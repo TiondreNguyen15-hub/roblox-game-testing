@@ -440,46 +440,49 @@ Run.RenderStepped:Connect(function(dt)
   end
  end
 end)
--- Real progress: account response, then each distinct character/arena content asset.
-local intro=create('Frame',gui,{Name='Introduction',Size=UDim2.fromScale(1,1),BackgroundColor3=C.BG,BackgroundTransparency=.08,BorderSizePixel=0,ZIndex=50})
-local mark=text(intro,'B /',72,C.Red); mark.AnchorPoint=Vector2.new(.5,.5); mark.Position=UDim2.fromScale(.5,.34); mark.Size=UDim2.fromOffset(180,100); mark.TextXAlignment=Enum.TextXAlignment.Center; mark.Font=Enum.Font.GothamBlack; mark.ZIndex=51
-local title=text(intro,'BLOCKLINE',38); title.AnchorPoint=Vector2.new(.5,.5); title.Position=UDim2.fromScale(.5,.47); title.Size=UDim2.new(.9,0,0,60); title.TextXAlignment=Enum.TextXAlignment.Center; title.Font=Enum.Font.GothamBlack; title.ZIndex=51
-local loading=text(intro,'CONNECTING / LOADING ACCOUNT',13,C.Muted); loading.TextXAlignment=Enum.TextXAlignment.Center; loading.AnchorPoint=Vector2.new(.5,.5); loading.Position=UDim2.fromScale(.5,.6); loading.Size=UDim2.new(.9,0,0,42); loading.ZIndex=51
-local track=create('Frame',intro,{Position=UDim2.fromScale(.2,.68),Size=UDim2.new(.6,0,0,3),BackgroundColor3=C.Panel,BorderSizePixel=0,ZIndex=51})
-local fill=create('Frame',track,{Size=UDim2.fromScale(0,1),BackgroundColor3=C.Red,BorderSizePixel=0,ZIndex=52})
-layout(); render()
+-- The independent ReplicatedFirst loader starts before server/profile waits.
+local cinematic=require(game:GetService('ReplicatedFirst'):WaitForChild('BlocklineLoading'))
+cinematic.Start()
+layout();render()
 task.spawn(function()
  repeat
-  local ok,r=pcall(function() return request:InvokeServer('Fetch') end)
-  if ok and r.OK and r.Profile then profile=r.Profile; settings=profile.Data.Settings; weaponId=profile.Data.Equipped; break end
-  loading.Text=ok and 'LOADING ACCOUNT DATA…' or 'CONNECTION INTERRUPTED / RETRYING…'
+  cinematic.Status('CONNECTING / LOADING YOUR PROFILE')
+  local ok,r=pcall(function()return request:InvokeServer('Fetch')end)
+  if ok and r.OK and r.Profile then profile=r.Profile;settings=profile.Data.Settings;weaponId=profile.Data.Equipped;break end
+  if not ok then cinematic.Status('SERVER CONNECTION INTERRUPTED / RETRYING')end
   task.wait(1)
  until not gui.Parent
  if not gui.Parent then return end
- refreshProfile(); fill.Size=UDim2.fromScale(.25,1)
- local assets={}; local seen={}
- local sources={workspace:WaitForChild('BlocklineArena')}; if p.Character then table.insert(sources,p.Character) end
- for _,source in ipairs(sources) do for _,o in ipairs(source:GetDescendants()) do
-  local asset
-  if o:IsA('MeshPart') then asset=o.MeshId elseif o:IsA('Decal') or o:IsA('Texture') then asset=o.Texture elseif o:IsA('Shirt') then asset=o.ShirtTemplate elseif o:IsA('Pants') then asset=o.PantsTemplate end
-  if asset and asset~='' and not seen[asset] then seen[asset]=true; table.insert(assets,asset) end
+ refreshProfile();cinematic.ReducedMotion(settings.ReducedMotion)
+ local assets,seen={},{}
+ local function add(value)if type(value)=='string'and value~=''and not seen[value]then seen[value]=true;table.insert(assets,value)end end
+ local sources={workspace:WaitForChild('BlocklineArena'),game:GetService('Lighting')}
+ if p.Character then table.insert(sources,p.Character)end
+ for _,source in ipairs(sources)do for _,o in ipairs(source:GetDescendants())do
+  if o:IsA('MeshPart')then add(o.MeshId);add(o.TextureID)
+  elseif o:IsA('SpecialMesh')then add(o.MeshId);add(o.TextureId)
+  elseif o:IsA('Decal')or o:IsA('Texture')then add(o.Texture)
+  elseif o:IsA('Shirt')then add(o.ShirtTemplate)
+  elseif o:IsA('Pants')then add(o.PantsTemplate)
+  elseif o:IsA('Sky')then for _,key in ipairs({'SkyboxBk','SkyboxDn','SkyboxFt','SkyboxLf','SkyboxRt','SkyboxUp'})do add(o[key])end end
  end end
  local done,failed=0,0
- if #assets>0 then
-  local preloadOK=pcall(function() Content:PreloadAsync(assets,function(_,assetStatus)
-   done=done+1; if assetStatus~=Enum.AssetFetchStatus.Success then failed=failed+1 end
-   local progress=.25+.75*math.min(1,done/#assets)
-   loading.Text=string.format('LOADING ASSETS / %d%%',math.floor(progress*100)); tween(fill,{Size=UDim2.fromScale(progress,1)},.1)
-  end) end)
-  if not preloadOK then failed=failed+1 end
- end
- loading.Text=failed>0 and 'READY / SOME ASSETS UNAVAILABLE' or 'READY / 100%'; fill.Size=UDim2.fromScale(1,1)
- render(); showMenu(true); introDone=true
- if not settings.ReducedMotion then
-  tween(intro,{BackgroundTransparency=1},.45)
-  for _,o in ipairs(intro:GetDescendants()) do if o:IsA('TextLabel') then tween(o,{TextTransparency=1},.4) elseif o:IsA('Frame') then tween(o,{BackgroundTransparency=1},.4) end end
-  task.wait(.5)
- end
- intro:Destroy()
- if profile.Notice~='' then notify(profile.Notice) elseif failed>0 then notify('Some character assets could not load; the arena is ready.') end
+ cinematic.Status('PREPARING ARENA AND CHARACTER ASSETS');cinematic.Progress(0,#assets,0)
+ local finished=false
+ task.spawn(function()
+  local ok=pcall(function()Content:PreloadAsync(assets,function(_,fetch)
+   done=done+1;if fetch~=Enum.AssetFetchStatus.Success then failed=failed+1 end
+   cinematic.Progress(math.min(done,#assets),#assets,failed)
+  end)end)
+  if not ok then failed=failed+1;cinematic.Status('ASSET SERVICE ERROR / USING AVAILABLE CONTENT')end
+  finished=true
+ end)
+ local deadline=os.clock()+30
+ while not finished and os.clock()<deadline do task.wait(.1)end
+ if not finished then cinematic.Status('ASSET REQUEST TIMED OUT / USING AVAILABLE CONTENT')
+ elseif failed==0 then cinematic.Status('READY TO DEPLOY')end
+ render();showMenu(true);introDone=true
+ cinematic.Finish()
+ if profile.Notice~=''then notify(profile.Notice)
+ elseif not finished or failed>0 then notify('Some assets could not load. Available content will be used.')end
 end)

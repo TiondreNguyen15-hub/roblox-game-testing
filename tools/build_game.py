@@ -22,8 +22,16 @@ o,p=item(sp,'LocalScript','BlocklineMenu')
 E.SubElement(p,'ProtectedString',name='Source').text=Path('Client.luau').read_text(); E.SubElement(p,'bool',name='Disabled').text='false'
 o,p=item(sp,'LocalScript','BlocklineMovement')
 E.SubElement(p,'ProtectedString',name='Source').text=Path('Movement.luau').read_text(); E.SubElement(p,'bool',name='Disabled').text='false'
+first,_=item(root,'ReplicatedFirst','ReplicatedFirst')
+o,p=item(first,'ModuleScript','BlocklineLoading')
+E.SubElement(p,'ProtectedString',name='Source').text=Path('LoadingScreen.luau').read_text()
+o,p=item(first,'LocalScript','BlocklineLoadingBoot')
+E.SubElement(p,'ProtectedString',name='Source').text=Path('LoadingBoot.luau').read_text(); E.SubElement(p,'bool',name='Disabled').text='false'
 E.ElementTree(root).write(out/'Blockline.rbxlx',encoding='utf-8',xml_declaration=True)
 for name in ['Server','Client']: shutil.copyfile(name+'.luau',out/(name+'.luau'))
 print('Built integrated place with organized server + ScreenGui LocalScript and separate map-only edition.')
 
 shutil.copyfile('Movement.luau',out/'Movement.luau')
+
+shutil.copyfile('LoadingScreen.luau',out/'LoadingScreen.luau')
+shutil.copyfile('LoadingBoot.luau',out/'LoadingBoot.luau')

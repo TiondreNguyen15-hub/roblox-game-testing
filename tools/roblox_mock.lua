@@ -1,3 +1,4 @@
+ColorSequence={new=function(...)return {...}end}
 table.clone=function(t)local r={};for k,v in pairs(t)do r[k]=v end;return r end
 -- Small headless test double. This does not simulate Roblox rendering or physics.
 local tick=100

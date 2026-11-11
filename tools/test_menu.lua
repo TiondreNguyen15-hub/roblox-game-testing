@@ -53,6 +53,9 @@ local rs=game:GetService('ReplicatedStorage');local network=rs:WaitForChild('Blo
 local event=network:WaitForChild('Event');local rf=network:WaitForChild('Request');function rf:InvokeServer(kind,payload) return request(a,kind,payload)end
 function network:WaitForChild(n)return self:FindFirstChild(n)end
 local combat=network:WaitForChild('Combat');function combat:FireServer(kind,payload)self.OnServerEvent:Fire(a,kind,payload)end
+local first=game:GetService('ReplicatedFirst');local module=Instance.new('ModuleScript',first);module.Name='BlocklineLoading'
+local loader=assert(loadfile('LoadingScreen.luau'))()
+local nativeRequire=require;require=function(m)if m==module then return loader end;return nativeRequire(m)end
 local clientSource=assert(io.open('Client.luau')):read('*a')
 local client=assert(load(clientSource..'\nreturn {page=setPage,menu=showMenu,ready=function()introDone=true end}','MenuClient'))()
 local gui=a:WaitForChild('PlayerGui'):WaitForChild('BlocklineInterface')
@@ -61,7 +64,7 @@ assert(#nav:GetChildren()==7)
 local count=0
 for _,o in ipairs(nav:GetChildren())do if o.ClassName=='TextButton'then assert(#o.Activated.Callbacks==1);count=count+1 end end
 assert(count==6)
-assert(gui:FindFirstChild('Introduction') and gui:FindFirstChild('GameplayHUD'))
+assert(a:WaitForChild('PlayerGui'):FindFirstChild('BlocklineLoading') and gui:FindFirstChild('GameplayHUD'))
 print('PASS: ScreenGui construction, six navigation actions, intro, viewport hierarchy, gameplay HUD and controller bindings load under test doubles.')
 
 event.OnClientEvent:Fire('Profile',api.public(a))
