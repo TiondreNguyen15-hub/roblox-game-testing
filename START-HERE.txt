@@ -1,53 +1,25 @@
-BLOCKLINE — Original Roblox urban shooter starter
+BLOCKLINE — INTRO, MENU AND MINIMALIST ARENA
 
-OPEN AND PLAY
-1. Install Roblox Studio on Windows or macOS and sign in.
-2. Choose File > Open from File and select Blockline.rbxlx.
-3. The complete city is visible immediately in Studio. Press Play (F5).
-4. Wait for the 10-second countdown, then shoot the orange practice targets.
-5. For multiplayer testing, use Studio Test / Server & Clients with 2 clients.
-   Players join Azure and Ember automatically. Friendly fire is disabled.
-6. Save a local copy. Use File > Publish to Roblox when ready.
+DOWNLOAD AND OPEN
+Download the GitHub repository as a ZIP, extract it, then use Roblox Studio:
+File > Open from File > Blockline.rbxlx. Press Play.
 
-CONTROLS
-Mouse: look. WASD: move. Space: jump.
-Left mouse / controller RT: fire.
-Right mouse / controller LT: aim.
-R / controller X: reload (2 seconds, 30-round magazine, unlimited reserves).
-Left Shift / controller L3: sprint. Firing is disabled while sprinting.
-Touch: on-screen action buttons plus Roblox movement controls.
-Tab: kills and deaths leaderboard.
+Blockline.rbxlx = full intro/menu and real arena/practice modes.
+Arena-Phase1.rbxlx = map only, default Roblox movement, no gameplay scripts.
+BlocklineArena.rbxmx = map-only model to insert into an existing Workspace.
 
-RULES
-Five-minute rounds, first team to 30 eliminations wins.
-Three seconds of spawn protection. Body hits: 24; head hits: 48.
-Targets respawn after three seconds; target hits do not award match points.
-Kills and deaths last for the session; team scores reset each round.
+Files display as XML when opened in a browser. They must be opened in Studio.
+Download a fresh copy to receive GitHub updates.
 
-CUSTOMIZE
-Workspace > BlocklineCity: edit the streets, shops, cover and spawns.
-ServerScriptService > BlocklineServer: damage, ammo, teams and rounds.
-StarterPlayer > StarterPlayerScripts > BlocklineClient: HUD and controls.
-Raw copies of both scripts are included for editing.
-This is an original prototype inspired by urban arena shooters. It contains
-no Urban Reload assets, branding, maps or source code. It uses generated
-parts and has no external assets, purchases or account credentials.
+PERSISTENCE
+Publish a test experience. For Studio saving tests, enable Game Settings >
+Security > Enable Studio Access to API Services. Settings, progress, credits,
+weapons and rewards use DataStoreService. If cloud storage is unavailable,
+the menu explicitly reports session-only data and blocks cloud purchases and
+daily rewards. It will not overwrite an existing cloud profile with fallback data.
 
-VALIDATION AND LIMITATIONS
-Place XML parsed and embedded scripts checked against packaged originals.
-253 anchored map parts; both bases, alleys and eight shop interiors pass a
-standing-player clearance connectivity check. Both scripts pass syntax checks.
-Roblox Studio is not available in the build environment: opening, device
-controls and multiplayer behavior still require Studio playtesting.
-No persistence, matchmaking, anti-cheat movement checks, custom animation,
-weapon audio, cosmetics or monetization are included in this starter.
+PC: WASD move, Space jump, click fire, right click aim, R reload, Shift run,
+M or MENU opens the menu. Controller and touch actions are included.
 
-MAP UPDATE
-Download the latest Blockline.rbxlx again; an older downloaded file will not
-automatically update. Open it as a place with File > Open from File.
-The city is saved in Workspace and needs no script to become visible.
-For an existing project, download BlocklineCity.rbxmx, right-click Workspace
-in Explorer, then choose Insert from File. Remove any older BlocklineCity
-first so there is exactly one city. Keep this model named BlocklineCity.
-Use the matching updated Server.luau if replacing scripts manually.
-The full place file is the recommended way to get the working setup.
+Studio movement/physics, actual cloud storage and real devices still need
+live testing. See README.md and STUDIO-TESTS.md for setup and validation.

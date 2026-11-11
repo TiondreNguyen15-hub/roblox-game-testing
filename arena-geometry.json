@@ -1,0 +1,4812 @@
+{
+  "parts": [
+    {
+      "name": "Arena floor - 320 x 200",
+      "size": [
+        320,
+        8,
+        200
+      ],
+      "pos": [
+        0,
+        -4,
+        0
+      ],
+      "collide": true
+    },
+    {
+      "name": "End boundary",
+      "size": [
+        328,
+        32,
+        4
+      ],
+      "pos": [
+        0,
+        12,
+        -102
+      ],
+      "collide": true
+    },
+    {
+      "name": "End boundary",
+      "size": [
+        328,
+        32,
+        4
+      ],
+      "pos": [
+        0,
+        12,
+        102
+      ],
+      "collide": true
+    },
+    {
+      "name": "Side boundary",
+      "size": [
+        4,
+        32,
+        200
+      ],
+      "pos": [
+        -162,
+        12,
+        0
+      ],
+      "collide": true
+    },
+    {
+      "name": "Side boundary",
+      "size": [
+        4,
+        32,
+        200
+      ],
+      "pos": [
+        162,
+        12,
+        0
+      ],
+      "collide": true
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        16,
+        18,
+        20
+      ],
+      "pos": [
+        -114,
+        9.0,
+        -56
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -114,
+        0.0,
+        -66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        -122.0,
+        9.0,
+        -66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        -122.0,
+        0.0,
+        -56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -114,
+        0.0,
+        -46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        -122.0,
+        9.0,
+        -46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        -122.0,
+        18.0,
+        -56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -114,
+        18.0,
+        -66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        -106.0,
+        9.0,
+        -66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        -106.0,
+        0.0,
+        -56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -114,
+        18.0,
+        -46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        -106.0,
+        9.0,
+        -46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        -106.0,
+        18.0,
+        -56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        28,
+        14,
+        12
+      ],
+      "pos": [
+        -72,
+        7.0,
+        -76
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -72,
+        0.0,
+        -82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        -86.0,
+        7.0,
+        -82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -86.0,
+        0.0,
+        -76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -72,
+        0.0,
+        -70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        -86.0,
+        7.0,
+        -70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -86.0,
+        14.0,
+        -76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -72,
+        14.0,
+        -82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        -58.0,
+        7.0,
+        -82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -58.0,
+        0.0,
+        -76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -72,
+        14.0,
+        -70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        -58.0,
+        7.0,
+        -70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -58.0,
+        14.0,
+        -76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        18,
+        9,
+        10
+      ],
+      "pos": [
+        -70,
+        4.5,
+        -23
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -70,
+        0.0,
+        -28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        -79.0,
+        4.5,
+        -28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -79.0,
+        0.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -70,
+        0.0,
+        -18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        -79.0,
+        4.5,
+        -18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -79.0,
+        9.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -70,
+        9.0,
+        -28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        -61.0,
+        4.5,
+        -28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -61.0,
+        0.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -70,
+        9.0,
+        -18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        -61.0,
+        4.5,
+        -18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -61.0,
+        9.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        28,
+        24,
+        12
+      ],
+      "pos": [
+        -24,
+        12.0,
+        -23
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -24,
+        0.0,
+        -29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        -38.0,
+        12.0,
+        -29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -38.0,
+        0.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -24,
+        0.0,
+        -17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        -38.0,
+        12.0,
+        -17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -38.0,
+        24.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -24,
+        24.0,
+        -29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        -10.0,
+        12.0,
+        -29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -10.0,
+        0.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -24,
+        24.0,
+        -17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        -10.0,
+        12.0,
+        -17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -10.0,
+        24.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        10,
+        5,
+        10
+      ],
+      "pos": [
+        -30,
+        2.5,
+        -68
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -30,
+        0.0,
+        -73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        -35.0,
+        2.5,
+        -73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -35.0,
+        0.0,
+        -68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -30,
+        0.0,
+        -63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        -35.0,
+        2.5,
+        -63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -35.0,
+        5.0,
+        -68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -30,
+        5.0,
+        -73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        -25.0,
+        2.5,
+        -73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -25.0,
+        0.0,
+        -68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -30,
+        5.0,
+        -63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        -25.0,
+        2.5,
+        -63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -25.0,
+        5.0,
+        -68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        8,
+        6,
+        8
+      ],
+      "pos": [
+        -132,
+        3.0,
+        -20
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -132,
+        0.0,
+        -24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        -136.0,
+        3.0,
+        -24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        -136.0,
+        0.0,
+        -20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -132,
+        0.0,
+        -16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        -136.0,
+        3.0,
+        -16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        -136.0,
+        6.0,
+        -20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -132,
+        6.0,
+        -24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        -128.0,
+        3.0,
+        -24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        -128.0,
+        0.0,
+        -20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -132,
+        6.0,
+        -16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        -128.0,
+        3.0,
+        -16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        -128.0,
+        6.0,
+        -20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        16,
+        18,
+        20
+      ],
+      "pos": [
+        -114,
+        9.0,
+        56
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -114,
+        0.0,
+        46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        -122.0,
+        9.0,
+        46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        -122.0,
+        0.0,
+        56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -114,
+        0.0,
+        66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        -122.0,
+        9.0,
+        66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        -122.0,
+        18.0,
+        56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -114,
+        18.0,
+        46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        -106.0,
+        9.0,
+        46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        -106.0,
+        0.0,
+        56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -114,
+        18.0,
+        66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        -106.0,
+        9.0,
+        66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        -106.0,
+        18.0,
+        56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        28,
+        14,
+        12
+      ],
+      "pos": [
+        -72,
+        7.0,
+        76
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -72,
+        0.0,
+        70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        -86.0,
+        7.0,
+        70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -86.0,
+        0.0,
+        76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -72,
+        0.0,
+        82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        -86.0,
+        7.0,
+        82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -86.0,
+        14.0,
+        76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -72,
+        14.0,
+        70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        -58.0,
+        7.0,
+        70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -58.0,
+        0.0,
+        76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -72,
+        14.0,
+        82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        -58.0,
+        7.0,
+        82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -58.0,
+        14.0,
+        76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        18,
+        9,
+        10
+      ],
+      "pos": [
+        -70,
+        4.5,
+        23
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -70,
+        0.0,
+        18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        -79.0,
+        4.5,
+        18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -79.0,
+        0.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -70,
+        0.0,
+        28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        -79.0,
+        4.5,
+        28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -79.0,
+        9.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -70,
+        9.0,
+        18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        -61.0,
+        4.5,
+        18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -61.0,
+        0.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -70,
+        9.0,
+        28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        -61.0,
+        4.5,
+        28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -61.0,
+        9.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        28,
+        24,
+        12
+      ],
+      "pos": [
+        -24,
+        12.0,
+        23
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -24,
+        0.0,
+        17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        -38.0,
+        12.0,
+        17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -38.0,
+        0.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -24,
+        0.0,
+        29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        -38.0,
+        12.0,
+        29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -38.0,
+        24.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -24,
+        24.0,
+        17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        -10.0,
+        12.0,
+        17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -10.0,
+        0.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -24,
+        24.0,
+        29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        -10.0,
+        12.0,
+        29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        -10.0,
+        24.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        10,
+        5,
+        10
+      ],
+      "pos": [
+        -30,
+        2.5,
+        68
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -30,
+        0.0,
+        63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        -35.0,
+        2.5,
+        63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -35.0,
+        0.0,
+        68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -30,
+        0.0,
+        73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        -35.0,
+        2.5,
+        73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -35.0,
+        5.0,
+        68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -30,
+        5.0,
+        63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        -25.0,
+        2.5,
+        63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -25.0,
+        0.0,
+        68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -30,
+        5.0,
+        73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        -25.0,
+        2.5,
+        73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        -25.0,
+        5.0,
+        68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        8,
+        6,
+        8
+      ],
+      "pos": [
+        -132,
+        3.0,
+        20
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -132,
+        0.0,
+        16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        -136.0,
+        3.0,
+        16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        -136.0,
+        0.0,
+        20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -132,
+        0.0,
+        24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        -136.0,
+        3.0,
+        24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        -136.0,
+        6.0,
+        20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -132,
+        6.0,
+        16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        -128.0,
+        3.0,
+        16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        -128.0,
+        0.0,
+        20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        -132,
+        6.0,
+        24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        -128.0,
+        3.0,
+        24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        -128.0,
+        6.0,
+        20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        16,
+        18,
+        20
+      ],
+      "pos": [
+        114,
+        9.0,
+        -56
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        114,
+        0.0,
+        -66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        106.0,
+        9.0,
+        -66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        106.0,
+        0.0,
+        -56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        114,
+        0.0,
+        -46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        106.0,
+        9.0,
+        -46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        106.0,
+        18.0,
+        -56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        114,
+        18.0,
+        -66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        122.0,
+        9.0,
+        -66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        122.0,
+        0.0,
+        -56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        114,
+        18.0,
+        -46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        122.0,
+        9.0,
+        -46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        122.0,
+        18.0,
+        -56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        28,
+        14,
+        12
+      ],
+      "pos": [
+        72,
+        7.0,
+        -76
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        72,
+        0.0,
+        -82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        58.0,
+        7.0,
+        -82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        58.0,
+        0.0,
+        -76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        72,
+        0.0,
+        -70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        58.0,
+        7.0,
+        -70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        58.0,
+        14.0,
+        -76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        72,
+        14.0,
+        -82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        86.0,
+        7.0,
+        -82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        86.0,
+        0.0,
+        -76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        72,
+        14.0,
+        -70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        86.0,
+        7.0,
+        -70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        86.0,
+        14.0,
+        -76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        18,
+        9,
+        10
+      ],
+      "pos": [
+        70,
+        4.5,
+        -23
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        70,
+        0.0,
+        -28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        61.0,
+        4.5,
+        -28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        61.0,
+        0.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        70,
+        0.0,
+        -18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        61.0,
+        4.5,
+        -18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        61.0,
+        9.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        70,
+        9.0,
+        -28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        79.0,
+        4.5,
+        -28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        79.0,
+        0.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        70,
+        9.0,
+        -18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        79.0,
+        4.5,
+        -18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        79.0,
+        9.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        28,
+        24,
+        12
+      ],
+      "pos": [
+        24,
+        12.0,
+        -23
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        24,
+        0.0,
+        -29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        10.0,
+        12.0,
+        -29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        10.0,
+        0.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        24,
+        0.0,
+        -17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        10.0,
+        12.0,
+        -17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        10.0,
+        24.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        24,
+        24.0,
+        -29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        38.0,
+        12.0,
+        -29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        38.0,
+        0.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        24,
+        24.0,
+        -17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        38.0,
+        12.0,
+        -17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        38.0,
+        24.0,
+        -23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        10,
+        5,
+        10
+      ],
+      "pos": [
+        30,
+        2.5,
+        -68
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        30,
+        0.0,
+        -73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        25.0,
+        2.5,
+        -73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        25.0,
+        0.0,
+        -68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        30,
+        0.0,
+        -63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        25.0,
+        2.5,
+        -63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        25.0,
+        5.0,
+        -68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        30,
+        5.0,
+        -73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        35.0,
+        2.5,
+        -73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        35.0,
+        0.0,
+        -68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        30,
+        5.0,
+        -63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        35.0,
+        2.5,
+        -63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        35.0,
+        5.0,
+        -68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        8,
+        6,
+        8
+      ],
+      "pos": [
+        132,
+        3.0,
+        -20
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        132,
+        0.0,
+        -24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        128.0,
+        3.0,
+        -24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        128.0,
+        0.0,
+        -20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        132,
+        0.0,
+        -16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        128.0,
+        3.0,
+        -16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        128.0,
+        6.0,
+        -20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        132,
+        6.0,
+        -24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        136.0,
+        3.0,
+        -24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        136.0,
+        0.0,
+        -20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        132,
+        6.0,
+        -16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        136.0,
+        3.0,
+        -16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        136.0,
+        6.0,
+        -20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        16,
+        18,
+        20
+      ],
+      "pos": [
+        114,
+        9.0,
+        56
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        114,
+        0.0,
+        46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        106.0,
+        9.0,
+        46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        106.0,
+        0.0,
+        56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        114,
+        0.0,
+        66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        106.0,
+        9.0,
+        66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        106.0,
+        18.0,
+        56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        114,
+        18.0,
+        46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        122.0,
+        9.0,
+        46.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        122.0,
+        0.0,
+        56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        16.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        114,
+        18.0,
+        66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        18.22,
+        0.22
+      ],
+      "pos": [
+        122.0,
+        9.0,
+        66.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        20.22
+      ],
+      "pos": [
+        122.0,
+        18.0,
+        56
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        28,
+        14,
+        12
+      ],
+      "pos": [
+        72,
+        7.0,
+        76
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        72,
+        0.0,
+        70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        58.0,
+        7.0,
+        70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        58.0,
+        0.0,
+        76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        72,
+        0.0,
+        82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        58.0,
+        7.0,
+        82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        58.0,
+        14.0,
+        76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        72,
+        14.0,
+        70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        86.0,
+        7.0,
+        70.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        86.0,
+        0.0,
+        76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        72,
+        14.0,
+        82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        14.22,
+        0.22
+      ],
+      "pos": [
+        86.0,
+        7.0,
+        82.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        86.0,
+        14.0,
+        76
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        18,
+        9,
+        10
+      ],
+      "pos": [
+        70,
+        4.5,
+        23
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        70,
+        0.0,
+        18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        61.0,
+        4.5,
+        18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        61.0,
+        0.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        70,
+        0.0,
+        28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        61.0,
+        4.5,
+        28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        61.0,
+        9.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        70,
+        9.0,
+        18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        79.0,
+        4.5,
+        18.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        79.0,
+        0.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        18.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        70,
+        9.0,
+        28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        9.22,
+        0.22
+      ],
+      "pos": [
+        79.0,
+        4.5,
+        28.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        79.0,
+        9.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        28,
+        24,
+        12
+      ],
+      "pos": [
+        24,
+        12.0,
+        23
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        24,
+        0.0,
+        17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        10.0,
+        12.0,
+        17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        10.0,
+        0.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        24,
+        0.0,
+        29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        10.0,
+        12.0,
+        29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        10.0,
+        24.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        24,
+        24.0,
+        17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        38.0,
+        12.0,
+        17.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        38.0,
+        0.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        28.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        24,
+        24.0,
+        29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        24.22,
+        0.22
+      ],
+      "pos": [
+        38.0,
+        12.0,
+        29.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        12.22
+      ],
+      "pos": [
+        38.0,
+        24.0,
+        23
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        10,
+        5,
+        10
+      ],
+      "pos": [
+        30,
+        2.5,
+        68
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        30,
+        0.0,
+        63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        25.0,
+        2.5,
+        63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        25.0,
+        0.0,
+        68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        30,
+        0.0,
+        73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        25.0,
+        2.5,
+        73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        25.0,
+        5.0,
+        68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        30,
+        5.0,
+        63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        35.0,
+        2.5,
+        63.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        35.0,
+        0.0,
+        68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        10.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        30,
+        5.0,
+        73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        5.22,
+        0.22
+      ],
+      "pos": [
+        35.0,
+        2.5,
+        73.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        10.22
+      ],
+      "pos": [
+        35.0,
+        5.0,
+        68
+      ],
+      "collide": false
+    },
+    {
+      "name": "Solid black collision block",
+      "size": [
+        8,
+        6,
+        8
+      ],
+      "pos": [
+        132,
+        3.0,
+        20
+      ],
+      "collide": true
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        132,
+        0.0,
+        16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        128.0,
+        3.0,
+        16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        128.0,
+        0.0,
+        20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        132,
+        0.0,
+        24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        128.0,
+        3.0,
+        24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        128.0,
+        6.0,
+        20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        132,
+        6.0,
+        16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        136.0,
+        3.0,
+        16.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        136.0,
+        0.0,
+        20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal X edge",
+      "size": [
+        8.22,
+        0.22,
+        0.22
+      ],
+      "pos": [
+        132,
+        6.0,
+        24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red vertical edge",
+      "size": [
+        0.22,
+        6.22,
+        0.22
+      ],
+      "pos": [
+        136.0,
+        3.0,
+        24.0
+      ],
+      "collide": false
+    },
+    {
+      "name": "Red horizontal Z edge",
+      "size": [
+        0.22,
+        0.22,
+        8.22
+      ],
+      "pos": [
+        136.0,
+        6.0,
+        20
+      ],
+      "collide": false
+    },
+    {
+      "name": "Spawn -143 -54",
+      "size": [
+        12,
+        0.4,
+        12
+      ],
+      "pos": [
+        -143,
+        0.2,
+        -54
+      ],
+      "collide": true
+    },
+    {
+      "name": "Spawn -143 54",
+      "size": [
+        12,
+        0.4,
+        12
+      ],
+      "pos": [
+        -143,
+        0.2,
+        54
+      ],
+      "collide": true
+    },
+    {
+      "name": "Spawn 143 -54",
+      "size": [
+        12,
+        0.4,
+        12
+      ],
+      "pos": [
+        143,
+        0.2,
+        -54
+      ],
+      "collide": true
+    },
+    {
+      "name": "Spawn 143 54",
+      "size": [
+        12,
+        0.4,
+        12
+      ],
+      "pos": [
+        143,
+        0.2,
+        54
+      ],
+      "collide": true
+    }
+  ],
+  "obstacles": [
+    {
+      "name": "Base shield -1 -1",
+      "size": [
+        16,
+        18,
+        20
+      ],
+      "pos": [
+        -114,
+        9.0,
+        -56
+      ]
+    },
+    {
+      "name": "Flank tower -1 -1",
+      "size": [
+        28,
+        14,
+        12
+      ],
+      "pos": [
+        -72,
+        7.0,
+        -76
+      ]
+    },
+    {
+      "name": "Mid wall -1 -1",
+      "size": [
+        18,
+        9,
+        10
+      ],
+      "pos": [
+        -70,
+        4.5,
+        -23
+      ]
+    },
+    {
+      "name": "Central monolith -1 -1",
+      "size": [
+        28,
+        24,
+        12
+      ],
+      "pos": [
+        -24,
+        12.0,
+        -23
+      ]
+    },
+    {
+      "name": "Low flank block -1 -1",
+      "size": [
+        10,
+        5,
+        10
+      ],
+      "pos": [
+        -30,
+        2.5,
+        -68
+      ]
+    },
+    {
+      "name": "Small outer block -1 -1",
+      "size": [
+        8,
+        6,
+        8
+      ],
+      "pos": [
+        -132,
+        3.0,
+        -20
+      ]
+    },
+    {
+      "name": "Base shield -1 +1",
+      "size": [
+        16,
+        18,
+        20
+      ],
+      "pos": [
+        -114,
+        9.0,
+        56
+      ]
+    },
+    {
+      "name": "Flank tower -1 +1",
+      "size": [
+        28,
+        14,
+        12
+      ],
+      "pos": [
+        -72,
+        7.0,
+        76
+      ]
+    },
+    {
+      "name": "Mid wall -1 +1",
+      "size": [
+        18,
+        9,
+        10
+      ],
+      "pos": [
+        -70,
+        4.5,
+        23
+      ]
+    },
+    {
+      "name": "Central monolith -1 +1",
+      "size": [
+        28,
+        24,
+        12
+      ],
+      "pos": [
+        -24,
+        12.0,
+        23
+      ]
+    },
+    {
+      "name": "Low flank block -1 +1",
+      "size": [
+        10,
+        5,
+        10
+      ],
+      "pos": [
+        -30,
+        2.5,
+        68
+      ]
+    },
+    {
+      "name": "Small outer block -1 +1",
+      "size": [
+        8,
+        6,
+        8
+      ],
+      "pos": [
+        -132,
+        3.0,
+        20
+      ]
+    },
+    {
+      "name": "Base shield +1 -1",
+      "size": [
+        16,
+        18,
+        20
+      ],
+      "pos": [
+        114,
+        9.0,
+        -56
+      ]
+    },
+    {
+      "name": "Flank tower +1 -1",
+      "size": [
+        28,
+        14,
+        12
+      ],
+      "pos": [
+        72,
+        7.0,
+        -76
+      ]
+    },
+    {
+      "name": "Mid wall +1 -1",
+      "size": [
+        18,
+        9,
+        10
+      ],
+      "pos": [
+        70,
+        4.5,
+        -23
+      ]
+    },
+    {
+      "name": "Central monolith +1 -1",
+      "size": [
+        28,
+        24,
+        12
+      ],
+      "pos": [
+        24,
+        12.0,
+        -23
+      ]
+    },
+    {
+      "name": "Low flank block +1 -1",
+      "size": [
+        10,
+        5,
+        10
+      ],
+      "pos": [
+        30,
+        2.5,
+        -68
+      ]
+    },
+    {
+      "name": "Small outer block +1 -1",
+      "size": [
+        8,
+        6,
+        8
+      ],
+      "pos": [
+        132,
+        3.0,
+        -20
+      ]
+    },
+    {
+      "name": "Base shield +1 +1",
+      "size": [
+        16,
+        18,
+        20
+      ],
+      "pos": [
+        114,
+        9.0,
+        56
+      ]
+    },
+    {
+      "name": "Flank tower +1 +1",
+      "size": [
+        28,
+        14,
+        12
+      ],
+      "pos": [
+        72,
+        7.0,
+        76
+      ]
+    },
+    {
+      "name": "Mid wall +1 +1",
+      "size": [
+        18,
+        9,
+        10
+      ],
+      "pos": [
+        70,
+        4.5,
+        23
+      ]
+    },
+    {
+      "name": "Central monolith +1 +1",
+      "size": [
+        28,
+        24,
+        12
+      ],
+      "pos": [
+        24,
+        12.0,
+        23
+      ]
+    },
+    {
+      "name": "Low flank block +1 +1",
+      "size": [
+        10,
+        5,
+        10
+      ],
+      "pos": [
+        30,
+        2.5,
+        68
+      ]
+    },
+    {
+      "name": "Small outer block +1 +1",
+      "size": [
+        8,
+        6,
+        8
+      ],
+      "pos": [
+        132,
+        3.0,
+        20
+      ]
+    }
+  ]
+}
