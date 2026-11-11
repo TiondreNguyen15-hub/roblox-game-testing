@@ -1,0 +1,23 @@
+{
+  "Blockline.rbxlx": "46b54711df8a9b547f6e779ca78ce59691af0724673473eabaf73eb4f7b8d74e",
+  "Arena-Phase1.rbxlx": "77479582b5186ce07a0273698729b91463f80c66abea067a0a46bd2cf2f2efcf",
+  "BlocklineArena.rbxmx": "e411e3a1dc753667b0bc1d67c554f4ae71953bef3c2013e814fe30afea1d5cd1",
+  "Arena-Overview.svg": "cbdd4d56c20eafa9d659acc396cf6328ac4af7558b04d04d3c23e9bad9cccdea",
+  "arena-geometry.json": "3662c909c7a2fa21535efc2ef201b9b7e7cbab11d2d47d9d08640a1b898adc02",
+  "Server.luau": "982f2aebd8c880c6dff24f56c86fc9134aac0d1a8a9e6c7219c0f24f51e2b2f2",
+  "Client.luau": "94e47073d0994ec5bef1cbaaa52998d8027e121e526f1616aa4e1cf3fd30ae48",
+  "Movement.luau": "8e7b4f0634381cdebd9ef79824fd88ce4d4455206f49f8f3a7e34d7a17bcb060",
+  "README.md": "9cf4e88df12aa3b5861fb53ba6b02e95018ece75b2e8cb0f5e586da1f9387899",
+  "START-HERE.txt": "53a5997c20d232715f183f4de41e5179f392fe6a400ade8702806e70186e3d07",
+  "FEATURES-AND-ISSUES.md": "ac336d3c331861ad8871c64af48b7ae90313c1fd688f80429d254386de82dc3b",
+  "STUDIO-TESTS.md": "c1efef2d34736a79230d761ce52bbfdbfeaa64810600f4b11d10748172a02430",
+  "tools/build_arena.py": "39a2e73f6e82e2d007f11972f0a04881d6bcd66466c6f44247d9586bfa927c8b",
+  "tools/build_game.py": "a429dae90f6b2025c93675c4432b3da96a05771633585522a83958a179491683",
+  "tools/roblox_mock.lua": "bf1b54d7fe715e407b3de67373bd2e2a6fb454a7e924cede0ef66570f779f831",
+  "tools/run_lua.py": "e164169f7f41509741ea74112b6dab95af0435a3110dc323b92b643af61c441c",
+  "tools/test_arena.py": "3116e0b11cada6fa38afdfb945f006114f59b0cf7938799ccf04b353e66fe990",
+  "tools/test_menu.lua": "d86c3b721240741c36db5cf26a7104b9da2e79891f9cf2989cfd9e634635f8e4",
+  "tools/test_movement.lua": "82fa3446b5f44fb925ca9d3ee5084f800f77ab5f26d4738fdafd89a30d15cf8d",
+  "tools/test_optimization.lua": "8ef080e45ef0f80358891ef856b0d1f7220a0653c4f1ba94a83e65679e58b762",
+  "tools/test_phases.lua": "367d3b1e3dc8c193895c0a672e9e1fb7cecbc694b7076db29872327350e9d871"
+}

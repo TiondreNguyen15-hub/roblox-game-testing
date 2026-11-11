@@ -40,3 +40,14 @@ Use a real touch device and real console/controller where available. Device emul
 - Mobile: touch navigation, native movement, and FIRE/AIM/RELOAD/RUN/MENU controls.
 
 Record failures from Studio's Output panel with the action that triggered them before marking these tests passed.
+
+## Additional full-build acceptance tests
+
+- Enter all three competitive modes with two clients. Check separate map positions, countdown, timer, score limits, mode isolation, results, respawn protection and draw/abandon behavior. A third player must receive a full-lobby response when joining an occupied duel.
+- Verify TDM team balancing each round. Verify neutral FFA/duel players can damage opponents while TDM teammates cannot. Check results, kills/deaths and rewards survive rejoining.
+- Check third-person camera mouse, touch and right-stick input; camera obstruction at every cover type; aiming from behind cover; recoil/spread; sprint/jump/crouch and stance restoration after mode changes or death.
+- Test stock R6/R15 locomotion/jumping, additive crouch/aim poses and procedural reload/recoil. Confirm custom avatars do not clip unexpectedly.
+- Run all five training drills. Check movement/reset behavior, hidden reaction targets, random flick locations, accepted shot/hit accuracy, reaction-to-elimination timing and career-stat isolation.
+- Confirm top-center timer/score, current K/D, kill feed, directional damage, elimination/death text, weapon selection, health bar, training stats and results panels at all supported resolutions.
+- Confirm controls pause in the menu and resume in gameplay; test default PlayerModule availability and custom control integrations if used.
+- Profile simultaneous active modes and private ranges at intended player counts, including map clones, sustained SMG fire, server heartbeats, pooled tracers and repeated practice joins/exits. Measure 60+ FPS rather than inferring it from object counts.

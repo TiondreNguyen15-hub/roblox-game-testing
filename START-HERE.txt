@@ -1,25 +1,24 @@
-BLOCKLINE — INTRO, MENU AND MINIMALIST ARENA
+BLOCKLINE — FULL PROTOTYPE
 
-DOWNLOAD AND OPEN
-Download the GitHub repository as a ZIP, extract it, then use Roblox Studio:
-File > Open from File > Blockline.rbxlx. Press Play.
+Extract Blockline-Full.zip. In Roblox Studio choose:
+File > Open from File > Blockline.rbxlx, then Play.
 
-Blockline.rbxlx = full intro/menu and real arena/practice modes.
-Arena-Phase1.rbxlx = map only, default Roblox movement, no gameplay scripts.
-BlocklineArena.rbxmx = map-only model to insert into an existing Workspace.
+Use MODE on the PLAY page to select TDM, FFA, Duel or Practice.
+Competitive modes require two players. Use Studio Server & Clients testing.
+On the PRACTICE page choose Stationary, Moving, Tracking, Flick or Reaction.
 
-Files display as XML when opened in a browser. They must be opened in Studio.
-Download a fresh copy to receive GitHub updates.
+WASD move, Space jump, mouse look, click fire, right-click aim, R reload,
+Shift sprint, C/Ctrl crouch, 1/2/3 weapon, M menu. Touch and controller
+bindings are included; see README.md.
 
-PERSISTENCE
-Publish a test experience. For Studio saving tests, enable Game Settings >
-Security > Enable Studio Access to API Services. Settings, progress, credits,
-weapons and rewards use DataStoreService. If cloud storage is unavailable,
-the menu explicitly reports session-only data and blocks cloud purchases and
-daily rewards. It will not overwrite an existing cloud profile with fallback data.
+Publish a test experience and enable Studio API access for persistence tests.
+Cloud failures are clearly reported; fallback data never overwrites cloud data.
 
-PC: WASD move, Space jump, click fire, right click aim, R reload, Shift run,
-M or MENU opens the menu. Controller and touch actions are included.
+Source: Server.luau, Client.luau, Movement.luau.
+Map-only: Arena-Phase1.rbxlx and BlocklineArena.rbxmx.
 
-Studio movement/physics, actual cloud storage and real devices still need
-live testing. See README.md and STUDIO-TESTS.md for setup and validation.
+Read FEATURES-AND-ISSUES.md before release. Automated headless checks passed,
+but actual Roblox Studio physics/rendering, live multiplayer/storage,
+physical console/mobile devices and 60+ FPS still require validation.
+
+Download the current Blockline-Full.zip from the repository for this version.

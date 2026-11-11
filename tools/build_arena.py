@@ -26,6 +26,9 @@ def part(parent,name,size,pos,color,collide=True,material=272,cls='Part'):
  o,p=obj(parent,cls,name); vec(p,'size',size); frame(p,pos)
  prop(p,'Color3uint8','Color3uint8',(255<<24)+(color[0]<<16)+(color[1]<<8)+color[2])
  for n,v in [('Anchored',True),('CanCollide',collide),('CanTouch',collide),('CanQuery',collide)]: prop(p,'bool',n,str(v).lower())
+ prop(p,'bool','CastShadow',str(collide).lower());
+ if cls!='SpawnLocation':
+  p.find("bool[@name='CanTouch']").text='false'
  prop(p,'token','Material',material); prop(p,'token','TopSurface',0); prop(p,'token','BottomSurface',0)
  geometry.append(dict(name=name,size=size,pos=pos,collide=collide))
  return o,p

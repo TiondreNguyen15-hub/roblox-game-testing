@@ -1,3 +1,4 @@
+table.clone=function(t)local r={};for k,v in pairs(t)do r[k]=v end;return r end
 -- Small headless test double. This does not simulate Roblox rendering or physics.
 local tick=100
 os.clock=function() return tick end
@@ -58,8 +59,8 @@ function methods:Clone()
  for _,v in ipairs(self:GetChildren())do local c=v:Clone();c.Parent=o end;return o
 end
 Instance={new=function(cls,parent)
- local o=setmetatable({_p={ClassName=cls,Name=cls,Health=100,MaxHealth=100,Archivable=true},_children={},_attr={},_signals={}},node)
- for _,n in ipairs({'Died','CharacterAdded','OnServerEvent','OnClientEvent','MouseEnter','MouseLeave','SelectionGained','SelectionLost','Activated','PlayerAdded','PlayerRemoving','WindowFocusReleased','GamepadConnected','RenderStepped'})do o[n]=signal()end
+ local o=setmetatable({_p={ClassName=cls,Name=cls,Health=100,MaxHealth=100,HipHeight=2,Archivable=true},_children={},_attr={},_signals={}},node)
+ for _,n in ipairs({'Died','CharacterAdded','OnServerEvent','OnClientEvent','MouseEnter','MouseLeave','SelectionGained','SelectionLost','Activated','PlayerAdded','PlayerRemoving','WindowFocusReleased','GamepadConnected','Heartbeat','InputChanged','RenderStepped'})do o[n]=signal()end
  o.Parent=parent;return o
 end}
 function typeof(v)if getmetatable(v)==vec then return 'Vector3' end;return type(v)end

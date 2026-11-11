@@ -13,8 +13,14 @@ local request=network:WaitForChild('Request'); local event=network:WaitForChild(
 local combat=network:WaitForChild('Combat'); local matchStatus=network:WaitForChild('MatchStatus')
 local C={BG=Color3.fromRGB(12,13,16),Panel=Color3.fromRGB(22,24,29),Hover=Color3.fromRGB(39,42,49),Text=Color3.fromRGB(242,243,246),Muted=Color3.fromRGB(155,161,174),Red=Color3.fromRGB(240,32,54)}
 local profile; local current='PLAY'; local menuOpen=true; local introDone=false; local busy=false; local mobile=false
-local settings={FOV=80,Sensitivity=1,ReducedMotion=false,Crosshair=true}
+local settings={FOV=80,Sensitivity=1,ReducedMotion=false,Crosshair=true,LowGraphics=false}
+local modeNames={Arena='TEAM DEATHMATCH',FFA='FREE FOR ALL',Duel='1V1 DUEL',Practice='AIM TRAINING'}
+local selectedDrill='Stationary'
 local selectedMode='Arena'; local firing=false; local aiming=false; local ammo=0; local reloading=false; local weaponId='Rifle'; local lastShot=0
+p:SetAttribute('BLMenuOpen',true)
+local aimParams=RaycastParams.new(); aimParams.FilterType=Enum.RaycastFilterType.Exclude
+p.CharacterAdded:Connect(function(char) aimParams.FilterDescendantsInstances={char} end)
+if p.Character then aimParams.FilterDescendantsInstances={p.Character} end
 local gui=Instance.new('ScreenGui'); gui.Name='BlocklineInterface'; gui.ResetOnSpawn=false; gui.ZIndexBehavior=Enum.ZIndexBehavior.Sibling; gui.DisplayOrder=5; gui.Parent=p:WaitForChild('PlayerGui')
 local function create(cls,parent,props)
  local o=Instance.new(cls); for k,v in pairs(props or {}) do o[k]=v end; o.Parent=parent; return o
@@ -54,7 +60,7 @@ local sideBody=create('ScrollingFrame',side,{Position=UDim2.fromOffset(18,16),Si
 create('UIListLayout',sideBody,{Padding=UDim.new(0,10),SortOrder=Enum.SortOrder.LayoutOrder})
 local portrait=create('ViewportFrame',sideBody,{Name='Character',Size=UDim2.new(1,0,0,210),BackgroundColor3=C.Panel,BorderSizePixel=0,Ambient=Color3.fromRGB(185,185,195),LightColor=Color3.fromRGB(255,190,190),LightDirection=Vector3.new(-1,-1,-1)}); round(portrait)
 local charWorld=create('WorldModel',portrait,{Name='CharacterPreview'}); local charCam=create('Camera',portrait,{}); portrait.CurrentCamera=charCam
-local profileText=text(sideBody,'Loading profile…',16); profileText.Size=UDim2.new(1,0,0,64)
+local profileText=text(sideBody,'Loading profile…',16); profileText.Size=UDim2.new(1,0,0,90)
 local rosterText=text(sideBody,'SERVER ROSTER',13,C.Muted); rosterText.Size=UDim2.new(1,0,0,150)
 local footer=text(menu,'CONNECTING TO SERVER',12,C.Muted); footer.TextXAlignment=Enum.TextXAlignment.Center
 local toast=create('TextLabel',gui,{Name='Notice',Text='',BackgroundColor3=C.Panel,BackgroundTransparency=.05,TextColor3=C.Text,Font=Enum.Font.GothamMedium,TextSize=14,TextWrapped=true,AnchorPoint=Vector2.new(.5,1),Position=UDim2.new(.5,0,1,-18),Size=UDim2.new(.8,0,0,56),Visible=false,ZIndex=30}); round(toast)
@@ -63,14 +69,24 @@ local function notify(message)
  toastVersion=toastVersion+1; local v=toastVersion; toast.Text=message; toast.Visible=true
  task.delay(5,function() if v==toastVersion then toast.Visible=false end end)
 end
+local currentMatch; local trainingStats
 local render; local showMenu; local refreshProfile
+local editingSettings=false
+local function acceptProfile(data)
+ if profile and profile.Mode~=data.Mode then currentMatch=nil; trainingStats=nil end
+ profile=data; if not editingSettings then settings=table.clone(data.Data.Settings) end
+ weaponId=data.Data.Equipped; refreshProfile()
+end
 local function call(kind,payload)
  if busy then notify('Please wait for the current request.'); return nil end
  busy=true
  local ok,result=pcall(function() return request:InvokeServer(kind,payload) end)
  busy=false
  if not ok then notify('Server unavailable. Please try again.'); return nil end
- if result.Profile then profile=result.Profile; settings=profile.Data.Settings; weaponId=profile.Data.Equipped; refreshProfile() end
+ if result.Profile then
+  if kind=='Settings' and result.OK then editingSettings=false end
+  acceptProfile(result.Profile)
+ end
  if result.Message then notify(result.Message) end
  return result
 end
@@ -93,6 +109,7 @@ local function weaponPreview(id)
 end
 local navButtons={}
 local function setPage(name)
+ if name~='SETTINGS' then editingSettings=false end
  current=name; render(); if UIS.GamepadEnabled then GuiService.SelectedObject=navButtons[name] end
 end
 local function enterMode(mode)
@@ -112,9 +129,9 @@ render=function()
   section('DEPLOY / CURRENT SERVER')
   rowText('ENTER THE ARENA',30,C.Text,70)
   rowText('Red edges. Clear sightlines. Team competition on the new minimalist arena.',15,C.Muted,54)
-  button(content,'MODE  /  '..(selectedMode=='Arena' and 'TEAM ARENA' or 'AIM TRAINING'),function() selectedMode=selectedMode=='Arena' and 'Practice' or 'Arena'; render() end)
-  rowText(selectedMode=='Arena' and '5 minutes • First to 30 • 2 players to start\nBalanced teams are assigned when you join.' or 'Private target range • Instant entry\nPractice with your equipped weapon. No match rewards.',14,C.Muted,64)
-  button(content,selectedMode=='Arena' and 'PLAY  /  JOIN ARENA' or 'START AIM TRAINING',function() enterMode(selectedMode) end,true)
+  button(content,'MODE  /  '..modeNames[selectedMode],function() local order={'Arena','FFA','Duel','Practice'}; for i,id in ipairs(order) do if selectedMode==id then selectedMode=order[i%#order+1]; break end end; render() end)
+  rowText(selectedMode=='Practice' and 'Private drills • Server-scored accuracy and reaction time\nPractice never changes your career statistics.' or (selectedMode=='Duel' and '1v1 • First to 5 • 3-minute rounds\nTwo slots, separate duel arena.' or (selectedMode=='FFA' and 'Everyone versus everyone • First to 20\n5-minute rounds in a separate arena.' or 'Balanced teams • First to 30 • 5 minutes\nTwo players required to start.')),14,C.Muted,64)
+  button(content,'PLAY / '..modeNames[selectedMode],function() enterMode(selectedMode) end,true)
   if profile.Mode~='Lobby' then
    button(content,'RESUME '..string.upper(profile.Mode),function() showMenu(false) end)
    button(content,'LEAVE MODE / RETURN TO LOBBY',function() local r=call('Enter','Lobby'); if r and r.OK then render() end end)
@@ -133,7 +150,10 @@ render=function()
   rowText('BUILD YOUR AIM',28,C.Text,68)
   rowText('Three targets with head and body hit zones. Targets reset after elimination. Your range is isolated from other players.',16,C.Muted,100)
   weaponPreview(d.Equipped)
-  button(content,'ENTER PRACTICE',function() enterMode('Practice') end,true)
+  button(content,'DRILL / '..selectedDrill:upper(),function() local order={'Stationary','Moving','Tracking','Flick','Reaction'}; for i,id in ipairs(order) do if id==selectedDrill then selectedDrill=order[i%#order+1]; break end end; render() end)
+  rowText('Stationary: precision. Moving: lateral targets. Tracking: continuous motion. Flick: random target positions. Reaction: targets appear after a random delay.',14,C.Muted,100)
+  button(content,'START '..selectedDrill:upper(),function() local r=call('Drill',selectedDrill); if r and r.OK then showMenu(false) end end,true)
+  if profile.Training then local t=profile.Training; rowText(string.format('LAST DRILL / %d hits / %d shots / %.1f%% accuracy / %.0f ms reaction',t.Hits,t.Shots,t.Accuracy,t.ReactionMs),14,C.Muted,70) end
  elseif current=='LOADOUT' then
   section('ARSENAL / EARN CREDITS BY PLAYING')
   for _,id in ipairs({'Rifle','SMG','Marksman'}) do
@@ -152,16 +172,16 @@ render=function()
    local holder=create('Frame',content,{Size=UDim2.new(1,0,0,68),BackgroundColor3=C.Panel,BorderSizePixel=0}); round(holder)
    local l=text(holder,label..': '..string.format(key=='Sensitivity' and '%.1f' or '%d',settings[key]),15); l.Position=UDim2.fromOffset(12,0); l.Size=UDim2.new(1,-24,0,28)
    local function change(sign)
-    settings[key]=math.clamp(math.floor((settings[key]+step*sign)*10+.5)/10,lo,hi)
+    editingSettings=true; settings[key]=math.clamp(math.floor((settings[key]+step*sign)*10+.5)/10,lo,hi)
     l.Text=label..': '..string.format(key=='Sensitivity' and '%.1f' or '%d',settings[key])
    end
    local minus=button(holder,'−',function() change(-1) end); minus.Size=UDim2.new(.5,-18,0,30); minus.Position=UDim2.fromOffset(12,32)
    local plus=button(holder,'+',function() change(1) end); plus.Size=UDim2.new(.5,-18,0,30); plus.Position=UDim2.new(.5,6,0,32)
   end
   adjust('Field of view','FOV',5,60,110); adjust('Mouse sensitivity','Sensitivity',.1,.2,2)
-  for _,setting in ipairs({{'Reduced motion','ReducedMotion'},{'Show crosshair','Crosshair'}}) do
+  for _,setting in ipairs({{'Reduced motion','ReducedMotion'},{'Show crosshair','Crosshair'},{'Low graphics (shadows)','LowGraphics'}}) do
    local b
-   b=button(content,setting[1]..' / '..(settings[setting[2]] and 'ON' or 'OFF'),function() settings[setting[2]]=not settings[setting[2]]; b.Text=setting[1]..' / '..(settings[setting[2]] and 'ON' or 'OFF') end)
+   b=button(content,setting[1]..' / '..(settings[setting[2]] and 'ON' or 'OFF'),function() editingSettings=true; settings[setting[2]]=not settings[setting[2]]; b.Text=setting[1]..' / '..(settings[setting[2]] and 'ON' or 'OFF') end)
   end
   button(content,'SAVE SETTINGS',function() call('Settings',settings) end,true)
   rowText(profile.Persistent and 'Cloud profile connected.' or profile.Notice,13,C.Muted,80)
@@ -180,6 +200,7 @@ render=function()
   tween(content,{Position=UDim2.fromOffset(22,66)},.18)
  end
  for name,b in pairs(navButtons) do b.TextColor3=name==current and C.Red or C.Text end
+ if UIS.GamepadEnabled and menuOpen and (not GuiService.SelectedObject or not GuiService.SelectedObject.Parent) then GuiService.SelectedObject=navButtons[current] end
 end
 for i,name in ipairs({'PLAY','PRACTICE','LOADOUT','SETTINGS','STATISTICS','TEAM'}) do
  local b=button(nav,name,function() setPage(name) end); b.LayoutOrder=i; navButtons[name]=b
@@ -187,24 +208,29 @@ end
 refreshProfile=function()
  if not profile then return end
  local d=profile.Data; identity.Text=string.format('%s  /  LV %d  /  %d CR',p.Name,profile.Level,d.Coins)
- profileText.Text=string.format('%s\nLEVEL %d   /   %d CREDITS\n%s',p.Name,profile.Level,d.Coins,profile.Mode:upper())
+ profileText.Text=string.format('%s\nLEVEL %d   /   %d CREDITS\n%s\nK %d / D %d / W %d',p.Name,profile.Level,d.Coins,profile.Mode:upper(),d.Kills,d.Deaths,d.Wins)
  local lines={'TEAM / SERVER ROSTER'}
  for _,r in ipairs(profile.Roster) do table.insert(lines,r.Username..'  /  '..(r.Mode=='Arena' and r.Team or r.Mode)) end
  rosterText.Text=table.concat(lines,'\n'); rosterText.Size=UDim2.new(1,0,0,math.max(150,#lines*25))
  footer.Text=profile.Persistent and matchStatus.Value or 'SESSION DATA / CLOUD SAVING UNAVAILABLE'
- UIS.MouseDeltaSensitivity=settings.Sensitivity
+ UIS.MouseDeltaSensitivity=1
+ p:SetAttribute('BLSensitivity',settings.Sensitivity); p:SetAttribute('BLFOV',settings.FOV); p:SetAttribute('BLReducedMotion',settings.ReducedMotion)
+ game:GetService('Lighting').GlobalShadows=not settings.LowGraphics
 end
 local function layout()
  local camera=workspace.CurrentCamera; if not camera then return end
  local size=camera.ViewportSize; mobile=size.X<950 or size.Y<580
  if mobile then
   header.Position=UDim2.fromOffset(16,4); header.Size=UDim2.new(1,-32,0,52); logo.TextSize=21; identity.TextSize=11
+  logo.Size=UDim2.new(1,0,0,30); identity.Position=UDim2.fromOffset(0,30); identity.Size=UDim2.new(1,0,0,24); identity.TextXAlignment=Enum.TextXAlignment.Right
+  tagline.Visible=false
   nav.Position=UDim2.fromOffset(12,66); nav.Size=UDim2.new(1,-24,0,46); nav.AutomaticCanvasSize=Enum.AutomaticSize.X
   navLayout.FillDirection=Enum.FillDirection.Horizontal
   for _,b in pairs(navButtons) do b.Size=UDim2.fromOffset(112,40); b.TextSize=13 end
   panel.Position=UDim2.fromOffset(12,120); panel.Size=UDim2.new(1,-24,1,-156); side.Visible=false
  else
   header.Position=UDim2.fromOffset(28,14); header.Size=UDim2.new(1,-56,0,54); logo.TextSize=26; identity.TextSize=14
+  logo.Size=UDim2.new(.6,0,0,34); identity.Position=UDim2.new(.55,0,0,6); identity.Size=UDim2.new(.45,0,0,40); tagline.Visible=true
   nav.Position=UDim2.fromOffset(28,112); nav.Size=UDim2.new(0,180,1,-168); nav.AutomaticCanvasSize=Enum.AutomaticSize.Y
   navLayout.FillDirection=Enum.FillDirection.Vertical
   for _,b in pairs(navButtons) do b.Size=UDim2.new(1,0,0,48); b.TextSize=15 end
@@ -220,7 +246,8 @@ local function avatarPreview(char)
   local ok,clone=pcall(function() return char:Clone() end); char.Archivable=was
   if not ok or not clone then return end
   for _,x in ipairs(charWorld:GetChildren()) do x:Destroy() end
-  for _,x in ipairs(clone:GetDescendants()) do if x:IsA('Script') or x:IsA('LocalScript') or x:IsA('Tool') then x:Destroy() end end
+  for _,x in ipairs(clone:GetDescendants()) do if x:IsA('Script') or x:IsA('LocalScript') or x:IsA('Tool') then x:Destroy()
+   elseif x:IsA('BasePart') then x.Anchored=true; x.CanCollide=false; x.CanTouch=false; x.CanQuery=false end end
   clone.Parent=charWorld; clone:PivotTo(CFrame.new(0,0,0)*CFrame.Angles(0,math.rad(160),0))
   charCam.CFrame=CFrame.lookAt(Vector3.new(0,1,8),Vector3.new(0,.5,0))
   if introDone and menuOpen and mobile and current=='PLAY' then render() end
@@ -237,27 +264,36 @@ local back=button(hud,'MENU',function() showMenu(true) end); back.Position=UDim2
 local function gameAction(name,state)
  if menuOpen then return Enum.ContextActionResult.Pass end
  local down=state==Enum.UserInputState.Begin
- if name=='BLFire' then firing=down elseif name=='BLAim' then aiming=down elseif name=='BLReload' and down then combat:FireServer('Reload') elseif name=='BLSprint' then combat:FireServer('Sprint',down) end
+ if name:sub(1,6)=='BLSlot' and down then
+  local id=({'Rifle','SMG','Marksman'})[tonumber(name:sub(7))]; call('Loadout',id)
+ elseif name=='BLNextWeapon' and down then
+  local order={'Rifle','SMG','Marksman'}; local index=1; for i,id in ipairs(order) do if weaponId==id then index=i end end
+  for n=1,3 do local id=order[(index+n-1)%3+1]; if profile.Data.Owned[id] then call('Loadout',id); break end end
+ elseif name=='BLFire' then firing=down elseif name=='BLAim' then aiming=down; combat:FireServer('Aim',down); p:SetAttribute('BLAiming',down) elseif name=='BLReload' and down then combat:FireServer('Reload') elseif name=='BLSprint' then combat:FireServer('Sprint',down) end
  return Enum.ContextActionResult.Sink
 end
 local function bindCombat(on)
- for _,name in ipairs({'BLFire','BLAim','BLReload','BLSprint'}) do CAS:UnbindAction(name) end
+ for _,name in ipairs({'BLFire','BLAim','BLReload','BLSprint','BLSlot1','BLSlot2','BLSlot3','BLNextWeapon'}) do CAS:UnbindAction(name) end
  if not on then return end
  CAS:BindAction('BLFire',gameAction,true,Enum.UserInputType.MouseButton1,Enum.KeyCode.ButtonR2)
  CAS:BindAction('BLAim',gameAction,true,Enum.UserInputType.MouseButton2,Enum.KeyCode.ButtonL2)
  CAS:BindAction('BLReload',gameAction,true,Enum.KeyCode.R,Enum.KeyCode.ButtonX)
+ CAS:BindAction('BLSlot1',gameAction,false,Enum.KeyCode.One)
+ CAS:BindAction('BLSlot2',gameAction,false,Enum.KeyCode.Two)
+ CAS:BindAction('BLSlot3',gameAction,false,Enum.KeyCode.Three)
+ CAS:BindAction('BLNextWeapon',gameAction,false,Enum.KeyCode.ButtonR1)
  CAS:BindAction('BLSprint',gameAction,true,Enum.KeyCode.LeftShift,Enum.KeyCode.ButtonL3)
  for name,title in pairs({BLFire='FIRE',BLAim='AIM',BLReload='RELOAD',BLSprint='RUN'}) do CAS:SetTitle(name,title) end
  CAS:SetPosition('BLFire',UDim2.new(1,-150,1,-160)); CAS:SetPosition('BLAim',UDim2.new(1,-230,1,-210)); CAS:SetPosition('BLReload',UDim2.new(1,-235,1,-125)); CAS:SetPosition('BLSprint',UDim2.new(0,110,1,-170))
 end
 showMenu=function(on)
- menuOpen=on; firing=false; aiming=false; combat:FireServer('Sprint',false)
+ menuOpen=on; p:SetAttribute('BLMenuOpen',on); firing=false; aiming=false; p:SetAttribute('BLAiming',false); combat:FireServer('Aim',false); combat:FireServer('Sprint',false)
  menu.Visible=on; hud.Visible=not on; UIS.MouseIconEnabled=on; UIS.MouseBehavior=on and Enum.MouseBehavior.Default or Enum.MouseBehavior.LockCenter
- p.CameraMode=on and Enum.CameraMode.Classic or Enum.CameraMode.LockFirstPerson
+ p.CameraMode=Enum.CameraMode.Classic
  if on then
   bindCombat(false); render(); layout(); if UIS.GamepadEnabled then GuiService.SelectedObject=navButtons[current] end
  else
-  GuiService.SelectedObject=nil; workspace.CurrentCamera.CameraType=Enum.CameraType.Custom
+  GuiService.SelectedObject=nil; workspace.CurrentCamera.CameraType=Enum.CameraType.Scriptable
   local hum=p.Character and p.Character:FindFirstChildOfClass('Humanoid'); if hum then workspace.CurrentCamera.CameraSubject=hum end
   bindCombat(true)
  end
@@ -278,37 +314,129 @@ CAS:BindAction('BLBack',function(_,state)
 end,false,Enum.KeyCode.ButtonB)
 UIS.WindowFocusReleased:Connect(function() firing=false; aiming=false; combat:FireServer('Sprint',false) end)
 UIS.GamepadConnected:Connect(function() if menuOpen and introDone then GuiService.SelectedObject=navButtons[current] end end)
+local career=text(hud,'0 K / 0 D',14,C.Muted); career.Position=UDim2.fromOffset(18,52); career.Size=UDim2.fromOffset(180,28)
+local healthTrack=create('Frame',hud,{Position=UDim2.new(0,18,1,-25),Size=UDim2.fromOffset(130,5),BackgroundColor3=C.Panel,BorderSizePixel=0})
+local healthFill=create('Frame',healthTrack,{Size=UDim2.fromScale(1,1),BackgroundColor3=C.Red,BorderSizePixel=0})
+local weaponButton=button(hud,'WEAPONS',function() showMenu(true); setPage('LOADOUT') end); weaponButton.Position=UDim2.fromOffset(14,84); weaponButton.Size=UDim2.fromOffset(100,32)
+local trainingLabel=text(hud,'',13); trainingLabel.Position=UDim2.new(.12,0,0,100); trainingLabel.Size=UDim2.new(.76,0,0,60); trainingLabel.TextXAlignment=Enum.TextXAlignment.Center
+local feed=text(hud,'',13,C.Muted); feed.Position=UDim2.new(1,-275,0,70); feed.Size=UDim2.fromOffset(260,135); feed.TextXAlignment=Enum.TextXAlignment.Right
+local elimination=text(hud,'',20,C.Red); elimination.Position=UDim2.new(.25,0,.32,0); elimination.Size=UDim2.new(.5,0,0,36); elimination.TextXAlignment=Enum.TextXAlignment.Center
+local damage=create('Frame',hud,{Size=UDim2.fromScale(1,1),BackgroundTransparency=1,BackgroundColor3=C.Red,BorderSizePixel=0,ZIndex=1})
+local directionLabel=text(hud,'',15,C.Red); directionLabel.Position=UDim2.new(.25,0,.65,0); directionLabel.Size=UDim2.new(.5,0,0,28); directionLabel.TextXAlignment=Enum.TextXAlignment.Center
+local results=create('Frame',gui,{Visible=false,Position=UDim2.fromScale(.08,.12),Size=UDim2.fromScale(.84,.76),BackgroundColor3=C.BG,BorderSizePixel=0,ZIndex=35}); round(results)
+local resultTitle=text(results,'ROUND COMPLETE',26,C.Red); resultTitle.Position=UDim2.fromOffset(18,20); resultTitle.Size=UDim2.new(1,-36,0,60)
+local resultBody=text(results,'',18); resultBody.Position=UDim2.fromOffset(18,90); resultBody.Size=UDim2.new(1,-36,1,-165)
+local closeResults=button(results,'CONTINUE TO MENU',function() results.Visible=false; showMenu(true) end,true); closeResults.Position=UDim2.new(.05,0,1,-65); closeResults.Size=UDim2.new(.9,0,0,46)
+local feedLines={}
+local feedbackVersion=0
+local function feedback(message)
+ feedbackVersion=feedbackVersion+1; local v=feedbackVersion; elimination.Text=message
+ task.delay(2,function() if feedbackVersion==v then elimination.Text='' end end)
+end
+local tracerPool={}; local tracerCursor=0
+local function shotVisual(data)
+ if menuOpen then return end
+ tracerCursor=tracerCursor%32+1
+ local t=tracerPool[tracerCursor]
+ if not t then
+  local part=create('Part',workspace,{Name='LocalTracer',Anchored=true,CanCollide=false,CanTouch=false,CanQuery=false,CastShadow=false,Material=Enum.Material.Neon,Color=C.Red,Transparency=1})
+  t={Part=part,Until=0}; tracerPool[tracerCursor]=t
+ end
+ local distance=(data.Finish-data.Origin).Magnitude
+ if distance<.01 then return end
+ t.Part.Size=Vector3.new(.06,.06,distance); t.Part.CFrame=CFrame.lookAt((data.Origin+data.Finish)/2,data.Finish)
+ t.Part.Transparency=0; t.Until=os.clock()+.06
+end
 local hitVersion=0
 event.OnClientEvent:Connect(function(kind,data)
  if kind=='Profile' then
-  local was=profile; profile=data; settings=data.Data.Settings; weaponId=data.Data.Equipped; refreshProfile()
-  if menuOpen and introDone and not busy then render() end
+  acceptProfile(data)
+  if menuOpen and introDone and not busy and not editingSettings then render() end
+ elseif kind=='Shot' then shotVisual(data)
+ elseif kind=='Roster' then
+  if profile then profile.Roster=data; refreshProfile(); if menuOpen and current=='TEAM' and not busy then render() end end
+ elseif kind=='Persistence' then
+  if profile then profile.Persistent=false; profile.Notice=data; refreshProfile() end
+  notify(data)
  elseif kind=='Notice' then notify(data)
- elseif kind=='Ammo' then ammo=data.Ammo; reloading=data.Reloading; ammoLabel.Text=data.Name..' / '..(reloading and 'RELOADING' or (data.Ammo..' | '..data.Magazine))
+ elseif kind=='Ammo' then p:SetAttribute('BLReloading',data.Reloading); ammo=data.Ammo; reloading=data.Reloading; ammoLabel.Text=data.Name..' / '..(reloading and 'RELOADING' or (data.Ammo..' | '..data.Magazine))
+ elseif kind=='Training' then trainingStats=data; if profile then profile.Training=data end
+ elseif kind=='Match' then
+  currentMatch=data
+  if data.Remaining==8 and results.Visible then results.Visible=false end
+ elseif kind=='Damage' then
+  damage.BackgroundTransparency=.82; tween(damage,{BackgroundTransparency=1},.35)
+  local root=p.Character and p.Character:FindFirstChild('HumanoidRootPart')
+  if root then
+   local d=data.From-root.Position; local cam=workspace.CurrentCamera
+   local side=d:Dot(cam.CFrame.RightVector); local front=d:Dot(cam.CFrame.LookVector)
+   directionLabel.Text=math.abs(side)>math.abs(front) and (side>0 and 'DAMAGE / RIGHT' or 'DAMAGE / LEFT') or (front>0 and 'DAMAGE / FRONT' or 'DAMAGE / BEHIND')
+   task.delay(1,function() directionLabel.Text='' end)
+  end
+ elseif kind=='Elimination' then feedback('ELIMINATED / '..data)
+ elseif kind=='Death' then firing=false; aiming=false; p:SetAttribute('BLAiming',false); feedback(data)
+ elseif kind=='KillFeed' then
+  table.insert(feedLines,1,{Text=data.Killer..' > '..data.Victim..' / '..data.Weapon,Expires=os.clock()+6}); while #feedLines>4 do table.remove(feedLines) end
+ elseif kind=='Results' then
+  firing=false; aiming=false; results.Visible=true; showMenu(true)
+  resultTitle.Text=data.Outcome..' / '..data.Mode
+  resultBody.Text=string.format('ELIMINATIONS  %d\nDEATHS  %d\nMATCH CREDITS  +%d',data.Kills,data.Deaths,data.Reward)
+  if UIS.GamepadEnabled then GuiService.SelectedObject=closeResults end
  elseif kind=='Hit' then hitVersion=hitVersion+1; local v=hitVersion; hitLabel.Text=data and 'ELIMINATED' or 'HIT'; task.delay(.4,function() if hitVersion==v then hitLabel.Text='' end end)
  end
 end)
 matchStatus:GetPropertyChangedSignal('Value'):Connect(function() if profile then refreshProfile() end end)
 local lastViewport=Vector2.new()
+local hudElapsed=0; local lastHealth,lastMode
+local layoutCombatHUD
+layoutCombatHUD=function()
+ local narrow=workspace.CurrentCamera.ViewportSize.X<600
+ ammoLabel.Size=UDim2.fromOffset(narrow and 180 or 240,38); ammoLabel.TextSize=narrow and 16 or 19
+ hp.Size=UDim2.fromOffset(narrow and 85 or 140,38); hp.TextSize=narrow and 16 or 19
+ modeStatus.Position=UDim2.new(0,104,0,12); modeStatus.Size=UDim2.new(1,-116,0,36); modeStatus.TextSize=narrow and 12 or 15
+ feed.Position=narrow and UDim2.new(.5,4,0,60) or UDim2.new(1,-275,0,70)
+ feed.Size=narrow and UDim2.new(.5,-20,0,100) or UDim2.fromOffset(260,135); feed.TextSize=narrow and 11 or 13
+ trainingLabel.Position=UDim2.new(0,14,0,narrow and 140 or 100); trainingLabel.Size=UDim2.new(1,-28,0,56)
+ resultTitle.TextSize=narrow and 18 or 26
+end
 Run.RenderStepped:Connect(function(dt)
  local camera=workspace.CurrentCamera; if not camera then return end
- if camera.ViewportSize~=lastViewport then lastViewport=camera.ViewportSize; local before=mobile; layout(); if before~=mobile and introDone then render() end end
+ local now=os.clock()
+ local light=game:GetService('Lighting'); if light.GlobalShadows==settings.LowGraphics then light.GlobalShadows=not settings.LowGraphics end
+ for _,t in ipairs(tracerPool) do if t.Until>0 and now>=t.Until then t.Part.Transparency=1; t.Until=0 end end
+ if camera.ViewportSize~=lastViewport then lastViewport=camera.ViewportSize; local before=mobile; layout(); layoutCombatHUD(); if before~=mobile and introDone then render() end end
  if menuOpen then
   camera.CameraType=Enum.CameraType.Scriptable
   local angle=settings.ReducedMotion and .7 or .7+math.sin(os.clock()*.08)*.08
   camera.CFrame=CFrame.lookAt(Vector3.new(math.cos(angle)*165,85,math.sin(angle)*165),Vector3.new(0,4,0))
   camera.FieldOfView=70
  else
-  local target=aiming and math.max(40,settings.FOV-24) or settings.FOV
-  camera.FieldOfView=camera.FieldOfView+(target-camera.FieldOfView)*math.min(1,dt*12)
-  UIS.MouseDeltaSensitivity=settings.Sensitivity
+  p:SetAttribute('BLFOV',settings.FOV); p:SetAttribute('BLSensitivity',settings.Sensitivity); p:SetAttribute('BLReducedMotion',settings.ReducedMotion)
+  UIS.MouseDeltaSensitivity=1
   cross.Visible=settings.Crosshair
-  local hum=p.Character and p.Character:FindFirstChildOfClass('Humanoid'); hp.Text=hum and math.ceil(hum.Health)..' HP' or 'RESPAWNING'
-  modeStatus.Text=profile and profile.Mode=='Practice' and 'AIM TRAINING / M OR Y TO OPEN MENU' or matchStatus.Value
+  local hum=p.Character and p.Character:FindFirstChildOfClass('Humanoid')
+  hudElapsed=hudElapsed+dt
+  if hudElapsed>=.1 then
+   hudElapsed=0; local health=hum and math.ceil(hum.Health)..' HP' or 'RESPAWNING'
+   local mode=profile and profile.Mode=='Practice' and 'AIM TRAINING' or (currentMatch and currentMatch.Text or (profile and profile.Match or matchStatus.Value))
+   if currentMatch and profile and profile.Mode=='Arena' then mode=string.format('AZURE %d / %s / %d EMBER',currentMatch.Scores.Azure,mode,currentMatch.Scores.Ember)
+   elseif currentMatch and currentMatch.Board[1] then mode=mode..' / LEADER '..currentMatch.Board[1].Name..' '..currentMatch.Board[1].Kills end
+   healthFill.Size=UDim2.fromScale(hum and math.clamp(hum.Health/hum.MaxHealth,0,1) or 0,1)
+   career.Text=profile and string.format('%d K / %d D',profile.RoundKills or 0,profile.RoundDeaths or 0) or ''
+   local lines={}; for _,line in ipairs(feedLines) do if line.Expires>now then table.insert(lines,line.Text) end end; feed.Text=table.concat(lines,'\n'); feed.Visible=profile and profile.Mode~='Practice' or false
+   local t=trainingStats or (profile and profile.Training)
+   trainingLabel.Visible=profile and profile.Mode=='Practice' or false
+   if trainingLabel.Visible and t then trainingLabel.Text=string.format('%s / %d HITS / %d SHOTS / %.1f%% / REACTION %.0f MS',t.Drill:upper(),t.Hits,t.Shots,t.Accuracy,t.ReactionMs) end
+   if health~=lastHealth then hp.Text=health; lastHealth=health end
+   if mode~=lastMode then modeStatus.Text=mode; lastMode=mode end
+  end
   local t=p.Character and p.Character:FindFirstChildOfClass('Tool'); local w=profile and profile.Weapons[weaponId]
   if firing and t and t:GetAttribute('BlocklineWeapon') and hum and hum.Health>0 and ammo>0 and not reloading and w and os.clock()-lastShot>=w.Interval then
-   lastShot=os.clock(); local ray=camera:ViewportPointToRay(camera.ViewportSize.X/2,camera.ViewportSize.Y/2); combat:FireServer('Shoot',ray.Direction.Unit)
-   if not settings.ReducedMotion then camera.CFrame=camera.CFrame*CFrame.Angles(math.rad(.4),0,0) end
+   lastShot=os.clock(); local ray=camera:ViewportPointToRay(camera.ViewportSize.X/2,camera.ViewportSize.Y/2)
+   local hit=workspace:Raycast(ray.Origin,ray.Direction*w.Range,aimParams)
+   local target=hit and hit.Position or ray.Origin+ray.Direction*w.Range
+   local head=p.Character:FindFirstChild('Head'); if head then combat:FireServer('Shoot',(target-head.Position).Unit) end
+   p:SetAttribute('BLShotAt',os.clock()); p:SetAttribute('BLRecoil',settings.ReducedMotion and 0 or (w.Recoil or .7))
   end
  end
 end)

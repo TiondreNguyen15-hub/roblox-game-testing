@@ -20,6 +20,10 @@ starter=next(o for o in root.findall('Item') if o.get('class')=='StarterPlayer')
 sp,_=item(starter,'StarterPlayerScripts','StarterPlayerScripts')
 o,p=item(sp,'LocalScript','BlocklineMenu')
 E.SubElement(p,'ProtectedString',name='Source').text=Path('Client.luau').read_text(); E.SubElement(p,'bool',name='Disabled').text='false'
+o,p=item(sp,'LocalScript','BlocklineMovement')
+E.SubElement(p,'ProtectedString',name='Source').text=Path('Movement.luau').read_text(); E.SubElement(p,'bool',name='Disabled').text='false'
 E.ElementTree(root).write(out/'Blockline.rbxlx',encoding='utf-8',xml_declaration=True)
 for name in ['Server','Client']: shutil.copyfile(name+'.luau',out/(name+'.luau'))
 print('Built integrated place with organized server + ScreenGui LocalScript and separate map-only edition.')
+
+shutil.copyfile('Movement.luau',out/'Movement.luau')
