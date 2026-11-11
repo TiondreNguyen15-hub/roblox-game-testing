@@ -1,0 +1,40 @@
+BLOCKLINE — Original Roblox urban shooter starter
+
+OPEN AND PLAY
+1. Install Roblox Studio on Windows or macOS and sign in.
+2. Choose File > Open from File and select Blockline.rbxlx.
+3. Press Play (F5). The city is generated when the server starts.
+4. Wait for the 10-second countdown, then shoot the orange practice targets.
+5. For multiplayer testing, use Studio Test / Server & Clients with 2 clients.
+   Players join Azure and Ember automatically. Friendly fire is disabled.
+6. Save a local copy. Use File > Publish to Roblox when ready.
+
+CONTROLS
+Mouse: look. WASD: move. Space: jump.
+Left mouse / controller RT: fire.
+Right mouse / controller LT: aim.
+R / controller X: reload (2 seconds, 30-round magazine, unlimited reserves).
+Left Shift / controller L3: sprint. Firing is disabled while sprinting.
+Touch: on-screen action buttons plus Roblox movement controls.
+Tab: kills and deaths leaderboard.
+
+RULES
+Five-minute rounds, first team to 30 eliminations wins.
+Three seconds of spawn protection. Body hits: 24; head hits: 48.
+Targets respawn after three seconds; target hits do not award match points.
+Kills and deaths last for the session; team scores reset each round.
+
+CUSTOMIZE
+ServerScriptService > BlocklineServer: map, damage, ammo, teams and rounds.
+StarterPlayer > StarterPlayerScripts > BlocklineClient: HUD and controls.
+Raw copies of both scripts are included for editing.
+This is an original prototype inspired by urban arena shooters. It contains
+no Urban Reload assets, branding, maps or source code. It uses generated
+parts and has no external assets, purchases or account credentials.
+
+VALIDATION AND LIMITATIONS
+Place XML parsed and embedded scripts checked against packaged originals.
+Roblox Studio is not available in the build environment: opening, device
+controls and multiplayer behavior still require Studio playtesting.
+No persistence, matchmaking, anti-cheat movement checks, custom animation,
+weapon audio, cosmetics or monetization are included in this starter.
