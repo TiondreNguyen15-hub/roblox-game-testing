@@ -6,7 +6,10 @@ local Teams=game:GetService('Teams')
 local Http=game:GetService('HttpService')
 local Run=game:GetService('RunService')
 local Debris=game:GetService('Debris')
-local store=DSS:GetDataStore('Blockline_Profile_v1')
+-- Unpublished Studio places can throw during GetDataStore itself.
+local store
+local storeReady,storeResult=pcall(function() return DSS:GetDataStore('Blockline_Profile_v1') end)
+if storeReady then store=storeResult else warn('Blockline cloud storage unavailable; using session data.') end
 local folder=Instance.new('Folder'); folder.Name='Blockline'; folder.Parent=RS
 local request=Instance.new('RemoteFunction',folder); request.Name='Request'
 local event=Instance.new('RemoteEvent',folder); event.Name='Event'

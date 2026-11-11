@@ -1,0 +1,10 @@
+dofile('tools/roblox_mock.lua')
+local d=game:GetService('DataStoreService');function d:GetDataStore()error('Publish this place before accessing DataStore')end
+local f=assert(io.open('Server.luau'));local source=f:read('*a');f:close()
+local cut=assert(source:find('\nwhile true do\n roundActive=false',1,true))
+local api=assert(load(source:sub(1,cut-1)..'\nreturn {load=loadPlayer,profiles=profiles,request=request}'))()
+local p=newPlayer(90,'StudioPlayer');api.load(p)
+assert(api.profiles[p] and not api.profiles[p].Persistent)
+advance(1);local r=api.request.OnServerInvoke(p,'Fetch');assert(r.OK and r.Profile.Mode=='Lobby')
+advance(1);r=api.request.OnServerInvoke(p,'Enter','Practice');assert(r.OK)
+print('PASS: GetDataStore throwing in an unpublished place does not stop startup, profile fetch or practice entry.')
