@@ -6,67 +6,29 @@ local Debris = game:GetService('Debris')
 local Lighting = game:GetService('Lighting')
 local remote = Instance.new('RemoteEvent', RS); remote.Name = 'BlocklineAction'
 local status = Instance.new('StringValue', RS); status.Name = 'BlocklineStatus'
-local arena = Instance.new('Folder', workspace); arena.Name = 'BlocklineCity'
+local arena = workspace:WaitForChild('BlocklineCity', 10)
+assert(arena, 'BlocklineCity map missing. Open the updated Blockline.rbxlx place.')
 local states = {}
 local scores = {Azure = 0, Ember = 0}
 local active = false
-local function part(name, size, pos, color, material)
- local p = Instance.new('Part'); p.Name = name; p.Size = size; p.Position = pos
- p.Anchored = true; p.Color = color; p.Material = material or Enum.Material.Concrete; p.Parent = arena
+local gray = Color3.fromRGB(59,65,76)
+local orange = Color3.fromRGB(255,122,65)
+Lighting.ClockTime = 17; Lighting.Brightness = 2
+Lighting.Ambient = Color3.fromRGB(125,132,152)
+workspace.FallenPartsDestroyHeight = -60
+local function part(name, size, pos, color)
+ local p = Instance.new('Part'); p.Name=name; p.Size=size; p.Position=pos
+ p.Anchored=true; p.Color=color; p.Parent=arena
  return p
 end
-local gray = Color3.fromRGB(59,65,76)
-local blue = Color3.fromRGB(53,182,255)
-local orange = Color3.fromRGB(255,122,65)
-Lighting.ClockTime = 17.4; Lighting.Brightness = 2
-Lighting.Ambient = Color3.fromRGB(125,132,152)
-workspace.FallenPartsDestroyHeight = -50
-part('City foundation', Vector3.new(220,3,180), Vector3.new(0,-2,0), gray)
-part('Main road', Vector3.new(200,0.3,32), Vector3.new(0,-0.3,0), Color3.fromRGB(30,33,40), Enum.Material.Asphalt)
-for x=-90,90,18 do
- part('Road stripe',Vector3.new(8,0.1,0.4),Vector3.new(x,-0.1,0),Color3.fromRGB(244,207,105))
-end
-for _,z in ipairs({-90,90}) do part('Boundary',Vector3.new(224,25,3),Vector3.new(0,10,z),gray) end
-for _,x in ipairs({-110,110}) do part('Boundary',Vector3.new(3,25,180),Vector3.new(x,10,0),gray) end
-local function sign(parent, text, color)
- local gui=Instance.new('SurfaceGui',parent); gui.Face=Enum.NormalId.Front
- local label=Instance.new('TextLabel',gui); label.Size=UDim2.fromScale(1,1); label.BackgroundTransparency=1
- label.Text=text; label.TextColor3=color; label.Font=Enum.Font.GothamBold; label.TextScaled=true
-end
-for _,z in ipairs({-55,55}) do
- for i,x in ipairs({-68,-23,23,68}) do
-  local h = 23 + (i%3)*7
-  part('City block',Vector3.new(33,h,35),Vector3.new(x,h/2,z),Color3.fromRGB(69+i*9,73+i*7,87+i*7))
-  for y=8,h-3,8 do
-   for dx=-10,10,10 do
-    part('Window',Vector3.new(4,4,0.2),Vector3.new(x+dx,y,z+(z<0 and 17.6 or -17.6)),Color3.fromRGB(168,203,213),Enum.Material.Glass)
-   end
-  end
-  local awning=part('Shop sign',Vector3.new(26,4,0.6),Vector3.new(x,5,z-17.9),gray)
-  sign(awning,({'METRO','NIGHT MARKET','BLOCKLINE','NOODLE BAR'})[i],blue)
- end
-end
-for _,pos in ipairs({Vector3.new(-40,2,9),Vector3.new(35,2,-9),Vector3.new(0,2,24),Vector3.new(0,2,-24)}) do
- part('Street cover',Vector3.new(10,4,5),pos,Color3.fromRGB(91,111,103))
-end
-for _,x in ipairs({-60,60}) do
- local car=part('Parked car',Vector3.new(13,3,7),Vector3.new(x,1.5,12),x<0 and blue or orange,Enum.Material.Metal)
- part('Car roof',Vector3.new(7,2,6),car.Position+Vector3.new(0,2.5,0),gray,Enum.Material.Metal)
-end
-for _,x in ipairs({-88,0,88}) do
- for _,z in ipairs({-22,22}) do
-  part('Lamp post',Vector3.new(0.5,17,0.5),Vector3.new(x,8,z),gray,Enum.Material.Metal)
-  local bulb=part('Street light',Vector3.new(3,0.4,2),Vector3.new(x,16.7,z),Color3.fromRGB(255,224,160),Enum.Material.Neon)
-  local light=Instance.new('PointLight',bulb); light.Range=24; light.Brightness=1.5
- end
-end
 for i,name in ipairs({'Azure','Ember'}) do
- local team=Instance.new('Team',Teams); team.Name=name; team.TeamColor=BrickColor.new(i==1 and 'Bright blue' or 'Bright orange'); team.AutoAssignable=false
- local spawn=Instance.new('SpawnLocation',arena); spawn.Name=name..' spawn'; spawn.Size=Vector3.new(16,1,22)
- spawn.Position=Vector3.new(i==1 and -96 or 96,0.5,0); spawn.Anchored=true; spawn.Neutral=false
- spawn.TeamColor=team.TeamColor; spawn.Color=i==1 and blue or orange; spawn.Duration=3
- part('Spawn cover',Vector3.new(3,10,17),Vector3.new(i==1 and -83 or 83,4.5,0),gray)
+ local team=Teams:FindFirstChild(name) or Instance.new('Team',Teams)
+ team.Name=name; team.TeamColor=BrickColor.new(i==1 and 'Bright blue' or 'Bright orange'); team.AutoAssignable=false
+ local spawn=arena:FindFirstChild(name..' spawn',true)
+ assert(spawn, name..' spawn missing from city')
+ spawn.TeamColor=team.TeamColor; spawn.Neutral=false
 end
+status.Value='CITY READY'
 -- Practice targets respawn and do not award match points.
 for _,z in ipairs({-28,28}) do
  local model=Instance.new('Model',arena); model.Name='Practice target'
@@ -88,6 +50,13 @@ end
 local function equip(p,char)
  local s={ammo=30,last=0,reloading=false,sprint=false}; states[p]=s
  local hum=char:WaitForChild('Humanoid'); hum.WalkSpeed=16
+ local root=char:WaitForChild('HumanoidRootPart')
+ local spawn=p.Team and arena:FindFirstChild(p.Team.Name..' spawn',true)
+ if spawn then
+  p.RespawnLocation=spawn
+  local position=spawn.Position+Vector3.new(0,4,0)
+  char:PivotTo(CFrame.lookAt(position,Vector3.new(0,position.Y,0)))
+ end
  local tool=Instance.new('Tool'); tool.Name='AR-24'; tool.CanBeDropped=false
  local handle=Instance.new('Part',tool); handle.Name='Handle'; handle.Size=Vector3.new(0.45,0.7,2.7)
  handle.Color=Color3.fromRGB(32,38,47); handle.Material=Enum.Material.Metal; handle.CanCollide=false; handle.Massless=true
@@ -99,15 +68,18 @@ local function equip(p,char)
  hum.Died:Connect(function() local d=p:FindFirstChild('leaderstats'); if d then d.Deaths.Value=d.Deaths.Value+1 end end)
  send(p)
 end
-Players.PlayerAdded:Connect(function(p)
+local function setupPlayer(p)
+ if p:FindFirstChild('leaderstats') then return end
  local a,b=0,0
  for _,other in ipairs(Players:GetPlayers()) do if other.Team and other.Team.Name=='Azure' then a=a+1 elseif other.Team then b=b+1 end end
  p.Team=Teams:FindFirstChild(a<=b and 'Azure' or 'Ember')
  local stats=Instance.new('Folder',p); stats.Name='leaderstats'
  for _,name in ipairs({'Kills','Deaths'}) do local v=Instance.new('IntValue',stats); v.Name=name end
  p.CharacterAdded:Connect(function(char) equip(p,char) end)
- if p.Character then equip(p,p.Character) end
-end)
+ if p.Character then task.spawn(equip,p,p.Character) end
+end
+Players.PlayerAdded:Connect(setupPlayer)
+for _,p in ipairs(Players:GetPlayers()) do setupPlayer(p) end
 Players.PlayerRemoving:Connect(function(p) states[p]=nil end)
 remote.OnServerEvent:Connect(function(p,action,direction)
  local s=states[p]; if not s then return end
