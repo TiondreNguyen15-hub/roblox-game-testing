@@ -37,6 +37,12 @@ jobs:
           ./apex-visualizer/tools/setup-gpu-runtime.ps1 -Destination $dest -InstallDependencies
           & './build-apex/Release/apex_dependency_tests.exe' $dest 2>&1 | Tee-Object dependency-loader-test.txt
           if ($LASTEXITCODE -eq 77) { Write-Host 'Provider initialization explicitly BLOCKED by unavailable NVIDIA driver; not GPU success'; $global:LASTEXITCODE = 0 } elseif ($LASTEXITCODE -ne 0) { throw 'Actual CUDA dependency DLL loading failed (not a GPU execution test)' }
+          Move-Item (Join-Path $dest 'cudnn_graph64_9.dll') (Join-Path $dest 'cudnn_graph64_9.dll.disabled')
+          try {
+            $p = Start-Process './build-apex/Release/apex_dependency_tests.exe' -ArgumentList $dest -PassThru -RedirectStandardError missing-cudnn-component.txt
+            if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Missing-companion test timeout' }
+            if ($p.ExitCode -ne 1 -or (Get-Content missing-cudnn-component.txt -Raw) -notmatch 'cudnn_graph64_9.dll: missing') { throw 'Missing cuDNN component was not rejected cleanly before dispatcher use' }
+          } finally { Move-Item (Join-Path $dest 'cudnn_graph64_9.dll.disabled') (Join-Path $dest 'cudnn_graph64_9.dll') }
           Get-ChildItem $dest -Filter '*.dll' | Get-FileHash -Algorithm SHA256 | ConvertTo-Json | Set-Content gpu-runtime-install-manifest.json
           Remove-Item $dest -Recurse -Force
       - name: Required CUDA must fail without CUDA hardware
@@ -76,6 +82,7 @@ jobs:
             compute-validation/
             gpu-runtime-install-manifest.json
             dependency-loader-test.txt
+            missing-cudnn-component.txt
             compute-required-negative/
             compute-missing-runtime/
             compute-cancelled/
