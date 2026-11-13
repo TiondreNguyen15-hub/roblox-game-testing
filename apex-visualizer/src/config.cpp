@@ -35,6 +35,7 @@ bool Config::save(const std::filesystem::path& path,const Settings& input,std::s
 }
 bool Config::load(const std::filesystem::path& path,Settings& output,std::string& error){
  try{
+  if(std::filesystem::file_size(path)>32768)throw std::runtime_error("Configuration exceeds 32 KiB");
   std::ifstream in(path);if(!in)throw std::runtime_error("Configuration does not exist or cannot be read");
   Settings next;std::string line;bool version=false;int lines=0;
   while(std::getline(in,line)){

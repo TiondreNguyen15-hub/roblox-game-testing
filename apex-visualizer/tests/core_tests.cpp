@@ -13,6 +13,7 @@ int main(){try{
  {std::ofstream f(path);f<<"version=1\nmenuWidth=nan\n";}CHECK(!apex::Config::load(path,read,err));
  {std::ofstream f(path);f<<"version=99\n";}CHECK(!apex::Config::load(path,read,err));
  {std::ofstream f(path);f<<"version=1\nentityCount=4.2\n";}CHECK(!apex::Config::load(path,read,err));
+ {std::ofstream f(path);f<<std::string(40000,'x');}CHECK(!apex::Config::load(path,read,err));
  CHECK(apex::Config::save(path,s,err));CHECK(apex::Config::save(path,s,err));CHECK(apex::Config::load(path,read,err));std::filesystem::remove(path);
  apex::Vec2 screen{};CHECK(apex::project({0,1.1f,10},1280,720,screen));CHECK(screen.x==640&&screen.y==360);CHECK(!apex::project({0,0,-1},1280,720,screen));CHECK(!apex::project({0,0,10},0,720,screen));
  apex::Simulation sim;sim.update(0,18);auto initial=sim.entities()[0].position.x;CHECK(sim.entities().size()==18);sim.update(2,18);CHECK(initial!=sim.entities()[0].position.x);

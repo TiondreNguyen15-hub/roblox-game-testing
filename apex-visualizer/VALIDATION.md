@@ -28,3 +28,7 @@ This Linux build host has no Windows desktop or Wine, so local tests do not esta
 6. Hardware-specific FPS with VSync on/off and entity count 1/64. No universal FPS guarantee or GPU-utilization measurement is claimed.
 
 Device removal is handled by reporting HRESULT, releasing resources and exiting; automatic device recreation is not implemented. There are no unfinished placeholder APIs. The simulation is deterministic generated data, not an actual game's telemetry.
+
+## Repository delivery status
+
+The source and Windows build are packaged locally. The GitHub connector returned HTTP 403 (Resource not accessible by integration), and authenticated Git push also returned HTTP 403. The existing repository was not changed. Repository Contents write access must be restored before publishing the prepared commit and running the Windows CI workflow. This is an authorization failure, not a failed application build.
