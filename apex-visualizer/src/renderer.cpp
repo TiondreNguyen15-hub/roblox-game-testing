@@ -14,7 +14,7 @@ void Renderer::cleanup()noexcept{
  if(context_)context_->ClearState();
  for(auto& q:queries_){release(q.disjoint);release(q.begin);release(q.end);q.pending=false;}
  if(latency_){CloseHandle(latency_);latency_=nullptr;}
- release(target_);release(swap_);release(context_);release(device_);
+ release(memoryAdapter_);release(target_);release(swap_);release(context_);release(device_);
 }
 void Renderer::initialize(HWND hwnd,bool warp){
  const D3D_FEATURE_LEVEL levels[]={D3D_FEATURE_LEVEL_11_0,D3D_FEATURE_LEVEL_10_1};D3D_FEATURE_LEVEL level{};
@@ -27,9 +27,10 @@ void Renderer::initialize(HWND hwnd,bool warp){
  }
  HRESULT hr=D3D11CreateDevice(chosen,warp?D3D_DRIVER_TYPE_WARP:(chosen?D3D_DRIVER_TYPE_UNKNOWN:D3D_DRIVER_TYPE_HARDWARE),nullptr,0,levels,2,D3D11_SDK_VERSION,&device_,&level,&context_);release(chosen);
  if(FAILED(hr)&&!warp){release(context_);release(device_);hr=D3D11CreateDevice(nullptr,D3D_DRIVER_TYPE_WARP,nullptr,0,levels,2,D3D11_SDK_VERSION,&device_,&level,&context_);Log::write("WARN","Hardware device failed; using WARP");}
- check(hr,"D3D11 device creation");
+ check(hr,"D3D11 device creation");featureLevel=level==D3D_FEATURE_LEVEL_11_0?"11.0":"10.1";
  IDXGIDevice* dxgi=nullptr;IDXGIAdapter* adapter=nullptr;IDXGIFactory1* factory=nullptr;
  check(device_->QueryInterface(__uuidof(IDXGIDevice),reinterpret_cast<void**>(&dxgi)),"DXGI device");hr=dxgi->GetAdapter(&adapter);release(dxgi);check(hr,"DXGI adapter");
+ adapter->QueryInterface(__uuidof(IDXGIAdapter3),reinterpret_cast<void**>(&memoryAdapter_));
  DXGI_ADAPTER_DESC info{};if(SUCCEEDED(adapter->GetDesc(&info))){gpu_=utf8(info.Description);videoMemory_=info.DedicatedVideoMemory;}
  hr=adapter->GetParent(__uuidof(IDXGIFactory1),reinterpret_cast<void**>(&factory));release(adapter);check(hr,"DXGI factory");
  IDXGIFactory2* factory2=nullptr;
@@ -42,6 +43,10 @@ void Renderer::initialize(HWND hwnd,bool warp){
  factory->MakeWindowAssociation(hwnd,DXGI_MWA_NO_ALT_ENTER);release(factory);check(hr,"Swap-chain creation");target();
  for(auto& q:queries_){D3D11_QUERY_DESC d{D3D11_QUERY_TIMESTAMP_DISJOINT,0};if(FAILED(device_->CreateQuery(&d,&q.disjoint)))continue;d.Query=D3D11_QUERY_TIMESTAMP;if(FAILED(device_->CreateQuery(&d,&q.begin))||FAILED(device_->CreateQuery(&d,&q.end))){release(q.disjoint);release(q.begin);release(q.end);}}
  Log::write("INFO","Renderer: "+gpu_+" / "+(flip_?"flip-discard":"compatibility discard"));
+}
+void Renderer::updateMemory(double now){
+ if(lastMemory_>=0&&now-lastMemory_<.5)return;lastMemory_=now;memoryValid=false;
+ if(memoryAdapter_){DXGI_QUERY_VIDEO_MEMORY_INFO info{};if(SUCCEEDED(memoryAdapter_->QueryVideoMemoryInfo(0,DXGI_MEMORY_SEGMENT_GROUP_LOCAL,&info))){memoryValid=true;processVram=info.CurrentUsage;vramBudget=info.Budget;}}
 }
 void Renderer::target(){ID3D11Texture2D* buffer=nullptr;check(swap_->GetBuffer(0,__uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&buffer)),"Swap-chain buffer");HRESULT hr=device_->CreateRenderTargetView(buffer,nullptr,&target_);release(buffer);check(hr,"Render target");}
 void Renderer::resize(unsigned w,unsigned h){if(!swap_||!w||!h)return;context_->OMSetRenderTargets(0,nullptr,nullptr);release(target_);check(swap_->ResizeBuffers(0,w,h,DXGI_FORMAT_UNKNOWN,flip_?DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT:0),"ResizeBuffers");target();}

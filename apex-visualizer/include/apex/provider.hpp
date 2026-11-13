@@ -15,11 +15,13 @@ private:Simulation simulation_;double time_=0;int count_=18,scene_=0;
 class ProviderSystem {
 public:
  explicit ProviderSystem(bool background=false):background_(background){}
- void update(const Settings& settings,double now,double simulationTime){
+ double processingMs=-1,deliveryMs=-1;
+ void update(const Settings& settings,double now,double simulationTime){auto start=std::chrono::steady_clock::now();
   IDataSource* selected=settings.liveFile?(background_?static_cast<IDataSource*>(&async_):static_cast<IDataSource*>(&file_)):static_cast<IDataSource*>(&simulation_);
   if(selected!=active_){file_.reset();async_.reset();active_=selected;}
   if(settings.liveFile)active_->poll(std::filesystem::u8path(settings.livePath),now);
   else{simulation_.configure(simulationTime,settings.entityCount,settings.scene);active_->poll({},now);}
+  if(active_==&async_){processingMs=async_.processingMs;deliveryMs=async_.deliveryMs;}else{processingMs=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();deliveryMs=processingMs;}
  }
  const std::vector<Entity>& entities()const {static const std::vector<Entity> empty;return active_?active_->entities():empty;}
  std::string status(double now)const{return active_?active_->status(now):"No provider selected";}

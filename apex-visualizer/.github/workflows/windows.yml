@@ -20,9 +20,15 @@ jobs:
           if ($p.ExitCode -ne 0) { if (Test-Path "$env:LOCALAPPDATA/ApexVisualization/apex.log") { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" }; throw "Smoke test failed: $($p.ExitCode)" }
           Get-Content smoke-result.txt
           }
+      - name: Timed WARP stability benchmark (120 seconds)
+        shell: pwsh
+        run: |
+          ./apex-visualizer/tools/benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./hardware-validation -Seconds 120 -Warmup 5 -Warp
       - uses: actions/upload-artifact@v5
         with:
           name: apex-visualizer-windows
           path: |
             build-apex/Release/*.exe
             smoke-result.txt
+            hardware-validation/
+          if-no-files-found: error

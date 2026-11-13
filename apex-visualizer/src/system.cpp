@@ -4,6 +4,7 @@
 #include <ctime>
 #ifdef _WIN32
 #include <windows.h>
+#include <psapi.h>
 #endif
 namespace apex {
 #ifdef _WIN32
@@ -14,6 +15,7 @@ void SystemMetrics::update(){
  auto now=Clock::now();double seconds=std::chrono::duration<double>(now-sample_).count();if(seconds<.5)return;
  unsigned long long total=0;double tickSeconds=0;
 #ifdef _WIN32
+ PROCESS_MEMORY_COUNTERS_EX memory{};memory.cb=sizeof(memory);memoryValid=K32GetProcessMemoryInfo(GetCurrentProcess(),reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&memory),sizeof(memory))!=0;if(memoryValid){workingSet=memory.WorkingSetSize;privateBytes=memory.PrivateUsage;}
  FILETIME creation{},exit{},kernel{},user{};
  if(!GetProcessTimes(GetCurrentProcess(),&creation,&exit,&kernel,&user))return;
  total=ticks(kernel)+ticks(user);tickSeconds=1e-7;

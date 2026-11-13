@@ -37,7 +37,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::TextDisabled("Ctrl+A / Ctrl+C / Ctrl+V; quoted Windows paths are accepted.");
    if(!notice_.empty())ImGui::TextWrapped("%s",notice_.c_str());
    if(s.liveFile)ImGui::TextWrapped("%s",sourceStatus.c_str());
-   ImGui::TextDisabled("All entities below are generated inside this application.");
+   ImGui::TextDisabled(s.liveFile?"Entities come only from your local JSON file.":"Entities are generated inside this application.");
    ImGui::Checkbox("2D bounding boxes",&s.boxes);ImGui::SameLine();ImGui::Checkbox("Corner style",&s.corners);
    ImGui::Checkbox("Skeleton",&s.skeleton);ImGui::SameLine();ImGui::Checkbox("Health bars",&s.health);ImGui::Checkbox("Shield bars (JSON)",&s.shields);
    ImGui::Checkbox("Names",&s.names);ImGui::SameLine();ImGui::Checkbox("Distances",&s.distance);
@@ -53,7 +53,13 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::SliderFloat("Menu width",&s.menuWidth,560,1200,"%.0f px");ImGui::SliderFloat("Menu height",&s.menuHeight,440,900,"%.0f px");ImGui::ColorEdit3("Purple accent",s.accent);
    ImGui::TextWrapped("VSync uses the monitor refresh rate. The frame cap also limits CPU usage. The scene pauses while minimized or occluded.");
   }else if(tab_==2){
-   ImGui::Text("FPS: %.1f",ImGui::GetIO().Framerate);ImGui::Text("Previous frame CPU work: %.3f ms",stats.frameMs);ImGui::Text("Process CPU: %.2f%% (all logical cores)",system.cpu());
+   ImGui::Text("FPS: %.1f",ImGui::GetIO().Framerate);ImGui::Text("Frame interval: %.3f ms (includes pacing)",stats.wallFrameMs);
+   if(device.utilizationValid)ImGui::Text("GPU utilization: %u%% (device-wide)",device.utilization);else ImGui::TextDisabled("GPU utilization: unavailable");
+   if(device.memoryValid)ImGui::Text("Device VRAM: %.1f / %.1f MiB",device.usedBytes/1048576.,device.totalBytes/1048576.);else ImGui::TextDisabled("Device VRAM usage: unavailable");
+   if(device.processMemoryValid)ImGui::Text("Process local VRAM: %.1f MiB / budget %.1f MiB",device.processVram/1048576.,device.vramBudget/1048576.);
+   if(system.memoryValid)ImGui::Text("Process RAM: %.1f MiB working / %.1f MiB private",system.workingSet/1048576.,system.privateBytes/1048576.);
+   if(stats.processingMs>=0)ImGui::Text("Source processing: %.3f ms / delivery: %.3f ms",stats.processingMs,stats.deliveryMs);else ImGui::TextDisabled("Source latency: awaiting sample");
+   ImGui::TextWrapped("DirectX feature level: %s",device.featureLevel.c_str());ImGui::TextWrapped("%s",device.cudaStatus.c_str());ImGui::TextWrapped("%s",device.nvmlStatus.c_str());ImGui::Text("Previous frame CPU work: %.3f ms",stats.frameMs);ImGui::Text("Process CPU: %.2f%% (all logical cores)",system.cpu());
    ImGui::TextWrapped("GPU: %s",device.gpu.c_str());ImGui::Text("Dedicated video memory: %.0f MiB",double(device.videoMemory)/1048576.);if(device.gpuTimingValid)ImGui::Text("GPU draw time: %.3f ms (async)",device.gpuMs);else ImGui::TextDisabled("GPU timing: warming up / unavailable");ImGui::Text("Present: %s",device.flipModel?"flip-discard, low-latency":"compatibility discard");ImGui::Text("Application uptime: %.1f s",system.uptime());
    ImGui::Separator();ImGui::Text("Previous frame draw calls: %d",stats.drawCalls);ImGui::Text("Vertices: %d / indices: %d",stats.vertices,stats.indices);ImGui::Text("Entities: %d drawn / %d filtered",visuals.drawn,visuals.filtered);
   }else{
@@ -63,7 +69,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    if(ImGui::Button("Restore defaults")){s=Settings{};notice_="Defaults restored in memory. Save to persist.";}
    ImGui::TextWrapped("%s",notice_.c_str());
   }
-  ImGui::EndChild();ImGui::Separator();ImGui::TextDisabled("Simulated data | DX11 | ImGui | Insert: menu | F10: exit");
+  ImGui::EndChild();ImGui::Separator();ImGui::TextDisabled("Local data lab | DX11 | ImGui | Insert: menu | F10: exit");
  }
  ImGui::End();ImGui::PopStyleVar();s.clamp();
 }
