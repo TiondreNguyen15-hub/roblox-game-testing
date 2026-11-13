@@ -1,41 +1,28 @@
-# Validation record
+# Final validation record
 
-## Latest JSON integration validation
+## Native Windows validation passed
 
-Windows run: https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43356676687
+Run: https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43359752528
+Source commit: e6330e0
 
-Native Visual Studio 2022 build passed. All four Windows tests passed. DX11 WARP rendered six frames using the JSON input: **fileEntities=2**, 3,316 vertices and 6 draw calls in the final frame. Local native CTest also passed 4/4 suites. New checks cover the exact players schema, shields and screen coordinates, supplied-distance filtering, missing/malformed/oversized data, last-valid retention, file refresh, stale state and saved file-source settings.
+- Visual Studio 2022 x64 Release compilation succeeded, with static C/C++ runtime.
+- All five CTest suites passed: core/config, actual ImGui visuals, menu/system, providers/JSON/async handoff, and logging.
+- DX11 WARP synchronous smoke: 6 frames, 2 file entities, flip presentation, 3,400 vertices and 5 final-frame draw calls.
+- DX11 WARP asynchronous smoke: 60 frames, 2 file entities, flip presentation, 3,400 vertices and 5 final-frame draw calls.
+- Async GPU timestamps produced valid measurements on the Microsoft Basic Render Driver. These are WARP measurements, **not RTX 3070 benchmarks**.
+- The final runtime ZIP uses the actual native MSVC executable from this successful CI artifact. It is not the earlier cross-build.
+- Import inspection shows only Windows system DLLs, without MSVCP/VCRUNTIME redistribution dependencies.
 
+## Local validation passed
 
-## Passed
+All five native C++17 test suites passed. Windows cross-compilation/linking also passed. AddressSanitizer and UndefinedBehaviorSanitizer tests passed for the JSON/provider path, including source switching and the background-worker handoff. The unused ImGui demo source is excluded from the offline dependency bundle.
 
-- Native C++17 build with GNU C++ 14.2; all three CTest suites passed.
-- AddressSanitizer and UndefinedBehaviorSanitizer core tests passed.
-- Windows x64 cross-build with Clang 18.1.6/Zig 0.13.0; application and all three test executables linked.
-- **Native Visual Studio 2022 Windows CI build passed.**
-- **All three test suites passed on Windows.**
-- **Real DX11 WARP smoke test passed:** six frames, Microsoft Basic Render Driver, 5 draw calls and 5,840 vertices in the final frame.
-- Dependency archive hash and delivery ZIP integrity verified.
+Input checks cover exact sample compatibility, shields, position/distance updates, missing/partial/oversized JSON, stale data, last-valid retention, source switching, async result handoff, missing/supplied bones and unchanged settings. Visual tests generate real ImGui draw data. Logging tests cover sanitization, rotation and unwritable paths.
 
-Windows run: https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43354535661
+## Remaining external / physical checks
 
-## Scope
+No authorized live Apex dataset is supplied by this project. Only explicit local simulated data is bundled. Actual external entity fields, bones, visibility, teams, distances and coordinates must be supplied by an authorized producer using the documented schema.
 
-Core tests cover settings bounds, config round-trips/overwrites, malformed/unsupported/non-finite/oversized input rejection, unchanged state on failed load, projection and simulation invariants. Visual tests generate real ImGui draw lists with filters and corner/overlay toggles. Menu tests render all four pages and fade frames and check process CPU/uptime. The WARP smoke test creates a real Win32/DX11 window and exercises the ImGui DX11 backend.
+RTX 3070 hardware was unavailable on the build host. Validate physical GPU selection, FPS, GPU draw time, DPI, resize/minimize/restore, driver resets and a ten-minute memory run on that PC. No hardware-specific frame rate, overall GPU utilization percentage or lag-compensation claim is made. Device removal reports a logged error and exits cleanly; restart is required.
 
-preview.png is CPU rasterization of actual ImGui geometry, not a Windows GPU screenshot. The source archive vendors Dear ImGui v1.91.9b and its MIT license.
-
-The direct Windows ZIP contains the Clang/Zig cross-built executables. The same source passed the native MSVC/WARP checks above; MSVC-generated executable artifacts are also available from that Actions run. The cross-built ZIP itself has not been launched on a physical PC here.
-
-## Remaining manual checks
-
-- Physical Windows 10/11 hardware GPUs, monitor refresh rates and long-run memory/FPS behavior.
-- Insert/F10 and all control interactions, config permission failures and malformed-file warning UI.
-- Resize, minimize/restore, occlusion and 100/150/200% DPI across real monitors.
-- Hardware-specific device removal/failure behavior. The app reports an HRESULT and releases resources on device loss; it does not recreate the device automatically.
-
-No universal FPS guarantee, GPU utilization or GPU frame-time measurement is claimed. Process CPU is normalized over logical cores, not whole-machine CPU usage. All scene entities and visibility are generated within the application.
-
-## Delivery
-
-Project, complete source archive, cross-built Windows archive, checksum manifest and Windows CI workflow are uploaded in the existing repository. Earlier Roblox files remain preserved.
+See FINAL-AUDIT.md for all implemented changes, resource-lifetime policy and remaining acceptance checks. preview.png is a CPU rasterization of real ImGui geometry, not a Windows hardware screenshot.

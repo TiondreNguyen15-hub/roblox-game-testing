@@ -8,7 +8,7 @@
 - File reads, validation and parsing run on one background worker in the interactive application. A bounded single pending request/result prevents unbounded queues. Source/path generations discard obsolete results when switching modes or paths.
 - The existing `players` schema remains compatible. Names, health, shields, supplied distance, screen-space boxes, visibility and optional teams update from accepted snapshots.
 - Optional explicit 15-joint screen-space skeletons are supported. Versioned 3D records accept supplied bones and shields. Missing bones are no longer replaced with a fabricated pose. Only the clearly selected simulator generates entities/poses.
-- 64-entity / 256 KiB / 16-level bounds; type/range/name checks; immutable last-valid snapshot on error; empty-array clearing; stale markers; path switching; stable-file checks; no reparsing of unchanged valid contents.
+- 64-entity / 256 KiB / 16-level bounds; type/range/name checks; immutable last-valid snapshot on error; ancient-file timestamp overflow regression fixed; empty-array clearing; stale markers; path switching; stable-file checks; no reparsing of unchanged valid contents.
 - Startup can find the bundled sample beside the executable when the working directory differs. `--json` selects an explicit authorized file.
 
 ### Visual correctness and UI preservation
@@ -33,7 +33,7 @@ The same sidebar, tabs, hotkeys, appearance settings, filters, configuration loc
 
 ## Audit tests
 
-The local suite covers configuration compatibility, quoted paths, bounds, parsing, missing/partial/oversized input, last-valid recovery, stale data, actual ImGui geometry, absent/supplied skeleton behavior, independent shield controls, source switching, async-reader handoff, logging rotation and unwritable log destinations. Address/undefined-behavior sanitizer checks and Windows results are recorded in VALIDATION.md after execution.
+The local suite covers configuration compatibility, quoted paths, bounds, parsing, missing/partial/oversized input, last-valid recovery, stale data, actual ImGui geometry, absent/supplied skeleton behavior, independent shield controls, source switching, async-reader handoff, logging rotation and unwritable log destinations. All five suites passed locally and on Windows. Address/undefined-behavior sanitizer checks passed. Native Windows DX11 synchronous and asynchronous smoke tests passed. Exact evidence is recorded in VALIDATION.md.
 
 Windows CI runs both the six-frame synchronous smoke test and a 60-frame asynchronous-reader smoke test against the bundled JSON. The interactive app uses the background reader; worker switching and cleanup are also unit tested.
 

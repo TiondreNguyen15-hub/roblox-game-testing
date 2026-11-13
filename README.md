@@ -1,10 +1,9 @@
-# Apex Visualization — active project
+# Apex Visualization — standalone Windows data lab
 
-The current project is a **standalone C++17 / DirectX 11 / Dear ImGui simulated-entity visualization lab** for Windows 10/11.
+- [Download the final native Windows x64 build](Apex-Visualization-Windows-x64.zip)
+- [Download the complete C++ source and dependencies](Apex-Visualization-Source.zip)
+- [Build instructions](apex-visualizer/README.md)
+- [Final audit and authorized-data requirements](apex-visualizer/FINAL-AUDIT.md)
+- [Passed native Windows tests and remaining hardware checks](apex-visualizer/VALIDATION.md)
 
-- [Project source and build instructions](apex-visualizer/README.md)
-- [Download complete source ZIP with Dear ImGui](Apex-Visualization-Source.zip)
-- [Download cross-compiled Windows x64 build](Apex-Visualization-Windows-x64.zip)
-- [Validation and remaining runtime checks](apex-visualizer/VALIDATION.md)
-
-Build with Visual Studio 2022 and CMake. The app uses only entities it generates itself. Earlier Roblox files remain preserved in this repository; the active project is under apex-visualizer/.
+The runtime build passed Visual Studio 2022 compilation, five test suites and two real DX11 WARP smoke tests. It displays authorized local JSON or explicit simulation in its own window. Physical RTX 3070 measurements remain a hardware acceptance step. Earlier Roblox files are preserved separately in this repository.

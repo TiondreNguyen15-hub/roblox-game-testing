@@ -1,0 +1,12 @@
+{
+  "commit": "e6330e0cda837d6fee0f211e2f28c812232b18b6",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43359752528",
+  "compiler": "Visual Studio 2022 x64 Release, static runtime",
+  "exe_sha256": "49d301210753ff4cb5e78050586e2d53909ef19a76ef0bd63fb2f8563d47837c",
+  "tests": 5,
+  "smoke_frames": [
+    6,
+    60
+  ],
+  "gpu_tested": "Microsoft Basic Render Driver (WARP); RTX 3070 measurements not performed"
+}
