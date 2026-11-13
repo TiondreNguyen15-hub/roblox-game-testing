@@ -17,6 +17,8 @@ Get-CimInstance Win32_OperatingSystem | Select-Object Caption,Version,BuildNumbe
 $arguments = @('--compute-test','--compute-seconds',"$Seconds",'--compute-iterations',"$Iterations",'--output',('"' + $run + '"'))
 if ($RequireCuda) { $arguments += '--require-cuda' }
 if ($Warp) { $arguments += '--warp' }
+$model = Join-Path (Split-Path $exePath) 'models/compute_validation.onnx'
+if (Test-Path $model) { Get-FileHash $model -Algorithm SHA256 | ConvertTo-Json | Set-Content (Join-Path $run 'model.json') }
 $p = Start-Process -FilePath $exePath -ArgumentList $arguments -PassThru
 # Seconds is the MINIMUM for each of up to three available phases; slow iteration
 # counts can take longer. The bounded allowance below catches hangs, not TDR recovery.

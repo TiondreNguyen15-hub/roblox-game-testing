@@ -109,11 +109,14 @@ void ComputeRunner::phase(const std::string& name){std::lock_guard<std::mutex> l
 void ComputeRunner::publish(const ComputeTest& test,int which){std::lock_guard<std::mutex> lock(mutex_);(which==0?state_.cuda:which==1?state_.cpu:state_.gpu)=test;}
 void ComputeRunner::start(const ComputeOptions& options){
  if(snapshot().running)return;if(options.iterations<1||options.iterations>100000||!std::isfinite(options.phaseSeconds)||options.phaseSeconds<0||options.phaseSeconds>86400)throw std::runtime_error("Invalid compute test limits");
- stop();cancel_=false;{std::lock_guard<std::mutex> lock(mutex_);state_=ComputeSnapshot{};state_.running=true;state_.adapter=options.adapter;state_.before=latest_;state_.peak=latest_;state_.requestedIterations=options.iterations;state_.requestedPhaseSeconds=options.phaseSeconds;}
+ stop();finishCapture();trace_.clear();std::error_code captureError;std::filesystem::create_directories(options.resultDirectory,captureError);if(!captureError)trace_.open(options.resultDirectory/L"compute-samples.csv");if(trace_)trace_<<"elapsed_s,phase,render_frame_interval_ms,process_busiest_engine_percent,process_local_vram_mib,working_set_mib,private_mib\n";else Log::write("WARN","Compute process trace unavailable");captureStart_=Clock::now();lastCapture_=-1;
+ cancel_=false;{std::lock_guard<std::mutex> lock(mutex_);state_=ComputeSnapshot{};state_.running=true;state_.adapter=options.adapter;state_.before=latest_;state_.peak=latest_;state_.requestedIterations=options.iterations;state_.requestedPhaseSeconds=options.phaseSeconds;}
  try{worker_=std::thread([this,options]{run(options);});}catch(...){std::lock_guard<std::mutex> lock(mutex_);state_.running=false;state_.finished=true;state_.error="Compute worker creation failed";throw;}
 }
+void ComputeRunner::finishCapture(){if(trace_.is_open()){trace_.flush();if(!trace_)Log::write("WARN","Compute process trace write failed");trace_.close();}}
 void ComputeRunner::observe(double frameMs,const ProcessObservation& p){
  std::lock_guard<std::mutex> lock(mutex_);latest_=p;if(!state_.running&&!state_.finished)return;state_.after=p;++state_.observations;
+ double age=elapsed(captureStart_);if(trace_.is_open()&&(lastCapture_<0||age-lastCapture_>=.5)){lastCapture_=age;trace_<<age<<','<<state_.phase<<','<<frameMs;for(double value:{p.engineBusy,p.localVramMiB,p.workingMiB,p.privateMiB}){trace_<<',';if(std::isfinite(value)&&value>=0)trace_<<value;}trace_<<'\n';}
  state_.peak.engineBusy=std::max(state_.peak.engineBusy,p.engineBusy);state_.peak.localVramMiB=std::max(state_.peak.localVramMiB,p.localVramMiB);state_.peak.workingMiB=std::max(state_.peak.workingMiB,p.workingMiB);state_.peak.privateMiB=std::max(state_.peak.privateMiB,p.privateMiB);
  if(state_.running&&std::isfinite(frameMs)&&frameMs>0)state_.renderIntervals[state_.phase].add(frameMs);
 }

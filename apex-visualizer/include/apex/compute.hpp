@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <fstream>
+#include <chrono>
 namespace apex {
 struct TimingSummary {
  std::uint64_t count=0;double total=0,min=1e30,max=0;
@@ -33,9 +35,9 @@ class ComputeRunner {
 public:
  ~ComputeRunner();ComputeRunner()=default;ComputeRunner(const ComputeRunner&)=delete;ComputeRunner& operator=(const ComputeRunner&)=delete;
  void start(const ComputeOptions&);void cancel(){cancel_=true;}void stop();ComputeSnapshot snapshot()const;
- void observe(double frameMs,const ProcessObservation&);
+ void finishCapture();void observe(double frameMs,const ProcessObservation&);
 private:
  void run(ComputeOptions)noexcept;void phase(const std::string&);void publish(const ComputeTest&,int which);
- mutable std::mutex mutex_;std::atomic<bool> cancel_{false};std::thread worker_;ComputeSnapshot state_;ProcessObservation latest_;
+ mutable std::mutex mutex_;std::atomic<bool> cancel_{false};std::thread worker_;ComputeSnapshot state_;ProcessObservation latest_;std::ofstream trace_;std::chrono::steady_clock::time_point captureStart_;double lastCapture_=-1;
 };
 }

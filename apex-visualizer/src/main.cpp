@@ -97,7 +97,7 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
    int computeAction=menu.consumeCompute();if(computeAction==3)compute.cancel();
    if((computeCli&&!computeStarted&&metrics.uptime()>=1.1)||computeAction==1||computeAction==2){apex::ComputeOptions options;options.adapter=renderer.gpu();options.baseDirectory=exeFolder;options.iterations=computeCli?computeIterations:200;options.phaseSeconds=computeCli?computeSeconds:computeAction==2?300:0;
     computeDirectory=computeCli?benchmarkPath:apex::Config::defaultPath().parent_path()/L"compute-results"/std::to_wstring(std::chrono::system_clock::now().time_since_epoch().count());options.resultDirectory=computeDirectory;compute.start(options);computeStarted=true;computeReported=false;computeFinishedAt=-1;deviceInfo.computeReport.clear();}
-   deviceInfo.compute=compute.snapshot();if(computeStarted&&deviceInfo.compute.finished&&!computeReported){if(computeFinishedAt<0)computeFinishedAt=metrics.uptime();if(metrics.uptime()-computeFinishedAt>=1.1){apex::saveComputeReport(computeDirectory,deviceInfo.compute);computeReported=true;deviceInfo.computeReport=(computeDirectory/L"compute-report.json").u8string();apex::Log::write("INFO","Compute report saved: "+deviceInfo.computeReport);if(computeCli)break;}}
+   deviceInfo.compute=compute.snapshot();if(computeStarted&&deviceInfo.compute.finished&&!computeReported){if(computeFinishedAt<0)computeFinishedAt=metrics.uptime();if(metrics.uptime()-computeFinishedAt>=1.1){apex::saveComputeReport(computeDirectory,deviceInfo.compute);compute.finishCapture();computeReported=true;deviceInfo.computeReport=(computeDirectory/L"compute-report.json").u8string();apex::Log::write("INFO","Compute report saved: "+deviceInfo.computeReport);if(computeCli)break;}}
    ImGui_ImplDX11_NewFrame();ImGui_ImplWin32_NewFrame();ImGui::GetIO().FontGlobalScale=state.dpi;ImGui::NewFrame();
    deviceInfo.flipModel=renderer.flipModel();deviceInfo.gpuTimingValid=renderer.gpuTimingValid();deviceInfo.gpuMs=renderer.gpuTimeMs();
    auto size=ImGui::GetIO().DisplaySize;if(benchmarkRequested&&frames==0){benchmark.metadata["initial_client_width"]=std::to_string(int(size.x));benchmark.metadata["initial_client_height"]=std::to_string(int(size.y));}
@@ -113,7 +113,7 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
    if(maxFrames&&frames>=maxFrames)break;
    auto target=start+std::chrono::microseconds(1000000/settings.frameLimit);pacer.wait(target);
   }
-  if(computeStarted&&!computeReported){compute.stop();apex::saveComputeReport(computeDirectory,compute.snapshot());}
+  if(computeStarted&&!computeReported){compute.stop();compute.finishCapture();apex::saveComputeReport(computeDirectory,compute.snapshot());}
   if(computeCli){auto result=compute.snapshot();if(!computeReported||!result.cpu.verified||result.cuda.state=="failed"||result.gpu.state=="failed"||(requireCuda&&(!result.cuda.verified||!result.gpu.verified)))return 6;}
   if(benchmarkRequested)benchmark.finish("stopped before requested duration");
   if(smoke){std::ofstream report("smoke-result.txt");report<<"PASS: "<<frames<<" DX11/ImGui frames; GPU="<<renderer.gpu()<<"; vertices="<<stats.vertices<<"; drawCalls="<<stats.drawCalls<<"; present="<<(renderer.flipModel()?"flip":"discard")<<"; gpuTiming="<<(renderer.gpuTimingValid()?renderer.gpuTimeMs():-1)<<"; fileEntities="<<providers.entities().size()<<'\n';if(!jsonPath.empty()&&providers.entities().empty())return 4;if(frames<6||stats.vertices==0||stats.drawCalls==0)return 3;}
