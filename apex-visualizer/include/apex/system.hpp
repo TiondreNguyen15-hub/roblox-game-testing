@@ -2,7 +2,7 @@
 #include <chrono>
 namespace apex {
 class SystemMetrics {
-public: bool memoryValid=false;unsigned long long workingSet=0,privateBytes=0;void update();double uptime()const;double cpu()const{return cpu_;}
+public: bool memoryValid=false,cpuValid=false;unsigned long long workingSet=0,privateBytes=0;void update();double uptime()const;double cpu()const{return cpu_;}
 private:
  using Clock=std::chrono::steady_clock;Clock::time_point start_=Clock::now(),sample_=start_;unsigned long long previous_=0;bool initial_=true;double cpu_=0;
 };

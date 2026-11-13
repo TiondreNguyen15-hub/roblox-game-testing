@@ -30,6 +30,6 @@ int main(){try{
  std::filesystem::remove(file);settings.liveFile=true;providers.update(settings,.6,1);CHECK(providers.entities().empty());
  {std::ofstream f(file);f<<valid;}apex::AsyncFileSource worker;worker.poll(file,0);
  for(int i=0;i<100&&worker.entities().empty();++i){std::this_thread::sleep_for(std::chrono::milliseconds(5));worker.poll(file,.01);}
- CHECK(worker.entities().size()==2);worker.reset();CHECK(worker.entities().empty());std::filesystem::remove(file);
+ CHECK(worker.entities().size()==2);CHECK(worker.processingMs>=0&&worker.deliveryMs>=worker.processingMs);worker.reset();CHECK(worker.processingMs<0&&worker.deliveryMs<0);CHECK(worker.entities().empty());std::filesystem::remove(file);
  std::cout<<"PASS: exact players schema, shields/screen data, malformed and bounded input, last-valid retention, refresh, stale and missing files\n";return 0;
  }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

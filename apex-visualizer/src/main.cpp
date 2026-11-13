@@ -7,6 +7,7 @@
 #include "apex/provider.hpp"
 #include "apex/log.hpp"
 #include "apex/hardware.hpp"
+#include "apex/frame_pacer.hpp"
 #include "apex/benchmark.hpp"
 #include <cmath>
 #include <imgui.h>
@@ -76,10 +77,10 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
   apex::HardwareMetrics hardware;hardware.initialize(renderer.gpu());deviceInfo.cudaStatus=hardware.cudaStatus;deviceInfo.nvmlStatus=hardware.nvmlStatus;deviceInfo.featureLevel=renderer.featureLevel;
   if(benchmarkRequested){benchmark.start(benchmarkPath,renderer.gpu(),"DirectX / feature level "+renderer.featureLevel+" / "+hardware.cudaStatus,benchmarkSeconds,warmup);benchmarkStarted=true;benchmark.metadata={{"vsync",settings.vsync?"on":"off"},{"frame_cap",std::to_string(settings.frameLimit)},{"entity_count",std::to_string(settings.entityCount)},{"source",settings.liveFile?settings.livePath:"local simulation"},{"window_initial_size","1440x900 outer; DPI dependent client"},{"nvml",hardware.nvmlStatus},{"cuda",hardware.cudaStatus},{"cuda_driver_api_version",std::to_string(hardware.cudaDriver)},{"cuda_compute_capability",std::to_string(hardware.computeMajor)+"."+std::to_string(hardware.computeMinor)},{"present",renderer.flipModel()?"flip-discard latency1":"compatibility discard"},{"model_backend","none - no model or inference workload exists"}};}
   apex::ProviderSystem providers(!smoke||asyncSmoke);apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics metrics;apex::RenderStats stats;
-  using Clock=std::chrono::steady_clock;auto previous=Clock::now();auto benchmarkStart=previous;double simulationTime=0;int frames=0;bool occluded=false;
+  apex::FramePacer pacer;using Clock=std::chrono::steady_clock;auto previous=Clock::now();auto benchmarkStart=previous;double simulationTime=0;int frames=0;bool occluded=false;
   while(!state.quit){
    MSG msg{};while(PeekMessageW(&msg,nullptr,0,0,PM_REMOVE)){if(msg.message==WM_QUIT)state.quit=true;TranslateMessage(&msg);DispatchMessageW(&msg);}if(state.quit)break;
-   if(state.minimized||(occluded&&!renderer.visible())){std::this_thread::sleep_for(std::chrono::milliseconds(50));previous=Clock::now();continue;}
+   if(state.minimized||(occluded&&!renderer.visible())){if(benchmarkRequested)throw std::runtime_error("Benchmark interrupted: window minimized or occluded");std::this_thread::sleep_for(std::chrono::milliseconds(50));previous=Clock::now();continue;}
    occluded=false;if(state.width&&state.height){renderer.resize(state.width,state.height);state.width=state.height=0;}
    renderer.waitForFrame();
    auto start=Clock::now();float delta=std::chrono::duration<float>(start-previous).count();stats.wallFrameMs=std::chrono::duration<double,std::milli>(start-previous).count();previous=start;
@@ -96,10 +97,10 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
    for(int n=0;n<data->CmdListsCount;++n)for(const auto& cmd:data->CmdLists[n]->CmdBuffer)if(cmd.ElemCount&&!cmd.UserCallback)++stats.drawCalls;
    stats.frameMs=std::chrono::duration<double,std::milli>(Clock::now()-start).count();occluded=!renderer.present(settings.vsync);
    ++frames;
-   if(benchmarkRequested){apex::BenchmarkSample sample;sample.frameMs=stats.wallFrameMs;sample.cpuWorkMs=stats.frameMs;sample.processCpu=metrics.cpu();sample.gpuMs=renderer.gpuTimingValid()?renderer.gpuTimeMs():-1;sample.gpuUtil=hardware.utilizationValid?double(hardware.utilization):-1;sample.deviceVramMiB=hardware.memoryValid?hardware.usedBytes/1048576.:-1;sample.processVramMiB=renderer.memoryValid?renderer.processVram/1048576.:-1;sample.workingSetMiB=metrics.memoryValid?metrics.workingSet/1048576.:-1;sample.privateMiB=metrics.memoryValid?metrics.privateBytes/1048576.:-1;sample.processingMs=stats.processingMs;sample.deliveryMs=stats.deliveryMs;
+   if(benchmarkRequested&&frames>1){apex::BenchmarkSample sample;sample.frameMs=stats.wallFrameMs;sample.cpuWorkMs=stats.frameMs;sample.processCpu=metrics.cpuValid?metrics.cpu():-1;sample.gpuMs=renderer.gpuTimingValid()?renderer.gpuTimeMs():-1;sample.gpuUtil=hardware.utilizationValid?double(hardware.utilization):-1;sample.deviceVramMiB=hardware.memoryValid?hardware.usedBytes/1048576.:-1;sample.processVramMiB=renderer.memoryValid?renderer.processVram/1048576.:-1;sample.workingSetMiB=metrics.memoryValid?metrics.workingSet/1048576.:-1;sample.privateMiB=metrics.memoryValid?metrics.privateBytes/1048576.:-1;sample.processingMs=stats.processingMs;sample.deliveryMs=stats.deliveryMs;
     if(benchmark.sample(std::chrono::duration<double>(Clock::now()-benchmarkStart).count(),sample))break;}
    if(maxFrames&&frames>=maxFrames)break;
-   auto target=start+std::chrono::microseconds(1000000/settings.frameLimit);std::this_thread::sleep_until(target);
+   auto target=start+std::chrono::microseconds(1000000/settings.frameLimit);pacer.wait(target);
   }
   if(benchmarkRequested)benchmark.finish("stopped before requested duration");
   if(smoke){std::ofstream report("smoke-result.txt");report<<"PASS: "<<frames<<" DX11/ImGui frames; GPU="<<renderer.gpu()<<"; vertices="<<stats.vertices<<"; drawCalls="<<stats.drawCalls<<"; present="<<(renderer.flipModel()?"flip":"discard")<<"; gpuTiming="<<(renderer.gpuTimingValid()?renderer.gpuTimeMs():-1)<<"; fileEntities="<<providers.entities().size()<<'\n';if(!jsonPath.empty()&&providers.entities().empty())return 4;if(frames<6||stats.vertices==0||stats.drawCalls==0)return 3;}

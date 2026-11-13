@@ -21,6 +21,8 @@ $p = Start-Process -FilePath $exePath -ArgumentList $arguments -PassThru
 if (-not $p.WaitForExit(($Seconds + $Warmup + 120) * 1000)) { $p.Kill(); throw "Benchmark timeout: $run" }
 $p.Refresh()
 if ($p.ExitCode -ne 0) { throw "Application failed ($($p.ExitCode)); inspect %LOCALAPPDATA%\ApexVisualization\apex.log; output: $run" }
+$log = Join-Path $env:LOCALAPPDATA 'ApexVisualizationpex.log'
+if (Test-Path $log) { Copy-Item $log (Join-Path $run 'application.log') }
 $report = Get-Content (Join-Path $run 'report.json') -Raw | ConvertFrom-Json
 if ($report.outcome -ne 'completed' -or $report.samples -eq 0) { throw "Run incomplete: $run" }
 $report | ConvertTo-Json -Depth 8

@@ -18,7 +18,7 @@ bool Benchmark::sample(double elapsed,const BenchmarkSample& s){
  if(!std::isfinite(s.frameMs)||s.frameMs<=0)return false;
  ++count_;sum_+=s.frameMs;min_=std::min(min_,s.frameMs);max_=std::max(max_,s.frameMs);auto bin=static_cast<size_t>(std::min(10000.,std::floor(s.frameMs*10)));++histogram_[bin];
  if(s.workingSetMiB>=0){if(firstMemory_<0)firstMemory_=s.workingSetMiB;lastMemory_=s.workingSetMiB;}
- csv_<<elapsed<<','<<s.frameMs<<','<<s.cpuWorkMs<<','<<s.processCpu;
+ csv_<<elapsed<<','<<s.frameMs<<','<<s.cpuWorkMs<<',';if(std::isfinite(s.processCpu)&&s.processCpu>=0)csv_<<s.processCpu;
  for(double v:{s.gpuMs,s.gpuUtil,s.deviceVramMiB,s.processVramMiB,s.workingSetMiB,s.privateMiB,s.processingMs,s.deliveryMs}){csv_<<',';if(std::isfinite(v)&&v>=0)csv_<<v;}csv_<<'\n';if(!csv_)throw std::runtime_error("Benchmark CSV write failed");return false;
 }
 void Benchmark::finish(const std::string& outcome){

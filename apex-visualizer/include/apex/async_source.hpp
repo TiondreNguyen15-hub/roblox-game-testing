@@ -15,7 +15,7 @@ public:
  void reset(){processingMs=deliveryMs=-1;std::lock_guard<std::mutex> lock(mutex_);++generation_;front_.clear();frontStatus_="WAITING FOR JSON DATA";lastSent_=-1;outReady_=false;}
  void poll(const std::filesystem::path& path,double now)override{
   std::lock_guard<std::mutex> lock(mutex_);
-  if(path!=frontPath_){frontPath_=path;++generation_;front_.clear();frontStatus_="WAITING FOR JSON DATA";lastSent_=-1;outReady_=false;}
+  if(path!=frontPath_){processingMs=deliveryMs=-1;frontPath_=path;++generation_;front_.clear();frontStatus_="WAITING FOR JSON DATA";lastSent_=-1;outReady_=false;}
   if(outReady_&&outGeneration_==generation_){front_=std::move(out_);frontStatus_=std::move(outStatus_);processingMs=outProcessing_;deliveryMs=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-outStart_).count();outReady_=false;}
   if(lastSent_<0||now-lastSent_>=.2){requestPath_=path;requestTime_=now;requestGeneration_=generation_;pending_=true;lastSent_=now;wake_.notify_one();}
  }
@@ -31,7 +31,7 @@ private:
     if(current!=generation){source.reset();current=generation;}
     auto start=std::chrono::steady_clock::now();source.poll(path,now);auto end=std::chrono::steady_clock::now();auto frame=source.entities();auto message=source.status(now);
     std::lock_guard<std::mutex> lock(mutex_);if(generation==generation_){outStart_=start;outProcessing_=std::chrono::duration<double,std::milli>(end-start).count();out_=std::move(frame);outStatus_=std::move(message);outGeneration_=generation;outReady_=true;}
-   }catch(...){try{std::lock_guard<std::mutex> lock(mutex_);if(generation==generation_){outStatus_="FILE ERROR / reader failed";out_=source.entities();outGeneration_=generation;outReady_=true;}}catch(...){}}
+   }catch(...){try{std::lock_guard<std::mutex> lock(mutex_);if(generation==generation_){outProcessing_=-1;outStart_=std::chrono::steady_clock::now();outStatus_="FILE ERROR / reader failed";out_=source.entities();outGeneration_=generation;outReady_=true;}}catch(...){}}
   }
  }
  std::mutex mutex_;std::condition_variable wake_;bool stop_=false,pending_=false,outReady_=false;

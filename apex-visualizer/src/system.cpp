@@ -23,7 +23,7 @@ void SystemMetrics::update(){
  auto ticks=std::clock();if(ticks==static_cast<std::clock_t>(-1))return;
  total=static_cast<unsigned long long>(ticks);tickSeconds=1.0/CLOCKS_PER_SEC;
 #endif
- if(!initial_)cpu_=std::clamp((total-previous_)*tickSeconds/seconds/std::max(1u,std::thread::hardware_concurrency())*100.,0.,100.);
+ if(!initial_){cpuValid=true;cpu_=std::clamp((total-previous_)*tickSeconds/seconds/std::max(1u,std::thread::hardware_concurrency())*100.,0.,100.);}
  previous_=total;initial_=false;
  sample_=now;
 }
