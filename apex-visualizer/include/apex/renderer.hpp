@@ -8,7 +8,7 @@ namespace apex {
 class Renderer {
 public:
  Renderer()=default;~Renderer();Renderer(const Renderer&)=delete;Renderer& operator=(const Renderer&)=delete;
- void updateMemory(double now);bool memoryValid=false;unsigned long long processVram=0,vramBudget=0;std::string featureLevel;
+ LUID adapterLuid{};void updateMemory(double now);bool memoryValid=false;unsigned long long processVram=0,vramBudget=0;std::string featureLevel;
  void waitForFrame();bool flipModel()const{return flip_;}bool gpuTimingValid()const{return gpuValid_;}double gpuTimeMs()const{return gpuMs_;}
  void initialize(HWND window,bool warp);void resize(unsigned width,unsigned height);void clear();bool present(bool vsync);bool visible();
  ID3D11Device* device()const{return device_;}ID3D11DeviceContext* context()const{return context_;}

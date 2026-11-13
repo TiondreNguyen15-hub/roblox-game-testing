@@ -31,7 +31,7 @@ void Renderer::initialize(HWND hwnd,bool warp){
  IDXGIDevice* dxgi=nullptr;IDXGIAdapter* adapter=nullptr;IDXGIFactory1* factory=nullptr;
  check(device_->QueryInterface(__uuidof(IDXGIDevice),reinterpret_cast<void**>(&dxgi)),"DXGI device");hr=dxgi->GetAdapter(&adapter);release(dxgi);check(hr,"DXGI adapter");
  adapter->QueryInterface(__uuidof(IDXGIAdapter3),reinterpret_cast<void**>(&memoryAdapter_));
- DXGI_ADAPTER_DESC info{};if(SUCCEEDED(adapter->GetDesc(&info))){gpu_=utf8(info.Description);videoMemory_=info.DedicatedVideoMemory;}
+ DXGI_ADAPTER_DESC info{};if(SUCCEEDED(adapter->GetDesc(&info))){adapterLuid=info.AdapterLuid;gpu_=utf8(info.Description);videoMemory_=info.DedicatedVideoMemory;}
  hr=adapter->GetParent(__uuidof(IDXGIFactory1),reinterpret_cast<void**>(&factory));release(adapter);check(hr,"DXGI factory");
  IDXGIFactory2* factory2=nullptr;
  if(SUCCEEDED(factory->QueryInterface(__uuidof(IDXGIFactory2),reinterpret_cast<void**>(&factory2)))){

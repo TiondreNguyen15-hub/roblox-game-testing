@@ -53,6 +53,18 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::SliderFloat("Menu width",&s.menuWidth,560,1200,"%.0f px");ImGui::SliderFloat("Menu height",&s.menuHeight,440,900,"%.0f px");ImGui::ColorEdit3("Purple accent",s.accent);
    ImGui::TextWrapped("VSync uses the monitor refresh rate. The frame cap also limits CPU usage. The scene pauses while minimized or occluded.");
   }else if(tab_==2){
+   ImGui::TextWrapped("Compute status: %s",device.compute.providerStatus.c_str());
+   if(device.compute.running){ImGui::TextWrapped("Running: %s",device.compute.phase.c_str());if(ImGui::Button("Cancel compute test"))computeRequest_=3;}
+   else {if(ImGui::Button("Run CUDA + ONNX validation"))computeRequest_=1;if(ImGui::Button("Sustained test (5 min per available phase)"))computeRequest_=2;}
+   if(ImGui::CollapsingHeader("Compute results / latency comparison")){
+    const ComputeTest* results[]={&device.compute.cuda,&device.compute.cpu,&device.compute.gpu};const char* labels[]={"CUDA vector-add","ONNX CPU","ONNX CUDA EP"};
+    for(int i=0;i<3;++i){const auto& r=*results[i];ImGui::Text("%s: %s",labels[i],r.state.c_str());ImGui::TextWrapped("%s",r.message.c_str());if(r.latency.count)ImGui::Text("Mean Run latency %.4f ms; serial equivalent %.1f /s (%llu runs)",r.latency.mean(),r.latency.mean()>0?1000./r.latency.mean():0.,static_cast<unsigned long long>(r.latency.count));if(r.kernel.count)ImGui::Text("CUDA event kernel mean: %.4f ms",r.kernel.mean());}
+    for(const auto& item:device.compute.renderIntervals)if(item.second.count)ImGui::Text("Render FPS during %s: %.1f (%llu intervals)",item.first.c_str(),1000./item.second.mean(),static_cast<unsigned long long>(item.second.count));
+    if(!device.compute.error.empty())ImGui::TextWrapped("%s",device.compute.error.c_str());if(!device.computeReport.empty())ImGui::TextWrapped("Report: %s",device.computeReport.c_str());
+   }
+   if(device.processUtilizationValid)ImGui::Text("Process GPU: %.2f%% (busiest engine)",device.processUtilization);else ImGui::TextDisabled("Process GPU usage: unavailable / warming up");
+   ImGui::TextWrapped("%s",device.processCounterStatus.c_str());
+
    ImGui::Text("FPS: %.1f",ImGui::GetIO().Framerate);ImGui::Text("Frame interval: %.3f ms (includes pacing)",stats.wallFrameMs);
    if(device.utilizationValid)ImGui::Text("GPU utilization: %u%% (device-wide)",device.utilization);else ImGui::TextDisabled("GPU utilization: unavailable");
    if(device.memoryValid)ImGui::Text("Device VRAM: %.1f / %.1f MiB",device.usedBytes/1048576.,device.totalBytes/1048576.);else ImGui::TextDisabled("Device VRAM usage: unavailable");

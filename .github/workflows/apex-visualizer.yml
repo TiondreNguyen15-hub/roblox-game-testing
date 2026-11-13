@@ -24,11 +24,39 @@ jobs:
         shell: pwsh
         run: |
           ./apex-visualizer/tools/benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./hardware-validation -Seconds 120 -Warmup 5 -Warp
+      - name: Actual CPU ONNX inference and CUDA unavailable handling
+        shell: pwsh
+        run: |
+          ./apex-visualizer/tools/compute-benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./compute-validation -Seconds 60 -Warp
+          $report = Get-Content (Get-ChildItem compute-validation -Recurse -Filter compute-report.json | Select-Object -First 1).FullName -Raw | ConvertFrom-Json
+          if (-not $report.cpu_inference.verified -or $report.cuda_workload.verified -or $report.cuda_ep_inference.verified) { throw 'Unexpected compute verification state on WARP runner' }
+      - name: Required CUDA must fail without CUDA hardware
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-iterations','5','--require-cuda','--warp','--output','./compute-required-negative' -PassThru
+          if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Negative CUDA test timeout' }
+          if ($p.ExitCode -ne 6) { throw "Expected unverified CUDA exit 6, got $($p.ExitCode)" }
+      - name: Missing runtime recovery
+        shell: pwsh
+        run: |
+          Move-Item ./build-apex/Release/runtime ./build-apex/Release/runtime-disabled
+          try {
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-iterations','5','--warp','--output','./compute-missing-runtime' -PassThru
+          if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Missing runtime test timeout' }
+          if ($p.ExitCode -ne 6) { throw "Expected unavailable inference exit 6, got $($p.ExitCode)" }
+          $report = Get-Content ./compute-missing-runtime/compute-report.json -Raw | ConvertFrom-Json
+          if ($report.cpu_inference.state -ne 'unavailable' -or $report.cuda_ep_inference.verified) { throw 'Missing runtime falsely verified' }
+          } finally { Move-Item ./build-apex/Release/runtime-disabled ./build-apex/Release/runtime }
       - uses: actions/upload-artifact@v5
         with:
           name: apex-visualizer-windows
           path: |
             build-apex/Release/*.exe
+            build-apex/Release/runtime/
+            build-apex/Release/models/
             smoke-result.txt
             hardware-validation/
+            compute-validation/
+            compute-required-negative/
+            compute-missing-runtime/
           if-no-files-found: error
