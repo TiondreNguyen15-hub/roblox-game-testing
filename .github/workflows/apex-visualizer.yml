@@ -14,7 +14,7 @@ jobs:
       - name: DX11 WARP smoke test
         shell: pwsh
         run: |
-          $p = Start-Process -FilePath './build-apex/Release/apex_visualizer.exe' -ArgumentList '--smoke-test' -PassThru
+          $p = Start-Process -FilePath './build-apex/Release/apex_visualizer.exe' -ArgumentList '--smoke-test','--json','apex-visualizer/apex_entities.json' -PassThru
           if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Smoke test timed out' }
           if ($p.ExitCode -ne 0) { if (Test-Path apex-error.log) { Get-Content apex-error.log }; throw "Smoke test failed: $($p.ExitCode)" }
           Get-Content smoke-result.txt

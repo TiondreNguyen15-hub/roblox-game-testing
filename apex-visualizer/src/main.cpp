@@ -1,7 +1,9 @@
+#include <algorithm>
 #include "apex/renderer.hpp"
 #include "apex/menu.hpp"
 #include "apex/visuals.hpp"
 #include "apex/config.hpp"
+#include "apex/telemetry.hpp"
 #include <imgui.h>
 #include <imgui_impl_dx11.h>
 #include <imgui_impl_win32.h>
@@ -49,14 +51,15 @@ struct Gui {
 };
 }
 int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int){
- bool smoke=false,warp=false;int maxFrames=0;
+ bool smoke=false,warp=false;int maxFrames=0;std::filesystem::path jsonPath;
  int argc=0;LPWSTR* argv=CommandLineToArgvW(GetCommandLineW(),&argc);
- if(argv){for(int i=1;i<argc;++i){std::wstring a=argv[i];if(a==L"--smoke-test"){smoke=true;warp=true;maxFrames=6;}else if(a==L"--warp")warp=true;else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]));}catch(...){LocalFree(argv);return 2;}}}LocalFree(argv);}
+ if(argv){for(int i=1;i<argc;++i){std::wstring a=argv[i];if(a==L"--smoke-test"){smoke=true;warp=true;maxFrames=6;}else if(a==L"--json"&&i+1<argc)jsonPath=argv[++i];else if(a==L"--warp")warp=true;else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]));}catch(...){LocalFree(argv);return 2;}}}LocalFree(argv);}
  try{
   ImGui_ImplWin32_EnableDpiAwareness();Window window;window.open();apex::Renderer renderer;renderer.initialize(window.handle,warp);Gui gui;gui.initialize(window.handle,renderer);
   apex::Settings settings;std::string message;if(std::filesystem::exists(apex::Config::defaultPath())&&!apex::Config::load(apex::Config::defaultPath(),settings,message)&&!smoke)MessageBoxA(window.handle,message.c_str(),"Configuration warning",MB_OK|MB_ICONWARNING);
+  if(!jsonPath.empty()){auto value=jsonPath.u8string();if(value.size()>200)throw std::runtime_error("JSON path exceeds 200 UTF-8 bytes");std::copy(value.begin(),value.end(),settings.livePath);settings.livePath[value.size()]=0;settings.liveFile=true;}
   apex::DeviceInfo deviceInfo{renderer.gpu(),renderer.videoMemory()};
-  apex::Simulation simulation;apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics metrics;apex::RenderStats stats;
+  apex::Telemetry telemetry;apex::Simulation simulation;apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics metrics;apex::RenderStats stats;
   using Clock=std::chrono::steady_clock;auto previous=Clock::now();double simulationTime=0;int frames=0;bool occluded=false;
   while(!state.quit){
    MSG msg{};while(PeekMessageW(&msg,nullptr,0,0,PM_REMOVE)){if(msg.message==WM_QUIT)state.quit=true;TranslateMessage(&msg);DispatchMessageW(&msg);}if(state.quit)break;
@@ -65,9 +68,10 @@ int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int){
    auto start=Clock::now();float delta=std::chrono::duration<float>(start-previous).count();previous=start;
    delta=std::min(delta,.1f);if(state.pause){settings.animate=!settings.animate;state.pause=false;}
    if(state.reset||menu.consumeReset()){simulationTime=0;state.reset=false;}
-   if(settings.animate)simulationTime+=delta*settings.playbackSpeed;simulation.update(simulationTime,settings.entityCount,settings.scene);metrics.update();
+   if(settings.animate)simulationTime+=delta*settings.playbackSpeed;simulation.update(simulationTime,settings.entityCount,settings.scene);metrics.update();if(settings.liveFile)telemetry.poll(std::filesystem::u8path(settings.livePath),metrics.uptime());
    ImGui_ImplDX11_NewFrame();ImGui_ImplWin32_NewFrame();ImGui::GetIO().FontGlobalScale=state.dpi;ImGui::NewFrame();
-   auto size=ImGui::GetIO().DisplaySize;auto visualStats=visuals.draw(simulation,settings,size.x,size.y);menu.draw(settings,deviceInfo,metrics,stats,visualStats,state.menu,delta);
+   auto size=ImGui::GetIO().DisplaySize;auto visualStats=visuals.draw(settings.liveFile?telemetry.entities():simulation.entities(),settings,size.x,size.y);menu.draw(settings,deviceInfo,metrics,stats,visualStats,state.menu,delta,settings.liveFile?telemetry.status(metrics.uptime()):"Simulation mode");
+   if(settings.liveFile)ImGui::GetForegroundDrawList()->AddText({20,42},IM_COL32(210,190,255,255),telemetry.status(metrics.uptime()).c_str());
    ImGui::Render();auto* data=ImGui::GetDrawData();renderer.clear();ImGui_ImplDX11_RenderDrawData(data);
    stats.vertices=data->TotalVtxCount;stats.indices=data->TotalIdxCount;stats.drawCalls=0;
    for(int n=0;n<data->CmdListsCount;++n)for(const auto& cmd:data->CmdLists[n]->CmdBuffer)if(cmd.ElemCount&&!cmd.UserCallback)++stats.drawCalls;
@@ -75,7 +79,7 @@ int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int){
    ++frames;if(maxFrames&&frames>=maxFrames)break;
    auto target=start+std::chrono::microseconds(1000000/settings.frameLimit);std::this_thread::sleep_until(target);
   }
-  if(smoke){std::ofstream report("smoke-result.txt");report<<"PASS: "<<frames<<" DX11/ImGui frames; GPU="<<renderer.gpu()<<"; vertices="<<stats.vertices<<"; drawCalls="<<stats.drawCalls<<'\n';if(frames<6||stats.vertices==0||stats.drawCalls==0)return 3;}
+  if(smoke){std::ofstream report("smoke-result.txt");report<<"PASS: "<<frames<<" DX11/ImGui frames; GPU="<<renderer.gpu()<<"; vertices="<<stats.vertices<<"; drawCalls="<<stats.drawCalls<<"; fileEntities="<<telemetry.entities().size()<<'\n';if(!jsonPath.empty()&&telemetry.entities().empty())return 4;if(frames<6||stats.vertices==0||stats.drawCalls==0)return 3;}
   return 0;
  }catch(const std::exception& e){std::ofstream log("apex-error.log",std::ios::app);log<<e.what()<<'\n';if(!smoke)MessageBoxA(nullptr,e.what(),"Apex Visualization error",MB_OK|MB_ICONERROR);return 1;}
 }

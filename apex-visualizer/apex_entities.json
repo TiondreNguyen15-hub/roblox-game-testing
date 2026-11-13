@@ -1,0 +1,6 @@
+{
+  "players": [
+    {"name":"Player 1","health":100,"shield":100,"distance":45,"x":500,"y":300,"visible":true},
+    {"name":"Player 2","health":75,"shield":50,"distance":90,"x":800,"y":400,"visible":true}
+  ]
+}

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "apex/config.hpp"
 #include "apex/simulation.hpp"
 #include <iostream>
@@ -21,6 +22,7 @@ int main(){try{
  sim.update(1,1000);CHECK(sim.entities().size()==64);sim.update(1,-2);CHECK(sim.entities().size()==1);
  sim.update(0,5,2);auto fixed=sim.entities()[0].position.x;sim.update(100,5,2);CHECK(sim.entities()[0].position.x==fixed);
  sim.update(0,5,1);auto tracked=sim.entities()[0].position.x;sim.update(2,5,1);CHECK(sim.entities()[0].position.x!=tracked);
- s.scene=2;s.playbackSpeed=2.5f;CHECK(apex::Config::save(path,s,err));CHECK(apex::Config::load(path,read,err));CHECK(read.scene==2&&read.playbackSpeed==2.5f);std::filesystem::remove(path);
+ s.liveFile=true;std::string live="C:\\my tool\\apex_entities.json";std::copy(live.begin(),live.end(),s.livePath);s.livePath[live.size()]=0;
+ s.scene=2;s.playbackSpeed=2.5f;CHECK(apex::Config::save(path,s,err));CHECK(apex::Config::load(path,read,err));CHECK(read.scene==2&&read.playbackSpeed==2.5f&&read.liveFile&&std::string(read.livePath)==live);std::filesystem::remove(path);
  std::cout<<"PASS: settings bounds; config round-trip/atomic overwrite/rejection; projection; simulation invariants\n";return 0;
  }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

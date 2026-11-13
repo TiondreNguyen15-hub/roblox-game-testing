@@ -26,7 +26,11 @@ ctest --test-dir build -C Release --output-on-failure
 .\build\Release\apex_visualizer.exe
 ```
 
-The download ZIP vendors Dear ImGui **v1.91.9b** including its MIT license. A source-only checkout without third_party/imgui fetches the exact official release archive through CMake FetchContent, with SHA-256 verification. No package manager or JSON dependency is required. DX11/Win32 libraries come from the Windows SDK. The included source archive can build offline once VS/SDK/CMake are installed.
+The download ZIP vendors Dear ImGui **v1.91.9b** including its MIT license. A source-only checkout without third_party/imgui fetches the exact official release archive through CMake FetchContent, with SHA-256 verification. nlohmann/json v3.11.3 is vendored for local telemetry. No package manager is required. DX11/Win32 libraries come from the Windows SDK. The included source archive can build offline once VS/SDK/CMake are installed.
+
+## Local JSON input
+
+The app now reads **apex_entities.json** from its working directory by default. The Windows ZIP includes your two-player example. See [JSON-TELEMETRY.md](JSON-TELEMETRY.md) for the exact schema and sample writer. Disable **Read local JSON file** in Visuals to use simulation mode.
 
 ## Use
 

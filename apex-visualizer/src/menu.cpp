@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cmath>
 namespace apex {
-void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system,const RenderStats& stats,const VisualStats& visuals,bool shown,float dt){
+void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system,const RenderStats& stats,const VisualStats& visuals,bool shown,float dt,const std::string& sourceStatus){
  fade_+=(float(shown)-fade_)*(1-std::exp(-dt*15));if(!shown&&fade_<.01f)return;
  ImGuiStyle& style=ImGui::GetStyle();style.WindowRounding=12;style.ChildRounding=8;style.FrameRounding=5;style.WindowBorderSize=1;style.FramePadding={9,6};style.ItemSpacing={10,10};
  style.Colors[ImGuiCol_WindowBg]={.055f,.055f,.078f,.98f};style.Colors[ImGuiCol_ChildBg]={.075f,.075f,.1f,1};style.Colors[ImGuiCol_Border]={.2f,.18f,.29f,1};
@@ -23,9 +23,11 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
   ImGui::BeginChild("Page",{0,-28},false);
   ImGui::Text("%s",tabs[tab_]);ImGui::Separator();
   if(tab_==0){
+   ImGui::Checkbox("Read local JSON file",&s.liveFile);ImGui::InputText("JSON path",s.livePath,sizeof(s.livePath));
+   if(s.liveFile)ImGui::TextWrapped("%s",sourceStatus.c_str());
    ImGui::TextDisabled("All entities below are generated inside this application.");
    ImGui::Checkbox("2D bounding boxes",&s.boxes);ImGui::SameLine();ImGui::Checkbox("Corner style",&s.corners);
-   ImGui::Checkbox("Skeleton",&s.skeleton);ImGui::SameLine();ImGui::Checkbox("Health bars",&s.health);
+   ImGui::Checkbox("Skeleton",&s.skeleton);ImGui::SameLine();ImGui::Checkbox("Health bars",&s.health);ImGui::Checkbox("Shield bars (JSON)",&s.shields);
    ImGui::Checkbox("Names",&s.names);ImGui::SameLine();ImGui::Checkbox("Distances",&s.distance);
    ImGui::Checkbox("Team identifiers",&s.teams);ImGui::SameLine();ImGui::Checkbox("Visibility labels",&s.visibility);
    ImGui::Checkbox("Enemies only (hide team 1)",&s.enemiesOnly);ImGui::Checkbox("Visible only",&s.visibleOnly);
