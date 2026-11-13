@@ -78,22 +78,23 @@ ComputeTest cudaWork(const ComputeOptions& o,std::atomic<bool>& stop,int& device
  result.measuredWallSeconds=elapsed(start);result.reason="VERIFIED_EXECUTION";result.verified=true;result.state="passed";result.message="Actual PTX JIT, HtoD, kernel launch, GPU events, completion and DtoH verified against all 1,048,576 reference values; 12 MiB device buffers released after phase";return result;
 }
 struct OrtLibrary {
- HMODULE dll=nullptr,shared=nullptr,cudaProvider=nullptr;const OrtApi* api=nullptr;OrtEnv* env=nullptr;std::string version,path;int driverVersion=0;std::vector<std::string> providers;std::unique_ptr<RuntimeDependencies> dependencies;std::filesystem::path folder;
- ~OrtLibrary(){if(env&&api)api->ReleaseEnv(env);if(cudaProvider)FreeLibrary(cudaProvider);if(shared)FreeLibrary(shared);if(dll)FreeLibrary(dll);}
+ HMODULE dll=nullptr;const OrtApi* api=nullptr;OrtEnv* env=nullptr;std::string version,path;int driverVersion=0;std::vector<std::string> providers;std::unique_ptr<RuntimeDependencies> dependencies;std::filesystem::path folder;
+ ~OrtLibrary(){if(env&&api)api->ReleaseEnv(env);if(dll)FreeLibrary(dll);}
  void check(OrtStatus* status){if(status){std::string message=api->GetErrorMessage(status);api->ReleaseStatus(status);throw std::runtime_error("ONNX Runtime: "+message);}}
+ static void ORT_API_CALL logger(void*,OrtLoggingLevel,const char*,const char*,const char*,const char* message){try{Log::write("WARN",std::string("ONNX Runtime: ")+(message?message:""));}catch(...){}}
  void initialize(const std::filesystem::path& base){
   std::string errors;
   for(const auto& directory:{base/L"runtime/gpu",base/L"runtime/cpu"}){auto file=directory/L"onnxruntime.dll";if(!std::filesystem::exists(file))continue;dll=LoadLibraryExW(file.c_str(),nullptr,LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);if(dll){folder=directory;break;}errors+=" "+directory.u8string()+" Win32="+std::to_string(GetLastError());}
   if(!dll)throw Unavailable("ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies."+errors,"ORT_RUNTIME_NOT_LOADABLE");
-  using GetBase=const OrtApiBase*(ORT_API_CALL*)();const auto* b=proc<GetBase>(dll,"OrtGetApiBase")();api=b->GetApi(ORT_API_VERSION);if(!api)throw Unavailable("ONNX Runtime C API v22 unavailable (use runtime 1.22.x)");version=b->GetVersionString();path=loadedModulePath(dll);folder=std::filesystem::u8path(path).parent_path();check(api->CreateEnv(ORT_LOGGING_LEVEL_WARNING,"ApexComputeValidation",&env));
+  using GetBase=const OrtApiBase*(ORT_API_CALL*)();const auto* b=proc<GetBase>(dll,"OrtGetApiBase")();api=b->GetApi(ORT_API_VERSION);if(!api)throw Unavailable("ONNX Runtime C API v22 unavailable (use runtime 1.22.x)");version=b->GetVersionString();path=loadedModulePath(dll);folder=std::filesystem::u8path(path).parent_path();check(api->CreateEnvWithCustomLogger(logger,nullptr,ORT_LOGGING_LEVEL_WARNING,"ApexComputeValidation",&env));
   char** names=nullptr;int count=0;check(api->GetAvailableProviders(&names,&count));for(int i=0;i<count;++i)providers.emplace_back(names[i]);check(api->ReleaseAvailableProviders(names,count));dependencies=std::make_unique<RuntimeDependencies>(folder);dependencies->inspect();
  }
  void preloadCuda(){
   try{dependencies->load();}catch(const std::exception& e){throw Unavailable(e.what(),"ORT_CUDA_DEPENDENCY_LOAD_FAILED");}
-  shared=LoadLibraryExW((folder/L"onnxruntime_providers_shared.dll").c_str(),nullptr,LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
-  if(!shared)throw Unavailable("ONNX shared provider: "+windowsLoadError(GetLastError()),"ORT_SHARED_PROVIDER_NOT_LOADABLE");
-  cudaProvider=LoadLibraryExW((folder/L"onnxruntime_providers_cuda.dll").c_str(),nullptr,LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
-  if(!cudaProvider)throw Unavailable("ONNX CUDA provider: "+windowsLoadError(GetLastError())+". Inspect dependency diagnostics; do not copy another ONNX Runtime over this package.","ORT_CUDA_PROVIDER_NOT_LOADABLE");
+  // Provider DLLs must be initialized by ORT's bridge. Loading CUDA directly
+  // before Provider_SetHost(shared, host) can fail its DLL initialization (1114).
+  // We preload NVIDIA dependencies only, then use the public ORT C API below.
+
  }
  bool hasCuda()const{return std::find(providers.begin(),providers.end(),"CUDAExecutionProvider")!=providers.end();}
 

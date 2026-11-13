@@ -7,6 +7,7 @@ param(
  [string]$CacheDirectory = "$env:LOCALAPPDATA\ApexVisualization\packages"
 )
 $ErrorActionPreference = 'Stop'
+$ProgressPreference = 'SilentlyContinue'
 $appRoot=[IO.Path]::GetFullPath("$PSScriptRoot\..")
 foreach ($process in @(Get-Process -Name apex_visualizer -ErrorAction SilentlyContinue)) {
  if ($process.Path -and [IO.Path]::GetFullPath($process.Path).StartsWith($appRoot+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)) { throw 'Close this application before replacing GPU runtime files, then rerun setup.' }
