@@ -35,7 +35,7 @@ The same sidebar, tabs, hotkeys, appearance settings, filters, configuration loc
 
 The local suite covers configuration compatibility, quoted paths, bounds, parsing, missing/partial/oversized input, last-valid recovery, stale data, actual ImGui geometry, absent/supplied skeleton behavior, independent shield controls, source switching, async-reader handoff, logging rotation and unwritable log destinations. Address/undefined-behavior sanitizer checks and Windows results are recorded in VALIDATION.md after execution.
 
-The Windows smoke test intentionally uses a synchronous instance of the same file provider so its six-frame validation does not depend on worker scheduling. The interactive app uses the background reader; worker switching/cleanup is separately tested.
+Windows CI runs both the six-frame synchronous smoke test and a 60-frame asynchronous-reader smoke test against the bundled JSON. The interactive app uses the background reader; worker switching and cleanup are also unit tested.
 
 ## Authorized external input required
 

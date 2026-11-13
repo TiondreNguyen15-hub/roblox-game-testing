@@ -11,13 +11,15 @@ jobs:
         run: cmake --build build-apex --config Release --parallel 2
       - name: Module tests
         run: ctest --test-dir build-apex -C Release --output-on-failure
-      - name: DX11 WARP smoke test
+      - name: DX11 WARP smoke tests
         shell: pwsh
         run: |
-          $p = Start-Process -FilePath './build-apex/Release/apex_visualizer.exe' -ArgumentList '--smoke-test','--json','apex-visualizer/apex_entities.json' -PassThru
+          foreach ($mode in @('--smoke-test', '--async-smoke-test')) {
+          $p = Start-Process -FilePath './build-apex/Release/apex_visualizer.exe' -ArgumentList $mode,'--json','apex-visualizer/apex_entities.json' -PassThru
           if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Smoke test timed out' }
           if ($p.ExitCode -ne 0) { if (Test-Path "$env:LOCALAPPDATA/ApexVisualization/apex.log") { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" }; throw "Smoke test failed: $($p.ExitCode)" }
           Get-Content smoke-result.txt
+          }
       - uses: actions/upload-artifact@v5
         with:
           name: apex-visualizer-windows
