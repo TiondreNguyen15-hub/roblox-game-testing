@@ -11,5 +11,7 @@
   "model_sha256": "2d08ea139dfea3fc7273eb47a58e1168dde19073ca3526c6fee62db096900c5b",
   "model_is_trained": false,
   "gpu_runtime_bundled": false,
-  "gpu_installation_is_not_execution_verification": true
+  "gpu_installation_is_not_execution_verification": true,
+  "private_nvidia_runtime_manifest": "tools/cuda-dependencies.json",
+  "provider_loading": "Official ORT bridge must initialize Provider_SetHost before loading CUDA provider"
 }

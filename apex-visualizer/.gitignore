@@ -4,3 +4,6 @@
 apex-error.log
 smoke-result.txt
 apex-settings.cfg
+
+__pycache__/
+*.pyc

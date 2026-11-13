@@ -1,3 +1,5 @@
+> **Latest runtime repair:** [PC evidence and fixes](PC-RESULTS-AND-REPAIRS.md) · [Actual repair validation](RUNTIME-REPAIR-VALIDATION.md). Your PC report is still required for PC-specific conclusions.
+
 # GPU compute implementation and actual test report
 
 ## Verified build and scope

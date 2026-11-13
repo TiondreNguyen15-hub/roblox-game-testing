@@ -1,19 +1,16 @@
 {
-  "phase": "Actual GPU compute validation implementation; CPU runtime verified, physical CUDA verification pending",
-  "commit": "ea78b3e532b9d8fde6b2f8df629c566b154fa5ad",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43366750203",
-  "compiler": "Visual Studio 2022 x64 Release; static app runtime; optional ONNX DLLs require VC++ x64 runtime",
-  "exe_sha256": "0f9199dbb39ac0f6a5c152a4fc771807c930a32235c21957772f0198d8b6e67d",
-  "tests": 7,
-  "smoke_frames": [
-    6,
-    60
-  ],
-  "render_benchmark_seconds": 120,
-  "cpu_onnx_validation_min_seconds": 60.0,
-  "onnx_cpu_verified": true,
-  "rtx3070_kernel_verified_here": false,
-  "cuda_ep_verified_here": false,
-  "model_sha256": "2d08ea139dfea3fc7273eb47a58e1168dde19073ca3526c6fee62db096900c5b",
-  "onnx_runtime_version": "1.22.0"
+  "phase": "Runtime dependency and ONNX provider initialization repair",
+  "commit": "e24ca35755a0a82315e09ab2a10725ffcb2ebb17",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43372129649",
+  "exe_sha256": "a3020ebaccd72ba2278d4a5c56e5d220558149df4bf609b9af8a210452a5dfff",
+  "compiler": "Visual Studio 2022 x64 Release / static app runtime",
+  "windows_cpp_test_suites": 7,
+  "portable_sanitizer_suites": 7,
+  "python_audit_tests": 6,
+  "nvidia_dependency_dll_load_test": "passed",
+  "onnx_provider_bridge_probe": "blocked by unavailable NVIDIA driver",
+  "onnx_cpu_inference_verified_here": true,
+  "rtx3070_inference_verified_here": false,
+  "actual_pc_report_supplied": false,
+  "model_sha256": "2d08ea139dfea3fc7273eb47a58e1168dde19073ca3526c6fee62db096900c5b"
 }
