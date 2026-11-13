@@ -20,6 +20,13 @@ jobs:
           if ($p.ExitCode -ne 0) { if (Test-Path "$env:LOCALAPPDATA/ApexVisualization/apex.log") { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" }; throw "Smoke test failed: $($p.ExitCode)" }
           Get-Content smoke-result.txt
           }
+      - name: External recording through real DX11 preview
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--capture-test','./apex-visualizer/tests/fixtures/capture-test.mp4' -PassThru
+          if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Capture preview integration timed out' }
+          if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 50; throw "Capture preview failed: $($p.ExitCode)" }
+          Get-Content capture-smoke-result.txt
       - name: Timed WARP stability benchmark (120 seconds)
         shell: pwsh
         run: |
@@ -90,6 +97,7 @@ jobs:
             build-apex/Release/runtime/
             build-apex/Release/models/
             smoke-result.txt
+            capture-smoke-result.txt
             hardware-validation/
             compute-validation/
             model-benchmark-validation/
