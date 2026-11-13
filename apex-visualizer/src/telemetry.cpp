@@ -6,6 +6,7 @@
 #include <set>
 #include <cmath>
 #include <sstream>
+#include <iomanip>
 namespace apex {
 namespace {
 float number(const nlohmann::json& j,float low,float high){if(!j.is_number())throw std::runtime_error("Expected numeric field");auto v=j.get<double>();if(!std::isfinite(v)||v<low||v>high)throw std::runtime_error("Numeric field outside bounds");return static_cast<float>(v);}
@@ -68,6 +69,6 @@ void Telemetry::poll(const std::filesystem::path& path,double now){
 std::string Telemetry::status(double now)const{
  if(!error_.empty())return "FILE ERROR / "+error_+(hasGood_?" / retaining last valid frame":" / no valid snapshot");
  if(!hasGood_)return "WAITING FOR JSON DATA";
- std::ostringstream s;s<<(now-lastGood_>2?"STALE":"LIVE")<<" / "<<entities_.size()<<" entities / age "<<static_cast<int>(std::max(0.,now-lastGood_))<<" s";return s.str();
+ std::ostringstream s;s<<(now-lastGood_>2?"STALE":"LIVE")<<" / "<<entities_.size()<<" entities / age "<<std::fixed<<std::setprecision(1)<<std::max(0.,now-lastGood_)<<" s";return s.str();
 }
 }

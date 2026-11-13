@@ -18,7 +18,8 @@ int main(){try{
  {std::ofstream f(file);f<<"partial";}source.poll(file,.25);CHECK(source.entities().size()==2&&source.status(.25).find("FILE ERROR")==0);
  {std::ofstream f(file);f<<"{\"players\":[]}";}source.poll(file,.5);CHECK(source.entities().empty());
  std::filesystem::last_write_time(file,std::filesystem::file_time_type::clock::now()-std::chrono::seconds(10));source.poll(file,.75);CHECK(source.status(.75).find("STALE")==0);
- std::filesystem::remove(file);source.poll(file,1);CHECK(source.status(1).find("FILE ERROR")==0);
+ std::filesystem::last_write_time(file,std::filesystem::file_time_type::clock::now()-std::chrono::hours(24*365*90));source.poll(file,.99);CHECK(source.status(.99).find("STALE")==0);
+ std::filesystem::remove(file);source.poll(file,1.25);CHECK(source.status(1.25).find("FILE ERROR")==0);
  const std::string world=R"({"schema":1,"entities":[{"id":1,"name":"Authorized","team":1,"health":70,"shield":25,"visible":true,"position":[0,0,20]}]})";
  CHECK(apex::Telemetry::decode(world,entities,error));CHECK(!entities[0].hasSkeleton&&!entities[0].synthetic&&entities[0].hasShield);
  std::string screenBones="[";for(int i=0;i<15;++i){if(i)screenBones+=",";screenBones+="[500,300]";}screenBones+="]";
