@@ -1,0 +1,69 @@
+{
+  "acceleration_status": "Cancelled; inspect individual verified results",
+  "adapter": "Microsoft Basic Render Driver",
+  "cpu_inference": {
+    "cuda_kernel_events": null,
+    "message": "Cancelled; phase not verified complete",
+    "run_end_to_end": null,
+    "state": "cancelled",
+    "verified": false
+  },
+  "cpu_to_cuda_ep_latency_ratio": null,
+  "cuda_ep_inference": {
+    "cuda_kernel_events": null,
+    "message": "Not tested",
+    "run_end_to_end": null,
+    "state": "not_run",
+    "verified": false
+  },
+  "cuda_workload": {
+    "cuda_kernel_events": null,
+    "message": "CUDA driver DLL unavailable",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "error": "Cancelled; partial measurements only",
+  "finished": true,
+  "measurement_notes": "Synthetic authorized compute only. ONNX Run wall latency includes transfers, execution and output materialization; output validation and setup excluded. Serial inference/s is reciprocal mean Run latency, not display FPS. CUDA event duration measures the vector-add kernel, not inference. CUDA EP marked verified only with numeric agreement, disabled CPU fallback and a CUDAExecutionProvider node in actual ORT profiling. Render FPS is reciprocal of observed main-window frame intervals during each phase; short phases can have too few frames to compare. Process GPU busy is PDH busiest matching PID+adapter engine; local VRAM is per-process DXGI WDDM usage. Counters sampled at 2Hz can miss short peaks. Memory endpoints/ranges do not establish leak freedom.",
+  "minimum_seconds_per_available_phase": 30.0,
+  "model": "Bundled deterministic MatMul(128x256,256x256)+Relu, float32",
+  "observed_render_frame_intervals": {
+    "cpu_inference": {
+      "max_ms": 14.8595,
+      "mean_ms": 12.691403896103894,
+      "min_ms": 9.6576,
+      "observations": 77,
+      "serial_latency_equivalent_per_second": 78.79348952931738
+    },
+    "cuda_vector_add": {
+      "max_ms": 13.0671,
+      "mean_ms": 12.6743,
+      "min_ms": 12.2851,
+      "observations": 3,
+      "serial_latency_equivalent_per_second": 78.89982089740656
+    }
+  },
+  "onnx_runtime_version": "1.22.0",
+  "phase": "cancelled",
+  "process_after_cleanup": {
+    "private_mib": 18.59765625,
+    "process_busiest_engine_percent": 94.35113768499852,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 38.0859375
+  },
+  "process_before": {
+    "private_mib": 16.3046875,
+    "process_busiest_engine_percent": 94.53727264947766,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 35.6796875
+  },
+  "process_observations": 191,
+  "process_peak_observed": {
+    "private_mib": 27.83203125,
+    "process_busiest_engine_percent": 95.46986085180231,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 51.73828125
+  },
+  "requested_iterations_per_phase": 200
+}

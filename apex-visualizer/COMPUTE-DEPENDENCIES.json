@@ -1,0 +1,15 @@
+{
+  "onnxruntime_version": "1.22.0",
+  "cpu_nuget_url": "https://api.nuget.org/v3-flatcontainer/microsoft.ml.onnxruntime/1.22.0/microsoft.ml.onnxruntime.1.22.0.nupkg",
+  "cpu_nuget_sha256": "d571e63a2329baacb713f441e65ad75284de354db6e1ac435fe4bebbb417986a",
+  "gpu_nuget_url": "https://api.nuget.org/v3-flatcontainer/microsoft.ml.onnxruntime.gpu.windows/1.22.0/microsoft.ml.onnxruntime.gpu.windows.1.22.0.nupkg",
+  "gpu_nuget_sha512_base64": "QctLHrK0ltiw8EZtYl10pk+/58kYwM+tQnGqa2FGUkbyV7apswmQFgNb+Cgce3Ht/eG3G0khehwW8WUCLrOQRg==",
+  "bundled_runtime_cpu_sha256": {
+    "onnxruntime.dll": "579b636403983254346a5c1d80bd28f1519cd1e284cd204f8d4ff41f8d711559",
+    "onnxruntime_providers_shared.dll": "ba00ea1ef846c9b909c7854bc56c51051a20f9773b3e1153dda118d4b85d0b93"
+  },
+  "model_sha256": "2d08ea139dfea3fc7273eb47a58e1168dde19073ca3526c6fee62db096900c5b",
+  "model_is_trained": false,
+  "gpu_runtime_bundled": false,
+  "gpu_installation_is_not_execution_verification": true
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "0F32C09DA925EC58C650A0D72CCC950A73DB570CAE0ADEFFB3D07165419B8BD1",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\onnxruntime_providers_cuda.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "3B53C353CD52A7BE926BEB289277B79DE1E659A1DC3BB74B24C99A6A7296D9D9",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\onnxruntime_providers_shared.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "8C934C01F34702F60DE665273876DBE9F70FCBBE0F7E0F292840AC0C13DAA338",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\onnxruntime.dll"
+  }
+]

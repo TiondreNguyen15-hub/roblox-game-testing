@@ -1,3 +1,5 @@
+> Current compute phase: [GPU-COMPUTE.md](GPU-COMPUTE.md) and [GPU-COMPUTE-REPORT.md](GPU-COMPUTE-REPORT.md) supersede earlier detection-only/no-model descriptions. This record preserves the previous phase's measurements.
+
 # Phase 2 performance report
 
 ## Build and evidence

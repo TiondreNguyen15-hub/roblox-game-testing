@@ -1,3 +1,5 @@
+> Current compute phase: [GPU-COMPUTE.md](GPU-COMPUTE.md) and [GPU-COMPUTE-REPORT.md](GPU-COMPUTE-REPORT.md) supersede earlier detection-only/no-model descriptions. This record preserves the previous phase's measurements.
+
 > Phase 2 adds hardware telemetry and benchmarking; see [HARDWARE-VALIDATION.md](HARDWARE-VALIDATION.md) and [PHASE2-PERFORMANCE-REPORT.md](PHASE2-PERFORMANCE-REPORT.md) for current behavior and validation. The record below describes the preceding audit.
 
 # Final application audit

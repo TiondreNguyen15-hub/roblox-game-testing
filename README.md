@@ -1,12 +1,15 @@
-# Apex Visualization — standalone Windows data lab
+# Apex Visualization — standalone Windows data and compute lab
 
-- [Download Windows x64 build](Apex-Visualization-Windows-x64.zip)
+- [Download updated native Windows x64 build](Apex-Visualization-Windows-x64.zip)
 - [Download complete C++ source and offline dependencies](Apex-Visualization-Source.zip)
-- [Phase 2 performance report and verified results](apex-visualizer/PHASE2-PERFORMANCE-REPORT.md)
-- [Hardware counters, benchmark commands and remaining PC checks](apex-visualizer/HARDWARE-VALIDATION.md)
+- [Actual compute test report and remaining RTX checks](apex-visualizer/GPU-COMPUTE-REPORT.md)
+- [CUDA/ONNX GPU setup, benchmark and sustained-test commands](apex-visualizer/GPU-COMPUTE.md)
 - [Build instructions](apex-visualizer/README.md)
-- [Original feature audit and authorized-data requirements](apex-visualizer/FINAL-AUDIT.md)
 
-Extract the Windows ZIP fully and run `apex_visualizer.exe`. This standalone app displays explicit local simulation or your selected authorized JSON file in its own window. The System page adds real optional GPU/VRAM counters, CPU/RAM, frame and provider timing. NVIDIA counter and CUDA driver detection fail gracefully when unavailable; DirectX remains the renderer.
+Extract the Windows ZIP completely and run `apex_visualizer.exe`. Open **System → Run CUDA + ONNX validation** for actual vector-add and inference checks. CUDA detection alone never marks execution passed.
 
-The native build is checked with Visual Studio 2022, six test suites, two DX11 WARP smoke tests and a timed software-rendering benchmark. These checks do not establish RTX 3070 performance or long-duration hardware stability. Use the included `tools/benchmark.ps1` on that PC for reproducible measurements. No game process integration or memory access exists. Earlier Roblox files remain in this repository.
+The app includes a real CUDA driver/PTX workload, deterministic ONNX model, CPU/CUDA EP comparison, process GPU/VRAM/RAM monitoring, and a streamed sustained-test trace. The ZIP bundles CPU ONNX Runtime; the GPU installer supplies optional CUDA EP files, with compatible CUDA 12/cuDNN 9 and VC++ x64 dependencies needed separately. No rebuild is required to use the optional GPU runtime.
+
+Native Windows validation passed seven module suites, both DX11 smoke tests, 120 seconds of WARP rendering, 60 seconds of actual CPU ONNX inference, GPU-package download/hash/extraction, and missing-CUDA/runtime/cancellation checks. **RTX 3070 kernel execution, CUDA EP execution, performance and GPU leak freedom remain unverified by the build host.** Read the report for raw measured data and commands that require real GPU success.
+
+Existing visual settings, authorized JSON input and the DX11 renderer are preserved. The model is an untrained mathematical workload, independent of entity data. Earlier Roblox files remain in this repository.

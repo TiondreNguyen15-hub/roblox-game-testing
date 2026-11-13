@@ -1,3 +1,5 @@
+> **Current phase:** real CUDA workload and optional ONNX CUDA EP validation. [Setup and commands](GPU-COMPUTE.md) · [Actual native test report](GPU-COMPUTE-REPORT.md). The bundled CPU ONNX DLLs require VC++ x64 runtime; GPU inference additionally needs CUDA 12/cuDNN 9 and the optional GPU runtime. The DX11 application remains statically linked.
+
 # Apex Visualization — standalone DX11 data lab
 
 See [HARDWARE-VALIDATION.md](HARDWARE-VALIDATION.md) for Phase 2 hardware counters, benchmarks and limitations. See [FINAL-AUDIT.md](FINAL-AUDIT.md) for completed implementation, data-source requirements and hardware acceptance checks.

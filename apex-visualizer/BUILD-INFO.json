@@ -1,16 +1,19 @@
 {
-  "commit": "b7af9cfff79bd8e363e24fe67007ec9c7c335ea8",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43362563447",
-  "compiler": "Visual Studio 2022 x64 Release, static C/C++ runtime",
-  "exe_sha256": "45947c027c0f6f106b599bb7bdceb50cf42bc5075cdcdbd1a4c2f191081d8913",
-  "tests": 6,
+  "phase": "Actual GPU compute validation implementation; CPU runtime verified, physical CUDA verification pending",
+  "commit": "ea78b3e532b9d8fde6b2f8df629c566b154fa5ad",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43366750203",
+  "compiler": "Visual Studio 2022 x64 Release; static app runtime; optional ONNX DLLs require VC++ x64 runtime",
+  "exe_sha256": "0f9199dbb39ac0f6a5c152a4fc771807c930a32235c21957772f0198d8b6e67d",
+  "tests": 7,
   "smoke_frames": [
     6,
     60
   ],
-  "benchmark_measurement_seconds": 120.0,
-  "benchmark_warmup_seconds": 5.0,
-  "benchmark_gpu": "Microsoft Basic Render Driver",
-  "rtx3070_tested": false,
-  "cuda_workload_tested": false
+  "render_benchmark_seconds": 120,
+  "cpu_onnx_validation_min_seconds": 60.0,
+  "onnx_cpu_verified": true,
+  "rtx3070_kernel_verified_here": false,
+  "cuda_ep_verified_here": false,
+  "model_sha256": "2d08ea139dfea3fc7273eb47a58e1168dde19073ca3526c6fee62db096900c5b",
+  "onnx_runtime_version": "1.22.0"
 }

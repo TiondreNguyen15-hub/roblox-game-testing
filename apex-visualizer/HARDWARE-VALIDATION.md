@@ -1,3 +1,5 @@
+> Current compute phase: [GPU-COMPUTE.md](GPU-COMPUTE.md) and [GPU-COMPUTE-REPORT.md](GPU-COMPUTE-REPORT.md) supersede earlier detection-only/no-model descriptions. This record preserves the previous phase's measurements.
+
 # Phase 2 — hardware validation and performance audit
 
 This is a standalone DirectX visualization app using local simulation or an explicitly selected JSON file. No game process access or external game integration is present. No RTX 3070 performance result is asserted without a measurement from that machine.
