@@ -43,6 +43,14 @@ jobs:
           $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-iterations','5','--require-cuda','--warp','--output','./compute-required-negative' -PassThru
           if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Negative CUDA test timeout' }
           if ($p.ExitCode -ne 6) { throw "Expected unverified CUDA exit 6, got $($p.ExitCode)" }
+      - name: Cancelled compute must fail even after CPU validation
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-seconds','30','--compute-cancel-after','1','--warp','--output','./compute-cancelled' -PassThru
+          if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Cancelled run timeout' }
+          if ($p.ExitCode -ne 6) { throw "Expected cancelled exit 6, got $($p.ExitCode)" }
+          $report = Get-Content ./compute-cancelled/compute-report.json -Raw | ConvertFrom-Json
+          if ($report.phase -ne 'cancelled' -or $report.cuda_ep_inference.verified) { throw 'Cancelled run falsely completed' }
       - name: Missing runtime recovery
         shell: pwsh
         run: |
@@ -67,4 +75,5 @@ jobs:
             gpu-runtime-install-manifest.json
             compute-required-negative/
             compute-missing-runtime/
+            compute-cancelled/
           if-no-files-found: error
