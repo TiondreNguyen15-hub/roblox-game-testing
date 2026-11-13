@@ -19,7 +19,7 @@ struct ComputeTest {
  std::string state="not_run",message="Not tested",reason="NOT_RUN",blockedBy,profileFile,inputContract;double measuredWallSeconds=-1;bool verified=false;TimingSummary latency,kernel;
 };
 struct LibraryDiagnostic {std::string name,path,state,message;unsigned long errorCode=0;};
-struct ProcessObservation {double engineBusy=-1,localVramMiB=-1,workingMiB=-1,privateMiB=-1;};
+struct ProcessObservation {double engineBusy=-1,localVramMiB=-1,workingMiB=-1,privateMiB=-1,deviceBusy=-1,deviceVramMiB=-1;};
 struct ComputeSnapshot {
  bool running=false,finished=false,modelBenchmark=false;double gpuTargetSeconds=0;std::string modelPath,modelSha256,inputProfilePath,inputProfileSha256;MemoryTrend vramTrend,privateTrend;std::string phase="idle",adapter,ortVersion,providerStatus="Not tested",error;
  int cudaDriverVersion=0;std::string runtimePath;std::vector<std::string> availableProviders;std::vector<LibraryDiagnostic> dependencies;
