@@ -10,7 +10,7 @@ bool project(Vec3 p,float w,float h,Vec2& s){
 }
 void Simulation::update(double time,int count,int scene){
  count=std::clamp(count,1,64);entities_.resize(static_cast<size_t>(count));
- for(int i=0;i<count;++i){auto& e=entities_[i];float t=scene==2?0.f:static_cast<float>(time);e.id=i;e.team=i%3;e.health=20.f+80.f*(.5f+.5f*std::sin(t*.3f+i));e.visible=std::sin(t*.35f+i*.9f)>-.25f;e.name="Operator "+std::to_string(i+1);
+ for(int i=0;i<count;++i){auto& e=entities_[i];float t=scene==2?0.f:static_cast<float>(time);e.id=i;e.hasSkeleton=true;e.synthetic=true;e.team=i%3;e.health=20.f+80.f*(.5f+.5f*std::sin(t*.3f+i));e.visible=std::sin(t*.35f+i*.9f)>-.25f;e.name="Operator "+std::to_string(i+1);
   float x=(i%8-3.5f)*4.2f+std::sin(t*.4f+i)*1.3f,z=14.f+(i/8)*16.f+(i%3)*4.f;if(scene==1){x=std::sin(t*.7f+i*.6f)*12.f;z=18.f+(i%4)*6.f;}e.position={x,0,z};
   const float step=std::sin(t*2.f+i)*.13f;
   const std::array<Vec3,15> pose={{{0,1.8f,0},{0,1.55f,0},{0,1.05f,0},{-.28f,1.48f,0},{-.48f,1.15f,step},{-.58f,.87f,step},{.28f,1.48f,0},{.48f,1.15f,-step},{.58f,.87f,-step},{-.18f,.98f,0},{-.22f,.52f,step},{-.25f,0,step},{.18f,.98f,0},{.22f,.52f,-step},{.25f,0,-step}}};

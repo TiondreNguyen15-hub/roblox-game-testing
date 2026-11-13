@@ -51,3 +51,11 @@ The source mode and path save/load with the existing configuration buttons. Rela
 ## Copy/paste paths
 
 Click JSON path and use Ctrl+A/Ctrl+V, or click **Paste path**. Windows Explorer **Copy as path** quotes are removed when you paste with the button or finish editing (Enter/click outside). **Copy path** and a right-click context menu are also available. Pasted paths over 200 UTF-8 bytes or containing multiple lines are rejected with a message instead of being silently truncated.
+
+## Final audit additions
+
+Interactive file polling/parsing now uses a bounded background worker. Old results are discarded across source changes. `provider.hpp` selects providers through the common interface; `async_source.hpp` implements handoff and cleanup; `log.cpp` records provider failures and recovery without repeating the same error each poll.
+
+A player record may include `bones`: an array of exactly 15 `[x,y]` screen points. Joint order: head, neck, pelvis, left shoulder/elbow/hand, right shoulder/elbow/hand, left hip/knee/foot, right hip/knee/foot. Coordinates are absolute client-area pixels. Omit it if your producer has no authorized bones; the skeleton toggle then draws no skeleton for that record.
+
+For the optional `{ "schema": 1, "entities": [...] }` 3D format, each entity supplies integer `id`, integer `team`, `name`, `health`, `visible`, and `position: [x,y,z]` in meters. Optional `shield` is 0–100; optional `bones` contains the same 15 joints as `[x,y,z]` world points. The camera is fixed at `(0,1.1,0)`, looks along +Z and has a 70-degree vertical FOV. Missing bones are never synthesized. Bounds without bones use a documented 1.8 m display height, not discovered anatomy.

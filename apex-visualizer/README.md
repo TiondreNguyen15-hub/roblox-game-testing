@@ -1,4 +1,6 @@
-# Apex Visualization — standalone DX11 simulation lab
+# Apex Visualization — standalone DX11 data lab
+
+See [FINAL-AUDIT.md](FINAL-AUDIT.md) for completed implementation, data-source requirements and hardware acceptance checks.
 
 A modular C++17 Windows desktop application with a dark/purple Dear ImGui interface and animated simulated entities. It draws its own scene inside its own window. No process injection, game hooks, protected-memory access, anti-cheat interaction or live multiplayer manipulation is implemented.
 
@@ -64,7 +66,7 @@ Matching headers live under include/apex. No function is a placeholder. Statisti
 
 ## Performance and resource lifetime
 
-One ImGui DX11 submission per frame, CPU-filtered entities capped at 64, reusable entity vector, clipped draw lists, VSync/frame limiting, and minimized/occluded throttling. Camera projection uses a fixed synthetic 70-degree vertical field of view. DX11 queries the actual adapter; WARP is used if hardware creation fails. Device loss/resize/present failures terminate with an HRESULT error instead of continuing with invalid resources.
+Flip-discard presentation with bounded frame latency, asynchronous GPU timing, and one ImGui DX11 submission per frame, CPU-filtered entities capped at 64, reusable entity vector, clipped draw lists, VSync/frame limiting, and minimized/occluded throttling. Camera projection uses a fixed synthetic 70-degree vertical field of view. DX11 queries the actual adapter; WARP is used if hardware creation fails. Device loss/resize/present failures terminate with an HRESULT error instead of continuing with invalid resources.
 
 Window, ImGui backend/context and renderer lifetimes unwind in reverse order, including partial initialization. Swap-chain references are unbound before resize; temporary COM interfaces are released. No external render hooks or other process handles are opened.
 
@@ -78,6 +80,6 @@ Windows smoke mode creates a real WARP DX11 window, renders six frames, checks n
 .\build\Release\apex_visualizer.exe --smoke-test
 ```
 
-`--warp` explicitly selects software rendering; `--frames 120` exits after 120 rendered frames. Normal launch uses hardware with fallback. Errors are appended to apex-error.log; normal-mode errors also display a message box.
+`--warp` explicitly selects software rendering; `--frames 120` exits after 120 rendered frames. Normal launch uses hardware with fallback. Errors are recorded in %LOCALAPPDATA%\ApexVisualization\apex.log; normal-mode errors also display a message box.
 
 A GitHub Actions workflow is supplied for Visual Studio builds, CTest and the DX11 WARP smoke test. The Visual Studio 2022 build, all four test suites and the JSON-driven DX11 WARP smoke test passed in [this Windows run](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43356676687). See VALIDATION.md for manual hardware checks still outstanding.

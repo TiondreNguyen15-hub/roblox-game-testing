@@ -1,4 +1,5 @@
 #include "apex/config.hpp"
+#include "apex/log.hpp"
 #include <fstream>
 #include <sstream>
 #include <iomanip>
@@ -31,8 +32,8 @@ bool Config::save(const std::filesystem::path& path,const Settings& input,std::s
 #else
   std::filesystem::rename(temp,path);
 #endif
-  error.clear();return true;
- }catch(const std::exception& e){error=e.what();return false;}
+  error.clear();Log::write("INFO","Configuration operation completed");return true;
+ }catch(const std::exception& e){error=e.what();Log::write("WARN","Configuration: "+error);return false;}
 }
 bool Config::load(const std::filesystem::path& path,Settings& output,std::string& error){
  try{
@@ -60,7 +61,7 @@ bool Config::load(const std::filesystem::path& path,Settings& output,std::string
    if(key.size()==7&&key.compare(0,6,"accent")==0&&key[6]>='0'&&key[6]<='2')next.accent[key[6]-'0']=static_cast<float>(v);
   }
   if(!in.eof()||!version)throw std::runtime_error("Incomplete configuration");
-  next.clamp();output=next;error.clear();return true;
- }catch(const std::exception& e){error=e.what();return false;}
+  next.clamp();output=next;error.clear();Log::write("INFO","Configuration operation completed");return true;
+ }catch(const std::exception& e){error=e.what();Log::write("WARN","Configuration: "+error);return false;}
 }
 }

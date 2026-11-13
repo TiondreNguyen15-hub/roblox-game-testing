@@ -14,5 +14,9 @@ int main(){try{
  CHECK(apex::Telemetry::decode(R"({"players":[{"name":"One","health":100,"shield":100,"distance":45,"x":500,"y":300,"visible":true},{"name":"Two","health":75,"shield":50,"distance":90,"x":800,"y":400,"visible":true}]})",players,error));
  settings=apex::Settings{};settings.liveFile=true;ImGui::NewFrame();stats=visuals.draw(players,settings,1280,720);ImGui::Render();CHECK(stats.drawn==2);
  settings.maxDistance=60;ImGui::NewFrame();stats=visuals.draw(players,settings,1280,720);ImGui::Render();CHECK(stats.drawn==1&&stats.filtered==1);
+ settings=apex::Settings{};settings.liveFile=true;settings.boxes=false;settings.health=false;settings.shields=false;settings.names=false;settings.distance=false;settings.teams=false;settings.visibility=false;
+ ImGui::NewFrame();visuals.draw(players,settings,1280,720);ImGui::Render();int without=ImGui::GetDrawData()->TotalVtxCount;
+ settings.skeleton=false;ImGui::NewFrame();visuals.draw(players,settings,1280,720);ImGui::Render();CHECK(ImGui::GetDrawData()->TotalVtxCount==without);
+ settings.shields=true;ImGui::NewFrame();visuals.draw(players,settings,1280,720);ImGui::Render();CHECK(ImGui::GetDrawData()->TotalVtxCount>without);
  ImGui::DestroyContext();std::cout<<"PASS: actual ImGui draw generation, entity filters, corner boxes and overlay toggles\n";return 0;
  }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

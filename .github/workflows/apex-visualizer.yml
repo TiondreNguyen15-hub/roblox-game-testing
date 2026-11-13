@@ -4,7 +4,7 @@ jobs:
   windows:
     runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Configure
         run: cmake -S apex-visualizer -B build-apex -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON
       - name: Compile
@@ -16,9 +16,9 @@ jobs:
         run: |
           $p = Start-Process -FilePath './build-apex/Release/apex_visualizer.exe' -ArgumentList '--smoke-test','--json','apex-visualizer/apex_entities.json' -PassThru
           if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Smoke test timed out' }
-          if ($p.ExitCode -ne 0) { if (Test-Path apex-error.log) { Get-Content apex-error.log }; throw "Smoke test failed: $($p.ExitCode)" }
+          if ($p.ExitCode -ne 0) { if (Test-Path "$env:LOCALAPPDATA/ApexVisualization/apex.log") { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" }; throw "Smoke test failed: $($p.ExitCode)" }
           Get-Content smoke-result.txt
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: apex-visualizer-windows
           path: |
