@@ -1,0 +1,214 @@
+{
+  "acceleration_status": "Cancelled; inspect individual verified results",
+  "adapter": "Microsoft Basic Render Driver",
+  "available_providers": [
+    "AzureExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "cpu_inference": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "message": "Cancelled; phase not verified complete",
+    "profile_file": "",
+    "reason_code": "CANCELLED",
+    "run_end_to_end": null,
+    "state": "cancelled",
+    "verified": false
+  },
+  "cpu_to_cuda_ep_latency_ratio": null,
+  "cuda_driver_api_version": null,
+  "cuda_ep_inference": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "message": "Not tested",
+    "profile_file": "",
+    "reason_code": "NOT_RUN",
+    "run_end_to_end": null,
+    "state": "not_run",
+    "verified": false
+  },
+  "cuda_workload": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+    "profile_file": "",
+    "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "dependencies": [
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cudart64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cublasLt64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cublas64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cufft64_11.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_engines_runtime_compiled64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_engines_precompiled64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_heuristic64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_ops64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_adv64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_cnn64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_graph64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    }
+  ],
+  "error": "Cancelled; partial measurements only",
+  "finished": true,
+  "measurement_notes": "Synthetic authorized compute only. ONNX Run wall latency includes transfers, execution and output materialization; output validation and setup excluded. Serial inference/s is reciprocal mean Run latency, not display FPS. CUDA event duration measures the vector-add kernel, not inference. CUDA EP marked verified only with numeric agreement, disabled CPU fallback and a CUDAExecutionProvider node in actual ORT profiling. Render FPS is reciprocal of observed main-window frame intervals during each phase; short phases can have too few frames to compare. Process GPU busy is PDH busiest matching PID+adapter engine; local VRAM is per-process DXGI WDDM usage. Counters sampled at 2Hz can miss short peaks. Memory endpoints/ranges do not establish leak freedom.",
+  "minimum_seconds_per_available_phase": 30.0,
+  "model": "Bundled deterministic MatMul(128x256,256x256)+Relu, float32",
+  "observed_render_frame_intervals": {
+    "cpu_inference": {
+      "max_ms": 13.8225,
+      "mean_ms": 12.272562820512823,
+      "min_ms": 9.5281,
+      "observations": 78,
+      "serial_latency_equivalent_per_second": 81.48257333248785
+    },
+    "cuda_vector_add": {
+      "max_ms": 12.882,
+      "mean_ms": 12.4156,
+      "min_ms": 11.7507,
+      "observations": 4,
+      "serial_latency_equivalent_per_second": 80.54383195334901
+    }
+  },
+  "onnx_runtime_version": "1.22.0",
+  "phase": "cancelled",
+  "process_after_cleanup": {
+    "private_mib": 18.58984375,
+    "process_busiest_engine_percent": 95.73220835516601,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 38.171875
+  },
+  "process_before": {
+    "private_mib": 17.22265625,
+    "process_busiest_engine_percent": 95.60056681300334,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 36.0390625
+  },
+  "process_observations": 196,
+  "process_peak_observed": {
+    "private_mib": 26.703125,
+    "process_busiest_engine_percent": 96.74095855514757,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 51.7265625
+  },
+  "requested_iterations_per_phase": 200,
+  "runtime_path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\build-apex\\Release\\runtime\\cpu\\onnxruntime.dll",
+  "test_inventory": [
+    {
+      "blocked_by": "",
+      "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+      "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cuda_workload",
+      "verified": false
+    },
+    {
+      "blocked_by": "",
+      "message": "Cancelled; phase not verified complete",
+      "reason_code": "CANCELLED",
+      "state": "cancelled",
+      "test": "cpu_inference",
+      "verified": false
+    },
+    {
+      "blocked_by": "",
+      "message": "Not tested",
+      "reason_code": "NOT_RUN",
+      "state": "not_run",
+      "test": "cuda_ep_inference",
+      "verified": false
+    },
+    {
+      "message": "Requires passed CPU and CUDA EP inference",
+      "state": "skipped",
+      "test": "cpu_gpu_comparison",
+      "verified": false
+    },
+    {
+      "message": "Recommended minimum 600 seconds per phase; inspect actual loop duration and verification",
+      "state": "incomplete",
+      "test": "sustained_cuda_inference",
+      "verified": false
+    },
+    {
+      "message": "Memory counters alone cannot establish driver/CUDA leak freedom",
+      "state": "not_recorded",
+      "test": "native_gpu_leak_analysis",
+      "verified": false
+    }
+  ]
+}

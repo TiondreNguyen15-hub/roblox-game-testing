@@ -1,3 +1,5 @@
+> **Latest cuDNN crash fix:** [PC outcome and patch](CUDNN-CRASH-FIX.md) · [Actual validation](CUDNN-FIX-VALIDATION.md). A later user run passed CUDA inference with the process-only PATH workaround; earlier missing-data statements below are historical.
+
 # PC result analysis: evidence still needed, source defects repaired
 
 ## What is actually known from your PC

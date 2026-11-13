@@ -1,0 +1,110 @@
+{
+  "acceleration_status": "Inference unavailable; DX11 renderer remains active",
+  "adapter": "Microsoft Basic Render Driver",
+  "available_providers": [],
+  "cpu_inference": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "message": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+    "profile_file": "",
+    "reason_code": "ORT_RUNTIME_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "cpu_to_cuda_ep_latency_ratio": null,
+  "cuda_driver_api_version": null,
+  "cuda_ep_inference": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "message": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+    "profile_file": "",
+    "reason_code": "ORT_RUNTIME_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "cuda_workload": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+    "profile_file": "",
+    "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "dependencies": [],
+  "error": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+  "finished": true,
+  "measurement_notes": "Synthetic authorized compute only. ONNX Run wall latency includes transfers, execution and output materialization; output validation and setup excluded. Serial inference/s is reciprocal mean Run latency, not display FPS. CUDA event duration measures the vector-add kernel, not inference. CUDA EP marked verified only with numeric agreement, disabled CPU fallback and a CUDAExecutionProvider node in actual ORT profiling. Render FPS is reciprocal of observed main-window frame intervals during each phase; short phases can have too few frames to compare. Process GPU busy is PDH busiest matching PID+adapter engine; local VRAM is per-process DXGI WDDM usage. Counters sampled at 2Hz can miss short peaks. Memory endpoints/ranges do not establish leak freedom.",
+  "minimum_seconds_per_available_phase": 0.0,
+  "model": "Bundled deterministic MatMul(128x256,256x256)+Relu, float32",
+  "onnx_runtime_version": "",
+  "phase": "unavailable_or_failed",
+  "process_after_cleanup": {
+    "private_mib": 17.43359375,
+    "process_busiest_engine_percent": 95.32329909576357,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 36.13671875
+  },
+  "process_before": {
+    "private_mib": 16.58984375,
+    "process_busiest_engine_percent": 94.49212813439317,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 35.71484375
+  },
+  "process_observations": 114,
+  "process_peak_observed": {
+    "private_mib": 17.43359375,
+    "process_busiest_engine_percent": 95.32329909576357,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 36.13671875
+  },
+  "requested_iterations_per_phase": 5,
+  "runtime_path": "",
+  "test_inventory": [
+    {
+      "blocked_by": "",
+      "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+      "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cuda_workload",
+      "verified": false
+    },
+    {
+      "blocked_by": "",
+      "message": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+      "reason_code": "ORT_RUNTIME_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cpu_inference",
+      "verified": false
+    },
+    {
+      "blocked_by": "",
+      "message": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+      "reason_code": "ORT_RUNTIME_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cuda_ep_inference",
+      "verified": false
+    },
+    {
+      "message": "Requires passed CPU and CUDA EP inference",
+      "state": "skipped",
+      "test": "cpu_gpu_comparison",
+      "verified": false
+    },
+    {
+      "message": "Recommended minimum 600 seconds per phase; inspect actual loop duration and verification",
+      "state": "incomplete",
+      "test": "sustained_cuda_inference",
+      "verified": false
+    },
+    {
+      "message": "Memory counters alone cannot establish driver/CUDA leak freedom",
+      "state": "not_recorded",
+      "test": "native_gpu_leak_analysis",
+      "verified": false
+    }
+  ]
+}

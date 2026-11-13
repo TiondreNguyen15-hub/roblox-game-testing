@@ -1,3 +1,5 @@
+> **Latest cuDNN crash fix:** [PC outcome and patch](CUDNN-CRASH-FIX.md) · [Actual validation](CUDNN-FIX-VALIDATION.md). A later user run passed CUDA inference with the process-only PATH workaround; earlier missing-data statements below are historical.
+
 > **Latest runtime repair:** [PC evidence and fixes](PC-RESULTS-AND-REPAIRS.md) · [Actual repair validation](RUNTIME-REPAIR-VALIDATION.md). Your PC report is still required for PC-specific conclusions.
 
 > **Current phase:** real CUDA workload and optional ONNX CUDA EP validation. [Setup and commands](GPU-COMPUTE.md) · [Actual native test report](GPU-COMPUTE-REPORT.md). The bundled CPU ONNX DLLs require VC++ x64 runtime; GPU inference additionally needs CUDA 12/cuDNN 9 and the optional GPU runtime. The DX11 application remains statically linked.

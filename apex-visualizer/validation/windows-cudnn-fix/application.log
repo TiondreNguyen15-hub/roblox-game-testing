@@ -1,0 +1,49 @@
+2026-11-13T21:53:49Z [INFO] Configuration operation completed
+2026-11-13T21:53:49Z [INFO] Configuration operation completed
+2026-11-13T21:53:49Z [WARN] Configuration: Invalid boolean
+2026-11-13T21:53:49Z [WARN] Configuration: Invalid numeric setting
+2026-11-13T21:53:49Z [WARN] Configuration: Unsupported configuration version
+2026-11-13T21:53:49Z [WARN] Configuration: Invalid integer
+2026-11-13T21:53:49Z [WARN] Configuration: Configuration exceeds 32 KiB
+2026-11-13T21:53:49Z [INFO] Configuration operation completed
+2026-11-13T21:53:49Z [INFO] Configuration operation completed
+2026-11-13T21:53:49Z [INFO] Configuration operation completed
+2026-11-13T21:53:49Z [INFO] Configuration operation completed
+2026-11-13T21:53:49Z [INFO] Configuration operation completed
+2026-11-13T21:53:49Z [INFO] JSON provider recovered
+2026-11-13T21:53:49Z [WARN] JSON provider: [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - invalid literal; last read: 'p'
+2026-11-13T21:53:49Z [INFO] JSON provider recovered
+2026-11-13T21:53:49Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "C:\Users\RUNNER~1\AppData\Local\Temp\apex-file-telemetry-test.json"
+2026-11-13T21:53:49Z [INFO] JSON provider recovered
+2026-11-13T21:53:49Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "C:\Users\RUNNER~1\AppData\Local\Temp\apex-file-telemetry-test.json"
+2026-11-13T21:53:49Z [INFO] JSON provider recovered
+2026-11-13T21:53:50Z [INFO] Application startup
+2026-11-13T21:53:50Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-13T21:53:50Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-13T21:53:50Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-13T21:53:50Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-13T21:53:50Z [INFO] JSON provider recovered
+2026-11-13T21:53:50Z [INFO] Application shutdown
+2026-11-13T21:53:50Z [INFO] Application startup
+2026-11-13T21:53:50Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-13T21:53:50Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-13T21:53:50Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-13T21:53:50Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-13T21:53:50Z [INFO] JSON provider recovered
+2026-11-13T21:53:51Z [INFO] Application shutdown
+2026-11-13T21:53:53Z [INFO] Application startup
+2026-11-13T21:53:53Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-13T21:53:54Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-13T21:53:54Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-13T21:53:54Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-13T21:55:59Z [INFO] Application shutdown
+2026-11-13T21:56:00Z [INFO] Application startup
+2026-11-13T21:56:00Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-13T21:56:01Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-13T21:56:01Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-13T21:56:01Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-13T21:56:02Z [WARN] Compute 0 unavailable: CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  
+2026-11-13T21:57:02Z [INFO] Compute 1 passed: CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread
+2026-11-13T21:57:02Z [WARN] Compute 2 skipped: No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.
+2026-11-13T21:57:03Z [INFO] Compute report status: D:\a\roblox-game-testing\roblox-game-testing\compute-validation\20261113-215559-438\compute-report.json
+2026-11-13T21:57:03Z [INFO] Application shutdown

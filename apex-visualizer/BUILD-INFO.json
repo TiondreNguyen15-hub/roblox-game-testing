@@ -1,16 +1,14 @@
 {
-  "phase": "Runtime dependency and ONNX provider initialization repair",
-  "commit": "e24ca35755a0a82315e09ab2a10725ffcb2ebb17",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43372129649",
-  "exe_sha256": "a3020ebaccd72ba2278d4a5c56e5d220558149df4bf609b9af8a210452a5dfff",
-  "compiler": "Visual Studio 2022 x64 Release / static app runtime",
-  "windows_cpp_test_suites": 7,
-  "portable_sanitizer_suites": 7,
-  "python_audit_tests": 6,
-  "nvidia_dependency_dll_load_test": "passed",
-  "onnx_provider_bridge_probe": "blocked by unavailable NVIDIA driver",
-  "onnx_cpu_inference_verified_here": true,
-  "rtx3070_inference_verified_here": false,
-  "actual_pc_report_supplied": false,
-  "model_sha256": "2d08ea139dfea3fc7273eb47a58e1168dde19073ca3526c6fee62db096900c5b"
+  "phase": "Complete cuDNN companion preloading / first-use crash fix",
+  "commit": "7177fef1fcb416ecb07d5a0fdf137a8cf871a45d",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43514496776",
+  "exe_sha256": "fe627810a20be7867f56742ac1af4cd6f7f154f8b149c27aa83aeea89fa36c74",
+  "cpp_suites": 7,
+  "nvidia_dlls_actually_loaded": 12,
+  "cudnn_first_use_get_version": "passed",
+  "missing_cudnn_companion_clean_rejection": "passed",
+  "provider_probe": "blocked without a usable driver",
+  "user_reported_rtx3070_inference_with_temporary_path": "passed",
+  "patched_binary_normal_launch_on_user_pc": "pending",
+  "sustained_gpu_or_leak_freedom_claimed": false
 }

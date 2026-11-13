@@ -1,3 +1,5 @@
+> **Latest cuDNN crash fix:** [PC outcome and patch](CUDNN-CRASH-FIX.md) · [Actual validation](CUDNN-FIX-VALIDATION.md). A later user run passed CUDA inference with the process-only PATH workaround; earlier missing-data statements below are historical.
+
 # Runtime repair validation — build host, not your PC
 
 [Passed native Windows run](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43372129649); native source commit `e24ca35755a0a82315e09ab2a10725ffcb2ebb17`. Shipped EXE SHA256 `a3020ebaccd72ba2278d4a5c56e5d220558149df4bf609b9af8a210452a5dfff`.

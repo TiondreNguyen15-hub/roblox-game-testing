@@ -1,0 +1,229 @@
+{
+  "acceleration_status": "CPU fallback verified; CUDA EP skipped [BLOCKED_BY_CUDA_DEVICE]: No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.",
+  "adapter": "Microsoft Basic Render Driver",
+  "available_providers": [
+    "AzureExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "cpu_inference": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "message": "CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread",
+    "profile_file": "",
+    "reason_code": "VERIFIED_EXECUTION",
+    "run_end_to_end": {
+      "max_ms": 0.3233,
+      "mean_ms": 0.29347999999999996,
+      "min_ms": 0.24830000000000002,
+      "observations": 5,
+      "serial_latency_equivalent_per_second": 3407.387215483168
+    },
+    "state": "passed",
+    "validated_iterations_per_second": 2264.2876551037043,
+    "validated_loop_duration_s": 0.0022082,
+    "verified": true
+  },
+  "cpu_to_cuda_ep_latency_ratio": null,
+  "cuda_driver_api_version": null,
+  "cuda_ep_inference": {
+    "blocked_by": "cuda_workload",
+    "cuda_kernel_events": null,
+    "message": "No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.",
+    "profile_file": "",
+    "reason_code": "BLOCKED_BY_CUDA_DEVICE",
+    "run_end_to_end": null,
+    "state": "skipped",
+    "verified": false
+  },
+  "cuda_workload": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+    "profile_file": "",
+    "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "dependencies": [
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cudart64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cublasLt64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cublas64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cufft64_11.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_engines_runtime_compiled64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_engines_precompiled64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_heuristic64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_ops64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_adv64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_cnn64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_graph64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    }
+  ],
+  "error": "",
+  "finished": true,
+  "measurement_notes": "Synthetic authorized compute only. ONNX Run wall latency includes transfers, execution and output materialization; output validation and setup excluded. Serial inference/s is reciprocal mean Run latency, not display FPS. CUDA event duration measures the vector-add kernel, not inference. CUDA EP marked verified only with numeric agreement, disabled CPU fallback and a CUDAExecutionProvider node in actual ORT profiling. Render FPS is reciprocal of observed main-window frame intervals during each phase; short phases can have too few frames to compare. Process GPU busy is PDH busiest matching PID+adapter engine; local VRAM is per-process DXGI WDDM usage. Counters sampled at 2Hz can miss short peaks. Memory endpoints/ranges do not establish leak freedom.",
+  "minimum_seconds_per_available_phase": 0.0,
+  "model": "Bundled deterministic MatMul(128x256,256x256)+Relu, float32",
+  "observed_render_frame_intervals": {
+    "completed": {
+      "max_ms": 12.891,
+      "mean_ms": 12.891,
+      "min_ms": 12.891,
+      "observations": 1,
+      "serial_latency_equivalent_per_second": 77.57350089209525
+    },
+    "cpu_inference": {
+      "max_ms": 14.4018,
+      "mean_ms": 13.409849999999999,
+      "min_ms": 12.4179,
+      "observations": 2,
+      "serial_latency_equivalent_per_second": 74.57204965007067
+    },
+    "cuda_vector_add": {
+      "max_ms": 13.1904,
+      "mean_ms": 12.352925,
+      "min_ms": 11.6199,
+      "observations": 4,
+      "serial_latency_equivalent_per_second": 80.95248696159007
+    }
+  },
+  "onnx_runtime_version": "1.22.0",
+  "phase": "completed",
+  "process_after_cleanup": {
+    "private_mib": 18.75390625,
+    "process_busiest_engine_percent": 95.29938908099473,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 38.38671875
+  },
+  "process_before": {
+    "private_mib": 16.21484375,
+    "process_busiest_engine_percent": 94.92755908592426,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 35.609375
+  },
+  "process_observations": 122,
+  "process_peak_observed": {
+    "private_mib": 18.75390625,
+    "process_busiest_engine_percent": 95.54308270703335,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 38.38671875
+  },
+  "requested_iterations_per_phase": 5,
+  "runtime_path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\build-apex\\Release\\runtime\\cpu\\onnxruntime.dll",
+  "test_inventory": [
+    {
+      "blocked_by": "",
+      "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+      "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cuda_workload",
+      "verified": false
+    },
+    {
+      "blocked_by": "",
+      "message": "CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread",
+      "reason_code": "VERIFIED_EXECUTION",
+      "state": "passed",
+      "test": "cpu_inference",
+      "verified": true
+    },
+    {
+      "blocked_by": "cuda_workload",
+      "message": "No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.",
+      "reason_code": "BLOCKED_BY_CUDA_DEVICE",
+      "state": "skipped",
+      "test": "cuda_ep_inference",
+      "verified": false
+    },
+    {
+      "message": "Requires passed CPU and CUDA EP inference",
+      "state": "skipped",
+      "test": "cpu_gpu_comparison",
+      "verified": false
+    },
+    {
+      "message": "Recommended minimum 600 seconds per phase; inspect actual loop duration and verification",
+      "state": "incomplete",
+      "test": "sustained_cuda_inference",
+      "verified": false
+    },
+    {
+      "message": "Memory counters alone cannot establish driver/CUDA leak freedom",
+      "state": "not_recorded",
+      "test": "native_gpu_leak_analysis",
+      "verified": false
+    }
+  ]
+}
