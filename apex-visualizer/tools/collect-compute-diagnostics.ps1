@@ -26,6 +26,7 @@ if (Test-Path $log) { Copy-Item $log (Join-Path $stage 'apex.log') }
 @{collected_utc=[DateTime]::UtcNow.ToString('o');source_directory=$ResultDirectory;app_directory=$AppDirectory;bundled_ci_reports_included=$false} | ConvertTo-Json | Set-Content (Join-Path $stage 'collection.json')
 Get-CimInstance Win32_VideoController | Select-Object Name,DriverVersion | ConvertTo-Json | Set-Content (Join-Path $stage 'current-display-adapters.json')
 if (Test-Path (Join-Path $AppDirectory 'BUILD-INFO.json')) { Copy-Item (Join-Path $AppDirectory 'BUILD-INFO.json') (Join-Path $stage 'application-build-info.json') }
+@{CUDA_PATH=$env:CUDA_PATH;CUDNN_PATH=$env:CUDNN_PATH;CUDA_VISIBLE_DEVICES=$env:CUDA_VISIBLE_DEVICES;CUDA_DEVICE_ORDER=$env:CUDA_DEVICE_ORDER;APEX_CUDA_DLL_DIRS=$env:APEX_CUDA_DLL_DIRS} | ConvertTo-Json | Set-Content (Join-Path $stage 'runtime-environment.json')
 $zip=$stage+'.zip';Compress-Archive -LiteralPath $stage -DestinationPath $zip
 Write-Host "Attach this ZIP for analysis: $zip"
 Write-Host 'It contains selected test reports and application logs/paths, not your entity JSON file. Nothing was uploaded automatically.'
