@@ -74,4 +74,4 @@ Windows smoke mode creates a real WARP DX11 window, renders six frames, checks n
 
 `--warp` explicitly selects software rendering; `--frames 120` exits after 120 rendered frames. Normal launch uses hardware with fallback. Errors are appended to apex-error.log; normal-mode errors also display a message box.
 
-A GitHub Actions workflow is supplied for Visual Studio builds, CTest and the DX11 WARP smoke test. A supplied workflow is not evidence that it has passed; consult its run status and VALIDATION.md.
+A GitHub Actions workflow is supplied for Visual Studio builds, CTest and the DX11 WARP smoke test. The Visual Studio 2022 build, all three test suites and the DX11 WARP smoke test passed in [this Windows run](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43354535661). See VALIDATION.md for manual hardware checks still outstanding.
