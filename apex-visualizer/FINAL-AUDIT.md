@@ -1,3 +1,5 @@
+> Phase 2 adds hardware telemetry and benchmarking; see [HARDWARE-VALIDATION.md](HARDWARE-VALIDATION.md) and [PHASE2-PERFORMANCE-REPORT.md](PHASE2-PERFORMANCE-REPORT.md) for current behavior and validation. The record below describes the preceding audit.
+
 # Final application audit
 
 ## Completed implementation

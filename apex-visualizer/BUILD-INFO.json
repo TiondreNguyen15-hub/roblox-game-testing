@@ -1,12 +1,16 @@
 {
-  "commit": "e6330e0cda837d6fee0f211e2f28c812232b18b6",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43359752528",
-  "compiler": "Visual Studio 2022 x64 Release, static runtime",
-  "exe_sha256": "49d301210753ff4cb5e78050586e2d53909ef19a76ef0bd63fb2f8563d47837c",
-  "tests": 5,
+  "commit": "b7af9cfff79bd8e363e24fe67007ec9c7c335ea8",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43362563447",
+  "compiler": "Visual Studio 2022 x64 Release, static C/C++ runtime",
+  "exe_sha256": "45947c027c0f6f106b599bb7bdceb50cf42bc5075cdcdbd1a4c2f191081d8913",
+  "tests": 6,
   "smoke_frames": [
     6,
     60
   ],
-  "gpu_tested": "Microsoft Basic Render Driver (WARP); RTX 3070 measurements not performed"
+  "benchmark_measurement_seconds": 120.0,
+  "benchmark_warmup_seconds": 5.0,
+  "benchmark_gpu": "Microsoft Basic Render Driver",
+  "rtx3070_tested": false,
+  "cuda_workload_tested": false
 }

@@ -1,3 +1,5 @@
+> Previous-phase validation record. Current six-suite and performance validation is in [PHASE2-PERFORMANCE-REPORT.md](PHASE2-PERFORMANCE-REPORT.md). Hardware counters added in Phase 2 supersede the earlier metadata-only limitation.
+
 # Final validation record
 
 ## Native Windows validation passed
