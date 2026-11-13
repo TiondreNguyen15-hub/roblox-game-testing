@@ -30,6 +30,18 @@ jobs:
           ./apex-visualizer/tools/compute-benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./compute-validation -Seconds 60 -Warp
           $report = Get-Content (Get-ChildItem compute-validation -Recurse -Filter compute-report.json | Select-Object -First 1).FullName -Raw | ConvertFrom-Json
           if (-not $report.cpu_inference.verified -or $report.cuda_workload.verified -or $report.cuda_ep_inference.verified) { throw 'Unexpected compute verification state on WARP runner' }
+      - name: Selected-model benchmark and input-shape recovery
+        shell: pwsh
+        run: |
+          ./apex-visualizer/tools/model-benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Model ./apex-visualizer/tests/fixtures/dynamic-relu.onnx -InputProfile ./apex-visualizer/tests/fixtures/dynamic-shapes.json -CpuSeconds 3 -GpuSeconds 2 -Output ./model-benchmark-validation -Warp
+          $report = Get-Content (Get-ChildItem model-benchmark-validation -Recurse -Filter compute-report.json | Select-Object -First 1).FullName -Raw | ConvertFrom-Json
+          $hash = (Get-FileHash ./apex-visualizer/tests/fixtures/dynamic-relu.onnx -Algorithm SHA256).Hash.ToLower()
+          if (!$report.selected_model.benchmark_mode -or $report.selected_model.sha256 -ne $hash -or !$report.cpu_inference.verified -or $report.cpu_inference.validated_loop_duration_s -lt 3 -or $report.cuda_ep_inference.verified) { throw 'Selected-model benchmark reported incorrect identity/execution' }
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--model-benchmark','--model','./apex-visualizer/tests/fixtures/dynamic-relu.onnx','--cpu-seconds','1','--gpu-seconds','1','--warp','--output','./model-shape-negative' -PassThru
+          if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Missing input-shape test timed out' }
+          if ($p.ExitCode -ne 6) { throw 'Missing dynamic dimensions were not rejected' }
+          $r = Get-Content ./model-shape-negative/compute-report.json -Raw | ConvertFrom-Json
+          if ($r.cpu_inference.reason_code -ne 'INPUT_SHAPE_REQUIRED' -or $r.cpu_inference.verified) { throw 'Dynamic shape omission falsely verified' }
       - name: Verify optional GPU runtime installer (not a GPU execution test)
         shell: pwsh
         run: |
@@ -80,6 +92,8 @@ jobs:
             smoke-result.txt
             hardware-validation/
             compute-validation/
+            model-benchmark-validation/
+            model-shape-negative/
             gpu-runtime-install-manifest.json
             dependency-loader-test.txt
             missing-cudnn-component.txt

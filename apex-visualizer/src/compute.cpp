@@ -3,6 +3,7 @@
 #include "apex/runtime_dependencies.hpp"
 #include <cstring>
 #include <windows.h>
+#include <bcrypt.h>
 #include <onnxruntime/onnxruntime_c_api.h>
 #include <nlohmann/json.hpp>
 #include <algorithm>
@@ -114,35 +115,42 @@ ComputeTest inference(OrtLibrary& lib,const ComputeOptions& o,bool gpu,int devic
  active(gpu);auto start=Clock::now();do{loop(true);}while(result.latency.count<static_cast<unsigned>(o.iterations)||elapsed(start)<o.phaseSeconds);
  result.measuredWallSeconds=elapsed(start);result.reason="VERIFIED_EXECUTION";result.verified=true;result.state="passed";result.message=gpu?"CUDA EP execution proved by actual node profile and numerical reference; CPU EP fallback disabled; TF32 off":"CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread";return result;
 }
+#include "model_benchmark.inc"
 }
 ComputeRunner::~ComputeRunner(){stop();}
 void ComputeRunner::stop(){cancel_=true;if(worker_.joinable())worker_.join();}
 ComputeSnapshot ComputeRunner::snapshot()const{std::lock_guard<std::mutex> lock(mutex_);return state_;}
-void ComputeRunner::phase(const std::string& name){std::lock_guard<std::mutex> lock(mutex_);state_.phase=name;if(name=="cuda_vector_add")state_.cuda.state="running";if(name=="cpu_inference")state_.cpu.state="running";if(name=="cuda_ep_inference")state_.gpu.state="running";}
+void ComputeRunner::phase(const std::string& name){std::lock_guard<std::mutex> lock(mutex_);state_.phase=name;phaseStart_=Clock::now();if(name=="cuda_vector_add")state_.cuda.state="running";if(name=="cpu_inference")state_.cpu.state="running";if(name=="cuda_ep_inference")state_.gpu.state="running";}
+void ComputeRunner::progress(const ComputeTest& test,bool gpu){std::lock_guard<std::mutex> lock(mutex_);(gpu?state_.gpu:state_.cpu)=test;(gpu?state_.gpu:state_.cpu).state="running";}
 void ComputeRunner::publish(const ComputeTest& test,int which){std::lock_guard<std::mutex> lock(mutex_);(which==0?state_.cuda:which==1?state_.cpu:state_.gpu)=test;}
 void ComputeRunner::start(const ComputeOptions& options){
- if(snapshot().running)return;if(options.iterations<1||options.iterations>100000||!std::isfinite(options.phaseSeconds)||options.phaseSeconds<0||options.phaseSeconds>86400)throw std::runtime_error("Invalid compute test limits");
+ if(snapshot().running)return;if(options.iterations<1||options.iterations>100000||!std::isfinite(options.phaseSeconds)||options.phaseSeconds<0||options.phaseSeconds>86400||!std::isfinite(options.cpuSeconds)||options.cpuSeconds<1||options.cpuSeconds>86400||!std::isfinite(options.gpuSeconds)||options.gpuSeconds<1||options.gpuSeconds>86400)throw std::runtime_error("Invalid compute test limits");
  stop();finishCapture();trace_.clear();std::error_code captureError;std::filesystem::create_directories(options.resultDirectory,captureError);if(!captureError)trace_.open(options.resultDirectory/L"compute-samples.csv");if(trace_)trace_<<"elapsed_s,phase,render_frame_interval_ms,process_busiest_engine_percent,process_local_vram_mib,working_set_mib,private_mib\n";else Log::write("WARN","Compute process trace unavailable");captureStart_=Clock::now();lastCapture_=-1;
- cancel_=false;{std::lock_guard<std::mutex> lock(mutex_);state_=ComputeSnapshot{};state_.running=true;state_.adapter=options.adapter;state_.before=latest_;state_.peak=latest_;state_.requestedIterations=options.iterations;state_.requestedPhaseSeconds=options.phaseSeconds;}
+ cancel_=false;{std::lock_guard<std::mutex> lock(mutex_);state_=ComputeSnapshot{};state_.running=true;state_.adapter=options.adapter;state_.before=latest_;state_.peak=latest_;state_.requestedIterations=options.iterations;state_.requestedPhaseSeconds=options.phaseSeconds;state_.modelBenchmark=options.modelBenchmark;state_.gpuTargetSeconds=options.modelBenchmark?options.gpuSeconds:options.phaseSeconds;memorySamples_.clear();}
  try{worker_=std::thread([this,options]{run(options);});}catch(...){std::lock_guard<std::mutex> lock(mutex_);state_.running=false;state_.finished=true;state_.error="Compute worker creation failed";throw;}
 }
 void ComputeRunner::finishCapture(){if(trace_.is_open()){trace_.flush();if(!trace_)Log::write("WARN","Compute process trace write failed");trace_.close();}}
 void ComputeRunner::observe(double frameMs,const ProcessObservation& p){
  std::lock_guard<std::mutex> lock(mutex_);latest_=p;if(!state_.running&&!state_.finished)return;state_.after=p;++state_.observations;
- double age=elapsed(captureStart_);if(trace_.is_open()&&(lastCapture_<0||age-lastCapture_>=.5)){lastCapture_=age;trace_<<age<<','<<state_.phase<<','<<frameMs;for(double value:{p.engineBusy,p.localVramMiB,p.workingMiB,p.privateMiB}){trace_<<',';if(std::isfinite(value)&&value>=0)trace_<<value;}trace_<<'\n';}
+ double age=elapsed(captureStart_);if(trace_.is_open()&&(lastCapture_<0||age-lastCapture_>=.5)){lastCapture_=age;if(state_.phase=="cuda_ep_inference"){double phaseAge=std::chrono::duration<double>(Clock::now()-phaseStart_).count();if(phaseAge>=30){if(memorySamples_.size()>=2400)memorySamples_.erase(memorySamples_.begin());memorySamples_.push_back({phaseAge,p.localVramMiB,p.privateMiB});}state_.vramTrend=assessMemoryTrend(memorySamples_,true);state_.privateTrend=assessMemoryTrend(memorySamples_,false);}
+ trace_<<age<<','<<state_.phase<<','<<frameMs;for(double value:{p.engineBusy,p.localVramMiB,p.workingMiB,p.privateMiB}){trace_<<',';if(std::isfinite(value)&&value>=0)trace_<<value;}trace_<<'\n';}
  state_.peak.engineBusy=std::max(state_.peak.engineBusy,p.engineBusy);state_.peak.localVramMiB=std::max(state_.peak.localVramMiB,p.localVramMiB);state_.peak.workingMiB=std::max(state_.peak.workingMiB,p.workingMiB);state_.peak.privateMiB=std::max(state_.peak.privateMiB,p.privateMiB);
  if(state_.running&&std::isfinite(frameMs)&&frameMs>0)state_.renderIntervals[state_.phase].add(frameMs);
 }
 void ComputeRunner::run(ComputeOptions options)noexcept{
  try{
-  std::filesystem::create_directories(options.resultDirectory);int device=-1,driverVersion=0;
-  auto attempt=[&](int which,auto&& action){ComputeTest result;try{result=action();}catch(const Cancelled&){result.state="cancelled";result.reason="CANCELLED";result.message="Cancelled; phase not verified complete";publish(result,which);throw;}catch(const Skipped& e){result.state="skipped";result.reason=e.reason;result.blockedBy="cuda_workload";result.message=e.what();}catch(const Unavailable& e){result.state="unavailable";result.reason=e.reason;result.message=e.what();}catch(const std::exception& e){result.state="failed";result.reason="EXECUTION_OR_VALIDATION_FAILED";result.message=e.what();}publish(result,which);Log::write(result.verified?"INFO":"WARN","Compute "+std::to_string(which)+" "+result.state+": "+result.message);return result;};
+  std::filesystem::create_directories(options.resultDirectory);
+  if(options.modelPath.empty())options.modelPath=options.baseDirectory/L"models/compute_validation.onnx";auto digest=modelDigest(options.modelPath);auto profileDigest=options.inputProfile.empty()?std::string{}:modelDigest(options.inputProfile);{std::lock_guard<std::mutex> lock(mutex_);state_.modelPath=options.modelPath.u8string();state_.modelSha256=digest;state_.inputProfilePath=options.inputProfile.u8string();state_.inputProfileSha256=profileDigest;if(options.modelBenchmark)state_.modelHashDescription="Actual selected ONNX file, deterministic FP32 inputs, CPU-reference comparison";}
+  int device=-1,driverVersion=0;
+  auto attempt=[&](int which,auto&& action){ComputeTest result;try{result=action();}catch(const Cancelled&){result.state="cancelled";result.reason="CANCELLED";result.message="Cancelled; phase not verified complete";publish(result,which);throw;}catch(const Skipped& e){result.state="skipped";result.reason=e.reason;result.blockedBy=e.reason=="BLOCKED_BY_CPU_REFERENCE"?"cpu_inference":"cuda_workload";result.message=e.what();}catch(const Unavailable& e){result.state="unavailable";result.reason=e.reason;result.message=e.what();}catch(const std::exception& e){result.state="failed";result.reason="EXECUTION_OR_VALIDATION_FAILED";result.message=e.what();}publish(result,which);Log::write(result.verified?"INFO":"WARN","Compute "+std::to_string(which)+" "+result.state+": "+result.message);return result;};
   phase("cuda_vector_add");auto cuda=attempt(0,[&]{return cudaWork(options,cancel_,device,driverVersion);});cancelled(cancel_);
   OrtLibrary lib;try{lib.initialize(options.baseDirectory);{std::lock_guard<std::mutex> lock(mutex_);state_.ortVersion=lib.version;state_.runtimePath=lib.path;state_.availableProviders=lib.providers;state_.dependencies=lib.dependencies->diagnostics();state_.cudaDriverVersion=driverVersion;lib.driverVersion=driverVersion;}}
   catch(const std::exception& e){ComputeTest unavailable;unavailable.state="unavailable";unavailable.reason="ORT_RUNTIME_NOT_LOADABLE";unavailable.message=e.what();publish(unavailable,1);publish(unavailable,2);throw Unavailable(e.what());}
-  auto active=[this](bool gpu){std::lock_guard<std::mutex> lock(mutex_);state_.providerStatus=gpu?"CUDA EP ACTIVE (profile + numerical test passed); benchmark running":"CPU ACTIVE (numerical test passed); CUDA EP evaluation pending";};
-  phase("cpu_inference");auto cpu=attempt(1,[&]{return inference(lib,options,false,device,cancel_,active);});cancelled(cancel_);
-  phase("cuda_ep_inference");auto gpu=attempt(2,[&]{return inference(lib,options,true,device,cancel_,active);});
+  ReferenceOutputs reference;auto update=[this](const ComputeTest& value,bool gpu){progress(value,gpu);};
+  auto active=[this](bool gpu){std::lock_guard<std::mutex> lock(mutex_);phaseStart_=Clock::now();if(gpu)memorySamples_.clear();state_.providerStatus=gpu?"CUDA EP ACTIVE (profile + numerical test passed); benchmark running":"CPU ACTIVE (numerical test passed); CUDA EP evaluation pending";};
+  phase("cpu_inference");auto cpu=attempt(1,[&]{return options.modelBenchmark?benchmarkInference(lib,options,false,device,cancel_,reference,active,update):inference(lib,options,false,device,cancel_,active);});cancelled(cancel_);
+  phase("cuda_ep_inference");auto gpu=attempt(2,[&]{if(options.modelBenchmark&&!cpu.verified)throw Skipped("CPU reference benchmark did not pass","BLOCKED_BY_CPU_REFERENCE");return options.modelBenchmark?benchmarkInference(lib,options,true,device,cancel_,reference,active,update):inference(lib,options,true,device,cancel_,active);});
+  if((!options.inputProfile.empty()&&modelDigest(options.inputProfile)!=profileDigest)||modelDigest(options.modelPath)!=digest)throw std::runtime_error("Model file changed during CPU/GPU benchmark");
   {std::lock_guard<std::mutex> lock(mutex_);state_.dependencies=lib.dependencies->diagnostics();state_.providerStatus=gpu.verified?"CUDA EP VERIFIED (test completed; inference stopped)":cpu.verified?"CPU fallback verified; CUDA EP "+gpu.state+" ["+gpu.reason+"]: "+gpu.message:"Inference unavailable: no verified provider";state_.phase="completed";}
  }catch(const Cancelled& e){std::lock_guard<std::mutex> lock(mutex_);state_.phase="cancelled";state_.error=e.what();state_.providerStatus="Cancelled; inspect individual verified results";}
  catch(const std::exception& e){std::lock_guard<std::mutex> lock(mutex_);state_.phase="unavailable_or_failed";state_.error=e.what();state_.providerStatus="Inference unavailable; DX11 renderer remains active";}

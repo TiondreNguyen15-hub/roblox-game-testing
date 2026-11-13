@@ -1,3 +1,5 @@
+> **Phase 3 update:** [Selected-model benchmark and five-minute GPU test](PHASE3-PERFORMANCE.md) · [External capture](CAPTURE.md). Existing configuration, renderer and JSON input remain. Hardware performance results require a run on your PC.
+
 > **Latest cuDNN crash fix:** [PC outcome and patch](CUDNN-CRASH-FIX.md) · [Actual validation](CUDNN-FIX-VALIDATION.md). A later user run passed CUDA inference with the process-only PATH workaround; earlier missing-data statements below are historical.
 
 > **Latest runtime repair:** [PC evidence and fixes](PC-RESULTS-AND-REPAIRS.md) · [Actual repair validation](RUNTIME-REPAIR-VALIDATION.md). Your PC report is still required for PC-specific conclusions.

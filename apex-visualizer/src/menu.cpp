@@ -19,7 +19,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
  if(ImGui::Begin("Apex Visualization",nullptr,flags)){
   ImGui::TextColored({s.accent[0],s.accent[1],s.accent[2],1},"A /  APEX VISUALIZATION");ImGui::SameLine();ImGui::TextDisabled("  STANDALONE LAB");ImGui::Separator();
   ImGui::BeginChild("Sidebar",{135*scale,-28},true);
-  const char* tabs[]={"Visuals","Rendering","System","Configuration"};for(int i=0;i<4;++i)if(ImGui::Selectable(tabs[i],tab_==i,0,{0,36*scale}))tab_=i;
+  const char* tabs[]={"Visuals","Rendering","System","Configuration","Capture"};for(int i=0;i<5;++i)if(ImGui::Selectable(tabs[i],tab_==i,0,{0,36*scale}))tab_=i;
   ImGui::Spacing();ImGui::TextDisabled("INSERT");ImGui::TextWrapped("Toggle menu\nF10: exit");ImGui::EndChild();ImGui::SameLine();
   ImGui::BeginChild("Page",{0,-28},false);
   ImGui::Text("%s",tabs[tab_]);ImGui::Separator();
@@ -56,6 +56,13 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::TextWrapped("Compute status: %s",device.compute.providerStatus.c_str());
    if(device.compute.running){ImGui::TextWrapped("Running: %s",device.compute.phase.c_str());if(ImGui::Button("Cancel compute test"))computeRequest_=3;}
    else {if(ImGui::Button("Run CUDA + ONNX validation"))computeRequest_=1;if(ImGui::Button("Sustained test (5 min per available phase)"))computeRequest_=2;}
+   ImGui::InputText("Model path (blank = bundled)",modelPath_,sizeof(modelPath_));
+   ImGui::InputText("Input shape JSON (optional)",inputProfile_,sizeof(inputProfile_));
+   ImGui::TextWrapped("FP32 tensors; dynamic dimensions require a shape profile. Ctrl+V supported. Paths apply to model benchmarks only.");
+   if(!device.compute.running){if(ImGui::Button("Benchmark loaded model CPU / GPU"))computeRequest_=4;if(ImGui::Button("5-minute GPU model test"))computeRequest_=5;}
+   if(!device.compute.modelPath.empty())ImGui::TextWrapped("Model: %s\nSHA256: %s",device.compute.modelPath.c_str(),device.compute.modelSha256.c_str());
+   for(const auto* r:{&device.compute.cpu,&device.compute.gpu})if(r->latency.count){ImGui::Text("%s: %.4f ms Run; %.1f inference FPS (%llu runs)",r==&device.compute.cpu?"CPU":"GPU",r->latency.mean(),r->measuredWallSeconds>0?r->latency.count/r->measuredWallSeconds:0.,static_cast<unsigned long long>(r->latency.count));}
+   if(device.compute.modelBenchmark){const auto& r=device.compute.gpu;ImGui::Text("GPU measured %.1f / %.1f seconds; %s",std::max(0.,r.measuredWallSeconds),device.compute.gpuTargetSeconds,r.state.c_str());for(const auto* trend:{&device.compute.vramTrend,&device.compute.privateTrend}){ImGui::Text("%s: %s, growth %.1f MiB, %.2f MiB/min",trend==&device.compute.vramTrend?"VRAM trend":"Private RAM trend",trend->state.c_str(),trend->growthMiB,trend->slopeMiBPerMinute);ImGui::TextWrapped("%s",trend->message.c_str());}}
    if(ImGui::Button("Copy compute diagnostics")){std::string text="Adapter: "+device.gpu+"\nStatus: "+device.compute.providerStatus+"\nRuntime: "+device.compute.runtimePath;const ComputeTest* items[]={&device.compute.cuda,&device.compute.cpu,&device.compute.gpu};const char* names[]={"CUDA workload","CPU inference","CUDA EP"};for(int i=0;i<3;++i)text+="\n"+std::string(names[i])+": "+items[i]->state+" ["+items[i]->reason+"] "+items[i]->message;text+="\nReport: "+device.computeReport;ImGui::SetClipboardText(text.c_str());}
    if(ImGui::CollapsingHeader("Compute results / latency comparison")){
     ImGui::TextWrapped("Loaded runtime: %s",device.compute.runtimePath.c_str());for(const auto& d:device.compute.dependencies)ImGui::TextWrapped("%s: %s / %s",d.name.c_str(),d.state.c_str(),d.message.c_str());
@@ -76,6 +83,18 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::TextWrapped("DirectX feature level: %s",device.featureLevel.c_str());ImGui::TextWrapped("%s",device.cudaStatus.c_str());ImGui::TextWrapped("%s",device.nvmlStatus.c_str());ImGui::Text("Previous frame CPU work: %.3f ms",stats.frameMs);if(system.cpuValid)ImGui::Text("Process CPU: %.2f%% (all logical cores)",system.cpu());else ImGui::TextDisabled("Process CPU: warming up / unavailable");
    ImGui::TextWrapped("GPU: %s",device.gpu.c_str());ImGui::Text("Dedicated video memory: %.0f MiB",double(device.videoMemory)/1048576.);if(device.gpuTimingValid)ImGui::Text("GPU draw time: %.3f ms (async)",device.gpuMs);else ImGui::TextDisabled("GPU timing: warming up / unavailable");ImGui::Text("Present: %s",device.flipModel?"flip-discard, low-latency":"compatibility discard");ImGui::Text("Application uptime: %.1f s",system.uptime());
    ImGui::Separator();ImGui::Text("Previous frame draw calls: %d",stats.drawCalls);ImGui::Text("Vertices: %d / indices: %d",stats.vertices,stats.indices);ImGui::Text("Entities: %d drawn / %d filtered",visuals.drawn,visuals.filtered);
+  }else if(tab_==4){
+   ImGui::TextWrapped("External gameplay capture / Windows Media Foundation");
+   ImGui::TextWrapped("In OBS use Display Capture or Window Capture (Windows Graphics Capture), then Start Virtual Camera. No Game Capture hooks are used by this application.");
+   if(!device.capture.running){if(ImGui::Button("Start OBS Virtual Camera"))captureRequest_=1;}
+   ImGui::InputText("Local recording path",recordingPath_,sizeof(recordingPath_));
+   if(!device.capture.running&&ImGui::Button("Open recording"))captureRequest_=2;
+   if(device.capture.running&&ImGui::Button("Stop capture"))captureRequest_=3;
+   ImGui::TextWrapped("%s: %s",device.capture.state.c_str(),device.capture.message.c_str());
+   ImGui::Text("%ux%u | %.1f capture FPS | read wait %.2f ms",device.capture.width,device.capture.height,device.capture.fps,device.capture.readWaitMs);
+   ImGui::Text("Luma %.3f | frame activity %.3f",device.capture.statistics.meanLuma,device.capture.statistics.meanAbsoluteChange);
+   if(device.captureTexture&&device.capture.width){float w=std::max(1.f,ImGui::GetContentRegionAvail().x);ImGui::Image(static_cast<ImTextureID>(device.captureTexture),{w,w*device.capture.height/device.capture.width});}
+   ImGui::TextWrapped("Preview and frame activity use real captured pixels. No semantic player detection is configured. A compatible authorized vision model and preprocessing contract are required for that next stage.");
   }else{
    ImGui::TextWrapped("Configuration: %s",Config::defaultPath().u8string().c_str());ImGui::TextWrapped("Log: %s",Log::path().u8string().c_str());
    if(ImGui::Button("Save configuration")){std::string error;notice_=Config::save(Config::defaultPath(),s,error)?"Configuration saved.":error;}

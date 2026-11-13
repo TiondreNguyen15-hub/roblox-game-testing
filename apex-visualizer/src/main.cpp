@@ -11,6 +11,7 @@
 #include "apex/benchmark.hpp"
 #include "apex/compute.hpp"
 #include <cmath>
+#include <cstring>
 #include <imgui.h>
 #include <imgui_impl_dx11.h>
 #include <imgui_impl_win32.h>
@@ -44,6 +45,15 @@ struct Window {
   if(!handle)throw std::runtime_error("Window creation failed");using DpiFn=UINT(WINAPI*)(HWND);auto dpi=reinterpret_cast<DpiFn>(GetProcAddress(GetModuleHandleW(L"user32.dll"),"GetDpiForWindow"));if(dpi)state.dpi=float(dpi(handle))/96.f;ShowWindow(handle,SW_SHOWDEFAULT);UpdateWindow(handle);
  }
 };
+struct CaptureTexture {
+ ID3D11Texture2D* texture=nullptr;ID3D11ShaderResourceView* view=nullptr;unsigned width=0,height=0;std::uint64_t sequence=0;
+ ~CaptureTexture(){clear();}void clear(){if(view)view->Release();if(texture)texture->Release();view=nullptr;texture=nullptr;sequence=0;width=height=0;}
+ void update(apex::Renderer& r,const std::shared_ptr<const apex::CapturedFrame>& f){if(!f||sequence==f->sequence)return;
+  if(width!=f->width||height!=f->height){clear();D3D11_TEXTURE2D_DESC d{};d.Width=f->width;d.Height=f->height;d.MipLevels=1;d.ArraySize=1;d.Format=DXGI_FORMAT_R8G8B8A8_UNORM;d.SampleDesc.Count=1;d.Usage=D3D11_USAGE_DYNAMIC;d.BindFlags=D3D11_BIND_SHADER_RESOURCE;d.CPUAccessFlags=D3D11_CPU_ACCESS_WRITE;
+   if(FAILED(r.device()->CreateTexture2D(&d,nullptr,&texture))||FAILED(r.device()->CreateShaderResourceView(texture,nullptr,&view))){clear();throw std::runtime_error("Capture preview texture allocation failed");}width=f->width;height=f->height;}
+  D3D11_MAPPED_SUBRESOURCE m{};if(FAILED(r.context()->Map(texture,0,D3D11_MAP_WRITE_DISCARD,0,&m)))throw std::runtime_error("Capture preview texture map failed");for(unsigned y=0;y<height;++y)std::memcpy(static_cast<unsigned char*>(m.pData)+size_t(y)*m.RowPitch,f->rgba.data()+size_t(y)*width*4,size_t(width)*4);r.context()->Unmap(texture,0);sequence=f->sequence;
+ }
+};
 struct Gui {
  bool context=false,platform=false,graphics=false;
  ~Gui(){if(graphics)ImGui_ImplDX11_Shutdown();if(platform)ImGui_ImplWin32_Shutdown();if(context)ImGui::DestroyContext();}
@@ -58,15 +68,19 @@ struct Gui {
 };
 }
 int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int){
- bool computeCli=false,requireCuda=false;double computeSeconds=0,computeCancelAfter=-1;int computeIterations=200;bool smoke=false,warp=false,asyncSmoke=false;int maxFrames=0;double benchmarkSeconds=0,warmup=5;int cap=144,entities=64;bool benchmarkRequested=false,noVsync=false,simulate=false;std::filesystem::path jsonPath,benchmarkPath=L"benchmark-results";
+ bool modelBenchmark=false,gpuSoak=false;double cpuSeconds=10,gpuSeconds=10;std::filesystem::path modelPath,inputProfile;bool computeCli=false,requireCuda=false;double computeSeconds=0,computeCancelAfter=-1;int computeIterations=200;bool smoke=false,warp=false,asyncSmoke=false;int maxFrames=0;double benchmarkSeconds=0,warmup=5;int cap=144,entities=64;bool benchmarkRequested=false,noVsync=false,simulate=false;std::filesystem::path jsonPath,benchmarkPath=L"benchmark-results";
  int argc=0;LPWSTR* argv=CommandLineToArgvW(GetCommandLineW(),&argc);
  if(argv){for(int i=1;i<argc;++i){std::wstring a=argv[i];if(a==L"--smoke-test"||a==L"--async-smoke-test"){smoke=true;warp=true;asyncSmoke=a==L"--async-smoke-test";maxFrames=asyncSmoke?60:6;}else if(a==L"--json"&&i+1<argc)jsonPath=argv[++i];else if(a==L"--warp")warp=true;
+ else if(a==L"--model-benchmark"){computeCli=true;modelBenchmark=true;}else if(a==L"--gpu-soak"){computeCli=true;modelBenchmark=true;gpuSoak=true;requireCuda=true;}
+ else if(a==L"--model"&&i+1<argc)modelPath=argv[++i];else if(a==L"--input-profile"&&i+1<argc)inputProfile=argv[++i];
+ else if((a==L"--cpu-seconds"||a==L"--gpu-seconds")&&i+1<argc){try{size_t used=0;std::wstring raw=argv[++i];double v=std::stod(raw,&used);if(used!=raw.size()||!std::isfinite(v)||v<1||v>86400)throw std::runtime_error("Invalid model benchmark duration");if(a==L"--cpu-seconds")cpuSeconds=v;else gpuSeconds=v;}catch(...){LocalFree(argv);return 2;}}
  else if(a==L"--compute-test")computeCli=true;else if(a==L"--require-cuda")requireCuda=true;
  else if((a==L"--compute-seconds"||a==L"--compute-iterations"||a==L"--compute-cancel-after")&&i+1<argc){try{double v=std::stod(argv[++i]);if(!std::isfinite(v)||v<0||v>86400)throw std::runtime_error("Invalid compute limit");if(a==L"--compute-cancel-after")computeCancelAfter=v;else if(a==L"--compute-seconds")computeSeconds=v;else {if(v<1||v!=std::floor(v))throw std::runtime_error("Invalid iterations");computeIterations=static_cast<int>(v);}}catch(...){LocalFree(argv);return 2;}}
  else if(a==L"--simulate")simulate=true;else if(a==L"--no-vsync")noVsync=true;
  else if(a==L"--output"&&i+1<argc)benchmarkPath=argv[++i];
  else if((a==L"--benchmark"||a==L"--warmup"||a==L"--cap"||a==L"--entities")&&i+1<argc){try{double v=std::stod(argv[++i]);if(!std::isfinite(v))throw std::runtime_error("Nonfinite argument");if(a==L"--benchmark"){benchmarkRequested=true;benchmarkSeconds=v;}else if(a==L"--warmup")warmup=v;else if(a==L"--cap"){if(v<30||v>360)throw std::runtime_error("Cap range 30..360");cap=static_cast<int>(v);}else{if(v<1||v>64)throw std::runtime_error("Entity range 1..64");entities=static_cast<int>(v);}}catch(...){LocalFree(argv);return 2;}}
 else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]));}catch(...){LocalFree(argv);return 2;}}}LocalFree(argv);}
+ if(gpuSoak)gpuSeconds=std::max(300.,gpuSeconds);
  apex::Benchmark benchmark;bool benchmarkStarted=false;
  try{
   apex::Log::write("INFO","Application startup");
@@ -80,6 +94,7 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
   apex::DeviceInfo deviceInfo{renderer.gpu(),renderer.videoMemory()};
   apex::HardwareMetrics hardware;hardware.initialize(renderer.gpu(),renderer.adapterLuid);deviceInfo.cudaStatus=hardware.cudaStatus;deviceInfo.nvmlStatus=hardware.nvmlStatus;deviceInfo.featureLevel=renderer.featureLevel;
   if(benchmarkRequested){benchmark.start(benchmarkPath,renderer.gpu(),"DirectX / feature level "+renderer.featureLevel+" / "+hardware.cudaStatus,benchmarkSeconds,warmup);benchmarkStarted=true;benchmark.metadata={{"vsync",settings.vsync?"on":"off"},{"frame_cap",std::to_string(settings.frameLimit)},{"entity_count",std::to_string(settings.entityCount)},{"source",settings.liveFile?settings.livePath:"local simulation"},{"window_initial_size","1440x900 outer; DPI dependent client"},{"nvml",hardware.nvmlStatus},{"cuda",hardware.cudaStatus},{"cuda_driver_api_version",std::to_string(hardware.cudaDriver)},{"cuda_compute_capability",std::to_string(hardware.computeMajor)+"."+std::to_string(hardware.computeMinor)},{"present",renderer.flipModel()?"flip-discard latency1":"compatibility discard"},{"model_backend","optional ONNX compute validation; inactive during render-only benchmark"}};}
+  CaptureTexture captureTexture;apex::CaptureSource capture;
   apex::ComputeRunner compute;bool computeStarted=false,computeReported=false;double computeFinishedAt=-1,computeStartedAt=0;std::filesystem::path computeDirectory;
   apex::ProviderSystem providers(!smoke||asyncSmoke);apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics metrics;apex::RenderStats stats;
   apex::FramePacer pacer;using Clock=std::chrono::steady_clock;auto previous=Clock::now();auto benchmarkStart=previous;double simulationTime=0;int frames=0;bool occluded=false;
@@ -95,10 +110,13 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
    hardware.update(metrics.uptime());renderer.updateMemory(metrics.uptime());deviceInfo.utilizationValid=hardware.utilizationValid;deviceInfo.utilization=hardware.utilization;deviceInfo.memoryValid=hardware.memoryValid;deviceInfo.usedBytes=hardware.usedBytes;deviceInfo.totalBytes=hardware.totalBytes;deviceInfo.processMemoryValid=renderer.memoryValid;deviceInfo.processVram=renderer.processVram;deviceInfo.vramBudget=renderer.vramBudget;deviceInfo.processUtilizationValid=hardware.processUtilizationValid;deviceInfo.processUtilization=hardware.processUtilization;deviceInfo.processCounterStatus=hardware.processCounterStatus;
    apex::ProcessObservation observation;observation.engineBusy=hardware.processUtilizationValid?hardware.processUtilization:-1;observation.localVramMiB=renderer.memoryValid?renderer.processVram/1048576.:-1;observation.workingMiB=metrics.memoryValid?metrics.workingSet/1048576.:-1;observation.privateMiB=metrics.memoryValid?metrics.privateBytes/1048576.:-1;compute.observe(stats.wallFrameMs,observation);
    int computeAction=menu.consumeCompute();if(computeAction==3)compute.cancel();
-   if((computeCli&&!computeStarted&&metrics.uptime()>=1.1)||computeAction==1||computeAction==2){apex::ComputeOptions options;options.adapter=renderer.gpu();options.adapterLuid=(std::uint64_t(static_cast<unsigned long>(renderer.adapterLuid.HighPart))<<32)|renderer.adapterLuid.LowPart;options.baseDirectory=exeFolder;options.iterations=computeCli?computeIterations:200;options.phaseSeconds=computeCli?computeSeconds:computeAction==2?300:0;
+   if((computeCli&&!computeStarted&&metrics.uptime()>=1.1)||computeAction==1||computeAction==2||computeAction==4||computeAction==5){apex::ComputeOptions options;options.adapter=renderer.gpu();options.adapterLuid=(std::uint64_t(static_cast<unsigned long>(renderer.adapterLuid.HighPart))<<32)|renderer.adapterLuid.LowPart;options.baseDirectory=exeFolder;options.iterations=computeCli?computeIterations:200;options.phaseSeconds=computeCli?computeSeconds:computeAction==2?300:0;
+    options.modelBenchmark=computeCli?modelBenchmark:(computeAction==4||computeAction==5);if(options.modelBenchmark){options.phaseSeconds=0;options.cpuSeconds=computeCli?cpuSeconds:10;options.gpuSeconds=computeCli?gpuSeconds:computeAction==5?300:10;options.modelPath=computeCli?modelPath:std::filesystem::u8path(menu.modelPath());options.inputProfile=computeCli?inputProfile:std::filesystem::u8path(menu.inputProfile());}
     computeDirectory=computeCli?benchmarkPath:apex::Config::defaultPath().parent_path()/L"compute-results"/std::to_wstring(std::chrono::system_clock::now().time_since_epoch().count());options.resultDirectory=computeDirectory;compute.start(options);computeStartedAt=metrics.uptime();computeStarted=true;computeReported=false;computeFinishedAt=-1;deviceInfo.computeReport.clear();}
    if(computeCli&&computeStarted&&computeCancelAfter>=0&&metrics.uptime()-computeStartedAt>=computeCancelAfter)compute.cancel();
    deviceInfo.compute=compute.snapshot();if(computeStarted&&deviceInfo.compute.finished&&!computeReported){if(computeFinishedAt<0)computeFinishedAt=metrics.uptime();if(metrics.uptime()-computeFinishedAt>=1.1){try{apex::saveComputeReport(computeDirectory,deviceInfo.compute);deviceInfo.computeReport=(computeDirectory/L"compute-report.json").u8string();}catch(const std::exception& reportError){apex::Log::write("ERROR",reportError.what());if(computeCli)throw;deviceInfo.computeReport=std::string("Report failed: ")+reportError.what();}compute.finishCapture();computeReported=true;apex::Log::write("INFO","Compute report status: "+deviceInfo.computeReport);if(computeCli)break;}}
+   int captureAction=menu.consumeCapture();if(captureAction){captureTexture.clear();if(captureAction==3)capture.stop();else if(captureAction==1)capture.start();else capture.start(std::filesystem::u8path(menu.recordingPath()));}
+   deviceInfo.capture=capture.snapshot();try{if(deviceInfo.capture.running||deviceInfo.capture.frame)captureTexture.update(renderer,deviceInfo.capture.frame);}catch(const std::exception& e){capture.stop();captureTexture.clear();apex::Log::write("WARN",e.what());deviceInfo.capture=capture.snapshot();deviceInfo.capture.message=e.what();}deviceInfo.captureTexture=reinterpret_cast<std::uintptr_t>(captureTexture.view);
    ImGui_ImplDX11_NewFrame();ImGui_ImplWin32_NewFrame();ImGui::GetIO().FontGlobalScale=state.dpi;ImGui::NewFrame();
    deviceInfo.flipModel=renderer.flipModel();deviceInfo.gpuTimingValid=renderer.gpuTimingValid();deviceInfo.gpuMs=renderer.gpuTimeMs();
    auto size=ImGui::GetIO().DisplaySize;if(benchmarkRequested&&frames==0){benchmark.metadata["initial_client_width"]=std::to_string(int(size.x));benchmark.metadata["initial_client_height"]=std::to_string(int(size.y));}
