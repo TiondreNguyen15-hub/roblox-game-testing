@@ -1,5 +1,12 @@
 # Validation record
 
+## Latest JSON integration validation
+
+Windows run: https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43356676687
+
+Native Visual Studio 2022 build passed. All four Windows tests passed. DX11 WARP rendered six frames using the JSON input: **fileEntities=2**, 3,316 vertices and 6 draw calls in the final frame. Local native CTest also passed 4/4 suites. New checks cover the exact players schema, shields and screen coordinates, supplied-distance filtering, missing/malformed/oversized data, last-valid retention, file refresh, stale state and saved file-source settings.
+
+
 ## Passed
 
 - Native C++17 build with GNU C++ 14.2; all three CTest suites passed.
