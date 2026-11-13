@@ -34,7 +34,9 @@ jobs:
         shell: pwsh
         run: |
           $dest = Join-Path $env:RUNNER_TEMP 'apex-ort-gpu-install'
-          ./apex-visualizer/tools/setup-gpu-runtime.ps1 -Destination $dest
+          ./apex-visualizer/tools/setup-gpu-runtime.ps1 -Destination $dest -InstallDependencies
+          & './build-apex/Release/apex_dependency_tests.exe' $dest 2>&1 | Tee-Object dependency-loader-test.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Actual CUDA dependency DLL loading failed (not a GPU execution test)' }
           Get-ChildItem $dest -Filter '*.dll' | Get-FileHash -Algorithm SHA256 | ConvertTo-Json | Set-Content gpu-runtime-install-manifest.json
           Remove-Item $dest -Recurse -Force
       - name: Required CUDA must fail without CUDA hardware
@@ -73,6 +75,7 @@ jobs:
             hardware-validation/
             compute-validation/
             gpu-runtime-install-manifest.json
+            dependency-loader-test.txt
             compute-required-negative/
             compute-missing-runtime/
             compute-cancelled/

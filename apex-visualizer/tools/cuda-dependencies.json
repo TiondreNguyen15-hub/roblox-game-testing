@@ -1,0 +1,53 @@
+{
+  "note": "Pinned official NVIDIA Windows x64 runtime wheels. Extract DLLs/licenses without installing Python. Download/extraction alone is not GPU validation.",
+  "packages": [
+    {
+      "name": "nvidia-cuda-runtime-cu12",
+      "version": "12.6.77",
+      "filename": "nvidia_cuda_runtime_cu12-12.6.77-py3-none-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/fa/76/4c80fa138333cc975743fd0687a745fccb30d167f906f13c1c7f9a85e5ea/nvidia_cuda_runtime_cu12-12.6.77-py3-none-win_amd64.whl",
+      "sha256": "86c58044c824bf3c173c49a2dbc7a6c8b53cb4e4dca50068be0bf64e9dab3f7f",
+      "bytes": 891773
+    },
+    {
+      "name": "nvidia-cublas-cu12",
+      "version": "12.6.4.1",
+      "filename": "nvidia_cublas_cu12-12.6.4.1-py3-none-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/84/f7/985e9bdbe3e0ac9298fcc8cfa51a392862a46a0ffaccbbd56939b62a9c83/nvidia_cublas_cu12-12.6.4.1-py3-none-win_amd64.whl",
+      "sha256": "9e4fa264f4d8a4eb0cdbd34beadc029f453b3bafae02401e999cf3d5a5af75f8",
+      "bytes": 434535301
+    },
+    {
+      "name": "nvidia-cufft-cu12",
+      "version": "11.2.6.59",
+      "filename": "nvidia_cufft_cu12-11.2.6.59-py3-none-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/1d/0f/e3efea5bd99d83a0d4f80cb66e3b9cfd6c2344329ccb0919545105e94622/nvidia_cufft_cu12-11.2.6.59-py3-none-win_amd64.whl",
+      "sha256": "998bbd77799dc427f9c48e5d57a316a7370d231fd96121fb018b370f67fc4909",
+      "bytes": 191481642
+    },
+    {
+      "name": "nvidia-cudnn-cu12",
+      "version": "9.8.0.87",
+      "filename": "nvidia_cudnn_cu12-9.8.0.87-py3-none-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/39/6a/5e9910b2b2c9dcddee9aaef372b3db0f08b9f7eaf1d462f859461a79caf9/nvidia_cudnn_cu12-9.8.0.87-py3-none-win_amd64.whl",
+      "sha256": "b4b5cfddc32aa4180f9d390ee99e9a9f55a89e7087329b41aba4319327e22466",
+      "bytes": 684630375
+    },
+    {
+      "name": "nvidia-nvjitlink-cu12",
+      "version": "12.6.85",
+      "filename": "nvidia_nvjitlink_cu12-12.6.85-py3-none-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/89/76/93c1467b1387387440a4d25102d86b7794535449b689f8e2dc22c1c8ff7f/nvidia_nvjitlink_cu12-12.6.85-py3-none-win_amd64.whl",
+      "sha256": "e61120e52ed675747825cdd16febc6a0730537451d867ee58bee3853b1b13d1c",
+      "bytes": 161908572
+    },
+    {
+      "name": "nvidia-cuda-nvrtc-cu12",
+      "version": "12.6.85",
+      "filename": "nvidia_cuda_nvrtc_cu12-12.6.85-py3-none-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/0c/f7/472414aee887d626373d0b2140a59ac4308e3eaed815060e5410fc83305a/nvidia_cuda_nvrtc_cu12-12.6.85-py3-none-win_amd64.whl",
+      "sha256": "a419e2c95e75b88b602f8bb66f82a6c5651e8475a509841c958486b1b71510bf",
+      "bytes": 39026436
+    }
+  ]
+}

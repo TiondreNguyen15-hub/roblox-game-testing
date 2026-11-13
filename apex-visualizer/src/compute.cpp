@@ -1,5 +1,7 @@
 #include "apex/compute.hpp"
 #include "apex/log.hpp"
+#include "apex/runtime_dependencies.hpp"
+#include <cstring>
 #include <windows.h>
 #include <onnxruntime/onnxruntime_c_api.h>
 #include <nlohmann/json.hpp>
@@ -17,7 +19,8 @@ namespace {
 using Clock=std::chrono::steady_clock;
 double elapsed(Clock::time_point start){return std::chrono::duration<double>(Clock::now()-start).count();}
 std::string lower(std::string v){for(char& c:v)c=static_cast<char>(std::tolower(static_cast<unsigned char>(c)));return v;}
-struct Unavailable:std::runtime_error{using std::runtime_error::runtime_error;};
+struct Unavailable:std::runtime_error{std::string reason;explicit Unavailable(const std::string& message,std::string code="UNAVAILABLE"):std::runtime_error(message),reason(std::move(code)){};};
+struct Skipped:Unavailable{using Unavailable::Unavailable;};
 struct Cancelled:std::runtime_error{Cancelled():std::runtime_error("Cancelled; partial measurements only"){};};
 void cancelled(const std::atomic<bool>& stop){if(stop)throw Cancelled();}
 template<class T>T proc(HMODULE dll,const char* name){auto fn=reinterpret_cast<T>(GetProcAddress(dll,name));if(!fn)throw Unavailable(std::string("Missing API: ")+name);return fn;}
@@ -36,24 +39,29 @@ DONE: ret;
 }
 )ptx";
 struct Cuda {
- HMODULE dll=nullptr;void* context=nullptr;void* module=nullptr;std::array<unsigned long long,3> memory{};void* begin=nullptr;void* end=nullptr;int ordinal=-1;
+ HMODULE dll=nullptr;void* context=nullptr;void* module=nullptr;std::array<unsigned long long,3> memory{};void* begin=nullptr;void* end=nullptr;int ordinal=-1,device=-1,driverVersion=0;
  using Destroy=int(__stdcall*)(void*);using Free=int(__stdcall*)(unsigned long long);
  Destroy destroyContext=nullptr,unload=nullptr,destroyEvent=nullptr;Free freeMemory=nullptr;
  ~Cuda(){if(destroyEvent){if(end)destroyEvent(end);if(begin)destroyEvent(begin);}if(freeMemory)for(auto p:memory)if(p)freeMemory(p);if(module&&unload)unload(module);if(context&&destroyContext)destroyContext(context);if(dll)FreeLibrary(dll);}
  void check(int code,const char* stage){if(code){using Error=int(__stdcall*)(int,const char**);const char* text=nullptr;auto f=reinterpret_cast<Error>(GetProcAddress(dll,"cuGetErrorString"));if(f)f(code,&text);throw std::runtime_error(std::string(stage)+" failed: "+std::to_string(code)+(text?" / "+std::string(text):""));}}
- void initialize(const std::string& adapter){
-  dll=LoadLibraryExW(L"nvcuda.dll",nullptr,LOAD_LIBRARY_SEARCH_SYSTEM32);if(!dll)throw Unavailable("CUDA driver DLL unavailable");
-  using Init=int(__stdcall*)(unsigned);using Count=int(__stdcall*)(int*);using Name=int(__stdcall*)(char*,int,int);
-  auto init=proc<Init>(dll,"cuInit");int result=init(0);if(result)throw Unavailable("cuInit failed: "+std::to_string(result));
-  int count=0;check(proc<Count>(dll,"cuDeviceGetCount")(&count),"CUDA enumerate");int matches=0;
-  for(int i=0;i<count;++i){char name[256]{};if(proc<Name>(dll,"cuDeviceGetName")(name,256,i)==0&&lower(name)==lower(adapter)){ordinal=i;++matches;}}
-  if(matches!=1)throw Unavailable("Selected DXGI adapter does not uniquely match a CUDA device");
+ void initialize(const ComputeOptions& options){
+  dll=LoadLibraryExW(L"nvcuda.dll",nullptr,LOAD_LIBRARY_SEARCH_SYSTEM32);if(!dll)throw Unavailable("CUDA driver DLL unavailable: "+windowsLoadError(GetLastError()),"CUDA_DRIVER_NOT_LOADABLE");
+  using Init=int(__stdcall*)(unsigned);using Count=int(__stdcall*)(int*);using Name=int(__stdcall*)(char*,int,int);using Device=int(__stdcall*)(int*,int);using Version=int(__stdcall*)(int*);using Luid=int(__stdcall*)(char*,unsigned*,int);
+  auto init=proc<Init>(dll,"cuInit");int code=init(0);if(code)throw Unavailable("cuInit failed: "+std::to_string(code),"CUDA_DRIVER_INIT_FAILED");
+  check(proc<Version>(dll,"cuDriverGetVersion")(&driverVersion),"CUDA driver version");int count=0;check(proc<Count>(dll,"cuDeviceGetCount")(&count),"CUDA enumerate");
+  auto getLuid=reinterpret_cast<Luid>(GetProcAddress(dll,"cuDeviceGetLuid"));std::vector<std::pair<int,int>> names,luids;bool hasLuids=false;
+  for(int i=0;i<count;++i){int candidate=-1;check(proc<Device>(dll,"cuDeviceGet")(&candidate,i),"CUDA device ordinal");char name[256]{};
+   if(proc<Name>(dll,"cuDeviceGetName")(name,256,candidate)==0&&lower(name)==lower(options.adapter))names.push_back({i,candidate});
+   char bytes[8]{};unsigned mask=0;if(getLuid&&getLuid(bytes,&mask,candidate)==0){hasLuids=true;std::uint64_t id=0;std::memcpy(&id,bytes,8);if(id==options.adapterLuid)luids.push_back({i,candidate});}
+  }
+  const auto& matches=options.adapterLuid&&hasLuids?luids:names;
+  if(matches.size()!=1)throw Unavailable("Selected DXGI adapter does not uniquely match a CUDA device by LUID (or exact name when LUID is unsupported)","CUDA_DEVICE_NOT_MATCHED");ordinal=matches[0].first;device=matches[0].second;
   destroyContext=proc<Destroy>(dll,"cuCtxDestroy_v2");unload=proc<Destroy>(dll,"cuModuleUnload");destroyEvent=proc<Destroy>(dll,"cuEventDestroy_v2");freeMemory=proc<Free>(dll,"cuMemFree_v2");
-  using Create=int(__stdcall*)(void**,unsigned,int);check(proc<Create>(dll,"cuCtxCreate_v2")(&context,0,ordinal),"CUDA context creation");
+  using Create=int(__stdcall*)(void**,unsigned,int);check(proc<Create>(dll,"cuCtxCreate_v2")(&context,0,device),"CUDA context creation");
  }
 };
-ComputeTest cudaWork(const ComputeOptions& o,std::atomic<bool>& stop,int& device){
- ComputeTest result;Cuda cuda;cuda.initialize(o.adapter);device=cuda.ordinal;
+ComputeTest cudaWork(const ComputeOptions& o,std::atomic<bool>& stop,int& device,int& driverVersion){
+ ComputeTest result;Cuda cuda;cuda.initialize(o);device=cuda.ordinal;driverVersion=cuda.driverVersion;
  using Load=int(__stdcall*)(void**,const void*);cuda.check(proc<Load>(cuda.dll,"cuModuleLoadData")(&cuda.module,vectorPtx),"PTX JIT/module load");
  using Function=int(__stdcall*)(void**,void*,const char*);void* function=nullptr;cuda.check(proc<Function>(cuda.dll,"cuModuleGetFunction")(&function,cuda.module,"vector_add"),"CUDA function");
  using Alloc=int(__stdcall*)(unsigned long long*,size_t);using HtoD=int(__stdcall*)(unsigned long long,const void*,size_t);using DtoH=int(__stdcall*)(void*,unsigned long long,size_t);
@@ -67,24 +75,28 @@ ComputeTest cudaWork(const ComputeOptions& o,std::atomic<bool>& stop,int& device
   if(measure){result.latency.add(wall);result.kernel.add(ms);}
  };
  for(int i=0;i<10;++i)loop(false);auto start=Clock::now();do{loop(true);}while(result.latency.count<static_cast<unsigned>(o.iterations)||elapsed(start)<o.phaseSeconds);
- result.verified=true;result.state="passed";result.message="Actual PTX JIT, HtoD, kernel launch, GPU events, completion and DtoH verified against all 1,048,576 reference values; 12 MiB device buffers released after phase";return result;
+ result.measuredWallSeconds=elapsed(start);result.reason="VERIFIED_EXECUTION";result.verified=true;result.state="passed";result.message="Actual PTX JIT, HtoD, kernel launch, GPU events, completion and DtoH verified against all 1,048,576 reference values; 12 MiB device buffers released after phase";return result;
 }
 struct OrtLibrary {
- HMODULE dll=nullptr,shared=nullptr,cudaProvider=nullptr;const OrtApi* api=nullptr;OrtEnv* env=nullptr;std::string version;std::filesystem::path folder;
+ HMODULE dll=nullptr,shared=nullptr,cudaProvider=nullptr;const OrtApi* api=nullptr;OrtEnv* env=nullptr;std::string version,path;int driverVersion=0;std::vector<std::string> providers;std::unique_ptr<RuntimeDependencies> dependencies;std::filesystem::path folder;
  ~OrtLibrary(){if(env&&api)api->ReleaseEnv(env);if(cudaProvider)FreeLibrary(cudaProvider);if(shared)FreeLibrary(shared);if(dll)FreeLibrary(dll);}
  void check(OrtStatus* status){if(status){std::string message=api->GetErrorMessage(status);api->ReleaseStatus(status);throw std::runtime_error("ONNX Runtime: "+message);}}
  void initialize(const std::filesystem::path& base){
   std::string errors;
   for(const auto& directory:{base/L"runtime/gpu",base/L"runtime/cpu"}){auto file=directory/L"onnxruntime.dll";if(!std::filesystem::exists(file))continue;dll=LoadLibraryExW(file.c_str(),nullptr,LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);if(dll){folder=directory;break;}errors+=" "+directory.u8string()+" Win32="+std::to_string(GetLastError());}
-  if(!dll)throw Unavailable("ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies."+errors);
-  using GetBase=const OrtApiBase*(ORT_API_CALL*)();const auto* b=proc<GetBase>(dll,"OrtGetApiBase")();api=b->GetApi(ORT_API_VERSION);if(!api)throw Unavailable("ONNX Runtime C API v22 unavailable (use runtime 1.22.x)");version=b->GetVersionString();check(api->CreateEnv(ORT_LOGGING_LEVEL_WARNING,"ApexComputeValidation",&env));
+  if(!dll)throw Unavailable("ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies."+errors,"ORT_RUNTIME_NOT_LOADABLE");
+  using GetBase=const OrtApiBase*(ORT_API_CALL*)();const auto* b=proc<GetBase>(dll,"OrtGetApiBase")();api=b->GetApi(ORT_API_VERSION);if(!api)throw Unavailable("ONNX Runtime C API v22 unavailable (use runtime 1.22.x)");version=b->GetVersionString();path=loadedModulePath(dll);folder=std::filesystem::u8path(path).parent_path();check(api->CreateEnv(ORT_LOGGING_LEVEL_WARNING,"ApexComputeValidation",&env));
+  char** names=nullptr;int count=0;check(api->GetAvailableProviders(&names,&count));for(int i=0;i<count;++i)providers.emplace_back(names[i]);check(api->ReleaseAvailableProviders(names,count));dependencies=std::make_unique<RuntimeDependencies>(folder);dependencies->inspect();
  }
  void preloadCuda(){
+  try{dependencies->load();}catch(const std::exception& e){throw Unavailable(e.what(),"ORT_CUDA_DEPENDENCY_LOAD_FAILED");}
   shared=LoadLibraryExW((folder/L"onnxruntime_providers_shared.dll").c_str(),nullptr,LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
+  if(!shared)throw Unavailable("ONNX shared provider: "+windowsLoadError(GetLastError()),"ORT_SHARED_PROVIDER_NOT_LOADABLE");
   cudaProvider=LoadLibraryExW((folder/L"onnxruntime_providers_cuda.dll").c_str(),nullptr,LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
-  if(!cudaProvider)throw Unavailable("CUDA EP DLL/dependencies not loadable, Win32="+std::to_string(GetLastError())+". Use setup-gpu-runtime.ps1 and supply CUDA 12/cuDNN 9 DLL directories. CPU remains available.");
+  if(!cudaProvider)throw Unavailable("ONNX CUDA provider: "+windowsLoadError(GetLastError())+". Inspect dependency diagnostics; do not copy another ONNX Runtime over this package.","ORT_CUDA_PROVIDER_NOT_LOADABLE");
  }
- bool hasCuda(){char** providers=nullptr;int count=0;check(api->GetAvailableProviders(&providers,&count));bool found=false;for(int i=0;i<count;++i)if(std::string(providers[i])=="CUDAExecutionProvider")found=true;check(api->ReleaseAvailableProviders(providers,count));return found;}
+ bool hasCuda()const{return std::find(providers.begin(),providers.end(),"CUDAExecutionProvider")!=providers.end();}
+
 };
 struct OrtSessionOwner {
  OrtLibrary& lib;OrtSessionOptions* options=nullptr;OrtCUDAProviderOptionsV2* cudaOptions=nullptr;OrtSession* session=nullptr;OrtMemoryInfo* memory=nullptr;OrtValue* input=nullptr;OrtValue* output=nullptr;
@@ -93,13 +105,13 @@ struct OrtSessionOwner {
 };
 ComputeTest inference(OrtLibrary& lib,const ComputeOptions& o,bool gpu,int device,std::atomic<bool>& stop,const std::function<void(bool)>& active){
  auto a=lib.api;ComputeTest result;OrtSessionOwner s(lib);lib.check(a->CreateSessionOptions(&s.options));lib.check(a->SetIntraOpNumThreads(s.options,1));lib.check(a->SetInterOpNumThreads(s.options,1));lib.check(a->SetSessionGraphOptimizationLevel(s.options,ORT_ENABLE_ALL));
- if(gpu){if(device<0)throw Unavailable("CUDA device match/workload not verified; CUDA EP test not started");if(!lib.hasCuda())throw Unavailable("Loaded ONNX Runtime has no CUDAExecutionProvider");lib.preloadCuda();lib.check(a->CreateCUDAProviderOptions(&s.cudaOptions));std::string ordinal=std::to_string(device);const char* keys[]={"device_id","use_tf32","do_copy_in_default_stream","gpu_mem_limit","arena_extend_strategy"};const char* values[]={ordinal.c_str(),"0","1","536870912","kSameAsRequested"};lib.check(a->UpdateCUDAProviderOptions(s.cudaOptions,keys,values,5));lib.check(a->SessionOptionsAppendExecutionProvider_CUDA_V2(s.options,s.cudaOptions));lib.check(a->AddSessionConfigEntry(s.options,"session.disable_cpu_ep_fallback","1"));auto prefix=o.resultDirectory/L"cuda-profile";lib.check(a->EnableProfiling(s.options,prefix.c_str()));}
+ if(gpu){if(device<0)throw Skipped("No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.","BLOCKED_BY_CUDA_DEVICE");if(!lib.hasCuda())throw Unavailable("Loaded CPU-only ONNX Runtime at "+lib.path+"; no CUDAExecutionProvider. Run setup-gpu-runtime.ps1 -InstallDependencies, restart, then validate.","ORT_CPU_ONLY_RUNTIME");if(lib.driverVersion>0&&lib.driverVersion<12000)throw Unavailable("ONNX Runtime 1.22 CUDA EP requires a CUDA 12 compatible NVIDIA driver; detected driver API "+std::to_string(lib.driverVersion),"CUDA_DRIVER_TOO_OLD");lib.preloadCuda();lib.check(a->CreateCUDAProviderOptions(&s.cudaOptions));std::string ordinal=std::to_string(device);const char* keys[]={"device_id","use_tf32","do_copy_in_default_stream","gpu_mem_limit","arena_extend_strategy"};const char* values[]={ordinal.c_str(),"0","1","536870912","kSameAsRequested"};lib.check(a->UpdateCUDAProviderOptions(s.cudaOptions,keys,values,5));lib.check(a->SessionOptionsAppendExecutionProvider_CUDA_V2(s.options,s.cudaOptions));lib.check(a->AddSessionConfigEntry(s.options,"session.disable_cpu_ep_fallback","1"));auto prefix=o.resultDirectory/L"cuda-profile";lib.check(a->EnableProfiling(s.options,prefix.c_str()));}
  auto model=o.baseDirectory/L"models/compute_validation.onnx";lib.check(a->CreateSession(lib.env,model.c_str(),s.options,&s.session));auto input=computeInput();const int64_t shape[]={128,256};lib.check(a->CreateCpuMemoryInfo(OrtArenaAllocator,OrtMemTypeDefault,&s.memory));lib.check(a->CreateTensorWithDataAsOrtValue(s.memory,input.data(),input.size()*sizeof(float),shape,2,ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT,&s.input));const char* inputs[]={"input"};const char* outputs[]={"output"};
  auto loop=[&](bool measure){cancelled(stop);if(s.output){a->ReleaseValue(s.output);s.output=nullptr;}auto start=Clock::now();const OrtValue* in[]={s.input};lib.check(a->Run(s.session,nullptr,inputs,in,1,outputs,1,&s.output));const OrtMemoryInfo* outputMemory=nullptr;lib.check(a->GetTensorMemoryInfo(s.output,&outputMemory));OrtMemoryInfoDeviceType deviceType; a->MemoryInfoGetDeviceType(outputMemory,&deviceType);if(deviceType!=OrtMemoryInfoDeviceType_CPU)throw std::runtime_error("ONNX output is not in CPU memory; cannot validate safely");void* data=nullptr;lib.check(a->GetTensorMutableData(s.output,&data));double wall=elapsed(start)*1000.;OrtTensorTypeAndShapeInfo* info=nullptr;lib.check(a->GetTensorTypeAndShape(s.output,&info));size_t count=0;ONNXTensorElementDataType elementType;auto status=a->GetTensorShapeElementCount(info,&count);auto typeStatus=a->GetTensorElementType(info,&elementType);a->ReleaseTensorTypeAndShapeInfo(info);lib.check(status);lib.check(typeStatus);if(elementType!=ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT)throw std::runtime_error("Expected float32 ONNX output");std::string error;if(!verifyComputeOutput(static_cast<const float*>(data),count,error))throw std::runtime_error(error);if(measure)result.latency.add(wall);};
  for(int i=0;i<10;++i)loop(false);
- if(gpu){OrtAllocator* allocator=nullptr;lib.check(a->GetAllocatorWithDefaultOptions(&allocator));char* path=nullptr;lib.check(a->SessionEndProfiling(s.session,allocator,&path));std::string profile=path?path:"";if(path)allocator->Free(allocator,path);std::ifstream file(std::filesystem::u8path(profile));nlohmann::json events;file>>events;bool executed=false;if(events.is_array())for(const auto& event:events){if(event.value("cat",std::string{})=="Node"&&event.contains("args")&&event["args"].is_object()&&event["args"].value("provider",std::string{})=="CUDAExecutionProvider"){auto op=event["args"].value("op_name",std::string{});if(op.find("MatMul")!=std::string::npos||op.find("Gemm")!=std::string::npos||op=="Relu")executed=true;}}if(!executed)throw std::runtime_error("No actual CUDAExecutionProvider node found in ORT profiling; acceleration not verified");}
+ if(gpu){OrtAllocator* allocator=nullptr;lib.check(a->GetAllocatorWithDefaultOptions(&allocator));char* path=nullptr;lib.check(a->SessionEndProfiling(s.session,allocator,&path));std::string profile=path?path:"";result.profileFile=profile;if(path)allocator->Free(allocator,path);std::ifstream file(std::filesystem::u8path(profile));nlohmann::json events;file>>events;bool executed=false;if(events.is_array())for(const auto& event:events){if(event.value("cat",std::string{})=="Node"&&event.contains("args")&&event["args"].is_object()&&event["args"].value("provider",std::string{})=="CUDAExecutionProvider"){auto op=event["args"].value("op_name",std::string{});if(op.find("MatMul")!=std::string::npos||op.find("Gemm")!=std::string::npos||op=="Relu")executed=true;}}if(!executed)throw std::runtime_error("No actual CUDAExecutionProvider node found in ORT profiling; acceleration not verified");}
  active(gpu);auto start=Clock::now();do{loop(true);}while(result.latency.count<static_cast<unsigned>(o.iterations)||elapsed(start)<o.phaseSeconds);
- result.verified=true;result.state="passed";result.message=gpu?"CUDA EP execution proved by actual node profile and numerical reference; CPU EP fallback disabled; TF32 off":"CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread";return result;
+ result.measuredWallSeconds=elapsed(start);result.reason="VERIFIED_EXECUTION";result.verified=true;result.state="passed";result.message=gpu?"CUDA EP execution proved by actual node profile and numerical reference; CPU EP fallback disabled; TF32 off":"CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread";return result;
 }
 }
 ComputeRunner::~ComputeRunner(){stop();}
@@ -122,15 +134,15 @@ void ComputeRunner::observe(double frameMs,const ProcessObservation& p){
 }
 void ComputeRunner::run(ComputeOptions options)noexcept{
  try{
-  std::filesystem::create_directories(options.resultDirectory);int device=-1;
-  auto attempt=[&](int which,auto&& action){ComputeTest result;try{result=action();}catch(const Cancelled&){result.state="cancelled";result.message="Cancelled; phase not verified complete";publish(result,which);throw;}catch(const Unavailable& e){result.state="unavailable";result.message=e.what();}catch(const std::exception& e){result.state="failed";result.message=e.what();}publish(result,which);Log::write(result.verified?"INFO":"WARN","Compute "+std::to_string(which)+" "+result.state+": "+result.message);return result;};
-  phase("cuda_vector_add");auto cuda=attempt(0,[&]{return cudaWork(options,cancel_,device);});if(!cuda.verified)device=-1;cancelled(cancel_);
-  OrtLibrary lib;try{lib.initialize(options.baseDirectory);{std::lock_guard<std::mutex> lock(mutex_);state_.ortVersion=lib.version;}}
-  catch(const std::exception& e){ComputeTest unavailable;unavailable.state="unavailable";unavailable.message=e.what();publish(unavailable,1);publish(unavailable,2);throw Unavailable(e.what());}
+  std::filesystem::create_directories(options.resultDirectory);int device=-1,driverVersion=0;
+  auto attempt=[&](int which,auto&& action){ComputeTest result;try{result=action();}catch(const Cancelled&){result.state="cancelled";result.reason="CANCELLED";result.message="Cancelled; phase not verified complete";publish(result,which);throw;}catch(const Skipped& e){result.state="skipped";result.reason=e.reason;result.blockedBy="cuda_workload";result.message=e.what();}catch(const Unavailable& e){result.state="unavailable";result.reason=e.reason;result.message=e.what();}catch(const std::exception& e){result.state="failed";result.reason="EXECUTION_OR_VALIDATION_FAILED";result.message=e.what();}publish(result,which);Log::write(result.verified?"INFO":"WARN","Compute "+std::to_string(which)+" "+result.state+": "+result.message);return result;};
+  phase("cuda_vector_add");auto cuda=attempt(0,[&]{return cudaWork(options,cancel_,device,driverVersion);});cancelled(cancel_);
+  OrtLibrary lib;try{lib.initialize(options.baseDirectory);{std::lock_guard<std::mutex> lock(mutex_);state_.ortVersion=lib.version;state_.runtimePath=lib.path;state_.availableProviders=lib.providers;state_.dependencies=lib.dependencies->diagnostics();state_.cudaDriverVersion=driverVersion;lib.driverVersion=driverVersion;}}
+  catch(const std::exception& e){ComputeTest unavailable;unavailable.state="unavailable";unavailable.reason="ORT_RUNTIME_NOT_LOADABLE";unavailable.message=e.what();publish(unavailable,1);publish(unavailable,2);throw Unavailable(e.what());}
   auto active=[this](bool gpu){std::lock_guard<std::mutex> lock(mutex_);state_.providerStatus=gpu?"CUDA EP ACTIVE (profile + numerical test passed); benchmark running":"CPU ACTIVE (numerical test passed); CUDA EP evaluation pending";};
   phase("cpu_inference");auto cpu=attempt(1,[&]{return inference(lib,options,false,device,cancel_,active);});cancelled(cancel_);
   phase("cuda_ep_inference");auto gpu=attempt(2,[&]{return inference(lib,options,true,device,cancel_,active);});
-  {std::lock_guard<std::mutex> lock(mutex_);state_.providerStatus=gpu.verified?"CUDA EP VERIFIED (test completed; inference stopped)":cpu.verified?"FALLBACK TO CPU (verified); CUDA EP unavailable or failed":"Inference unavailable: no verified provider";state_.phase="completed";}
+  {std::lock_guard<std::mutex> lock(mutex_);state_.dependencies=lib.dependencies->diagnostics();state_.providerStatus=gpu.verified?"CUDA EP VERIFIED (test completed; inference stopped)":cpu.verified?"CPU fallback verified; CUDA EP "+gpu.state+" ["+gpu.reason+"]: "+gpu.message:"Inference unavailable: no verified provider";state_.phase="completed";}
  }catch(const Cancelled& e){std::lock_guard<std::mutex> lock(mutex_);state_.phase="cancelled";state_.error=e.what();state_.providerStatus="Cancelled; inspect individual verified results";}
  catch(const std::exception& e){std::lock_guard<std::mutex> lock(mutex_);state_.phase="unavailable_or_failed";state_.error=e.what();state_.providerStatus="Inference unavailable; DX11 renderer remains active";}
  catch(...){std::lock_guard<std::mutex> lock(mutex_);state_.phase="failed";state_.error="Unexpected compute failure";state_.providerStatus="Compute failure; DX11 renderer remains active";}

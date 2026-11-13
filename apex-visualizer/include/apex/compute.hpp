@@ -15,17 +15,19 @@ struct TimingSummary {
  void add(double ms);double mean()const{return count?total/count:0;}
 };
 struct ComputeTest {
- std::string state="not_run",message="Not tested";bool verified=false;TimingSummary latency,kernel;
+ std::string state="not_run",message="Not tested",reason="NOT_RUN",blockedBy,profileFile;double measuredWallSeconds=-1;bool verified=false;TimingSummary latency,kernel;
 };
+struct LibraryDiagnostic {std::string name,path,state,message;unsigned long errorCode=0;};
 struct ProcessObservation {double engineBusy=-1,localVramMiB=-1,workingMiB=-1,privateMiB=-1;};
 struct ComputeSnapshot {
  bool running=false,finished=false;std::string phase="idle",adapter,ortVersion,providerStatus="Not tested",error;
+ int cudaDriverVersion=0;std::string runtimePath;std::vector<std::string> availableProviders;std::vector<LibraryDiagnostic> dependencies;
  ComputeTest cuda,cpu,gpu;std::map<std::string,TimingSummary> renderIntervals;
  ProcessObservation before,after,peak;std::uint64_t observations=0;
  double requestedPhaseSeconds=0;int requestedIterations=0;std::string modelHashDescription="Bundled deterministic MatMul(128x256,256x256)+Relu, float32";
 };
 struct ComputeOptions {
- std::string adapter;std::filesystem::path baseDirectory,resultDirectory;int iterations=200;double phaseSeconds=0;
+ std::string adapter;std::uint64_t adapterLuid=0;std::filesystem::path baseDirectory,resultDirectory;int iterations=200;double phaseSeconds=0;
 };
 // Reference input/output for the bundled synthetic model, shared with portable tests.
 std::vector<float> computeInput();std::vector<float> computeWeights();std::vector<float> computeReference();
