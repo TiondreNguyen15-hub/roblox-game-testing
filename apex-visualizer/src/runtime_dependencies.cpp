@@ -13,7 +13,11 @@ void add(std::vector<std::filesystem::path>& dirs,std::filesystem::path p){
 }
 void split(std::vector<std::filesystem::path>& dirs,const std::wstring& list){size_t start=0;while(start<=list.size()){auto end=list.find(L';',start);auto part=list.substr(start,end-start);if(part.size()>1&&part.front()==L'"'&&part.back()==L'"')part=part.substr(1,part.size()-2);add(dirs,part);if(end==std::wstring::npos)break;start=end+1;}}
 bool x64(const std::filesystem::path& file){std::ifstream in(file,std::ios::binary);unsigned short mz=0,machine=0;unsigned offset=0,signature=0;in.read(reinterpret_cast<char*>(&mz),2);in.seekg(0x3c);in.read(reinterpret_cast<char*>(&offset),4);if(!in||mz!=0x5a4d||offset>64*1024*1024)return false;in.seekg(offset);in.read(reinterpret_cast<char*>(&signature),4);in.read(reinterpret_cast<char*>(&machine),2);return bool(in)&&signature==0x4550&&machine==0x8664;}
-const wchar_t* required[]={L"cudart64_12.dll",L"cublasLt64_12.dll",L"cublas64_12.dll",L"cufft64_11.dll",L"cudnn64_9.dll"};
+const wchar_t* cudaRequired[]={L"cudart64_12.dll",L"cublasLt64_12.dll",L"cublas64_12.dll",L"cufft64_11.dll"};
+// Match ORT's Windows preload strategy, including CNN from our pinned 9.8 bundle.
+// cuDNN's umbrella lazily loads companions by bare name; AddDllDirectory alone
+// does not make those legacy LoadLibrary calls search our private runtime folder.
+const wchar_t* cudnnRequired[]={L"cudnn_engines_runtime_compiled64_9.dll",L"cudnn_engines_precompiled64_9.dll",L"cudnn_heuristic64_9.dll",L"cudnn_ops64_9.dll",L"cudnn_adv64_9.dll",L"cudnn_cnn64_9.dll",L"cudnn_graph64_9.dll",L"cudnn64_9.dll"};
 }
 std::string loadedModulePath(HMODULE module){wchar_t path[32768]{};DWORD n=GetModuleFileNameW(module,path,32768);return n&&n<32768?std::filesystem::path(path).u8string():std::string{};}
 std::string windowsLoadError(unsigned long code){char* value=nullptr;DWORD n=FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,nullptr,code,0,reinterpret_cast<char*>(&value),0,nullptr);std::string text=n&&value?std::string(value,n):"Unknown Windows loader error";if(value)LocalFree(value);for(char& c:text)if(c=='\r'||c=='\n')c=' ';return "Win32 "+std::to_string(code)+": "+text;}
@@ -29,7 +33,11 @@ RuntimeDependencies::RuntimeDependencies(std::filesystem::path folder){
 RuntimeDependencies::~RuntimeDependencies(){for(auto i=modules_.rbegin();i!=modules_.rend();++i)FreeLibrary(*i);for(auto c:cookies_)RemoveDllDirectory(c);}
 std::filesystem::path RuntimeDependencies::find(const wchar_t* name)const{for(const auto& dir:directories_){std::error_code ec;auto path=dir/name;if(std::filesystem::is_regular_file(path,ec))return path;}return {};}
 std::vector<LibraryDiagnostic> RuntimeDependencies::inspect(){
- diagnostics_.clear();for(auto name:required){LibraryDiagnostic d;d.name=std::filesystem::path(name).u8string();auto path=find(name);if(path.empty()){d.state="missing";d.message="Not found in runtime/gpu, APEX_CUDA_DLL_DIRS, CUDA_PATH/bin, CUDNN_PATH/bin or PATH";}else{d.path=path.u8string();d.state=x64(path)?"found_x64":"wrong_architecture";d.message=d.state=="found_x64"?"Located; loading and GPU execution not yet verified":"Expected a Windows x64 PE DLL";}diagnostics_.push_back(d);}return diagnostics_;
+ diagnostics_.clear();auto record=[&](const wchar_t* name,const std::filesystem::path& path,bool family){LibraryDiagnostic d;d.name=std::filesystem::path(name).u8string();std::error_code ec;if(path.empty()||!std::filesystem::is_regular_file(path,ec)){d.state="missing";d.message=family?"Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family":"Not found in supported CUDA runtime locations";}else{d.path=path.u8string();d.state=x64(path)?"found_x64":"wrong_architecture";d.message=d.state=="found_x64"?"Located; loading and GPU execution not yet verified":"Expected Windows x64 PE DLL";}diagnostics_.push_back(d);};
+ for(auto name:cudaRequired)record(name,find(name),false);
+ const auto umbrella=find(L"cudnn64_9.dll");for(auto name:cudnnRequired)record(name,umbrella.empty()?std::filesystem::path{}:umbrella.parent_path()/name,true);
+ return diagnostics_;
+
 }
 void RuntimeDependencies::load(){
  inspect();for(const auto& d:diagnostics_)if(d.state!="found_x64")throw std::runtime_error(d.name+": "+d.state+". Run setup-gpu-runtime.ps1 -InstallDependencies or supply compatible x64 CUDA 12/cuDNN 9 directories.");

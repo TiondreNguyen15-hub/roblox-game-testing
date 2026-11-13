@@ -76,7 +76,7 @@ try {
   }
  }
  $required=@('onnxruntime.dll','onnxruntime_providers_shared.dll','onnxruntime_providers_cuda.dll')
- if (-not $ExtractOnly) { $required += @('cudart64_12.dll','cublasLt64_12.dll','cublas64_12.dll','cufft64_11.dll','cudnn64_9.dll') }
+ if (-not $ExtractOnly) { $required += @('cudart64_12.dll','cublasLt64_12.dll','cublas64_12.dll','cufft64_11.dll','cudnn_engines_runtime_compiled64_9.dll','cudnn_engines_precompiled64_9.dll','cudnn_heuristic64_9.dll','cudnn_ops64_9.dll','cudnn_adv64_9.dll','cudnn_cnn64_9.dll','cudnn_graph64_9.dll','cudnn64_9.dll') }
  foreach ($name in $required) {
   $file = Join-Path $stage $name
   if (-not (Test-Path $file)) { throw "Missing $name. Use -InstallDependencies for the pinned self-contained NVIDIA runtime, or provide compatible DLL directories. Existing runtime preserved." }
