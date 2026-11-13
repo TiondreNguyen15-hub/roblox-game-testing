@@ -43,7 +43,7 @@ jobs:
           $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-iterations','5','--require-cuda','--warp','--output','./compute-required-negative' -PassThru
           if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Negative CUDA test timeout' }
           if ($p.ExitCode -ne 6) { throw "Expected unverified CUDA exit 6, got $($p.ExitCode)" }
-      - name: Cancelled compute must fail even after CPU validation
+      - name: Cancelled compute must fail
         shell: pwsh
         run: |
           $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-seconds','30','--compute-cancel-after','1','--warp','--output','./compute-cancelled' -PassThru

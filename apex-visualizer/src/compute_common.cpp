@@ -14,6 +14,11 @@ bool verifyComputeOutput(const float* values,size_t count,std::string& error){
  for(size_t i=0;i<count;++i)if(!std::isfinite(values[i])||std::abs(values[i]-reference[i])>1e-4f+1e-3f*std::abs(reference[i])){error="Inference numerical validation failed at index "+std::to_string(i);return false;}
  error.clear();return true;
 }
+bool computeRunSucceeded(const ComputeSnapshot& s,bool requireCuda){
+ if(!s.finished||s.phase!="completed"||!s.cpu.verified||s.cpu.state!="passed"||!s.cpu.latency.count||s.cuda.state=="failed"||s.gpu.state=="failed")return false;
+ if(requireCuda&&(!s.cuda.verified||s.cuda.state!="passed"||!s.cuda.latency.count||!s.gpu.verified||s.gpu.state!="passed"||!s.gpu.latency.count))return false;
+ return true;
+}
 void saveComputeReport(const std::filesystem::path& directory,const ComputeSnapshot& s){
  using J=nlohmann::json;auto timing=[](const TimingSummary& t)->J{if(!t.count)return nullptr;return {{"observations",t.count},{"mean_ms",t.mean()},{"min_ms",t.min},{"max_ms",t.max},{"serial_latency_equivalent_per_second",t.total>0?1000./t.mean():0.}};};
  auto test=[&](const ComputeTest& t)->J{return {{"state",t.state},{"verified",t.verified},{"message",t.message},{"run_end_to_end",timing(t.latency)},{"cuda_kernel_events",timing(t.kernel)}};};

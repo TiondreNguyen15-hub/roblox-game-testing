@@ -30,6 +30,7 @@ struct ComputeOptions {
 // Reference input/output for the bundled synthetic model, shared with portable tests.
 std::vector<float> computeInput();std::vector<float> computeWeights();std::vector<float> computeReference();
 bool verifyComputeOutput(const float* values,size_t count,std::string& error);
+bool computeRunSucceeded(const ComputeSnapshot&,bool requireCuda);
 void saveComputeReport(const std::filesystem::path&,const ComputeSnapshot&);
 class ComputeRunner {
 public:
