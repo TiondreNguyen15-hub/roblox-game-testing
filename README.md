@@ -1,13 +1,16 @@
-# Apex Visualization — cuDNN first-use crash fix
+# Apex Visualization — Phase 3 performance and external capture
 
-- [Small EXE patch: keep your installed GPU libraries](Apex-Visualization-CuDNN-Fix.zip)
-- [Full Windows x64 package](Apex-Visualization-Windows-x64.zip)
-- [Complete C++ source and build dependencies](Apex-Visualization-Source.zip)
-- [PC evidence, fix and update instructions](apex-visualizer/CUDNN-CRASH-FIX.md)
-- [Actual patch validation](apex-visualizer/CUDNN-FIX-VALIDATION.md)
+- [Small Phase 3 update — keep your installed GPU runtime](Apex-Visualization-Phase3-Update.zip)
+- [Full Windows x64 application](Apex-Visualization-Windows-x64.zip)
+- [Complete C++ source and offline build dependencies](Apex-Visualization-Source.zip)
+- [Benchmark and five-minute GPU test instructions](apex-visualizer/PHASE3-PERFORMANCE.md)
+- [OBS / local recording capture guide](apex-visualizer/CAPTURE.md)
+- [Actual build/test evidence and remaining PC checks](apex-visualizer/PHASE3-VALIDATION.md)
 
-The user's RTX 3070 passed CUDA vector-add, CPU inference and ONNX CUDA EP inference after a process-only PATH workaround. The cuDNN 9 first-use crash matched missing private-folder discovery of its companion DLLs.
+Close the application. Extract the small update into the **existing folder containing `apex_visualizer.exe`**, replace the EXE, and keep your working `runtime/gpu` folder. No GPU dependency reinstall is needed for an already-working installation. Fresh full downloads contain the CPU runtime; the optional pinned GPU setup helper remains available.
 
-This patch explicitly checks and preloads the entire pinned cuDNN DLL family by full path. Close the app, extract the small patch into the **existing folder containing apex_visualizer.exe**, and replace the executable. Keep `runtime/gpu`; no 1.41 GiB dependency reinstall is needed. Launch normally from File Explorer and rerun validation.
+In **System**, leave Model path blank for the bundled mathematical validation model, or select your own supported FP32 ONNX file. Choose **Benchmark loaded model CPU / GPU** or **5-minute GPU model test**. The app reports actual Run latency, validated-loop inference FPS, GPU utilization, VRAM and memory trends. A completed short CUDA test does not establish five-minute stability or a speedup. Current RTX 3070 timings must be measured on your PC; none are fabricated.
 
-Existing UI, settings, DX11 renderer and authorized JSON/simulation inputs remain. GPU verification still requires actual numeric agreement and a CUDA compute-node profile, with CPU EP fallback disabled. A user run passed those checks; normal-launch confirmation of the patched binary, sustained performance and GPU leak diagnostics remain separate acceptance checks. Earlier project assets and historical evidence are preserved.
+The **Capture** page receives real frames from OBS Virtual Camera or a local recording using Windows Media Foundation. Use OBS Display Capture / Window Capture with Windows Graphics Capture. This app does not inject, access another process's memory, bypass anti-cheat or invent player entities. Preview and frame activity work on pixels; semantic gameplay detection still requires a compatible authorized vision model and its preprocessing/output contract. The bundled MatMul model is not a vision detector.
+
+The existing interface, settings, DX11 renderer, local JSON input and earlier project assets are preserved. Historical evidence remains available; the Phase 3 validation report describes this native build specifically.

@@ -1,0 +1,259 @@
+{
+  "acceleration_status": "Inference unavailable: no verified provider",
+  "adapter": "Microsoft Basic Render Driver",
+  "available_providers": [
+    "AzureExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "benchmark_policy": {
+    "cpu_inter_op_threads": 1,
+    "cpu_intra_op_threads": 1,
+    "cuda_arena_limit_bytes": 536870912,
+    "input_values": "deterministic signed FP32",
+    "tf32_enabled": false,
+    "warmup_calls": 10
+  },
+  "cpu_inference": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "fp32_input_shapes": null,
+    "message": "Dynamic input dimensions need a JSON input profile",
+    "profile_file": "",
+    "reason_code": "INPUT_SHAPE_REQUIRED",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "cpu_to_cuda_ep_latency_ratio": null,
+  "cuda_driver_api_version": null,
+  "cuda_ep_inference": {
+    "blocked_by": "cpu_inference",
+    "cuda_kernel_events": null,
+    "fp32_input_shapes": null,
+    "message": "CPU reference benchmark did not pass",
+    "profile_file": "",
+    "reason_code": "BLOCKED_BY_CPU_REFERENCE",
+    "run_end_to_end": null,
+    "state": "skipped",
+    "verified": false
+  },
+  "cuda_workload": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "fp32_input_shapes": null,
+    "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+    "profile_file": "",
+    "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "dependencies": [
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cudart64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cublasLt64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cublas64_12.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Not found in supported CUDA runtime locations",
+      "name": "cufft64_11.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_engines_runtime_compiled64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_engines_precompiled64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_heuristic64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_ops64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_adv64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_cnn64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn_graph64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    },
+    {
+      "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+      "name": "cudnn64_9.dll",
+      "path": "",
+      "state": "missing",
+      "win32_error": 0
+    }
+  ],
+  "error": "",
+  "finished": true,
+  "gpu_execution_result": "INCOMPLETE",
+  "gpu_target_seconds": 1.0,
+  "measurement_notes": "Authorized selected-model benchmark or bundled synthetic validation. Benchmark mode uses deterministic FP32 tensor inputs; it does not represent actual gameplay preprocessing/inference. CPU baseline is cross-provider agreement, not independent model correctness.  ONNX Run wall latency includes transfers, execution and output materialization; output validation and setup excluded from mean Run latency. Validated-loop inference FPS includes periodic numerical checking.  Serial inference/s is reciprocal mean Run latency, not display FPS. CUDA event duration measures the vector-add kernel, not inference. CUDA EP marked verified only with numeric agreement, disabled CPU fallback and a CUDAExecutionProvider node in actual ORT profiling. Render FPS is reciprocal of observed main-window frame intervals during each phase; short phases can have too few frames to compare. Process GPU busy is PDH busiest matching PID+adapter engine; local VRAM is per-process DXGI WDDM usage. Counters sampled at 2Hz can miss short peaks. Memory endpoints/ranges do not establish leak freedom.",
+  "memory_trends": {
+    "process_private": {
+      "growth_mib": 0.0,
+      "message": "Not enough sustained samples",
+      "samples": 0,
+      "slope_mib_per_minute": 0.0,
+      "span_s": 0.0,
+      "state": "inconclusive"
+    },
+    "process_vram": {
+      "growth_mib": 0.0,
+      "message": "Not enough sustained samples",
+      "samples": 0,
+      "slope_mib_per_minute": 0.0,
+      "span_s": 0.0,
+      "state": "inconclusive"
+    }
+  },
+  "minimum_seconds_per_available_phase": 0.0,
+  "model": "Actual selected ONNX file, deterministic FP32 inputs, CPU-reference comparison",
+  "observed_render_frame_intervals": {
+    "completed": {
+      "max_ms": 8.7244,
+      "mean_ms": 8.7244,
+      "min_ms": 8.7244,
+      "observations": 1,
+      "serial_latency_equivalent_per_second": 114.62106276649398
+    },
+    "cuda_vector_add": {
+      "max_ms": 8.6118,
+      "mean_ms": 8.15765,
+      "min_ms": 7.8103,
+      "observations": 4,
+      "serial_latency_equivalent_per_second": 122.58432269097105
+    }
+  },
+  "onnx_runtime_version": "1.22.0",
+  "overall_benchmark_result": "INCOMPLETE",
+  "phase": "completed",
+  "process_after_cleanup": {
+    "device_gpu_percent": 4294967295.0,
+    "device_vram_mib": null,
+    "private_mib": 19.47265625,
+    "process_busiest_engine_percent": 89.32390480851575,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 39.078125
+  },
+  "process_before": {
+    "device_gpu_percent": 4294967295.0,
+    "device_vram_mib": null,
+    "private_mib": 17.67578125,
+    "process_busiest_engine_percent": 88.84300164577945,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 36.875
+  },
+  "process_observations": 156,
+  "process_peak_observed": {
+    "device_gpu_percent": 4294967295.0,
+    "device_vram_mib": null,
+    "private_mib": 19.47265625,
+    "process_busiest_engine_percent": 89.32390480851575,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 39.14453125
+  },
+  "requested_iterations_per_phase": 200,
+  "runtime_path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\build-apex\\Release\\runtime\\cpu\\onnxruntime.dll",
+  "selected_model": {
+    "benchmark_mode": true,
+    "input_profile_path": "",
+    "input_profile_sha256": "",
+    "path": "./apex-visualizer/tests/fixtures/dynamic-relu.onnx",
+    "sha256": "068bf1217cd3c4a91f5edb3f086eb25c2099e67e5da950ec53fa7f08f6935787"
+  },
+  "test_inventory": [
+    {
+      "blocked_by": "",
+      "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+      "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cuda_workload",
+      "verified": false
+    },
+    {
+      "blocked_by": "",
+      "message": "Dynamic input dimensions need a JSON input profile",
+      "reason_code": "INPUT_SHAPE_REQUIRED",
+      "state": "unavailable",
+      "test": "cpu_inference",
+      "verified": false
+    },
+    {
+      "blocked_by": "cpu_inference",
+      "message": "CPU reference benchmark did not pass",
+      "reason_code": "BLOCKED_BY_CPU_REFERENCE",
+      "state": "skipped",
+      "test": "cuda_ep_inference",
+      "verified": false
+    },
+    {
+      "message": "Requires passed CPU and CUDA EP inference",
+      "state": "skipped",
+      "test": "cpu_gpu_comparison",
+      "verified": false
+    },
+    {
+      "message": "Requires at least 300 actual measured GPU seconds and successful final numerical verification",
+      "state": "incomplete",
+      "test": "sustained_cuda_inference",
+      "verified": false
+    },
+    {
+      "message": "Heuristic, not proof of leak freedom: after 30s warmup, >=240s valid counters; >max(64MiB,2%) growth, >8MiB/min and rising quarter averages flag investigation",
+      "state": "inconclusive",
+      "test": "memory_growth_check",
+      "verified": false
+    }
+  ]
+}
