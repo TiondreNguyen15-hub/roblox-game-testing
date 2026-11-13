@@ -23,7 +23,7 @@ void HardwareMetrics::initialize(const std::string& adapter,LUID luid){
  HMODULE cuda=systemLibrary(L"nvcuda.dll");cudaStatus="CUDA driver unavailable; DX11 remains active";
  if(cuda){using Init=int(__stdcall*)(unsigned);using Count=int(__stdcall*)(int*);using Name=int(__stdcall*)(char*,int,int);using Capability=int(__stdcall*)(int*,int*,int);using Version=int(__stdcall*)(int*);
   auto init=symbol<Init>(cuda,"cuInit");auto count=symbol<Count>(cuda,"cuDeviceGetCount");auto name=symbol<Name>(cuda,"cuDeviceGetName");auto cap=symbol<Capability>(cuda,"cuDeviceComputeCapability");auto version=symbol<Version>(cuda,"cuDriverGetVersion");int n=0,matches=0;
-  if(init&&count&&name&&cap&&version&&init(0)==0&&count(&n)==0){for(int i=0;i<n;++i){char value[256]{};if(name(value,256,i)==0&&normalized(value)==normalized(adapter)&&cap(&computeMajor,&computeMinor,i)==0)++matches;}cudaAvailable=matches==1&&version(&cudaDriver)==0;cudaStatus=cudaAvailable?"CUDA driver/device verified; renderer uses DX11 (no CUDA workload)":"CUDA present; selected DXGI adapter not uniquely verified";}
+  if(init&&count&&name&&cap&&version&&init(0)==0&&count(&n)==0){for(int i=0;i<n;++i){char value[256]{};if(name(value,256,i)==0&&normalized(value)==normalized(adapter)&&cap(&computeMajor,&computeMinor,i)==0)++matches;}cudaAvailable=matches==1&&version(&cudaDriver)==0;cudaStatus=cudaAvailable?"CUDA driver/device detected; execution test is separate; UI renders with DX11":"CUDA present; selected DXGI adapter not uniquely verified";}
   else cudaStatus="CUDA driver initialization failed; DX11 remains active";
   FreeLibrary(cuda);
  }

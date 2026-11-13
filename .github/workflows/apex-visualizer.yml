@@ -30,6 +30,13 @@ jobs:
           ./apex-visualizer/tools/compute-benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./compute-validation -Seconds 60 -Warp
           $report = Get-Content (Get-ChildItem compute-validation -Recurse -Filter compute-report.json | Select-Object -First 1).FullName -Raw | ConvertFrom-Json
           if (-not $report.cpu_inference.verified -or $report.cuda_workload.verified -or $report.cuda_ep_inference.verified) { throw 'Unexpected compute verification state on WARP runner' }
+      - name: Verify optional GPU runtime installer (not a GPU execution test)
+        shell: pwsh
+        run: |
+          $dest = Join-Path $env:RUNNER_TEMP 'apex-ort-gpu-install'
+          ./apex-visualizer/tools/setup-gpu-runtime.ps1 -Destination $dest
+          Get-ChildItem $dest -Filter '*.dll' | Get-FileHash -Algorithm SHA256 | ConvertTo-Json | Set-Content gpu-runtime-install-manifest.json
+          Remove-Item $dest -Recurse -Force
       - name: Required CUDA must fail without CUDA hardware
         shell: pwsh
         run: |
@@ -57,6 +64,7 @@ jobs:
             smoke-result.txt
             hardware-validation/
             compute-validation/
+            gpu-runtime-install-manifest.json
             compute-required-negative/
             compute-missing-runtime/
           if-no-files-found: error
