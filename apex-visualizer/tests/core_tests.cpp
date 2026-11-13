@@ -8,6 +8,7 @@
 #define CHECK(x) do{if(!(x))throw std::runtime_error(#x);}while(false)
 int main(){try{
  apex::Settings s;s.menuWidth=1;s.entityCount=900;s.accent[0]=std::numeric_limits<float>::quiet_NaN();s.clamp();CHECK(s.menuWidth==560&&s.entityCount==64&&s.accent[0]==.6f);
+ std::string clipboardError;CHECK(apex::applyJsonPath(s,"  \"C:\\My Tool\\apex_entities.json\" ",clipboardError));CHECK(std::string(s.livePath)=="C:\\My Tool\\apex_entities.json");auto preserved=std::string(s.livePath);CHECK(!apex::applyJsonPath(s,std::string(201,'x'),clipboardError));CHECK(std::string(s.livePath)==preserved);CHECK(!apex::applyJsonPath(s,"one\ntwo",clipboardError));
  auto path=std::filesystem::temp_directory_path()/"apex-visualization-unit.cfg";std::string err;s.corners=true;s.names=false;s.frameLimit=120;
  CHECK(apex::Config::save(path,s,err));apex::Settings read;CHECK(apex::Config::load(path,read,err));CHECK(read.corners&&!read.names&&read.frameLimit==120&&read.entityCount==64);
  {std::ofstream f(path);f<<"version=1\nboxes=2\n";}auto previous=read;CHECK(!apex::Config::load(path,read,err));CHECK(read.corners==previous.corners);

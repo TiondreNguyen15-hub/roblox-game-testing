@@ -47,3 +47,7 @@ It generates its own moving sample records. It does not read another application
 `IDataSource` defines the read-only entity/status contract; `Telemetry` implements bounded local JSON polling/validation; `Visuals` accepts a vector of entities independent from transport. A future authorized source can provide the same Entity records without changing drawing code. `Simulation` remains available by disabling the file-source checkbox.
 
 The source mode and path save/load with the existing configuration buttons. Relative paths resolve against the current working directory; an absolute path is most reliable when launching from different shells. nlohmann/json v3.11.3 is vendored under third_party with its MIT license.
+
+## Copy/paste paths
+
+Click JSON path and use Ctrl+A/Ctrl+V, or click **Paste path**. Windows Explorer **Copy as path** quotes are removed when you paste with the button or finish editing (Enter/click outside). **Copy path** and a right-click context menu are also available. Pasted paths over 200 UTF-8 bytes or containing multiple lines are rejected with a message instead of being silently truncated.

@@ -23,7 +23,18 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
   ImGui::BeginChild("Page",{0,-28},false);
   ImGui::Text("%s",tabs[tab_]);ImGui::Separator();
   if(tab_==0){
-   ImGui::Checkbox("Read local JSON file",&s.liveFile);ImGui::InputText("JSON path",s.livePath,sizeof(s.livePath));
+   ImGui::Checkbox("Read local JSON file",&s.liveFile);
+   bool apply=ImGui::InputText("JSON path",s.livePath,sizeof(s.livePath),ImGuiInputTextFlags_AutoSelectAll|ImGuiInputTextFlags_EnterReturnsTrue);
+   if(apply||ImGui::IsItemDeactivatedAfterEdit()){std::string error;if(!applyJsonPath(s,s.livePath,error))notice_=error;}
+   if(ImGui::BeginPopupContextItem("JsonPathActions")){
+    if(ImGui::MenuItem("Copy path"))ImGui::SetClipboardText(s.livePath);
+    if(ImGui::MenuItem("Paste path")){const char* clip=ImGui::GetClipboardText();std::string error;notice_=applyJsonPath(s,clip?clip:"",error)?"Path pasted.":error;}
+    ImGui::EndPopup();
+   }
+   if(ImGui::Button("Copy path"))ImGui::SetClipboardText(s.livePath);ImGui::SameLine();
+   if(ImGui::Button("Paste path")){const char* clip=ImGui::GetClipboardText();std::string error;notice_=applyJsonPath(s,clip?clip:"",error)?"Path pasted.":error;}
+   ImGui::TextDisabled("Ctrl+A / Ctrl+C / Ctrl+V; quoted Windows paths are accepted.");
+   if(!notice_.empty())ImGui::TextWrapped("%s",notice_.c_str());
    if(s.liveFile)ImGui::TextWrapped("%s",sourceStatus.c_str());
    ImGui::TextDisabled("All entities below are generated inside this application.");
    ImGui::Checkbox("2D bounding boxes",&s.boxes);ImGui::SameLine();ImGui::Checkbox("Corner style",&s.corners);

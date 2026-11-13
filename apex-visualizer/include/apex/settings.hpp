@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 namespace apex {
 struct Settings {
  bool liveFile=true;char livePath[201]="apex_entities.json";
@@ -11,4 +12,5 @@ struct Settings {
  int entityCount=18, frameLimit=144;
  void clamp();
 };
+bool applyJsonPath(Settings&,std::string text,std::string& error);
 }
