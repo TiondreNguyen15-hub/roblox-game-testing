@@ -19,5 +19,8 @@ int main(){try{
  apex::Simulation sim;sim.update(0,18);auto initial=sim.entities()[0].position.x;CHECK(sim.entities().size()==18);sim.update(2,18);CHECK(initial!=sim.entities()[0].position.x);
  for(const auto& e:sim.entities()){CHECK(e.health>=0&&e.health<=100);CHECK(e.bones[0].y>e.bones[11].y);CHECK(e.team>=0&&e.team<=2);}
  sim.update(1,1000);CHECK(sim.entities().size()==64);sim.update(1,-2);CHECK(sim.entities().size()==1);
+ sim.update(0,5,2);auto fixed=sim.entities()[0].position.x;sim.update(100,5,2);CHECK(sim.entities()[0].position.x==fixed);
+ sim.update(0,5,1);auto tracked=sim.entities()[0].position.x;sim.update(2,5,1);CHECK(sim.entities()[0].position.x!=tracked);
+ s.scene=2;s.playbackSpeed=2.5f;CHECK(apex::Config::save(path,s,err));CHECK(apex::Config::load(path,read,err));CHECK(read.scene==2&&read.playbackSpeed==2.5f);std::filesystem::remove(path);
  std::cout<<"PASS: settings bounds; config round-trip/atomic overwrite/rejection; projection; simulation invariants\n";return 0;
  }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

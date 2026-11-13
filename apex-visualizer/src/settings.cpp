@@ -6,6 +6,7 @@ static float finiteClamp(float v,float lo,float hi,float fallback){return std::i
 void Settings::clamp(){
  maxDistance=finiteClamp(maxDistance,10,300,160); menuWidth=finiteClamp(menuWidth,560,1200,710);menuHeight=finiteClamp(menuHeight,440,900,530);
  for(auto& v:accent)v=finiteClamp(v,0,1,.6f);
+ playbackSpeed=finiteClamp(playbackSpeed,.1f,3.f,1.f);scene=std::clamp(scene,0,2);
  entityCount=std::clamp(entityCount,1,64);frameLimit=std::clamp(frameLimit,30,360);
 }
 }

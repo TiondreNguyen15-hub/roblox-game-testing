@@ -13,10 +13,10 @@
 #include <string>
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND,UINT,WPARAM,LPARAM);
 namespace {
-struct WindowState {unsigned width=0,height=0;bool minimized=false,menu=true,quit=false;float dpi=1;};
+struct WindowState {unsigned width=0,height=0;bool minimized=false,menu=true,quit=false,pause=false,reset=false;float dpi=1;};
 WindowState state;
 LRESULT WINAPI procedure(HWND hwnd,UINT msg,WPARAM w,LPARAM l){
- if(msg==WM_KEYDOWN&&!(l&(1LL<<30))){if(w==VK_INSERT){state.menu=!state.menu;return 0;}if(w==VK_F10){state.quit=true;return 0;}}
+ if(msg==WM_KEYDOWN&&!(l&(1LL<<30))){if(w==VK_F5){state.pause=true;return 0;}if(w==VK_F6){state.reset=true;return 0;}if(w==VK_INSERT){state.menu=!state.menu;return 0;}if(w==VK_F10){state.quit=true;return 0;}}
  if(msg==WM_GETMINMAXINFO){auto* info=reinterpret_cast<MINMAXINFO*>(l);info->ptMinTrackSize={640,480};return 0;}
  if(msg==WM_SIZE){state.minimized=w==SIZE_MINIMIZED;state.width=LOWORD(l);state.height=HIWORD(l);return 0;}
  if(msg==WM_DPICHANGED){state.dpi=float(HIWORD(w))/96.f;auto* r=reinterpret_cast<RECT*>(l);SetWindowPos(hwnd,nullptr,r->left,r->top,r->right-r->left,r->bottom-r->top,SWP_NOZORDER|SWP_NOACTIVATE);return 0;}
@@ -63,7 +63,9 @@ int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int){
    if(state.minimized||(occluded&&!renderer.visible())){std::this_thread::sleep_for(std::chrono::milliseconds(50));previous=Clock::now();continue;}
    occluded=false;if(state.width&&state.height){renderer.resize(state.width,state.height);state.width=state.height=0;}
    auto start=Clock::now();float delta=std::chrono::duration<float>(start-previous).count();previous=start;
-   delta=std::min(delta,.1f);if(settings.animate)simulationTime+=delta;simulation.update(simulationTime,settings.entityCount);metrics.update();
+   delta=std::min(delta,.1f);if(state.pause){settings.animate=!settings.animate;state.pause=false;}
+   if(state.reset||menu.consumeReset()){simulationTime=0;state.reset=false;}
+   if(settings.animate)simulationTime+=delta*settings.playbackSpeed;simulation.update(simulationTime,settings.entityCount,settings.scene);metrics.update();
    ImGui_ImplDX11_NewFrame();ImGui_ImplWin32_NewFrame();ImGui::GetIO().FontGlobalScale=state.dpi;ImGui::NewFrame();
    auto size=ImGui::GetIO().DisplaySize;auto visualStats=visuals.draw(simulation,settings,size.x,size.y);menu.draw(settings,deviceInfo,metrics,stats,visualStats,state.menu,delta);
    ImGui::Render();auto* data=ImGui::GetDrawData();renderer.clear();ImGui_ImplDX11_RenderDrawData(data);

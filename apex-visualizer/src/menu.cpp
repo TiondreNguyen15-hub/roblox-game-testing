@@ -31,7 +31,11 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::Checkbox("Enemies only (hide team 1)",&s.enemiesOnly);ImGui::Checkbox("Visible only",&s.visibleOnly);
    ImGui::SliderFloat("Max distance",&s.maxDistance,10,300,"%.0f m");ImGui::SliderInt("Simulated entities",&s.entityCount,1,64);
   }else if(tab_==1){
-   ImGui::Checkbox("VSync",&s.vsync);ImGui::Checkbox("Animate simulated scene",&s.animate);ImGui::SliderInt("Frame cap",&s.frameLimit,30,360);
+   ImGui::Checkbox("VSync",&s.vsync);ImGui::Checkbox("Animate simulated scene",&s.animate);ImGui::SliderFloat("Playback speed",&s.playbackSpeed,.1f,3.f,"%.1fx");
+   const char* scenes[]={"Arena patrol","Tracking lanes","Static inspection"};ImGui::Combo("Training scene",&s.scene,scenes,3);
+   if(ImGui::Button("Reset simulation (F6)"))reset_=true;
+   ImGui::TextDisabled("F5: pause/resume | F6: reset scene");
+   ImGui::SliderInt("Frame cap",&s.frameLimit,30,360);
    ImGui::SliderFloat("Menu width",&s.menuWidth,560,1200,"%.0f px");ImGui::SliderFloat("Menu height",&s.menuHeight,440,900,"%.0f px");ImGui::ColorEdit3("Purple accent",s.accent);
    ImGui::TextWrapped("VSync uses the monitor refresh rate. The frame cap also limits CPU usage. The scene pauses while minimized or occluded.");
   }else if(tab_==2){

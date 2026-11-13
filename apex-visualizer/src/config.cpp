@@ -21,7 +21,7 @@ bool Config::save(const std::filesystem::path& path,const Settings& input,std::s
   auto temp=path;temp+=".tmp";std::ofstream out(temp,std::ios::trunc);if(!out)throw std::runtime_error("Cannot open temporary configuration");
   out<<std::setprecision(9)<<"version=1\n";
 #define WRITE(k) out<<#k<<'='<<s.k<<'\n'
-  WRITE(boxes);WRITE(corners);WRITE(skeleton);WRITE(health);WRITE(distance);WRITE(names);WRITE(teams);WRITE(visibility);WRITE(enemiesOnly);WRITE(visibleOnly);WRITE(vsync);WRITE(animate);WRITE(maxDistance);WRITE(menuWidth);WRITE(menuHeight);WRITE(entityCount);WRITE(frameLimit);
+  WRITE(boxes);WRITE(corners);WRITE(skeleton);WRITE(health);WRITE(distance);WRITE(names);WRITE(teams);WRITE(visibility);WRITE(enemiesOnly);WRITE(visibleOnly);WRITE(vsync);WRITE(animate);WRITE(maxDistance);WRITE(menuWidth);WRITE(menuHeight);WRITE(entityCount);WRITE(frameLimit);WRITE(playbackSpeed);WRITE(scene);
 #undef WRITE
   for(int i=0;i<3;++i)out<<"accent"<<i<<'='<<s.accent[i]<<'\n';
   out.flush();if(!out)throw std::runtime_error("Configuration write failed");out.close();if(!out)throw std::runtime_error("Configuration close failed");
@@ -50,8 +50,9 @@ bool Config::load(const std::filesystem::path& path,Settings& output,std::string
    BOOL(boxes)BOOL(corners)BOOL(skeleton)BOOL(health)BOOL(distance)BOOL(names)BOOL(teams)BOOL(visibility)BOOL(enemiesOnly)BOOL(visibleOnly)BOOL(vsync)BOOL(animate)
 #undef BOOL
 #define FLOAT(k) if(key==#k){next.k=static_cast<float>(v);continue;}
-   FLOAT(maxDistance)FLOAT(menuWidth)FLOAT(menuHeight)
+   FLOAT(playbackSpeed)FLOAT(maxDistance)FLOAT(menuWidth)FLOAT(menuHeight)
 #undef FLOAT
+   if(key=="scene"){if(v<0||v>2||v!=std::floor(v))throw std::runtime_error("Invalid scene");next.scene=static_cast<int>(v);continue;}
    if(key=="entityCount"||key=="frameLimit"){if(v<0||v>10000||v!=std::floor(v))throw std::runtime_error("Invalid integer");(key=="entityCount"?next.entityCount:next.frameLimit)=static_cast<int>(v);continue;}
    if(key.size()==7&&key.compare(0,6,"accent")==0&&key[6]>='0'&&key[6]<='2')next.accent[key[6]-'0']=static_cast<float>(v);
   }

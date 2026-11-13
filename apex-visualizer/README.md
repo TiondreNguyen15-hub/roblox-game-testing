@@ -31,6 +31,8 @@ The download ZIP vendors Dear ImGui **v1.91.9b** including its MIT license. A so
 ## Use
 
 - **Insert** smoothly opens/closes the menu; the simulated scene continues behind it.
+- **F5** pauses/resumes; **F6** resets the simulation clock.
+- Rendering includes saved playback speed and three training scenes: arena patrol, tracking lanes and static inspection.
 - **F10** exits. Resize the window normally; the minimum window size is 640×480.
 - Visuals: full/corner boxes, skeletons, health, distances, names, teams and synthetic visibility labels; optional visible-only/enemy-only filters.
 - Rendering: animation pause, entity count, distance, VSync, frame cap, menu dimensions and accent color.
