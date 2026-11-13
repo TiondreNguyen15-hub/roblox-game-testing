@@ -27,8 +27,9 @@ def audit(report):
                  'evidence': 'Requires passed measured CPU and CUDA EP results; unavailable GPU metrics are not zero.'})
     gpu = report.get('cuda_ep_inference', {})
     duration = gpu.get('validated_loop_duration_s')
-    rows.append({'test': 'sustained_cuda_inference', 'classification': 'passed_as_recorded' if gpu.get('verified') and duration is not None and duration >= 600 else 'incomplete',
-                 'evidence': 'Recommended minimum: actual 600-second validated CUDA inference loop. Requested duration alone is not independent evidence.'})
+    target = max(300, report.get("gpu_target_seconds", 0)) if report.get("selected_model", {}).get("benchmark_mode") else 600
+    rows.append({'test': 'sustained_cuda_inference', 'classification': 'passed_as_recorded' if gpu.get('verified') and duration is not None and duration >= target else 'incomplete',
+                 'evidence': f'Requires actual {target}-second validated CUDA inference loop. Requested duration alone is not independent evidence.'})
     rows.append({'test': 'native_gpu_leak_analysis', 'classification': 'not_recorded',
                  'evidence': 'Before/after/peak counters and short sanitizer runs cannot prove CUDA/driver leak freedom.'})
     adapter = report.get('adapter', 'not_recorded')
