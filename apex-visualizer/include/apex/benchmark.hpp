@@ -16,6 +16,7 @@ public:
  bool sample(double elapsed,const BenchmarkSample&);
  void finish(const std::string& outcome);std::uint64_t samples()const{return count_;}
 private:
+ struct Aggregate{std::uint64_t count=0;double sum=0,min=1e30,max=-1e30;};std::array<Aggregate,10> counters_{};
  std::ofstream csv_;std::filesystem::path directory_;std::string gpu_,backend_;double duration_=0,warmup_=0,sum_=0,max_=0,min_=1e30,firstMemory_=-1,lastMemory_=-1;
  std::uint64_t count_=0;std::array<std::uint64_t,10001> histogram_{};bool finished_=false;
 };
