@@ -106,6 +106,11 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::SetNextItemOpen(!showTextTools,ImGuiCond_Once);
    if(ImGui::CollapsingHeader("Enemy model analysis")){
    ImGui::TextWrapped("Game ESP / enemy-model analysis");
+   ImGui::Checkbox("Desktop overlay (live capture)",&overlayOptions.enabled);
+   if(ImGui::BeginCombo("Overlay monitor",device.overlayMonitors.empty()?"No monitor":device.overlayMonitors[std::clamp(overlayOptions.monitor,0,int(device.overlayMonitors.size())-1)].c_str())){for(int n=0;n<int(device.overlayMonitors.size());++n)if(ImGui::Selectable(device.overlayMonitors[n].c_str(),overlayOptions.monitor==n))overlayOptions.monitor=n;ImGui::EndCombo();}
+   ImGui::Checkbox("Fit capture aspect ratio to monitor",&overlayOptions.fitAspect);
+   ImGui::TextWrapped("%s",device.overlayStatus.c_str());ImGui::TextWrapped("%s",device.overlayHotkey?"F8: show/hide overlay, even while the game has focus":"F8 unavailable (already reserved); use the overlay checkbox");
+   ImGui::TextWrapped("Use borderless/windowed gameplay on the selected monitor. OBS must show that same full game view; scene cropping or borders can misalign boxes.");
    if(ImGui::Button("Open recording for enemy analysis..."))captureRequest_=4;
    if(device.capture.running&&device.capture.isRecording&&ImGui::Button(device.capture.paused?"Resume analysis clip":"Pause analysis clip"))captureRequest_=5;
    if(ImGui::Button("Browse enemy ONNX model..."))enemyRequest_=3;

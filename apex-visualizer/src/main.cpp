@@ -24,9 +24,10 @@
 #include <string>
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND,UINT,WPARAM,LPARAM);
 namespace {
-struct WindowState {unsigned width=0,height=0;bool minimized=false,menu=true,quit=false,pause=false,reset=false;float dpi=1;};
+struct WindowState {unsigned width=0,height=0;bool minimized=false,menu=true,quit=false,pause=false,reset=false,overlayToggle=false;float dpi=1;};
 WindowState state;
 LRESULT WINAPI procedure(HWND hwnd,UINT msg,WPARAM w,LPARAM l){
+ if(msg==WM_HOTKEY&&w==0x4150){state.overlayToggle=true;return 0;}
  if(msg==WM_KEYDOWN&&!(l&(1LL<<30))){if(w==VK_F5){state.pause=true;return 0;}if(w==VK_F6){state.reset=true;return 0;}if(w==VK_INSERT){state.menu=!state.menu;return 0;}if(w==VK_F10){state.quit=true;return 0;}}
  if(msg==WM_GETMINMAXINFO){auto* info=reinterpret_cast<MINMAXINFO*>(l);info->ptMinTrackSize={640,480};return 0;}
  if(msg==WM_SIZE){state.minimized=w==SIZE_MINIMIZED;state.width=LOWORD(l);state.height=HIWORD(l);return 0;}
@@ -73,9 +74,10 @@ struct Gui {
 };
 }
 int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int){
+ bool overlayBackgroundTest=false,overlayMinimized=false;std::uint64_t overlayStartFrames=0,overlayStartResults=0;
  bool enemyTest=false;std::filesystem::path enemyModelArg;bool hudTest=false;bool captureCameraTest=false;bool captureTest=false;std::filesystem::path captureFile;bool capturePreviewDrawn=false;bool modelBenchmark=false,gpuSoak=false;double cpuSeconds=10,gpuSeconds=10;std::filesystem::path modelPath,inputProfile;bool computeCli=false,requireCuda=false;double computeSeconds=0,computeCancelAfter=-1;int computeIterations=200;bool smoke=false,warp=false,asyncSmoke=false;int maxFrames=0;double benchmarkSeconds=0,warmup=5;int cap=144,entities=64;bool benchmarkRequested=false,noVsync=false,simulate=false;std::filesystem::path jsonPath,benchmarkPath=L"benchmark-results";
  int argc=0;LPWSTR* argv=CommandLineToArgvW(GetCommandLineW(),&argc);
- if(argv){for(int i=1;i<argc;++i){std::wstring a=argv[i];if(a==L"--smoke-test"||a==L"--async-smoke-test"){smoke=true;warp=true;asyncSmoke=a==L"--async-smoke-test";maxFrames=asyncSmoke?60:6;}else if(a==L"--json"&&i+1<argc)jsonPath=argv[++i];else if(a==L"--warp")warp=true;
+ if(argv){for(int i=1;i<argc;++i){std::wstring a=argv[i];if(a==L"--smoke-test"||a==L"--async-smoke-test"){smoke=true;warp=true;asyncSmoke=a==L"--async-smoke-test";maxFrames=asyncSmoke?60:6;}else if(a==L"--json"&&i+1<argc)jsonPath=argv[++i];else if(a==L"--warp")warp=true;else if(a==L"--overlay-background-test"){overlayBackgroundTest=true;captureCameraTest=true;captureTest=true;smoke=true;warp=true;maxFrames=2000;}
  else if(a==L"--enemy-model"&&i+1<argc)enemyModelArg=argv[++i];else if(a==L"--enemy-test"&&i+1<argc){enemyTest=true;captureTest=true;smoke=true;warp=true;maxFrames=3000;captureFile=argv[++i];}
  else if(a==L"--hud-test"&&i+1<argc){hudTest=true;captureTest=true;smoke=true;warp=true;maxFrames=3000;captureFile=argv[++i];}
  else if(a==L"--capture-camera-test"){captureCameraTest=true;captureTest=true;smoke=true;warp=true;maxFrames=2000;}
@@ -103,7 +105,7 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
   apex::DeviceInfo deviceInfo{renderer.gpu(),renderer.videoMemory()};
   apex::HardwareMetrics hardware;hardware.initialize(renderer.gpu(),renderer.adapterLuid);deviceInfo.cudaStatus=hardware.cudaStatus;deviceInfo.nvmlStatus=hardware.nvmlStatus;deviceInfo.featureLevel=renderer.featureLevel;
   if(benchmarkRequested){benchmark.start(benchmarkPath,renderer.gpu(),"DirectX / feature level "+renderer.featureLevel+" / "+hardware.cudaStatus,benchmarkSeconds,warmup);benchmarkStarted=true;benchmark.metadata={{"vsync",settings.vsync?"on":"off"},{"frame_cap",std::to_string(settings.frameLimit)},{"entity_count",std::to_string(settings.entityCount)},{"source",settings.liveFile?settings.livePath:"local simulation"},{"window_initial_size","1440x900 outer; DPI dependent client"},{"nvml",hardware.nvmlStatus},{"cuda",hardware.cudaStatus},{"cuda_driver_api_version",std::to_string(hardware.cudaDriver)},{"cuda_compute_capability",std::to_string(hardware.computeMajor)+"."+std::to_string(hardware.computeMinor)},{"present",renderer.flipModel()?"flip-discard latency1":"compatibility discard"},{"model_backend","optional ONNX compute validation; inactive during render-only benchmark"}};}
-  CaptureTexture captureTexture;apex::CaptureSource capture;apex::HudOcrService hud;CaptureTexture enemyTexture;apex::EnemyService enemies;
+  CaptureTexture captureTexture;apex::CaptureSource capture;apex::HudOcrService hud;CaptureTexture enemyTexture;apex::EnemyService enemies;apex::DesktopOverlay overlay;
   apex::ComputeRunner compute;bool computeStarted=false,computeReported=false;double computeFinishedAt=-1,computeStartedAt=0;std::filesystem::path computeDirectory;
   apex::ProviderSystem providers(!smoke||asyncSmoke);apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics metrics;apex::RenderStats stats;
   {std::string error;auto path=apex::Config::defaultPath().parent_path()/"hud-settings.json";if(std::filesystem::exists(path)&&!apex::loadHudOptions(path,menu.hudOptions,error))apex::Log::write("WARN",error);}
@@ -112,13 +114,19 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
   if(captureTest){settings.menuWidth=1000;settings.menuHeight=780;}
   if(captureCameraTest||!captureFile.empty()){capture.start(captureFile);menu.selectPage(hudTest?apex::MenuPage::Hud:apex::MenuPage::Capture);}
   if(enemyTest){menu.enemyEnabled=true;menu.enemyOptions.modelPath=apex::normalizeComputePath(enemyModelArg,std::filesystem::current_path());menu.enemyOptions.preferCuda=false;menu.selectPage(apex::MenuPage::GameEsp);}
+  if(overlayBackgroundTest){menu.overlayOptions.enabled=true;menu.enemyEnabled=true;menu.enemyOptions.preferCuda=false;menu.enemyOptions.modelPath=apex::normalizeComputePath(enemyModelArg,std::filesystem::current_path());}
   if(hudTest){menu.showTextTools=true;menu.hudEnabled=true;menu.hudOptions.scale=1;}
+  deviceInfo.overlayHotkey=RegisterHotKey(window.handle,0x4150,MOD_NOREPEAT,VK_F8)!=FALSE;
   apex::FramePacer pacer;using Clock=std::chrono::steady_clock;auto previous=Clock::now();auto benchmarkStart=previous;double simulationTime=0;int frames=0;bool occluded=false;
   while(!state.quit){
    MSG msg{};while(PeekMessageW(&msg,nullptr,0,0,PM_REMOVE)){if(msg.message==WM_QUIT)state.quit=true;TranslateMessage(&msg);DispatchMessageW(&msg);}if(state.quit)break;
-   if(state.minimized||(occluded&&!renderer.visible())){if(benchmarkRequested||computeCli)throw std::runtime_error("Benchmark interrupted: window minimized or occluded");std::this_thread::sleep_for(std::chrono::milliseconds(50));previous=Clock::now();continue;}
+   if(state.overlayToggle){menu.overlayOptions.enabled=!menu.overlayOptions.enabled;state.overlayToggle=false;}
+   if(!menu.overlayOptions.enabled)overlay.update(menu.overlayOptions,{},false,0,0);
+   bool background=state.minimized||(occluded&&!renderer.visible());
+   if(background&&(benchmarkRequested||computeCli))throw std::runtime_error("Benchmark interrupted: window minimized or occluded");
+   if(background&&!menu.overlayOptions.enabled){if(benchmarkRequested||computeCli)throw std::runtime_error("Benchmark interrupted: window minimized or occluded");std::this_thread::sleep_for(std::chrono::milliseconds(50));previous=Clock::now();continue;}
    occluded=false;if(state.width&&state.height){renderer.resize(state.width,state.height);state.width=state.height=0;}
-   renderer.waitForFrame();
+   if(!background)renderer.waitForFrame();
    auto start=Clock::now();float delta=std::chrono::duration<float>(start-previous).count();stats.wallFrameMs=std::chrono::duration<double,std::milli>(start-previous).count();previous=start;
    delta=std::min(delta,.1f);if(state.pause){settings.animate=!settings.animate;state.pause=false;}
    if(state.reset||menu.consumeReset()){simulationTime=0;state.reset=false;}
@@ -136,6 +144,9 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
    deviceInfo.capture=capture.snapshot();try{if(deviceInfo.capture.running||deviceInfo.capture.frame)captureTexture.update(renderer,deviceInfo.capture.frame);}catch(const std::exception& e){capture.stop();captureTexture.clear();apex::Log::write("WARN",e.what());deviceInfo.capture=capture.snapshot();deviceInfo.capture.message=e.what();}deviceInfo.captureTexture=reinterpret_cast<std::uintptr_t>(captureTexture.view);
    int hudAction=menu.consumeHud();try{if(hudAction==2){auto file=chooseFile(window.handle,true);if(!file.empty())hud.exportCsv(file);}else if((menu.hudEnabled||hudAction==1)&&deviceInfo.capture.isRecording&&deviceInfo.capture.frame)hud.submit(deviceInfo.capture.frame,menu.hudOptions,deviceInfo.capture.source,hudAction==1);}catch(const std::exception& e){apex::Log::write("WARN",e.what());MessageBoxA(window.handle,e.what(),"HUD OCR",MB_OK|MB_ICONWARNING);}deviceInfo.hud=hud.snapshot();
    int enemyAction=menu.consumeEnemy();try{if(enemyAction==3){auto file=chooseEnemyFile(window.handle);if(!file.empty()){menu.enemyOptions.modelPath=file;enemies.stop();enemies.beginSource();menu.enemyEnabled=true;}}if((menu.enemyEnabled||enemyAction==1)&&deviceInfo.capture.frame&&!menu.enemyOptions.modelPath.empty())enemies.submit(deviceInfo.capture.frame,menu.enemyOptions,deviceInfo.capture.source,enemyAction==1);}catch(const std::exception& e){apex::Log::write("WARN",e.what());MessageBoxA(window.handle,e.what(),"Game ESP",MB_OK|MB_ICONWARNING);}deviceInfo.enemy=enemies.snapshot();enemyTexture.update(renderer,deviceInfo.enemy.analyzedFrame);deviceInfo.enemyTexture=reinterpret_cast<std::uintptr_t>(enemyTexture.view);
+   overlay.update(menu.overlayOptions,deviceInfo.enemy,deviceInfo.capture.running&&!deviceInfo.capture.isRecording,deviceInfo.capture.width,deviceInfo.capture.height);deviceInfo.overlayStatus=overlay.status();deviceInfo.overlayMonitors=overlay.monitors();
+   if(overlayBackgroundTest){if(metrics.uptime()>20)throw std::runtime_error("Minimized-overlay integration timed out");if(!overlayMinimized&&capturePreviewDrawn&&deviceInfo.enemy.completed){overlayStartFrames=deviceInfo.capture.frames;overlayStartResults=deviceInfo.enemy.completed;ShowWindow(window.handle,SW_MINIMIZE);overlayMinimized=true;}else if(overlayMinimized&&state.minimized&&deviceInfo.capture.frames>=overlayStartFrames+10&&deviceInfo.enemy.completed>overlayStartResults){if(deviceInfo.overlayStatus.find("Desktop overlay active")==std::string::npos)throw std::runtime_error("Overlay lost live capture while minimized: "+deviceInfo.overlayStatus);std::ofstream report("overlay-background-result.txt");report<<"PASS: actual OBS placeholder -> synthetic ONNX contract -> desktop overlay; app minimized; capture_frames_before="<<overlayStartFrames<<"; after="<<deviceInfo.capture.frames<<"; analyses_before="<<overlayStartResults<<"; after="<<deviceInfo.enemy.completed<<"; status="<<deviceInfo.overlayStatus<<"; trained model / gameplay not tested\n";report.flush();if(!report)throw std::runtime_error("Overlay report write failed");break;}}
+   if(background){std::this_thread::sleep_for(std::chrono::milliseconds(33));continue;}
    ImGui_ImplDX11_NewFrame();ImGui_ImplWin32_NewFrame();ImGui::GetIO().FontGlobalScale=state.dpi;ImGui::NewFrame();
    deviceInfo.flipModel=renderer.flipModel();deviceInfo.gpuTimingValid=renderer.gpuTimingValid();deviceInfo.gpuMs=renderer.gpuTimeMs();
    auto size=ImGui::GetIO().DisplaySize;if(benchmarkRequested&&frames==0){benchmark.metadata["initial_client_width"]=std::to_string(int(size.x));benchmark.metadata["initial_client_height"]=std::to_string(int(size.y));}
@@ -149,7 +160,7 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
    ++frames;
    if(benchmarkRequested&&frames>1){apex::BenchmarkSample sample;sample.frameMs=stats.wallFrameMs;sample.cpuWorkMs=stats.frameMs;sample.processCpu=metrics.cpuValid?metrics.cpu():-1;sample.gpuMs=renderer.gpuTimingValid()?renderer.gpuTimeMs():-1;sample.gpuUtil=hardware.utilizationValid?double(hardware.utilization):-1;sample.deviceVramMiB=hardware.memoryValid?hardware.usedBytes/1048576.:-1;sample.processVramMiB=renderer.memoryValid?renderer.processVram/1048576.:-1;sample.workingSetMiB=metrics.memoryValid?metrics.workingSet/1048576.:-1;sample.privateMiB=metrics.memoryValid?metrics.privateBytes/1048576.:-1;sample.processingMs=stats.processingMs;sample.deliveryMs=stats.deliveryMs;
     if(benchmark.sample(std::chrono::duration<double>(Clock::now()-benchmarkStart).count(),sample))break;}
-   if(captureCameraTest&&deviceInfo.capture.frames>=10&&capturePreviewDrawn)break;
+   if(captureCameraTest&&!overlayBackgroundTest&&deviceInfo.capture.frames>=10&&capturePreviewDrawn)break;
    if(enemyTest&&deviceInfo.enemy.status=="unavailable")throw std::runtime_error("Enemy model test failed: "+deviceInfo.enemy.message);
    if(hudTest&&deviceInfo.hud.status=="unavailable")throw std::runtime_error("HUD OCR test unavailable: "+deviceInfo.hud.message);
    if(captureTest&&!deviceInfo.capture.running){if(deviceInfo.capture.state!="end_of_recording"||!deviceInfo.capture.frames||!captureTexture.sequence||!capturePreviewDrawn)throw std::runtime_error("External recording/preview integration failed: "+deviceInfo.capture.message);if(enemyTest){if(deviceInfo.enemy.completed)break;}else if(!hudTest||deviceInfo.hud.completed)break;}

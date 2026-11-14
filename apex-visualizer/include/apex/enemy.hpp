@@ -7,7 +7,7 @@ struct EnemyBox{float x1=0,y1=0,x2=0,y2=0,score=0;};
 struct EnemyImage{std::vector<float> nchw;float scale=1;unsigned left=0,top=0,width=0,height=0;};
 struct EnemyOptions{std::filesystem::path modelPath,baseDirectory,profileDirectory;std::string adapter;std::uint64_t adapterLuid=0;bool preferCuda=true;float confidence=.5f,iou=.45f;int intervalMs=150;};
 struct EnemyObservation{std::uint64_t sequence=0;long long timestamp100ns=0;double latencyMs=0;std::vector<EnemyBox> boxes;std::string backend,modelSha,modelLabels,source,message;bool cudaVerified=false;};
-struct EnemySnapshot{bool busy=false;std::string status="no_model",message="Select your trained enemy ONNX model";std::uint64_t completed=0;EnemyObservation latest;std::shared_ptr<const CapturedFrame> analyzedFrame;};
+struct EnemySnapshot{std::chrono::steady_clock::time_point observedAt{};bool busy=false;std::string status="no_model",message="Select your trained enemy ONNX model";std::uint64_t completed=0;EnemyObservation latest;std::shared_ptr<const CapturedFrame> analyzedFrame;};
 EnemyImage prepareEnemyImage(const CapturedFrame&);
 std::vector<EnemyBox> decodeEnemyOutput(const float*,size_t,const EnemyImage&,float confidence,float iou);
 bool saveEnemyOptions(const std::filesystem::path&,const EnemyOptions&,std::string&);

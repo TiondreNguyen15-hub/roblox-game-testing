@@ -66,6 +66,13 @@ jobs:
           } finally {
             Start-Process "$env:SystemRoot/System32/regsvr32.exe" -ArgumentList '/u','/s',('"'+$camera.FullName+'"') -Wait
           }
+      - name: Desktop overlay continues actual capture and inference while minimized
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--overlay-background-test','--enemy-model','./apex-visualizer/tests/fixtures/enemy-contract-test.onnx' -PassThru
+          if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Desktop overlay background test timed out' }
+          if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 40; throw 'Minimized overlay integration failed' }
+          Get-Content overlay-background-result.txt
       - name: Five-minute startup recovery and missing custom-model diagnostics
         shell: pwsh
         run: |
@@ -157,6 +164,7 @@ jobs:
             capture-smoke-result.txt
             obs-camera-smoke-result.txt
             enemy-smoke-result.txt
+            overlay-background-result.txt
             hud-smoke-result.txt
             hud-readings-test.csv
             obs-camera-provenance.json
