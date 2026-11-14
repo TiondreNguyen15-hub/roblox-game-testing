@@ -1,5 +1,6 @@
 #include "apex/capture.hpp"
 #include "apex/log.hpp"
+#include "apex/capture_directshow.hpp"
 #include <windows.h>
 #include <mfapi.h>
 #include <mfidl.h>
@@ -31,7 +32,12 @@ void CaptureSource::run(std::filesystem::path file)noexcept{
    Com<IMFAttributes> filter;check(MFCreateAttributes(filter.put(),1),"Camera enumeration attributes");check(filter->SetGUID(MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE,MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_GUID),"Camera source type");IMFActivate** devices=nullptr;UINT32 count=0;check(MFEnumDeviceSources(filter.p,&devices,&count),"Enumerate OBS virtual camera");
    struct Devices{IMFActivate** p;UINT32 n;~Devices(){for(UINT32 i=0;i<n;++i)p[i]->Release();CoTaskMemFree(p);}} cleanup{devices,count};
    for(UINT32 i=0;i<count;++i){wchar_t* raw=nullptr;UINT32 length=0;if(SUCCEEDED(devices[i]->GetAllocatedString(MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME,&raw,&length))){std::wstring name(raw,length);CoTaskMemFree(raw);for(auto& c:name)c=static_cast<wchar_t>(std::towlower(c));if(name.find(L"obs")!=std::wstring::npos&&name.find(L"virtual")!=std::wstring::npos){check(devices[i]->ActivateObject(__uuidof(IMFMediaSource),reinterpret_cast<void**>(owned.put())),"Open OBS virtual camera");break;}}}
-   if(!owned.p)throw std::runtime_error("OBS Virtual Camera not found. Start OBS Virtual Camera using Display/Window capture first.");
+   Log::write("INFO","Media Foundation video inputs: "+std::to_string(count)+"; OBS found="+(owned.p?"yes":"no"));
+   if(!owned.p){auto begin=Clock::now();std::shared_ptr<const CapturedFrame> previous;
+    auto status=[this](const std::string& message){Log::write("INFO",message);std::lock_guard<std::mutex> lock(mutex_);state_.message=message;state_.source="OBS Virtual Camera / DirectShow";};
+    runObsDirectShow(stop_,[&](std::shared_ptr<CapturedFrame> frame){auto stats=frameStatistics(frame->rgba,frame->width,frame->height,previous&&previous->width==frame->width&&previous->height==frame->height?&previous->rgba:nullptr);previous=frame;std::lock_guard<std::mutex> lock(mutex_);frame->sequence=++state_.frames;state_.width=frame->width;state_.height=frame->height;state_.readWaitMs=frame->readWaitMs;state_.fps=state_.frames/std::max(.001,std::chrono::duration<double>(Clock::now()-begin).count());state_.statistics=stats;state_.frame=frame;state_.state="capturing";state_.source="OBS Virtual Camera / DirectShow";state_.message="Receiving actual OBS DirectShow video frames";},status);
+    std::lock_guard<std::mutex> lock(mutex_);state_.running=false;state_.state="stopped";state_.message="DirectShow capture stopped";return;
+   }
    {std::lock_guard<std::mutex> lock(mutex_);source_=owned.p;source_->AddRef();}
    check(MFCreateSourceReaderFromMediaSource(owned.p,attributes.p,reader.put()),"Create OBS source reader");
   }else {if(!std::filesystem::is_regular_file(file))throw std::runtime_error("Recording file not found");check(MFCreateSourceReaderFromURL(file.c_str(),attributes.p,reader.put()),"Open local recording");}

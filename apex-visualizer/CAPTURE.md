@@ -1,3 +1,5 @@
+> **OBS detection update:** [DirectShow compatibility fix and instructions](OBS-CAPTURE-FIX.md). The camera button now falls back to DirectShow when Media Foundation does not enumerate OBS. The Media Foundation recording instructions below still apply.
+
 # External gameplay video input
 
 ## OBS Virtual Camera

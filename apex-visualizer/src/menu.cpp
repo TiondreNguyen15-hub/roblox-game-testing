@@ -92,6 +92,8 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    if(!device.capture.running&&ImGui::Button("Open recording"))captureRequest_=2;
    if(device.capture.running&&ImGui::Button("Stop capture"))captureRequest_=3;
    ImGui::TextWrapped("%s: %s",device.capture.state.c_str(),device.capture.message.c_str());
+   ImGui::TextWrapped("Source: %s",device.capture.source.c_str());
+   if(ImGui::Button("Copy capture diagnostics")){auto text="Source: "+device.capture.source+"\nState: "+device.capture.state+"\nMessage: "+device.capture.message+"\nFrames: "+std::to_string(device.capture.frames)+"\nLog: "+Log::path().u8string();ImGui::SetClipboardText(text.c_str());}
    ImGui::Text("%ux%u | %.1f capture FPS | read wait %.2f ms",device.capture.width,device.capture.height,device.capture.fps,device.capture.readWaitMs);
    ImGui::Text("Luma %.3f | frame activity %.3f",device.capture.statistics.meanLuma,device.capture.statistics.meanAbsoluteChange);
    if(device.captureTexture&&device.capture.width){float w=std::max(1.f,std::min(ImGui::GetContentRegionAvail().x,180.f*device.capture.width/device.capture.height));ImGui::Image(static_cast<ImTextureID>(device.captureTexture),{w,w*device.capture.height/device.capture.width});}
