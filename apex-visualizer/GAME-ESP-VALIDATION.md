@@ -1,25 +1,37 @@
-# Game ESP validation
+# Desktop overlay and preview validation
 
-Native source `d2a3fef5b589867dc5e6e1c1e9df2884469f2b02`. [Windows workflow](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43558523408). EXE SHA256 `c3d0af61de9be24cd9c22169ae721aee4d326c2a0a70a6ccc91c7867b1226174`.
+Native source `05f954fdc1b861c50772bf9d95752a777492d71c`. [Windows workflow](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43563596867). Packaged MSVC EXE SHA256 `8f527f80c56577f57f3b10a0d37258049a9e66154e0b108aad016ae4152b40a8`.
 
 | Check | Verified result and scope |
 |---|---|
-| VS2022 x64 Release | Passed; the native MSVC executable from this workflow is packaged |
-| Native module suites | 13/13 passed, including enemy RGB/letterbox geometry, inverse boxes, confidence/IoU filtering and invalid-class rejection |
-| Linux module / ASAN+UBSAN suites | 11/11 each passed; no sanitizer failure in these tested paths |
-| Actual Windows enemy adapter integration | Passed: original H264 numeric video -> real capture pixels -> image-dependent synthetic ONNX fixture -> one decoded candidate -> actual analyzed-frame DX11 draw command. This tests plumbing, not enemy recognition |
-| Existing OCR integration | Passed: original recorded pixels -> actual Windows OCR -> 28/160 numeric candidates -> preview/CSV |
-| Existing camera receiver | Passed using actual official OBS 33.0.1 filter idle output on CI, not gameplay |
-| Existing stability / compute checks | 120-second software DX11 WARP rendering, actual CPU inference/custom-model checks, model recovery, cancellation and missing dependencies passed their expected contracts |
-| Private supplied model | ONNX checker and actual Linux ONNX Runtime 1.22 CPU execution passed. FP32 input [1,3,416,416], output [1,300,6], all finite; class 0; maximum black-image score 0.0000196695, zero candidates at 0.50. Black input is a contract/sanity check, not an accuracy test |
-| CUDA enemy-model execution | Not run here: hosted Windows runner has no RTX 3070. App enables its verified status only after an actual non-copy CUDA node appears in its ONNX profile. CPU operator work is allowed and labeled |
-| Updater preservation | [Focused Windows test](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43558633916) passed syntax, SHA integrity, replace/backup, spaced paths and GPU/model/settings preservation in an isolated folder. It did not exercise GUI selection or closing a real app |
-| Actual gameplay accuracy / long model soak | Not tested. Requires captured footage, labels and the user's PC. No speedup, detection accuracy or leak-freedom claim |
+| VS2022 x64 / native suites | 15/15 passed, including actual Windows desktop overlay tests and existing modules |
+| Portable + ASAN/UBSAN suites | 12/12 each passed in tested paths; this is not proof that the whole app cannot leak |
+| Actual overlay window | Native test created a layered, topmost, non-activating tool window; checked color-key transparency, click-through flags/hit test, unchanged foreground focus and actual GDI box pixels using its paint path |
+| Freshness and resources | Stale result removed box pixels; stopped source/disabled state hid window; 200 repaints and cleanup did not exceed the test's bounded GDI handle allowance; window destroyed |
+| Monitor mapping | Fit/stretch geometry, letterboxing/pillarboxing and invalid dimensions passed. Actual multi-monitor/DPI alignment still requires PC testing |
+| Background integration | Actual official OBS 33.0.1 placeholder capture -> image-dependent synthetic ONNX -> overlay continued after minimizing the native app. Both captured-frame and completed-analysis counts advanced. No real gameplay or trained-model GPU result was claimed |
+| Preview lag fix | Real ImGui draw-data test checks that a live capture texture is drawn while the detector is busy and has no completed result; optional analyzed-texture selection also passed. Native exact analyzed-frame integration remains tested |
+| Existing regressions | Actual H264 -> ONNX -> candidate boxes -> DX11 preview; actual recorded Windows OCR; OBS receiver; 120-second WARP render stability; CPU/custom-model inference; model recovery; cancellation and missing dependencies passed their contracts |
+| Updater | Unchanged executable-replacement script from [its Windows preservation test](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43558633916); native payload SHA256 checked. GPU files/models/settings are preserved. GUI EXE selection/closing a real app were not automated |
+| Combined GPU repair + update launcher | [Focused Windows validation](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43564570410) passed actual payload SHA/manifest validation, exact spaced path handoff, stage ordering and halt-on-failure using isolated stub child stages with the actual native app. It did not install GPU dependencies or run RTX compute in that test |
+| Actual RTX 3070 / gameplay | No new benchmark or accuracy claim. Requires the user's PC, local trained model, actual OBS scene and borderless game. F8 while game-focused, exclusive-fullscreen limitations, capture exclusion behavior, actual mouse interaction and multi-monitor placement require manual confirmation |
 
-The private model SHA256 is `e7f89487dc8970e8f6da4e70ed56756d3287b4f3dfef97ce973ef7138be280bc` (40,793,716 bytes). Its metadata is `{0: 'item'}`; the user's enemy-only meaning is shown as **Enemy?**, not independently verified friend/foe classification. Preprocessing uses RGB/[0,1]/gray114 letterboxing inferred from the observed model contract; training documentation and labeled footage should confirm it. No private weights or access link are published. Synthetic test weights stay in source/tests, outside runtime models.
+## Confirmed user CPU fallback
 
-The first Windows integration run caught a layout regression: new enemy controls pushed the preserved OCR preview below the visible page. Collapsible sections now keep the selected tools visible; the final native workflow above retested both previews.
+The user supplied `CPU fallback: Installed ONNX runtime has no CUDA provider`, with the correct trained-model hash. This confirms that their selected runtime was CPU-only; it does not indicate a model-shape error or prove GPU-driver incompatibility. **Update-And-Enable-GPU.cmd** targets the single running demo, runs the existing pinned GPU dependency helper, then installs this exact native update into that captured path. No repair is claimed to have run on the PC here. Verify the trained model afterward through its actual CUDA profile status. The runtime helper itself remains unchanged and was exercised by the native workflow dependency installation/loading checks; installer success alone is not GPU inference proof.
 
-New modules: enemy.hpp, enemy.cpp (image preparation/box decoding/settings), enemy_service.cpp (bounded latest-frame worker), enemy_inference.inc (existing-loader ONNX CPU/CUDA adapter). Menu/main integrate local file selection, analyzed-frame textures, boxes, thresholds, diagnostics and save/load. The old HUD Reader sidebar label becomes Game ESP; existing text tools remain collapsed beneath it. No weapons/ammo model, game overlay, memory access or automation was added. Existing local settings and installed runtimes remain.
+## Preview issue and behavior
 
-Raw records are in [validation/game-esp](validation/game-esp), including the private-model CPU contract check (no weights), actual native fixture output, workflow log, sanitizer records and updater log. See [usage](GAME-ESP-README.md).
+The previous Game ESP preview used only the analyzed frame. Its 150 ms submission interval alone limited preview changes to about 6.7/second, before any model time. The default preview now draws the newest captured texture independently; an optional exact analyzed-frame checkbox preserves the previous inspection view. Only that mode uploads an additional analyzed-frame GPU texture. Actual capture FPS, model processing latency, result age and UI frame time are separate diagnostics. This removes coupling; it does not demonstrate an RTX speedup or rule out CPU/GPU contention on the user's PC.
+
+Desktop overlay boxes use the latest actual detector result and expire after one second without completion. They have capture/inference delay and cannot predict motion. Recordings remain preview-only. Overlay is opt-in each launch; F8 uses a registered Windows hotkey (no input hook), with checkbox fallback if already reserved. Rendering uses a separate click-through GDI layered window; the DX11 renderer is preserved. Capture/inference continue at a background loop cadence while overlay is enabled; hidden main-window rendering is skipped. Turning the overlay off while minimized hides it before normal background suspension.
+
+Windows capture exclusion is requested; a rejected request is reported, not silently treated as supported. OBS scene alignment and actual exclusion must still be checked on the PC. Use a full-view Window Capture scene and borderless gameplay on the selected monitor. Arbitrary scene crops, tracking smaller game windows and in-game injection are not implemented.
+
+The initial background-test harness failed because a preceding test unregistered the official camera. The harness now registers/unregisters its own verified camera component; the final workflow above passed. The implementation also passed native overlay flags/painting/staleness/resource tests before that harness repair.
+
+The private supplied model previously passed ONNX checking and actual Linux CPU execution on black input (see raw private-model-cpu-check.json, no weights). Its SHA256 is `e7f89487dc8970e8f6da4e70ed56756d3287b4f3dfef97ce973ef7138be280bc`; shape FP32 [1,3,416,416] -> [1,300,6]. Metadata says class 0 = item; Enemy? is based on user description, not established friend/foe accuracy. GPU status becomes profiled only after an actual non-copy CUDA node executes. Synthetic fixture weights remain under source/tests, outside runtime models; private weights are not published.
+
+New overlay modules: desktop_overlay.hpp / desktop_overlay.cpp, overlay_geometry.cpp, portable mapping tests and native desktop-window tests. Enemy observations gain a monotonic completion timestamp. Menu/main add opt-in overlay/monitor/aspect controls, F8, background processing, independent live preview, optional exact preview, and copied timing diagnostics. Existing settings, UI pages, renderer, GPU dependencies and model files are retained. No weapons/ammo model, protected memory access, game injection or gameplay automation is added.
+
+Raw records: [validation/desktop-overlay](validation/desktop-overlay). [Instructions](GAME-ESP-README.md).

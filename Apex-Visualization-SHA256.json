@@ -1,11 +1,12 @@
 {
-  "Apex-Game-ESP-Update.zip": "2b5457cf6548c865b18c55e2d3e053c2e4780caab80e80abc96ec4fa369ea4ef",
+  "Apex-Game-ESP-Overlay-Update.zip": "44b120a0187a4cfc9431a20a5aeac168a40e9ecaa0eacd6f685e756277aa3028",
+  "Apex-Game-ESP-Update.zip": "44b120a0187a4cfc9431a20a5aeac168a40e9ecaa0eacd6f685e756277aa3028",
   "Apex-HUD-Update.zip": "791567322029da16cbc22a4c9b9f7406ae9bb949ffa768b6862d893e1c1c3d3b",
   "Apex-GPU-Reinstall.zip": "b4c54c1071f389ff96d3b13e982e5b695256427f528ec156b76ef13aa479e4b6",
-  "Apex-Visualization-Compute-Fix.zip": "7aa7e1dd9af9eadffaa3aa2b64509fa4f387fb2f5a3275c8f5794708f38708cb",
-  "Apex-Visualization-OBS-Fix.zip": "7aa7e1dd9af9eadffaa3aa2b64509fa4f387fb2f5a3275c8f5794708f38708cb",
-  "Apex-Visualization-Phase3-Update.zip": "7aa7e1dd9af9eadffaa3aa2b64509fa4f387fb2f5a3275c8f5794708f38708cb",
-  "Apex-Visualization-Source.zip": "ffed36da4b4880d3741cebe1b36a5169df197e1619ab5a43aa59edb1038a22db",
-  "Apex-Visualization-Windows-x64.zip": "977b19fe8cf5b362fc7f79afbd7a41586723209b42f8e2d36077f83d0ae00815",
+  "Apex-Visualization-Compute-Fix.zip": "e8e818d7f51565273aa95de117c89f315e1021b7a74229053e46e0b80e2ec01a",
+  "Apex-Visualization-OBS-Fix.zip": "e8e818d7f51565273aa95de117c89f315e1021b7a74229053e46e0b80e2ec01a",
+  "Apex-Visualization-Phase3-Update.zip": "e8e818d7f51565273aa95de117c89f315e1021b7a74229053e46e0b80e2ec01a",
+  "Apex-Visualization-Source.zip": "2319357a9462f0f7a6e416a351f5c2bf6b5cd0c88258b9810120efcafc179c7b",
+  "Apex-Visualization-Windows-x64.zip": "ec2f99ac297929a0b8deb2e95181dc7fb9e89394cc59b1ed94b9a0ed5645c3af",
   "Apex-Visualization-CuDNN-Fix.zip": "4f3831f22f7fba06df351e99bee5da687116511cfce6845438e219d65d2a4a4f"
 }

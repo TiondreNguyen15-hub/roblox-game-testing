@@ -1,0 +1,1 @@
+PASS: actual OBS virtual-camera frames (no OBS producer; placeholder output) =13; size=1280x720; last uploaded sequence=13; actual DX11 preview draw command=1; WARP=1

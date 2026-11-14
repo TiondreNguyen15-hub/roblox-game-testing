@@ -1,0 +1,1 @@
+PASS: actual H264 recording -> captured pixels -> HUD crop -> Windows OCR / en-US (CPU; separate from CUDA model benchmark) -> actual OCR: 28 / 160; magazine=28; reserve=160; OCR ms=14.3521; actual DX11 preview=1; observations=4

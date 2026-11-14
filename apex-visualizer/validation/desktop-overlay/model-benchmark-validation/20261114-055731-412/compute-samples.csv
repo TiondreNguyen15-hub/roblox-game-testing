@@ -1,0 +1,10 @@
+elapsed_s,phase,render_frame_interval_ms,process_busiest_engine_percent,process_local_vram_mib,working_set_mib,private_mib,device_gpu_percent,device_vram_mib
+0.0098388,cuda_vector_add,10.1165,95.1071,0,37.332,17.8555,4.29497e+09,
+0.520204,cpu_inference,10.8893,95.4319,0,52.3281,27.0586,4.29497e+09,
+1.03002,cpu_inference,10.2782,95.4382,0,52.3242,27.0664,4.29497e+09,
+1.53657,cpu_inference,10.1849,95.6691,0,52.3164,26.8867,4.29497e+09,
+2.04411,cpu_inference,10.2149,95.1641,0,52.625,28.1211,4.29497e+09,
+2.55264,cpu_inference,10.9822,95.9173,0,52.1328,26.2891,4.29497e+09,
+3.06095,completed,10.0097,95.1067,0,52.3945,27.2812,4.29497e+09,
+3.56724,completed,8.9344,95.1462,0,39.3359,18.457,4.29497e+09,
+4.07549,completed,8.5959,94.9036,0,39.3086,18.2852,4.29497e+09,

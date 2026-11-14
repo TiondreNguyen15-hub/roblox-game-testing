@@ -1,3 +1,19 @@
+# Desktop overlay and live-preview fix
+
+[Download the one-click overlay + preview update](Apex-Game-ESP-Overlay-Update.zip) · [Instructions](apex-visualizer/GAME-ESP-README.md) · [Actual validation](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+**If diagnostics say Installed ONNX runtime has no CUDA provider:** leave exactly one demo open, **Extract All**, then run **Update-And-Enable-GPU.cmd**. It repairs pinned GPU dependencies and updates that exact copy. Up to 1.4 GB may download; cached downloads are reused. GPU inference must still be checked afterward.
+
+For an installation with working GPU dependencies, leave your working demo open, **Extract All**, then double-click **Update-Game-ESP.cmd**. Installed GPU files, models and saved settings are preserved.
+
+In **Game ESP**, keep **Show exact analyzed frame** unchecked for the live captured preview. The previous default view waited for the model; live preview now runs independently. Detection latency and result age are shown separately. This removes that preview coupling; no RTX FPS improvement is claimed without PC measurements.
+
+For boxes on your main monitor: use borderless/windowed gameplay, start the existing OBS receiver, choose your local model, and enable **Desktop overlay (live capture)**. Monitor/aspect controls are under **Overlay alignment and help**; primary monitor is the default. **F8** hides/shows the click-through overlay. Capture and inference continue when the app is minimized while overlay is enabled. Boxes expire after one second without fresh analysis and remain model candidates, not proven enemy identities.
+
+The standalone preview, exact analyzed-frame option, old OCR tools, DX11 renderer and existing features remain. Actual game/OBS alignment, capture exclusion and RTX performance need confirmation on the user's PC.
+
+---
+
 # Game ESP enemy-model update
 
 [Download the one-click Game ESP update](Apex-Game-ESP-Update.zip) · [Instructions](apex-visualizer/GAME-ESP-README.md) · [Validation and limits](apex-visualizer/GAME-ESP-VALIDATION.md)

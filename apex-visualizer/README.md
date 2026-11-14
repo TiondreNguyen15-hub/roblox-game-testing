@@ -1,3 +1,5 @@
+> **Desktop overlay + smooth live preview:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.
+
 > **Game ESP update:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.
 
 > **HUD Reader update:** [Recorded text recognition](HUD-README.md) · [Actual OCR validation](HUD-VALIDATION.md). This text backend uses Windows OCR on CPU; CUDA tests remain separate.
