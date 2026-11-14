@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <fstream>
 #include <chrono>
+#include <stdexcept>
 #include "performance.hpp"
 namespace apex {
 struct TimingSummary {
@@ -30,6 +31,11 @@ struct ComputeSnapshot {
 struct ComputeOptions {
  std::string adapter;std::uint64_t adapterLuid=0;std::filesystem::path baseDirectory,resultDirectory,modelPath,inputProfile;int iterations=200;double phaseSeconds=0;bool modelBenchmark=false;double cpuSeconds=10,gpuSeconds=10;
 };
+struct ComputeInputError:std::runtime_error{std::string code;ComputeInputError(std::string reason,std::string message):std::runtime_error(std::move(message)),code(std::move(reason)){};};
+std::filesystem::path normalizeComputePath(const std::filesystem::path&,const std::filesystem::path& base);
+// Restores only a missing default model; never replaces an existing/custom file.
+bool prepareComputeInputs(ComputeOptions&);
+void markComputeStartupFailure(ComputeSnapshot&,const std::string& code,const std::string& message);
 // Reference input/output for the bundled synthetic model, shared with portable tests.
 std::vector<float> computeInput();std::vector<float> computeWeights();std::vector<float> computeReference();
 bool verifyComputeOutput(const float* values,size_t count,std::string& error);

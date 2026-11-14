@@ -71,6 +71,24 @@ jobs:
           if ($p.ExitCode -ne 6) { throw 'Missing dynamic dimensions were not rejected' }
           $r = Get-Content ./model-shape-negative/compute-report.json -Raw | ConvertFrom-Json
           if ($r.cpu_inference.reason_code -ne 'INPUT_SHAPE_REQUIRED' -or $r.cpu_inference.verified) { throw 'Dynamic shape omission falsely verified' }
+      - name: Five-minute startup recovery and missing custom-model diagnostics
+        shell: pwsh
+        run: |
+          $model = './build-apex/Release/models/compute_validation.onnx'
+          $hash = (Get-FileHash $model -Algorithm SHA256).Hash.ToLower()
+          Move-Item $model ($model+'.saved')
+          try {
+            $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--gpu-soak','--cpu-seconds','1','--compute-iterations','5','--warp','--output','./compute-model-recovery' -PassThru
+            if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Recovered-model startup timed out' }
+            if ($p.ExitCode -ne 6) { throw 'Expected required-GPU unavailability on WARP, not a fake GPU pass' }
+            $r = Get-Content ./compute-model-recovery/compute-report.json -Raw | ConvertFrom-Json
+            if (!$r.cpu_inference.verified -or $r.gpu_target_seconds -ne 300 -or $r.cuda_ep_inference.verified -or $r.selected_model.sha256 -ne $hash -or (Get-FileHash $model -Algorithm SHA256).Hash.ToLower() -ne $hash) { throw 'Bundled model was not recovered and numerically verified for actual soak startup' }
+          } finally { if (Test-Path $model) { Remove-Item $model }; Move-Item ($model+'.saved') $model }
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--gpu-soak','--model','./intentionally-missing-custom.onnx','--warp','--output','./compute-model-missing' -PassThru
+          if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Missing model diagnostic test timed out' }
+          if ($p.ExitCode -ne 6) { throw 'Missing custom model should not pass' }
+          $r = Get-Content ./compute-model-missing/compute-report.json -Raw | ConvertFrom-Json
+          if ($r.cuda_workload.reason_code -ne 'MODEL_FILE_MISSING' -or $r.cuda_workload.state -ne 'blocked' -or !$r.error -or $r.acceleration_status -notmatch 'MODEL_FILE_MISSING' -or $r.cuda_ep_inference.verified) { throw 'Missing-model startup error hidden or falsely verified' }
       - name: Verify optional GPU runtime installer (not a GPU execution test)
         shell: pwsh
         run: |
@@ -126,6 +144,8 @@ jobs:
             compute-validation/
             model-benchmark-validation/
             model-shape-negative/
+            compute-model-recovery/
+            compute-model-missing/
             gpu-runtime-install-manifest.json
             dependency-loader-test.txt
             missing-cudnn-component.txt
