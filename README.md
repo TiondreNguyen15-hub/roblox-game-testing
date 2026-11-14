@@ -1,3 +1,13 @@
+# GPU runtime reinstall without folder searches
+
+[Download the double-click GPU reinstall launcher](Apex-GPU-Reinstall.zip)
+
+Leave your current Apex Visualization demo open, extract **all** files from this ZIP, and double-click `GPU-Reinstall/Reinstall-GPU.cmd`. It detects the running demo, closes it normally, installs the version-pinned GPU libraries into that app folder, and reopens the demo. If no unique running demo is found, it uses the last known Compute-Fix folder or provides an EXE picker.
+
+About 1.4 GB may download; cached packages are reused and hashes verified. No CUDA toolkit or system PATH changes are made. Existing GPU files are backed up. After installation, use System > Run CUDA + ONNX validation. DLL installation is not proof of GPU execution. [Launcher validation scope](tools/gpu-reinstall/VALIDATION.txt).
+
+---
+
 # Five-minute GPU test startup repair
 
 [Download the compute startup fix](Apex-Visualization-Compute-Fix.zip) · [Instructions](apex-visualizer/COMPUTE-STARTUP-FIX.md) · [Actual validation](apex-visualizer/COMPUTE-STARTUP-VALIDATION.md)

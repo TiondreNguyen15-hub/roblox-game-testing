@@ -1,0 +1,4 @@
+Windows launcher syntax/payload validation passed:
+https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43548217540
+
+This validates parsing and packaged files, not the interactive file picker or an installation on your PC. The unchanged setup helper and pinned dependencies were previously exercised by the full native Windows workflow. Actual CUDA inference still requires running validation after installation.
