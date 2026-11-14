@@ -1,4 +1,4 @@
-param([switch]$ValidateOnly)
+param([switch]$ValidateOnly,[string]$TargetExe='')
 $ErrorActionPreference='Stop'
 function Run-Stage([string]$File,[string[]]$Extra=@()) {
  $arguments=@('-STA','-NoProfile','-ExecutionPolicy','Bypass','-File',('"'+$File+'"'))+$Extra
@@ -16,8 +16,19 @@ try {
   exit 0
  }
  $running=@(Get-Process -Name apex_visualizer -ErrorAction SilentlyContinue | Where-Object { $_.Path })
- if ($running.Count -ne 1) { throw 'Leave exactly ONE copy of your working demo open, then run this launcher again.' }
- $target=[IO.Path]::GetFullPath($running[0].Path)
+ $cache=Join-Path $env:LOCALAPPDATA 'ApexVisualization/last-launch-target.json'
+ if (!$TargetExe -and $running.Count -eq 1) { $TargetExe=$running[0].Path }
+ if (!$TargetExe -and $running.Count -gt 1) { throw 'Close the extra demos so only the copy to update is open.' }
+ if (!$TargetExe -and (Test-Path -LiteralPath $cache)) { try { $saved=Get-Content -LiteralPath $cache -Raw | ConvertFrom-Json;if (Test-Path -LiteralPath $saved.exe -PathType Leaf) { $TargetExe=$saved.exe } } catch { } }
+ if (!$TargetExe) {
+  Add-Type -AssemblyName System.Windows.Forms
+  $picker=New-Object System.Windows.Forms.OpenFileDialog
+  try { $picker.Title='Select the installed apex_visualizer.exe that failed to reopen';$picker.Filter='Current demo|apex_visualizer.exe';$picker.InitialDirectory=Join-Path $env:USERPROFILE 'Downloads';if ($picker.ShowDialog() -ne [System.Windows.Forms.DialogResult]::OK) { Write-Host 'Cancelled. No files changed.';exit 2 };$TargetExe=$picker.FileName } finally { $picker.Dispose() }
+ }
+ $target=[IO.Path]::GetFullPath($TargetExe)
+ if (!(Test-Path -LiteralPath $target -PathType Leaf) -or [IO.Path]::GetFileName($target) -ne 'apex_visualizer.exe') { throw 'Select the installed apex_visualizer.exe.' }
+ if ($target -match '[\\/]payload[\\/]|[\\/]update-backups[\\/]') { throw 'Select your installed app, not an update payload or backup.' }
+ try { New-Item -ItemType Directory -Path (Split-Path -Parent $cache) -Force | Out-Null;@{exe=$target} | ConvertTo-Json | Set-Content -LiteralPath $cache -Encoding UTF8 } catch { Write-Host 'Could not remember target; continuing with explicit selected path.' }
  Write-Host "Repairing GPU dependencies and updating this exact copy: $target" -ForegroundColor Cyan
  Run-Stage $gpu @('-TargetExe',('"'+$target+'"'),'-NoLaunch')
  Run-Stage $update @('-TargetExe',('"'+$target+'"'))

@@ -36,8 +36,8 @@ jobs:
           $root=Split-Path -Parent $PSScriptRoot
           if (!$NoLaunch -or $TargetExe -ne (Get-Content (Join-Path $root 'expected.txt'))) { exit 10 }
           Set-Content (Join-Path $root 'gpu-stage.txt') 'stub GPU stage only; no install'
-          $app=Get-Process -Name apex_visualizer | Select-Object -First 1
-          if (!$app.CloseMainWindow() -or !$app.WaitForExit(15000)) { exit 9 }
+          $app=Get-Process -Name apex_visualizer -ErrorAction SilentlyContinue | Select-Object -First 1
+          if ($app -and (!$app.CloseMainWindow() -or !$app.WaitForExit(15000))) { exit 9 }
           exit 0
           '@ | Set-Content (Join-Path $test 'GPU-Reinstall/Install-GPU.ps1')
           @'
@@ -55,6 +55,12 @@ jobs:
             & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1')
             if ($LASTEXITCODE -ne 0 -or !(Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Quoted spaced target handoff / stage order failed' }
           } finally { if (!$p.HasExited) { $p.Kill() } }
+          Remove-Item (Join-Path $test 'update-stage.txt')
+          & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1') -TargetExe $target
+          if ($LASTEXITCODE -ne 0 -or !(Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Closed-app explicit target recovery failed' }
+          Remove-Item (Join-Path $test 'update-stage.txt')
+          & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1')
+          if ($LASTEXITCODE -ne 0 -or !(Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Closed-app remembered target recovery failed' }
           Remove-Item (Join-Path $test 'update-stage.txt')
           'exit 7' | Set-Content (Join-Path $test 'GPU-Reinstall/Install-GPU.ps1')
           $p=Start-Process $target -ArgumentList '--warp' -PassThru
