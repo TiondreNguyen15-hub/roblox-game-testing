@@ -1,6 +1,6 @@
 # Game ESP: local enemy-model capture analysis
 
-The sidebar's **HUD Reader** entry is now **Game ESP**. This page loads your local trained model and draws candidate boxes on the exact captured frame that was analyzed. Existing recording text tools remain in a collapsed section; JSON/simulated visuals, settings, OBS capture, DX11 rendering and compute benchmarks remain.
+The sidebar's **HUD Reader** entry is now **Game ESP**. This page loads your local trained model and shows a live captured preview with the latest candidate boxes. Exact analyzed-frame viewing remains optional. Existing recording text tools remain in a collapsed section; JSON/simulated visuals, settings, OBS capture, DX11 rendering and compute benchmarks remain.
 
 ## Install and start
 
@@ -10,7 +10,22 @@ The sidebar's **HUD Reader** entry is now **Game ESP**. This page loads your loc
 4. Adjust **Detection score** and **Overlap suppression** if needed. Default score is 0.50. **Save enemy setup** preserves the local model path, CUDA preference, thresholds and analysis interval in `%LOCALAPPDATA%/ApexVisualization/enemy-settings.json`.
 5. Read **Backend**. Only `CUDA EP execution profiled (CPU ops permitted)` means this detector actually executed a non-copy CUDA node. It is separate from the math-model validation. CPU fallback includes its reason. Use **Copy Game ESP diagnostics** if initialization fails.
 
-The analyzed frame can lag the live capture; its source sequence and total processing latency are shown. The queue holds at most one pending frame and drops older pending work, rather than building an increasing backlog. Detection interval limits submissions; it is not an inference FPS claim. To unload the model fully, close the app. Browse again to reload a model replaced at the same path.
+The preview now updates from live capture independently of model completion. The previous default preview waited for each model result, so a 150 ms detection interval alone limited its visible refresh to about 6.7 updates/second even with fast inference. Keep **Show exact analyzed frame (updates at model speed)** unchecked for the smooth live view. Enable it to inspect boxes on their exact source pixels. Live boxes are delayed model results; result age and processing latency are displayed separately from actual capture FPS. This removes that preview coupling, but does not establish an RTX speedup or guarantee against GPU contention. The queue holds at most one pending frame and drops older pending work, rather than building an increasing backlog. Detection interval limits submissions; it is not an inference FPS claim. To unload the model fully, close the app. Browse again to reload a model replaced at the same path.
+
+## Desktop overlay on your main monitor
+
+1. Put Apex in **Borderless Window** or windowed mode on your main monitor. Exclusive fullscreen is not supported by this desktop window.
+2. In OBS, capture the full game view. Prefer **Window Capture** of the game, fit it to the OBS canvas, and start **Virtual Camera**. Cropped scenes, a webcam inset or extra borders can misalign detection boxes.
+3. In the demo, **Capture > Start OBS Virtual Camera**, then **Game ESP > Browse enemy ONNX model** and choose your local model. Keep **Analyze incoming capture frames** enabled.
+4. Check **Desktop overlay (live capture)**. Leave **Overlay monitor** set to **Primary monitor** for your main screen, or choose another display. The overlay starts off each time you launch the app.
+5. Switch back to the game. The purple **Game ESP** badge and any actual **Enemy?** boxes appear on the selected monitor. You can minimize the demo; its capture and inference continue while the overlay is enabled.
+6. Press **F8** to hide/show the overlay while the game has focus. If another app owns that hotkey, Game ESP reports it; use the checkbox instead. Close the demo to remove the overlay entirely.
+
+The overlay is a separate click-through, non-activating Windows desktop window, so it does not intercept game clicks or keyboard focus. It displays captured-image detections with capture/inference delay; boxes do not predict target motion. It clears boxes one second after the last completed analysis and hides when live capture stops or when a recording is selected. A visible badge without boxes means no fresh accepted detections, not proof of correct enemy recognition.
+
+**Fit capture aspect ratio to monitor** centers the captured view with letterboxing/pillarboxing. Turn it off only if your displayed game actually stretches the capture to fill the monitor. The overlay assumes the full capture corresponds to that monitor; it does not automatically track a smaller game window, undo OBS crops or calibrate scene transformations. Use borderless fullscreen on the same selected display for the first test.
+
+The app requests Windows capture exclusion for its overlay (Windows 10 2004+/11). If Windows rejects it, the status warns you to use OBS Window Capture. Actual OBS scene/compositor compatibility still needs checking on your PC; use Window Capture if Display Capture includes the overlay. The DX11 preview remains available for comparison.
 
 ## Model contract and limits
 
@@ -18,7 +33,7 @@ The supplied file was inspected and checked: FP32 input `in_00000` `[1,3,416,416
 
 The model's actual metadata label is `{0: 'item'}`. You described it as an enemy detector; the UI therefore labels results **Enemy?**. Enemy/friendly classification and accuracy have not been independently established. Scores are model outputs, not calibrated accuracy estimates. No weapons/ammo detector was added. No health, distance, skeleton or hidden-player information is invented from the detector output.
 
-This is analysis of externally captured pixels inside the standalone app. It does not add an in-game overlay, inject into Apex, read its memory, bypass anti-cheat or automate gameplay. Only visible image content can be analyzed. Existing Windows OCR text tools remain CPU-based.
+This is analysis of externally captured pixels, shown in the app preview or its separate desktop overlay. It does not inject into Apex, read its memory, bypass anti-cheat or automate gameplay. Only visible image content can be analyzed. Existing Windows OCR text tools remain CPU-based.
 
 GPU inference uses the existing pinned local ONNX/CUDA/cuDNN loader, renderer adapter identity, TF32 disabled, one CPU thread and a 1 GiB CUDA allocator limit (not a limit on all process GPU memory). CPU shape/operator work is permitted and honestly reported. Provider initialization or ordinary inference exceptions fall back to CPU; native driver/DLL process crashes cannot be made recoverable with a C++ exception handler.
 
