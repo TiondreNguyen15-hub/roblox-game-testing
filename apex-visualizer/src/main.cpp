@@ -16,6 +16,7 @@
 #include <imgui_impl_dx11.h>
 #include <imgui_impl_win32.h>
 #include <shellapi.h>
+#include <commdlg.h>
 #include <chrono>
 #include <thread>
 #include <fstream>
@@ -45,6 +46,9 @@ struct Window {
   if(!handle)throw std::runtime_error("Window creation failed");using DpiFn=UINT(WINAPI*)(HWND);auto dpi=reinterpret_cast<DpiFn>(GetProcAddress(GetModuleHandleW(L"user32.dll"),"GetDpiForWindow"));if(dpi)state.dpi=float(dpi(handle))/96.f;ShowWindow(handle,SW_SHOWDEFAULT);UpdateWindow(handle);
  }
 };
+std::filesystem::path chooseFile(HWND owner,bool save){
+ wchar_t path[32768]{};if(save)std::copy_n(L"hud-readings.csv",16,path);OPENFILENAMEW info{};info.lStructSize=sizeof(info);info.hwndOwner=owner;info.lpstrFile=path;info.nMaxFile=32768;info.lpstrFilter=save?L"CSV files\0*.csv\0\0":L"Video recordings\0*.mp4;*.m4v;*.wmv;*.avi\0All files\0*.*\0\0";info.lpstrTitle=save?L"Export actual HUD OCR observations":L"Open your local gameplay recording";info.lpstrDefExt=save?L"csv":nullptr;info.Flags=OFN_EXPLORER|OFN_NOCHANGEDIR|OFN_PATHMUSTEXIST|(save?OFN_OVERWRITEPROMPT:OFN_FILEMUSTEXIST);if(save?GetSaveFileNameW(&info):GetOpenFileNameW(&info))return path;auto error=CommDlgExtendedError();if(error)throw std::runtime_error("File picker failed: "+std::to_string(error));return {};
+}
 struct CaptureTexture {
  ID3D11Texture2D* texture=nullptr;ID3D11ShaderResourceView* view=nullptr;unsigned width=0,height=0;std::uint64_t sequence=0;
  ~CaptureTexture(){clear();}void clear(){if(view)view->Release();if(texture)texture->Release();view=nullptr;texture=nullptr;sequence=0;width=height=0;}
@@ -96,9 +100,10 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
   apex::DeviceInfo deviceInfo{renderer.gpu(),renderer.videoMemory()};
   apex::HardwareMetrics hardware;hardware.initialize(renderer.gpu(),renderer.adapterLuid);deviceInfo.cudaStatus=hardware.cudaStatus;deviceInfo.nvmlStatus=hardware.nvmlStatus;deviceInfo.featureLevel=renderer.featureLevel;
   if(benchmarkRequested){benchmark.start(benchmarkPath,renderer.gpu(),"DirectX / feature level "+renderer.featureLevel+" / "+hardware.cudaStatus,benchmarkSeconds,warmup);benchmarkStarted=true;benchmark.metadata={{"vsync",settings.vsync?"on":"off"},{"frame_cap",std::to_string(settings.frameLimit)},{"entity_count",std::to_string(settings.entityCount)},{"source",settings.liveFile?settings.livePath:"local simulation"},{"window_initial_size","1440x900 outer; DPI dependent client"},{"nvml",hardware.nvmlStatus},{"cuda",hardware.cudaStatus},{"cuda_driver_api_version",std::to_string(hardware.cudaDriver)},{"cuda_compute_capability",std::to_string(hardware.computeMajor)+"."+std::to_string(hardware.computeMinor)},{"present",renderer.flipModel()?"flip-discard latency1":"compatibility discard"},{"model_backend","optional ONNX compute validation; inactive during render-only benchmark"}};}
-  CaptureTexture captureTexture;apex::CaptureSource capture;
+  CaptureTexture captureTexture;apex::CaptureSource capture;apex::HudOcrService hud;
   apex::ComputeRunner compute;bool computeStarted=false,computeReported=false;double computeFinishedAt=-1,computeStartedAt=0;std::filesystem::path computeDirectory;
   apex::ProviderSystem providers(!smoke||asyncSmoke);apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics metrics;apex::RenderStats stats;
+  {std::string error;auto path=apex::Config::defaultPath().parent_path()/"hud-settings.json";if(std::filesystem::exists(path)&&!apex::loadHudOptions(path,menu.hudOptions,error))apex::Log::write("WARN",error);}
   if(captureTest){settings.menuWidth=1000;settings.menuHeight=780;}
   if(captureCameraTest||!captureFile.empty()){capture.start(captureFile);menu.selectPage(apex::MenuPage::Capture);}
   apex::FramePacer pacer;using Clock=std::chrono::steady_clock;auto previous=Clock::now();auto benchmarkStart=previous;double simulationTime=0;int frames=0;bool occluded=false;
@@ -119,8 +124,10 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
     computeDirectory=computeCli?benchmarkPath:apex::Config::defaultPath().parent_path()/L"compute-results"/std::to_wstring(std::chrono::system_clock::now().time_since_epoch().count());options.resultDirectory=computeDirectory;compute.start(options);computeStartedAt=metrics.uptime();computeStarted=true;computeReported=false;computeFinishedAt=-1;deviceInfo.computeReport.clear();}
    if(computeCli&&computeStarted&&computeCancelAfter>=0&&metrics.uptime()-computeStartedAt>=computeCancelAfter)compute.cancel();
    deviceInfo.compute=compute.snapshot();if(computeStarted&&deviceInfo.compute.finished&&!computeReported){if(computeFinishedAt<0)computeFinishedAt=metrics.uptime();if(metrics.uptime()-computeFinishedAt>=1.1){try{apex::saveComputeReport(computeDirectory,deviceInfo.compute);deviceInfo.computeReport=(computeDirectory/L"compute-report.json").u8string();}catch(const std::exception& reportError){apex::Log::write("ERROR",reportError.what());if(computeCli)throw;deviceInfo.computeReport=std::string("Report failed: ")+reportError.what();}compute.finishCapture();computeReported=true;apex::Log::write("INFO","Compute report status: "+deviceInfo.computeReport);if(computeCli)break;}}
-   int captureAction=menu.consumeCapture();if(captureAction){captureTexture.clear();if(captureAction==3)capture.stop();else if(captureAction==1)capture.start();else capture.start(std::filesystem::u8path(menu.recordingPath()));}
+   int captureAction=menu.consumeCapture();if(captureAction){try{if(captureAction==5)capture.setPaused(!capture.snapshot().paused);else if(captureAction==3)capture.stop();else {std::filesystem::path file;if(captureAction==4){file=chooseFile(window.handle,false);if(file.empty())captureAction=0;else menu.setRecordingPath(file.u8string());}else if(captureAction!=1)file=apex::normalizeComputePath(std::filesystem::u8path(menu.recordingPath()),exeFolder);if(captureAction){captureTexture.clear();hud.beginSource();capture.start(file);}}}catch(const std::exception& e){apex::Log::write("WARN",e.what());MessageBoxA(window.handle,e.what(),"Capture",MB_OK|MB_ICONWARNING);}}
+
    deviceInfo.capture=capture.snapshot();try{if(deviceInfo.capture.running||deviceInfo.capture.frame)captureTexture.update(renderer,deviceInfo.capture.frame);}catch(const std::exception& e){capture.stop();captureTexture.clear();apex::Log::write("WARN",e.what());deviceInfo.capture=capture.snapshot();deviceInfo.capture.message=e.what();}deviceInfo.captureTexture=reinterpret_cast<std::uintptr_t>(captureTexture.view);
+   int hudAction=menu.consumeHud();try{if(hudAction==2){auto file=chooseFile(window.handle,true);if(!file.empty())hud.exportCsv(file);}else if((menu.hudEnabled||hudAction==1)&&deviceInfo.capture.isRecording&&deviceInfo.capture.frame)hud.submit(deviceInfo.capture.frame,menu.hudOptions,deviceInfo.capture.source,hudAction==1);}catch(const std::exception& e){apex::Log::write("WARN",e.what());MessageBoxA(window.handle,e.what(),"HUD OCR",MB_OK|MB_ICONWARNING);}deviceInfo.hud=hud.snapshot();
    ImGui_ImplDX11_NewFrame();ImGui_ImplWin32_NewFrame();ImGui::GetIO().FontGlobalScale=state.dpi;ImGui::NewFrame();
    deviceInfo.flipModel=renderer.flipModel();deviceInfo.gpuTimingValid=renderer.gpuTimingValid();deviceInfo.gpuMs=renderer.gpuTimeMs();
    auto size=ImGui::GetIO().DisplaySize;if(benchmarkRequested&&frames==0){benchmark.metadata["initial_client_width"]=std::to_string(int(size.x));benchmark.metadata["initial_client_height"]=std::to_string(int(size.y));}

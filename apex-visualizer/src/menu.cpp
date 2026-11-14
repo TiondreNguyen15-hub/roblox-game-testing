@@ -19,7 +19,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
  if(ImGui::Begin("Apex Visualization",nullptr,flags)){
   ImGui::TextColored({s.accent[0],s.accent[1],s.accent[2],1},"A /  APEX VISUALIZATION");ImGui::SameLine();ImGui::TextDisabled("  STANDALONE LAB");ImGui::Separator();
   ImGui::BeginChild("Sidebar",{135*scale,-28},true);
-  const char* tabs[]={"Visuals","Rendering","System","Configuration","Capture"};for(int i=0;i<5;++i)if(ImGui::Selectable(tabs[i],tab_==i,0,{0,36*scale}))tab_=i;
+  const char* tabs[]={"Visuals","Rendering","System","Configuration","Capture","HUD Reader"};for(int i=0;i<6;++i)if(ImGui::Selectable(tabs[i],tab_==i,0,{0,36*scale}))tab_=i;
   ImGui::Spacing();ImGui::TextDisabled("INSERT");ImGui::TextWrapped("Toggle menu\nF10: exit");ImGui::EndChild();ImGui::SameLine();
   ImGui::BeginChild("Page",{0,-28},false);
   ImGui::Text("%s",tabs[tab_]);ImGui::Separator();
@@ -90,9 +90,11 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::TextWrapped("External gameplay capture / Windows Media Foundation");
    if(ImGui::CollapsingHeader("OBS setup instructions"))ImGui::TextWrapped("In OBS use Display Capture or Window Capture (Windows Graphics Capture), then Start Virtual Camera. No Game Capture hooks are used by this application.");
    if(!device.capture.running){if(ImGui::Button("Start OBS Virtual Camera"))captureRequest_=1;}
+   if(!device.capture.running&&ImGui::Button("Browse recording..."))captureRequest_=4;
    ImGui::InputText("Local recording path",recordingPath_,sizeof(recordingPath_));
    if(!device.capture.running&&ImGui::Button("Open recording"))captureRequest_=2;
    if(device.capture.running&&ImGui::Button("Stop capture"))captureRequest_=3;
+   if(device.capture.running&&device.capture.isRecording&&ImGui::Button(device.capture.paused?"Resume recording":"Pause recording"))captureRequest_=5;
    ImGui::TextWrapped("%s: %s",device.capture.state.c_str(),device.capture.message.c_str());
    ImGui::TextWrapped("Source: %s",device.capture.source.c_str());
    if(ImGui::Button("Copy capture diagnostics")){auto text="Source: "+device.capture.source+"\nState: "+device.capture.state+"\nMessage: "+device.capture.message+"\nFrames: "+std::to_string(device.capture.frames)+"\nLog: "+Log::path().u8string();ImGui::SetClipboardText(text.c_str());}
@@ -100,6 +102,29 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::Text("Luma %.3f | frame activity %.3f",device.capture.statistics.meanLuma,device.capture.statistics.meanAbsoluteChange);
    if(device.captureTexture&&device.capture.width){float w=std::max(1.f,std::min(ImGui::GetContentRegionAvail().x,180.f*device.capture.width/device.capture.height));ImGui::Image(static_cast<ImTextureID>(device.captureTexture),{w,w*device.capture.height/device.capture.width});}
    ImGui::TextWrapped("Preview and frame activity use real captured pixels. No semantic player detection is configured. A compatible authorized vision model and preprocessing contract are required for that next stage.");
+  }else if(tab_==5){
+   ImGui::TextWrapped("Read visible HUD text from local recordings");
+   if(ImGui::Button("Open recording..."))captureRequest_=4;ImGui::SameLine();
+   if(device.capture.running&&device.capture.isRecording){if(ImGui::Button(device.capture.paused?"Resume clip":"Pause clip"))captureRequest_=5;}
+   ImGui::TextWrapped("%s",device.capture.source.c_str());
+   if(device.captureTexture&&device.capture.width){
+    float w=std::max(1.f,std::min(ImGui::GetContentRegionAvail().x,250.f*device.capture.width/device.capture.height));ImVec2 size{w,w*device.capture.height/device.capture.width};auto origin=ImGui::GetCursorScreenPos();ImGui::Image(static_cast<ImTextureID>(device.captureTexture),size);auto& io=ImGui::GetIO();
+    auto local=[&](ImVec2 mouse){return ImVec2{std::clamp((mouse.x-origin.x)/size.x,0.f,1.f),std::clamp((mouse.y-origin.y)/size.y,0.f,1.f)};};
+    if(ImGui::IsItemHovered()&&ImGui::IsMouseClicked(0)){auto a=local(io.MousePos);hudAnchorX_=a.x;hudAnchorY_=a.y;hudDragging_=true;}
+    if(hudDragging_){auto b=local(io.MousePos);float x=std::min(hudAnchorX_,b.x),y=std::min(hudAnchorY_,b.y),right=std::max(hudAnchorX_,b.x),bottom=std::max(hudAnchorY_,b.y);if(right-x>.002f&&bottom-y>.002f)hudOptions.region={x,y,right-x,bottom-y};if(!ImGui::IsMouseDown(0))hudDragging_=false;}
+    auto r=hudOptions.region;ImGui::GetWindowDrawList()->AddRect({origin.x+r.x*size.x,origin.y+r.y*size.y},{origin.x+(r.x+r.width)*size.x,origin.y+(r.y+r.height)*size.y},IM_COL32(130,255,180,255),0,0,2);ImGui::TextWrapped("Pause the clip, then drag a box around ONLY the text to read.");
+   }else ImGui::TextWrapped("Open an MP4 recording first. Existing OBS capture stays on the Capture page.");
+   const char* modes[]={"Ammo counter","Match-result banner","Raw text"};int mode=static_cast<int>(hudOptions.mode);if(ImGui::Combo("Read",&mode,modes,3))hudOptions.mode=static_cast<HudMode>(mode);
+   auto& r=hudOptions.region;ImGui::SliderFloat("Region X",&r.x,0,.999f,"%.3f");ImGui::SliderFloat("Region Y",&r.y,0,.999f,"%.3f");r.width=std::clamp(r.width,.001f,1-r.x);r.height=std::clamp(r.height,.001f,1-r.y);ImGui::SliderFloat("Region width",&r.width,.001f,1-r.x,"%.3f");ImGui::SliderFloat("Region height",&r.height,.001f,1-r.y,"%.3f");
+   ImGui::SliderInt("Text upscale",&hudOptions.scale,1,4);ImGui::SliderInt("OCR interval (ms)",&hudOptions.intervalMs,250,5000);
+   ImGui::BeginDisabled(!device.capture.isRecording||!device.capture.frame);ImGui::Checkbox("Read HUD while clip plays",&hudEnabled);if(ImGui::Button("Read current frame"))hudRequest_=1;ImGui::EndDisabled();
+   if(ImGui::Button("Save HUD setup")){std::string error;notice_=saveHudOptions(Config::defaultPath().parent_path()/"hud-settings.json",hudOptions,error)?"HUD region and mode saved.":error;}ImGui::SameLine();if(ImGui::Button("Load HUD setup")){std::string error;notice_=loadHudOptions(Config::defaultPath().parent_path()/"hud-settings.json",hudOptions,error)?"HUD setup loaded.":error;}
+   ImGui::TextWrapped("%s",notice_.c_str());ImGui::TextWrapped("Backend: %s",device.hud.backend.c_str());ImGui::TextWrapped("%s: %s",device.hud.status.c_str(),device.hud.message.c_str());const auto& result=device.hud.latest;
+   ImGui::TextWrapped("Raw OCR: %s",result.raw.empty()?"(no text read)":result.raw.c_str());
+   if(result.magazine)ImGui::Text("Magazine candidate: %u",*result.magazine);if(result.reserve)ImGui::Text("Reserve candidate: %u",*result.reserve);if(!result.banner.empty())ImGui::Text("Banner candidate: %s",result.banner.c_str());
+   if(device.hud.completed)ImGui::Text("OCR %.2f ms | source frame %llu | %llu observations",result.latencyMs,static_cast<unsigned long long>(result.sequence),static_cast<unsigned long long>(device.hud.completed));
+   ImGui::BeginDisabled(!device.hud.completed);if(ImGui::Button("Export OCR CSV..."))hudRequest_=2;ImGui::SameLine();if(ImGui::Button("Copy OCR result")){auto text="Backend: "+device.hud.backend+"\nStatus: "+device.hud.status+"\nRaw OCR: "+result.raw+"\nSource: "+result.source+"\nFrame: "+std::to_string(result.sequence)+"\nOCR ms: "+std::to_string(result.latencyMs);ImGui::SetClipboardText(text.c_str());}ImGui::EndDisabled();
+   ImGui::TextWrapped("OCR reads pixels; parsed values are candidates, not ground truth. No confidence score is exposed by this backend. Windows OCR uses CPU and is separate from CUDA validation.");
   }else{
    ImGui::TextWrapped("Configuration: %s",Config::defaultPath().u8string().c_str());ImGui::TextWrapped("Log: %s",Log::path().u8string().c_str());
    if(ImGui::Button("Save configuration")){std::string error;notice_=Config::save(Config::defaultPath(),s,error)?"Configuration saved.":error;}
