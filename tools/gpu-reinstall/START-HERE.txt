@@ -1,0 +1,19 @@
+GPU RUNTIME REINSTALL
+
+1. Leave your Apex Visualization demo open so the installer finds it.
+2. Extract ALL files in this ZIP.
+3. Double-click Reinstall-GPU.cmd.
+4. Wait for "GPU runtime files installed". The demo reopens automatically.
+5. In the demo: System > Run CUDA + ONNX validation.
+
+The installer closes only the selected demo normally; it does not force-kill
+processes. If no unique running demo is found, it checks the last known
+Compute-Fix folder or asks you to select apex_visualizer.exe.
+
+About 1.4 GB may download. Existing cached packages are reused and verified.
+No CUDA toolkit/Python installation, admin prompt or system PATH change is
+requested. Existing GPU files are backed up by the tested setup helper.
+CPU files, models, app settings and OBS capture are preserved.
+
+Installing DLLs does not prove GPU inference. Run validation after installation.
+If there is an error, the command window stays open: send its screenshot.

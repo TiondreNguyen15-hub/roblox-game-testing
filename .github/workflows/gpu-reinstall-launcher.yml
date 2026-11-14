@@ -1,0 +1,17 @@
+name: GPU reinstall launcher validation
+on: [workflow_dispatch]
+jobs:
+  validate:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v5
+      - name: Parse PowerShell scripts and validate launcher payload
+        shell: pwsh
+        run: |
+          foreach ($file in Get-ChildItem ./tools/gpu-reinstall -Recurse -Filter '*.ps1') {
+            $tokens = $null; $errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref]$tokens, [ref]$errors)
+            if ($errors.Count) { $errors | Format-List; throw "PowerShell syntax failed: $($file.FullName)" }
+          }
+          & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File ./tools/gpu-reinstall/Install-GPU.ps1 -ValidateOnly
+          if ($LASTEXITCODE -ne 0) { throw 'Launcher validation failed' }
