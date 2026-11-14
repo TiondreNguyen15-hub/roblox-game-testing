@@ -1,17 +1,13 @@
 {
-  "phase": "Phase 3 selected-model performance and external capture",
-  "source_commit": "fc65f9fb5b56498f26c524bed741639733cbe09e",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43529520387",
-  "exe_sha256": "1f35dca304d42e17c8dfeb848df36d1a3da5210ec62a76de14ba276f28c4982b",
+  "phase": "OBS DirectShow compatibility fix",
+  "source_commit": "110547ab77eba226ca66879a5b905317af1283ba",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43540051211",
+  "exe_sha256": "fa0cdae9c5bb7ac95c5d04b08f9cadcde91bdc946fcf71750226366dc81321cb",
   "native_windows_ctest_suites": 9,
-  "portable_linux_suites": 8,
-  "sanitizer_suites": 8,
-  "actual_h264_decode_and_dx11_preview": "passed",
-  "selected_dynamic_onnx_cpu_benchmark": "passed",
-  "rtx3070_phase3_performance": "requires user PC",
-  "sustained_gpu_test": "requires user PC",
-  "obs_virtual_camera": "requires user PC",
-  "semantic_gameplay_detection": "requires compatible authorized vision model and preprocessing/output contract",
-  "gpu_speedup_claimed": false,
-  "leak_freedom_claimed": false
+  "directshow_actual_avi_graph_and_sample_callback": "passed",
+  "directshow_camera_enumeration_and_no_camera_diagnostics": "passed",
+  "media_foundation_recording_and_dx11_preview": "passed",
+  "cpu_onnx_and_recovery_regressions": "passed",
+  "actual_obs_device_on_user_pc": "requires PC confirmation",
+  "rtx3070_performance_or_speedup_claimed": false
 }

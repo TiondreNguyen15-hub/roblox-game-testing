@@ -1,3 +1,5 @@
+> **Latest OBS update:** [DirectShow compatibility fix](OBS-CAPTURE-FIX.md) · [Actual native validation](OBS-CAPTURE-VALIDATION.md). Actual OBS acquisition on your PC still requires confirmation.
+
 > **Phase 3 update:** [Selected-model benchmark and five-minute GPU test](PHASE3-PERFORMANCE.md) · [External capture](CAPTURE.md). Existing configuration, renderer and JSON input remain. Hardware performance results require a run on your PC.
 
 > **Latest cuDNN crash fix:** [PC outcome and patch](CUDNN-CRASH-FIX.md) · [Actual validation](CUDNN-FIX-VALIDATION.md). A later user run passed CUDA inference with the process-only PATH workaround; earlier missing-data statements below are historical.

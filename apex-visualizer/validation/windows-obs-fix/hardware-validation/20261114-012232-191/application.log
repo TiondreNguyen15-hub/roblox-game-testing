@@ -1,0 +1,51 @@
+2026-11-14T01:22:23Z [INFO] Configuration operation completed
+2026-11-14T01:22:23Z [INFO] Configuration operation completed
+2026-11-14T01:22:23Z [WARN] Configuration: Invalid boolean
+2026-11-14T01:22:23Z [WARN] Configuration: Invalid numeric setting
+2026-11-14T01:22:23Z [WARN] Configuration: Unsupported configuration version
+2026-11-14T01:22:23Z [WARN] Configuration: Invalid integer
+2026-11-14T01:22:23Z [WARN] Configuration: Configuration exceeds 32 KiB
+2026-11-14T01:22:23Z [INFO] Configuration operation completed
+2026-11-14T01:22:23Z [INFO] Configuration operation completed
+2026-11-14T01:22:23Z [INFO] Configuration operation completed
+2026-11-14T01:22:23Z [INFO] Configuration operation completed
+2026-11-14T01:22:23Z [INFO] Configuration operation completed
+2026-11-14T01:22:23Z [INFO] JSON provider recovered
+2026-11-14T01:22:23Z [WARN] JSON provider: [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - invalid literal; last read: 'p'
+2026-11-14T01:22:23Z [INFO] JSON provider recovered
+2026-11-14T01:22:23Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "C:\Users\RUNNER~1\AppData\Local\Temp\apex-file-telemetry-test.json"
+2026-11-14T01:22:23Z [INFO] JSON provider recovered
+2026-11-14T01:22:23Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "C:\Users\RUNNER~1\AppData\Local\Temp\apex-file-telemetry-test.json"
+2026-11-14T01:22:23Z [INFO] JSON provider recovered
+2026-11-14T01:22:26Z [WARN] Capture: Recording file not found
+2026-11-14T01:22:26Z [INFO] Media Foundation video inputs: 0; OBS found=no
+2026-11-14T01:22:26Z [INFO] DirectShow video inputs (0): 
+2026-11-14T01:22:26Z [WARN] Capture: Media Foundation did not find OBS. DirectShow also found no OBS Virtual Camera (0 inputs: none). Repair the 64-bit OBS Virtual Camera installation, then restart this app.
+2026-11-14T01:22:26Z [INFO] DirectShow OBS stream started; waiting for real video samples
+2026-11-14T01:22:27Z [INFO] Application startup
+2026-11-14T01:22:27Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-14T01:22:27Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-14T01:22:27Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-14T01:22:27Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-14T01:22:27Z [INFO] JSON provider recovered
+2026-11-14T01:22:27Z [INFO] Application shutdown
+2026-11-14T01:22:27Z [INFO] Application startup
+2026-11-14T01:22:27Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-14T01:22:28Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-14T01:22:28Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-14T01:22:28Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-14T01:22:28Z [INFO] JSON provider recovered
+2026-11-14T01:22:29Z [INFO] Application shutdown
+2026-11-14T01:22:29Z [INFO] Application startup
+2026-11-14T01:22:29Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-14T01:22:29Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-14T01:22:29Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-14T01:22:29Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-14T01:22:29Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "apex_entities.json"
+2026-11-14T01:22:31Z [INFO] Application shutdown
+2026-11-14T01:22:33Z [INFO] Application startup
+2026-11-14T01:22:33Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-14T01:22:33Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-14T01:22:33Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-14T01:22:33Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-14T01:24:38Z [INFO] Application shutdown

@@ -1,3 +1,13 @@
+# OBS Virtual Camera detection update
+
+[Download the small OBS compatibility patch](Apex-Visualization-OBS-Fix.zip) · [Actual native Windows validation](apex-visualizer/OBS-CAPTURE-VALIDATION.md)
+
+The original camera button searched only Media Foundation. The updated app also tries DirectShow, which OBS Virtual Camera commonly uses. Close the app, extract this patch into your **existing folder containing apex_visualizer.exe**, and replace the EXE. Keep your installed `runtime/gpu` and settings.
+
+Start Virtual Camera in OBS, then Capture > Start OBS Virtual Camera in the updated app. If it still fails, choose **Copy capture diagnostics** and paste that text in chat. DirectShow video decoding and existing renderer/CPU regression tests passed; actual OBS acquisition on your PC still needs confirmation. [Instructions and limits](apex-visualizer/OBS-CAPTURE-FIX.md).
+
+---
+
 # Apex Visualization — Phase 3 performance and external capture
 
 - [Small Phase 3 update — keep your installed GPU runtime](Apex-Visualization-Phase3-Update.zip)
