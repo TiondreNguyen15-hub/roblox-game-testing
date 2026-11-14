@@ -123,6 +123,8 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::TextWrapped("Raw OCR: %s",result.raw.empty()?"(no text read)":result.raw.c_str());
    if(result.magazine)ImGui::Text("Magazine candidate: %u",*result.magazine);if(result.reserve)ImGui::Text("Reserve candidate: %u",*result.reserve);if(!result.banner.empty())ImGui::Text("Banner candidate: %s",result.banner.c_str());
    if(device.hud.completed)ImGui::Text("OCR %.2f ms | source frame %llu | %llu observations",result.latencyMs,static_cast<unsigned long long>(result.sequence),static_cast<unsigned long long>(device.hud.completed));
+   if(ImGui::Button("Copy OCR diagnostics")){auto text="Backend: "+device.hud.backend+"\nStatus: "+device.hud.status+"\nMessage: "+device.hud.message+"\nRaw OCR: "+result.raw+"\nSource: "+device.capture.source+"\nFrame: "+std::to_string(result.sequence);ImGui::SetClipboardText(text.c_str());}
+   ImGui::TextDisabled("CSV export keeps the latest 600 observations for this source.");
    ImGui::BeginDisabled(!device.hud.completed);if(ImGui::Button("Export OCR CSV..."))hudRequest_=2;ImGui::SameLine();if(ImGui::Button("Copy OCR result")){auto text="Backend: "+device.hud.backend+"\nStatus: "+device.hud.status+"\nRaw OCR: "+result.raw+"\nSource: "+result.source+"\nFrame: "+std::to_string(result.sequence)+"\nOCR ms: "+std::to_string(result.latencyMs);ImGui::SetClipboardText(text.c_str());}ImGui::EndDisabled();
    ImGui::TextWrapped("OCR reads pixels; parsed values are candidates, not ground truth. No confidence score is exposed by this backend. Windows OCR uses CPU and is separate from CUDA validation.");
   }else{

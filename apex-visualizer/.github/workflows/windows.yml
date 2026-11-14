@@ -27,6 +27,14 @@ jobs:
           if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Capture preview integration timed out' }
           if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 50; throw "Capture preview failed: $($p.ExitCode)" }
           Get-Content capture-smoke-result.txt
+      - name: Recorded HUD text through actual OCR and DX11 UI
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--hud-test','./apex-visualizer/tests/fixtures/hud-counter.mp4' -PassThru
+          if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Recorded HUD OCR integration timed out' }
+          if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 60; throw "Actual HUD OCR integration failed: $($p.ExitCode)" }
+          Get-Content hud-smoke-result.txt
+          Get-Content hud-readings-test.csv
       - name: Actual official OBS virtual-camera filter and DX11 preview
         shell: pwsh
         run: |
@@ -139,6 +147,8 @@ jobs:
             smoke-result.txt
             capture-smoke-result.txt
             obs-camera-smoke-result.txt
+            hud-smoke-result.txt
+            hud-readings-test.csv
             obs-camera-provenance.json
             hardware-validation/
             compute-validation/

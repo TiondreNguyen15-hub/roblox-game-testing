@@ -5,7 +5,7 @@ bool sameOptions(const HudOptions& a,const HudOptions& b){return a.mode==b.mode&
 }
 HudOcrService::~HudOcrService(){stop();}
 void HudOcrService::stop(){{std::lock_guard<std::mutex> lock(mutex_);stop_=true;pending_.reset();}wake_.notify_all();if(worker_.joinable())worker_.join();}
-void HudOcrService::beginSource(){std::lock_guard<std::mutex> lock(mutex_);++generation_;pending_.reset();lastSequence_=0;haveOptions_=false;history_.clear();state_.latest=HudReading{};state_.completed=0;state_.message="Select a region in the current recording";}
+void HudOcrService::beginSource(){std::lock_guard<std::mutex> lock(mutex_);++generation_;pending_.reset();lastSequence_=0;haveOptions_=false;history_.clear();state_.latest=HudReading{};state_.completed=0;state_.status="idle";state_.message="Select a region in the current recording";}
 HudSnapshot HudOcrService::snapshot()const{std::lock_guard<std::mutex> lock(mutex_);return state_;}
 void HudOcrService::exportCsv(const std::filesystem::path& path)const{std::vector<HudReading> rows;{std::lock_guard<std::mutex> lock(mutex_);rows.assign(history_.begin(),history_.end());}writeHudCsv(path,rows);}
 void HudOcrService::submit(std::shared_ptr<const CapturedFrame> f,const HudOptions& o,const std::string& source,bool force){
