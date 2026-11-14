@@ -86,6 +86,7 @@ static void runDirectShow(std::atomic<bool>& stop,const std::function<void(std::
  const bool yuy2=recording.empty();
  if((yuy2?(type.subtype!=MEDIASUBTYPE_YUY2||info.biBitCount!=16||info.biWidth%2):(type.subtype!=MEDIASUBTYPE_RGB32||info.biBitCount!=32))||info.biWidth<=0||info.biWidth>4096||height<=0||height>2160)throw std::runtime_error("DirectShow requires native YUY2 camera or RGB32 recording video bounded to 4096x2160; set OBS output to 1280x720");
  const unsigned width=static_cast<unsigned>(info.biWidth),h=static_cast<unsigned>(height);const size_t stride=size_t(width)*(yuy2?2:4);
+ if(recording.empty()){Com<IMediaFilter> media;check(graph->QueryInterface(IID_IMediaFilter,reinterpret_cast<void**>(media.put())),"get live graph timing control");check(media->SetSyncSource(nullptr),"disable playback clock for live camera");Log::write("INFO","DirectShow live camera playback clock disabled; OBS paces its own capture samples");}
  Com<SampleSink> sink;sink.p=new SampleSink(stride*h);Com<IMediaControl> control;check(graph->QueryInterface(IID_IMediaControl,reinterpret_cast<void**>(control.put())),"get capture control");
  struct StopGraph{IMediaControl* control;Grabber* grabber;~StopGraph(){control->Stop();grabber->SetCallback(nullptr,1);}} cleanup{control.p,grabber.p};check(grabber->SetCallback(sink.p,1),"set actual-sample callback");// OBS VCamFilter signals its capture thread from Pause(), not Run().
  // Make the Stopped -> Paused -> Running sequence explicit for live sources.
