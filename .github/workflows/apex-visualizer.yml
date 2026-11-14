@@ -69,10 +69,18 @@ jobs:
       - name: Desktop overlay continues actual capture and inference while minimized
         shell: pwsh
         run: |
-          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--overlay-background-test','--enemy-model','./apex-visualizer/tests/fixtures/enemy-contract-test.onnx' -PassThru
-          if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Desktop overlay background test timed out' }
-          if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 40; throw 'Minimized overlay integration failed' }
-          Get-Content overlay-background-result.txt
+          $camera = Get-ChildItem (Join-Path $env:RUNNER_TEMP 'obs-official-camera') -Recurse -Filter 'obs-virtualcam-module64.dll' | Select-Object -First 1
+          if (!$camera) { throw 'Verified official OBS camera component missing' }
+          $registration = Start-Process "$env:SystemRoot/System32/regsvr32.exe" -ArgumentList '/i','/s',('"'+$camera.FullName+'"') -Wait -PassThru
+          if ($registration.ExitCode -ne 0) { throw 'OBS registration for background test failed' }
+          try {
+            $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--overlay-background-test','--enemy-model','./apex-visualizer/tests/fixtures/enemy-contract-test.onnx' -PassThru
+            if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Desktop overlay background test timed out' }
+            if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 40; throw 'Minimized overlay integration failed' }
+            Get-Content overlay-background-result.txt
+          } finally {
+            Start-Process "$env:SystemRoot/System32/regsvr32.exe" -ArgumentList '/u','/s',('"'+$camera.FullName+'"') -Wait
+          }
       - name: Five-minute startup recovery and missing custom-model diagnostics
         shell: pwsh
         run: |

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cstdio>
+#include <stdexcept>
 namespace apex {
 struct DesktopOverlay::Impl {
  struct Monitor {RECT bounds;bool primary;std::string label;};
