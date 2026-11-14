@@ -1,0 +1,107 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "01D8172B25D8E2D2CB6A276E76E719F5908C6124F484C8C8CA310FBE7B6634F3",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cublas64_12.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "0D59D264782CEC2782B9AC72483E53C9BA485A9D3A1E19B34071A17B8152102E",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cublasLt64_12.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "D954CA542B3B6BCF03CC2B798A7D00051501CF734CA751050E986AF505CF9DAD",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudart64_12.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "631AF1130B27B4D14683C7DA690DDDEC8E25FFE3097D498FBBA7129FABA1601C",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudnn_adv64_9.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "68C9F6BF98A5620A0BB0519C3997800EF2C7CB8979F17A60AFCF82D341629C73",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudnn_cnn64_9.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "59E71B3ADAE62186D3336CCBDA6D0C8B14A3A0EF21694757E2B32E84FA840152",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudnn_engines_precompiled64_9.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "8671C24FC0DEBBD99C3DCA57BFDF657F4C9490E2A009F641CFC2FCF7A1256180",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudnn_engines_runtime_compiled64_9.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "22C21907FB2108259CB25738156F4459C12C0A001715BBB6D5AAFAC150060E85",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudnn_graph64_9.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "5378E50729665245FA5ABE89C729B782DE686675E9BD6319CDA1A3165D9492E6",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudnn_heuristic64_9.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "080C2BB37E9D1FDD585CDD53FDBB23C0478B99610A19F8BBA512B596B1E302FE",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudnn_ops64_9.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "0EDB24306DB36121137A3150AC55015AEE174D4582D5B807BD3220180A7A57DB",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cudnn64_9.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "3B6D08256B3EFF88BE63D01EF424CDD467481BC9E0258789363158522539CE5C",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cufft64_11.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "31EFEB54FAF31335FEA8DBD3112EF70A21E6E3B07A273E912D08D64D2FF518EB",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\cufftw64_11.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "73456C112C896DE801CADA356312114AB301BBE7370F8A0208789C58875A7F64",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\nvblas64_12.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "8BDFE39ADB72BF4FD7ED665DC242DF1E48DA015B641651183D35E9A7DB76ABE8",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\nvJitLink_120_0.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "49B2D9298A97425F32BD74767ED784D702C2831A132459E254B49144ECF23C02",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\nvrtc-builtins64_126.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "AEEC38166605A19898CAAF238BA9AFECCAA7954760F324362BE7F052AA3DA0D6",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\nvrtc64_120_0.alt.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "01700CDF0F7F566439260201A8B7EE57F914B56F639770F83FEB0D1F2A078567",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\nvrtc64_120_0.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "0F32C09DA925EC58C650A0D72CCC950A73DB570CAE0ADEFFB3D07165419B8BD1",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\onnxruntime_providers_cuda.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "3B53C353CD52A7BE926BEB289277B79DE1E659A1DC3BB74B24C99A6A7296D9D9",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\onnxruntime_providers_shared.dll"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "8C934C01F34702F60DE665273876DBE9F70FCBBE0F7E0F292840AC0C13DAA338",
+    "Path": "D:\\a\\_temp\\apex-ort-gpu-install\\onnxruntime.dll"
+  }
+]

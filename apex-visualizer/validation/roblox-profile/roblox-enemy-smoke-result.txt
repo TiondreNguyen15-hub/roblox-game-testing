@@ -1,0 +1,1 @@
+PASS: actual captured pixels -> normalized RGB letterbox -> ONNX Run -> decoded candidates -> analyzed-frame DX11 preview; count=1; backend=ONNX CPU; model_sha256=d4d8df0de3d2e015076e34c18173c391e3dfccfe229bbe823434819d29bb2e58; latency_ms=5.6389; frame=29; CUDA_verified=0

@@ -1,4 +1,8 @@
-Windows launcher syntax/payload validation passed:
-https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43548217540
+Windows launcher and native startup validation passed:
+https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43566611698
 
-This validates parsing and packaged files, not the interactive file picker or an installation on your PC. The unchanged setup helper and pinned dependencies were previously exercised by the full native Windows workflow. Actual CUDA inference still requires running validation after installation.
+Actual native GUI startup, early-exit reporting, spaced explicit target, no intermediate relaunch, stage order, failure halt and closed-app recovery were checked. Child installation/update stages in that orchestration test were isolated stubs, not actual GPU installs.
+The pinned setup dependency installer was exercised by the native workflow:
+https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43565521727
+
+Interactive picker, actual PC installation, trained-model CUDA execution and gameplay accuracy still require the user's PC. Installation alone does not verify CUDA inference.

@@ -1,3 +1,15 @@
+# Separate Roblox test profile — Apex remains primary
+
+[Download the current combined update](Apex-Game-ESP-Roblox-Update.zip) · [Usage](apex-visualizer/GAME-ESP-README.md) · [Validation](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+For an app with working GPU dependencies, leave the demo open, **Extract All**, then run **Update-Game-ESP.cmd**. If that installation still reports a CPU-only ONNX runtime, use **Update-And-Enable-GPU.cmd** instead; it repairs pinned GPU dependencies in that selected copy and then updates it. If the app is closed, choose its usual installed EXE when prompted. The new launcher starts the final app only once, verifies startup and saves launch-failure.txt beside it if startup fails. GPU execution must still be verified with the selected model afterward.
+
+For Roblox: OBS capture of Roblox > Game ESP > **Model profile: Roblox (test, YOLO 640px)** > Browse your local **RobloxAIO-harlan.onnx** > Analyze incoming capture frames. The Apex profile and saved model path remain separate and primary at startup. Live preview, desktop overlay, F8, old OCR tools, DX11, existing settings and GPU setup remain.
+
+The private Roblox model passed ONNX checking and actual Linux CPU execution on black input. Its native adapter is tested with an explicitly synthetic format fixture; actual Roblox accuracy and RTX 3070 inference require testing on the user's PC. No trained weights or Drive link are published.
+
+---
+
 # Desktop overlay and live-preview fix
 
 [Download the one-click overlay + preview update](Apex-Game-ESP-Overlay-Update.zip) · [Instructions](apex-visualizer/GAME-ESP-README.md) · [Actual validation](apex-visualizer/GAME-ESP-VALIDATION.md)

@@ -1,0 +1,1 @@
+PASS actual private-model CPU output -> C++ YOLO decoder: zero candidates on black input at 0.5; not gameplay accuracy

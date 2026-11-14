@@ -1,3 +1,7 @@
+REOPEN / ROBLOX UPDATE
+Run Update-And-Enable-GPU.cmd for your CPU-only runtime. Leave the demo open if possible; if it is closed, select its installed apex_visualizer.exe when asked. Do not select payload or backup copies.
+The app now launches once after both stages, and startup is checked. Failure creates launch-failure.txt beside the installed EXE.
+
 CONFIRMED CPU-ONLY RUNTIME?
 Leave exactly ONE demo open, Extract All, then run Update-And-Enable-GPU.cmd.
 This repairs GPU dependencies in that running copy, then installs the overlay and preview fix. Up to 1.4 GB may download; cached files are reused.
@@ -18,3 +22,7 @@ Enemy? boxes are model candidates on a separate desktop window. No weapons detec
 IF THE MODEL STILL SAYS ONNX CPU:
 First enable Prefer CUDA and detect a frame. Copy Game ESP diagnostics for the exact reason.
 If GPU runtime files are missing from this running installation, leave the demo open and run GPU-Reinstall/Reinstall-GPU.cmd from this extracted folder. It detects that copy, closes it normally, installs pinned local dependencies, and reopens it. Up to 1.4 GB may download; cached files are reused. Installation alone does not verify this model's CUDA execution.
+
+ROBLOX MODEL TEST:
+Start OBS capture of Roblox. In Game ESP choose Model profile > Roblox (test, YOLO 640px), Browse > your local RobloxAIO-harlan.onnx, then enable Analyze incoming capture frames.
+Apex remains the default profile; saved paths/settings are separate. Trained weights are not included.
