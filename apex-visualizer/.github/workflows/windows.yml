@@ -53,6 +53,14 @@ jobs:
           $result=Get-Content roblox-enemy-smoke-result.txt -Raw
           if ($result -notmatch 'count=1;' -or $result -notmatch 'CUDA_verified=0') { throw 'Unexpected synthetic Roblox fixture result' }
           Write-Host $result
+      - name: Wrong model profile must fail with an actual shape diagnostic
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--enemy-test','./apex-visualizer/tests/fixtures/hud-counter.mp4','--enemy-profile','roblox','--enemy-model','./apex-visualizer/tests/fixtures/enemy-contract-test.onnx' -PassThru
+          if (!$p.WaitForExit(30000)) { $p.Kill(); throw 'Wrong-profile rejection timed out' }
+          $log=Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 15 | Out-String
+          if ($p.ExitCode -ne 1 -or $log -notmatch 'does not match selected Apex/Roblox profile') { throw 'Wrong-profile model failed without the expected shape diagnostic' }
+          Write-Host 'PASS incorrect profile rejected explicitly; no guessed decoder.'
       - name: Actual official OBS virtual-camera filter and DX11 preview
         shell: pwsh
         run: |
