@@ -1,3 +1,5 @@
+> **Five-minute test repair:** [Startup recovery](COMPUTE-STARTUP-FIX.md) · [Actual validation](COMPUTE-STARTUP-VALIDATION.md). Keep your installed GPU runtime.
+
 > **Latest OBS update:** [DirectShow compatibility fix](OBS-CAPTURE-FIX.md) · [Actual native validation](OBS-CAPTURE-VALIDATION.md). Actual OBS acquisition on your PC still requires confirmation.
 
 > **Phase 3 update:** [Selected-model benchmark and five-minute GPU test](PHASE3-PERFORMANCE.md) · [External capture](CAPTURE.md). Existing configuration, renderer and JSON input remain. Hardware performance results require a run on your PC.

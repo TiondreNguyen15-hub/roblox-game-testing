@@ -1,14 +1,15 @@
 {
-  "phase": "OBS explicit live-source startup and actual official camera validation",
+  "phase": "Five-minute test startup recovery and actionable diagnostics",
   "actual_official_obs_33_camera_and_dx11_preview": "passed (native YUY2, idle/placeholder frames; no producer/gameplay)",
-  "source_commit": "31870e7f30d434d1014426f5dfa64e1088c70357",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43543692901",
-  "exe_sha256": "dd8c3ae6741893c32a045e44e72ea7e0b5fa1cd58673bcee96f0e6a5a8930eaf",
-  "native_windows_ctest_suites": 9,
+  "source_commit": "d76fabc65483f6cba0468fec21fe65aeba3b7341",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43546472698",
+  "exe_sha256": "af3d56edffd5d786654e67bad5eb2bcb6a8dcc80583d484588f344129c94e3d9",
+  "native_windows_ctest_suites": 10,
   "directshow_actual_avi_graph_and_sample_callback": "passed",
   "directshow_camera_enumeration_and_no_camera_diagnostics": "passed",
   "media_foundation_recording_and_dx11_preview": "passed",
   "cpu_onnx_and_recovery_regressions": "passed",
   "actual_obs_device_on_user_pc": "requires PC confirmation",
-  "rtx3070_performance_or_speedup_claimed": false
+  "rtx3070_performance_or_speedup_claimed": false,
+  "missing_model_actual_soak_startup_and_cpu_inference": "passed; GPU execution still requires PC"
 }

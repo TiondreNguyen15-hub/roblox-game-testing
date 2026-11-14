@@ -1,3 +1,15 @@
+# Five-minute GPU test startup repair
+
+[Download the compute startup fix](Apex-Visualization-Compute-Fix.zip) · [Instructions](apex-visualizer/COMPUTE-STARTUP-FIX.md) · [Actual validation](apex-visualizer/COMPUTE-STARTUP-VALIDATION.md)
+
+This update includes the missing mathematical test model and CPU runtime, recovers a missing default model, accepts quoted Windows paths, adds **Use bundled test model**, and exposes the actual startup exception in the UI and copied diagnostics. Existing custom files, GPU libraries, OBS capture, settings and DX11 rendering remain.
+
+Close the app and extract into your **original full app folder containing runtime/gpu**, replacing the executable and supplied files. Keep all installed GPU DLLs. Launch > System > Use bundled test model > 5-minute GPU model test. The patch does not include or reinstall the 1.41 GiB GPU dependencies.
+
+Native Windows tests verified recovered-model bytes/SHA256, actual CPU inference through the soak startup path, honest missing-file errors, and existing camera/rendering/inference regressions. The exact original PC exception was not supplied; actual RTX 3070 five-minute execution still needs a retry on that PC. Copy compute diagnostics now includes any remaining error.
+
+---
+
 # OBS camera no-frame startup fix
 
 [Download the updated OBS patch](Apex-Visualization-OBS-Fix.zip) · [Startup fix details](apex-visualizer/OBS-STARTUP-FIX.md) · [Actual camera validation](apex-visualizer/OBS-CAPTURE-VALIDATION.md)

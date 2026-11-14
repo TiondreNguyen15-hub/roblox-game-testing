@@ -1,0 +1,1060 @@
+windows	Set up job	﻿2026-11-14T02:28:13.6262279Z Current runner version: '2.338.2'
+windows	Set up job	2026-11-14T02:28:13.6309181Z ##[group]Runner Image Provisioner
+windows	Set up job	2026-11-14T02:28:13.6309711Z Hosted Compute Agent
+windows	Set up job	2026-11-14T02:28:13.6310056Z Version: 20261103.629
+windows	Set up job	2026-11-14T02:28:13.6310402Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+windows	Set up job	2026-11-14T02:28:13.6310822Z Build Date: 2026-11-03T17:26:59Z
+windows	Set up job	2026-11-14T02:28:13.6311208Z Worker ID: {bdf48a99-e1bd-48c3-9d16-8333d0d36717}
+windows	Set up job	2026-11-14T02:28:13.6311669Z Region: northcentralus
+windows	Set up job	2026-11-14T02:28:13.6312024Z Cloud: Azure
+windows	Set up job	2026-11-14T02:28:13.6312320Z ##[endgroup]
+windows	Set up job	2026-11-14T02:28:13.6313858Z ##[group]Operating System
+windows	Set up job	2026-11-14T02:28:13.6314334Z Microsoft Windows Server 2022
+windows	Set up job	2026-11-14T02:28:13.6314679Z 10.0.20348
+windows	Set up job	2026-11-14T02:28:13.6314992Z Datacenter
+windows	Set up job	2026-11-14T02:28:13.6315275Z ##[endgroup]
+windows	Set up job	2026-11-14T02:28:13.6315561Z ##[group]Runner Image
+windows	Set up job	2026-11-14T02:28:13.6315905Z Image: windows-2022
+windows	Set up job	2026-11-14T02:28:13.6316214Z Version: 20261112.366.7
+windows	Set up job	2026-11-14T02:28:13.6316837Z Included Software: https://github.com/actions/runner-images/blob/win22/20261112.366/images/windows/Windows2022-Readme.md
+windows	Set up job	2026-11-14T02:28:13.6317964Z Image Release: https://github.com/actions/runner-images/releases/tag/win22%2F20261112.366
+windows	Set up job	2026-11-14T02:28:13.6318509Z ##[endgroup]
+windows	Set up job	2026-11-14T02:28:13.6319193Z ##[group]GITHUB_TOKEN Permissions
+windows	Set up job	2026-11-14T02:28:13.6320363Z Contents: read
+windows	Set up job	2026-11-14T02:28:13.6320668Z Metadata: read
+windows	Set up job	2026-11-14T02:28:13.6320973Z Packages: read
+windows	Set up job	2026-11-14T02:28:13.6321277Z ##[endgroup]
+windows	Set up job	2026-11-14T02:28:13.6322627Z Secret source: Actions
+windows	Set up job	2026-11-14T02:28:13.6323140Z Cache mode: write
+windows	Set up job	2026-11-14T02:28:13.6323578Z Prepare workflow directory
+windows	Set up job	2026-11-14T02:28:13.6539616Z Prepare all required actions
+windows	Set up job	2026-11-14T02:28:13.6573025Z Getting action download info
+windows	Set up job	2026-11-14T02:28:13.8742850Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+windows	Set up job	2026-11-14T02:28:13.9904149Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+windows	Set up job	2026-11-14T02:28:14.2361344Z Complete job name: windows
+windows	Run actions/checkout@v5	﻿2026-11-14T02:28:14.4146762Z ##[group]Run actions/checkout@v5
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4147511Z with:
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4147794Z   repository: TiondreNguyen15-hub/roblox-game-testing
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4150016Z   token: ***
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4150239Z   ssh-strict: true
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4150466Z   ssh-user: git
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4150704Z   persist-credentials: true
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4150965Z   clean: true
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4151201Z   sparse-checkout-cone-mode: true
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4151478Z   fetch-depth: 1
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4151701Z   fetch-tags: false
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4151932Z   show-progress: true
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4152165Z   lfs: false
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4152381Z   submodules: false
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4152620Z   set-safe-directory: true
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4152899Z   allow-unsafe-pr-checkout: false
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.4153329Z ##[endgroup]
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.7801087Z Syncing repository: TiondreNguyen15-hub/roblox-game-testing
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.7802338Z ##[group]Getting Git version info
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.7802790Z Working directory is 'D:\a\roblox-game-testing\roblox-game-testing'
+windows	Run actions/checkout@v5	2026-11-14T02:28:14.8403459Z [command]"C:\Program Files\Git\bin\git.exe" version
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.4247472Z git version 2.56.1.windows.1
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.4280921Z ##[endgroup]
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.4294844Z Temporarily overriding HOME='D:\a\_temp\930ce4bf-422b-4453-9aa8-7fd67e7f76c8' before making global git config changes
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.4296599Z Adding repository directory to the temporary git global config as a safe directory
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.4302349Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\roblox-game-testing\roblox-game-testing
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.5074144Z Deleting the contents of 'D:\a\roblox-game-testing\roblox-game-testing'
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.5077555Z ##[group]Initializing the repository
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.5084513Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\roblox-game-testing\roblox-game-testing
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.6170416Z Initialized empty Git repository in D:/a/roblox-game-testing/roblox-game-testing/.git/
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.6204931Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/TiondreNguyen15-hub/roblox-game-testing
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.6891380Z ##[endgroup]
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.6897556Z ##[group]Disabling automatic garbage collection
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.6898600Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.7136537Z ##[endgroup]
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.7137689Z ##[group]Setting up auth
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.7138929Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+windows	Run actions/checkout@v5	2026-11-14T02:28:15.7360290Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+windows	Run actions/checkout@v5	2026-11-14T02:28:17.6093707Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+windows	Run actions/checkout@v5	2026-11-14T02:28:17.6342938Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+windows	Run actions/checkout@v5	2026-11-14T02:28:18.0301845Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+windows	Run actions/checkout@v5	2026-11-14T02:28:18.0549740Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+windows	Run actions/checkout@v5	2026-11-14T02:28:18.4405957Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+windows	Run actions/checkout@v5	2026-11-14T02:28:18.4648569Z ##[endgroup]
+windows	Run actions/checkout@v5	2026-11-14T02:28:18.4649215Z ##[group]Fetching the repository
+windows	Run actions/checkout@v5	2026-11-14T02:28:18.4662561Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d76fabc65483f6cba0468fec21fe65aeba3b7341:refs/remotes/origin/main
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.4632186Z From https://github.com/TiondreNguyen15-hub/roblox-game-testing
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.4632846Z  * [new ref]         d76fabc65483f6cba0468fec21fe65aeba3b7341 -> origin/main
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.4660698Z ##[endgroup]
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.4661100Z ##[group]Determining the checkout info
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.4662720Z ##[endgroup]
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.4670022Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.5075942Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.5326709Z ##[group]Checking out the ref
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.5334344Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.8000671Z Switched to a new branch 'main'
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.8051662Z branch 'main' set up to track 'origin/main'.
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.8133638Z ##[endgroup]
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.8750761Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+windows	Run actions/checkout@v5	2026-11-14T02:28:20.8984807Z d76fabc65483f6cba0468fec21fe65aeba3b7341
+windows	Configure	﻿2026-11-14T02:28:20.9423848Z ##[group]Run cmake -S apex-visualizer -B build-apex -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON
+windows	Configure	2026-11-14T02:28:20.9424423Z [36;1mcmake -S apex-visualizer -B build-apex -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON[0m
+windows	Configure	2026-11-14T02:28:20.9496742Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Configure	2026-11-14T02:28:20.9496975Z ##[endgroup]
+windows	Configure	2026-11-14T02:28:22.9342038Z -- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.20348.
+windows	Configure	2026-11-14T02:28:43.3805878Z -- The CXX compiler identification is MSVC 19.44.35230.0
+windows	Configure	2026-11-14T02:28:43.6158909Z -- Detecting CXX compiler ABI info
+windows	Configure	2026-11-14T02:28:44.7905371Z -- Detecting CXX compiler ABI info - done
+windows	Configure	2026-11-14T02:28:44.8026084Z -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+windows	Configure	2026-11-14T02:28:44.8037011Z -- Detecting CXX compile features
+windows	Configure	2026-11-14T02:28:44.8046833Z -- Detecting CXX compile features - done
+windows	Configure	2026-11-14T02:28:48.1822603Z -- Configuring done (25.8s)
+windows	Configure	2026-11-14T02:28:48.2509782Z -- Generating done (0.1s)
+windows	Configure	2026-11-14T02:28:48.2514874Z -- Build files have been written to: D:/a/roblox-game-testing/roblox-game-testing/build-apex
+windows	Compile	﻿2026-11-14T02:28:48.3419001Z ##[group]Run cmake --build build-apex --config Release --parallel 2
+windows	Compile	2026-11-14T02:28:48.3419360Z [36;1mcmake --build build-apex --config Release --parallel 2[0m
+windows	Compile	2026-11-14T02:28:48.3446081Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Compile	2026-11-14T02:28:48.3446291Z ##[endgroup]
+windows	Compile	2026-11-14T02:28:48.5588257Z MSBuild version 17.14.60+43b635718 for .NET Framework
+windows	Compile	2026-11-14T02:28:48.5803970Z 
+windows	Compile	2026-11-14T02:28:48.8766666Z   1>Checking Build System
+windows	Compile	2026-11-14T02:28:49.0540714Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:28:49.1613784Z   settings.cpp
+windows	Compile	2026-11-14T02:28:49.3327035Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:28:49.4506434Z   imgui.cpp
+windows	Compile	2026-11-14T02:28:51.6969493Z   config.cpp
+windows	Compile	2026-11-14T02:28:52.5850113Z   imgui_draw.cpp
+windows	Compile	2026-11-14T02:28:52.7348580Z   imgui_tables.cpp
+windows	Compile	2026-11-14T02:28:52.8535314Z   imgui_widgets.cpp
+windows	Compile	2026-11-14T02:28:53.0211525Z   imgui_impl_dx11.cpp
+windows	Compile	2026-11-14T02:28:53.8226263Z   simulation.cpp
+windows	Compile	2026-11-14T02:28:54.0678220Z   telemetry.cpp
+windows	Compile	2026-11-14T02:28:54.0724863Z   imgui_impl_win32.cpp
+windows	Compile	2026-11-14T02:28:54.4138125Z   Generating Code...
+windows	Compile	2026-11-14T02:28:55.8316385Z   log.cpp
+windows	Compile	2026-11-14T02:28:56.8197969Z   benchmark.cpp
+windows	Compile	2026-11-14T02:28:58.7216620Z   compute_common.cpp
+windows	Compile	2026-11-14T02:28:59.3258292Z   imgui.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\imgui.lib
+windows	Compile	2026-11-14T02:29:00.0344938Z   compute_inputs.cpp
+windows	Compile	2026-11-14T02:29:00.9893062Z   performance.cpp
+windows	Compile	2026-11-14T02:29:01.2374578Z   Generating Code...
+windows	Compile	2026-11-14T02:29:07.3087213Z   apex_core.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_core.lib
+windows	Compile	2026-11-14T02:29:07.3565377Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.3566300Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.4012011Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.4424056Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.4865457Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.5277399Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.5689783Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.6095118Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.6598541Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.7016232Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.7434631Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:07.7951880Z   benchmark_tests.cpp
+windows	Compile	2026-11-14T02:29:07.8020861Z   core_tests.cpp
+windows	Compile	2026-11-14T02:29:08.7355620Z   capture_tests.cpp
+windows	Compile	2026-11-14T02:29:09.7270723Z   capture.cpp
+windows	Compile	2026-11-14T02:29:10.3745387Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Compile	2026-11-14T02:29:10.4739501Z   menu_tests.cpp
+windows	Compile	2026-11-14T02:29:10.9305290Z   menu.cpp
+windows	Compile	2026-11-14T02:29:11.3924169Z   system.cpp
+windows	Compile	2026-11-14T02:29:11.5181200Z   capture_directshow.cpp
+windows	Compile	2026-11-14T02:29:11.7512477Z   Generating Code...
+windows	Compile	2026-11-14T02:29:13.4634972Z   Generating Code...
+windows	Compile	2026-11-14T02:29:14.8971638Z   apex_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_tests.exe
+windows	Compile	2026-11-14T02:29:14.9164985Z   apex_menu_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_menu_tests.exe
+windows	Compile	2026-11-14T02:29:14.9539390Z   visuals_tests.cpp
+windows	Compile	2026-11-14T02:29:15.0833736Z   apex_benchmark_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_benchmark_tests.exe
+windows	Compile	2026-11-14T02:29:15.1301097Z   telemetry_tests.cpp
+windows	Compile	2026-11-14T02:29:15.4203638Z   apex_capture_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_capture_tests.exe
+windows	Compile	2026-11-14T02:29:15.4207046Z   visuals.cpp
+windows	Compile	2026-11-14T02:29:15.4699419Z   performance_tests.cpp
+windows	Compile	2026-11-14T02:29:15.7059868Z   Generating Code...
+windows	Compile	2026-11-14T02:29:16.3153964Z   apex_visuals_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_visuals_tests.exe
+windows	Compile	2026-11-14T02:29:16.4458985Z   log_tests.cpp
+windows	Compile	2026-11-14T02:29:16.7051290Z   apex_telemetry_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_telemetry_tests.exe
+windows	Compile	2026-11-14T02:29:16.8556720Z   apex_performance_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_performance_tests.exe
+windows	Compile	2026-11-14T02:29:16.9019746Z   runtime_dependency_tests.cpp
+windows	Compile	2026-11-14T02:29:16.9054922Z   compute_tests.cpp
+windows	Compile	2026-11-14T02:29:17.7058832Z   runtime_dependencies.cpp
+windows	Compile	2026-11-14T02:29:17.7124029Z   apex_log_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_log_tests.exe
+windows	Compile	2026-11-14T02:29:17.7597594Z   compute_input_tests.cpp
+windows	Compile	2026-11-14T02:29:18.7012394Z   Generating Code...
+windows	Compile	2026-11-14T02:29:20.1084903Z   apex_compute_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_compute_tests.exe
+windows	Compile	2026-11-14T02:29:20.4057191Z   apex_compute_input_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_compute_input_tests.exe
+windows	Compile	2026-11-14T02:29:20.4504316Z   main.cpp
+windows	Compile	2026-11-14T02:29:20.5833627Z   apex_dependency_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_dependency_tests.exe
+windows	Compile	2026-11-14T02:29:21.2615149Z   capture.cpp
+windows	Compile	2026-11-14T02:29:21.9170661Z   capture_directshow.cpp
+windows	Compile	2026-11-14T02:29:22.5619240Z   menu.cpp
+windows	Compile	2026-11-14T02:29:22.9916358Z   renderer.cpp
+windows	Compile	2026-11-14T02:29:23.5597098Z   visuals.cpp
+windows	Compile	2026-11-14T02:29:23.7465387Z   system.cpp
+windows	Compile	2026-11-14T02:29:24.0449006Z   hardware.cpp
+windows	Compile	2026-11-14T02:29:24.5078827Z   frame_pacer.cpp
+windows	Compile	2026-11-14T02:29:24.9713893Z   compute.cpp
+windows	Compile	2026-11-14T02:29:26.1198134Z   runtime_dependencies.cpp
+windows	Compile	2026-11-14T02:29:26.6495678Z   Generating Code...
+windows	Compile	2026-11-14T02:29:32.7676938Z   apex_visualizer.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\apex_visualizer.exe
+windows	Compile	2026-11-14T02:29:32.8682931Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+windows	Module tests	﻿2026-11-14T02:29:32.9940435Z ##[group]Run ctest --test-dir build-apex -C Release --output-on-failure
+windows	Module tests	2026-11-14T02:29:32.9940792Z [36;1mctest --test-dir build-apex -C Release --output-on-failure[0m
+windows	Module tests	2026-11-14T02:29:32.9964493Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Module tests	2026-11-14T02:29:32.9964695Z ##[endgroup]
+windows	Module tests	2026-11-14T02:29:33.8354296Z Internal ctest changing into directory: D:/a/roblox-game-testing/roblox-game-testing/build-apex
+windows	Module tests	2026-11-14T02:29:33.9946153Z Test project D:/a/roblox-game-testing/roblox-game-testing/build-apex
+windows	Module tests	2026-11-14T02:29:34.0645999Z       Start  1: apex_core_modules
+windows	Module tests	2026-11-14T02:29:34.1200909Z  1/10 Test  #1: apex_core_modules ................   Passed    0.05 sec
+windows	Module tests	2026-11-14T02:29:34.1280621Z       Start  2: apex_imgui_visuals
+windows	Module tests	2026-11-14T02:29:34.1376945Z  2/10 Test  #2: apex_imgui_visuals ...............   Passed    0.01 sec
+windows	Module tests	2026-11-14T02:29:34.1379507Z       Start  3: apex_menu_system
+windows	Module tests	2026-11-14T02:29:34.6617447Z  3/10 Test  #3: apex_menu_system .................   Passed    0.52 sec
+windows	Module tests	2026-11-14T02:29:34.6620467Z       Start  4: apex_json_telemetry
+windows	Module tests	2026-11-14T02:29:34.6920896Z  4/10 Test  #4: apex_json_telemetry ..............   Passed    0.03 sec
+windows	Module tests	2026-11-14T02:29:34.6923407Z       Start  5: apex_logging
+windows	Module tests	2026-11-14T02:29:34.7040785Z  5/10 Test  #5: apex_logging .....................   Passed    0.01 sec
+windows	Module tests	2026-11-14T02:29:34.7043040Z       Start  6: apex_benchmark_reports
+windows	Module tests	2026-11-14T02:29:34.7116370Z  6/10 Test  #6: apex_benchmark_reports ...........   Passed    0.01 sec
+windows	Module tests	2026-11-14T02:29:34.7118592Z       Start  7: apex_compute_reference
+windows	Module tests	2026-11-14T02:29:34.7324035Z  7/10 Test  #7: apex_compute_reference ...........   Passed    0.02 sec
+windows	Module tests	2026-11-14T02:29:34.7326264Z       Start  8: apex_performance_checks
+windows	Module tests	2026-11-14T02:29:34.7380276Z  8/10 Test  #8: apex_performance_checks ..........   Passed    0.00 sec
+windows	Module tests	2026-11-14T02:29:34.7382434Z       Start  9: apex_external_recording
+windows	Module tests	2026-11-14T02:29:38.8657687Z  9/10 Test  #9: apex_external_recording ..........   Passed    4.13 sec
+windows	Module tests	2026-11-14T02:29:38.8660676Z       Start 10: apex_compute_startup_recovery
+windows	Module tests	2026-11-14T02:29:38.8762172Z 10/10 Test #10: apex_compute_startup_recovery ....   Passed    0.01 sec
+windows	Module tests	2026-11-14T02:29:38.8767484Z 
+windows	Module tests	2026-11-14T02:29:38.8767656Z 100% tests passed, 0 tests failed out of 10
+windows	Module tests	2026-11-14T02:29:38.8767827Z 
+windows	Module tests	2026-11-14T02:29:38.8767883Z Total Test time (real) =   4.88 sec
+windows	DX11 WARP smoke tests	﻿2026-11-14T02:29:38.9943017Z ##[group]Run foreach ($mode in @('--smoke-test', '--async-smoke-test')) {
+windows	DX11 WARP smoke tests	2026-11-14T02:29:38.9943405Z [36;1mforeach ($mode in @('--smoke-test', '--async-smoke-test')) {[0m
+windows	DX11 WARP smoke tests	2026-11-14T02:29:38.9943880Z [36;1m$p = Start-Process -FilePath './build-apex/Release/apex_visualizer.exe' -ArgumentList $mode,'--json','apex-visualizer/apex_entities.json' -PassThru[0m
+windows	DX11 WARP smoke tests	2026-11-14T02:29:38.9944332Z [36;1mif (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Smoke test timed out' }[0m
+windows	DX11 WARP smoke tests	2026-11-14T02:29:38.9944840Z [36;1mif ($p.ExitCode -ne 0) { if (Test-Path "$env:LOCALAPPDATA/ApexVisualization/apex.log") { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" }; throw "Smoke test failed: $($p.ExitCode)" }[0m
+windows	DX11 WARP smoke tests	2026-11-14T02:29:38.9945283Z [36;1mGet-Content smoke-result.txt[0m
+windows	DX11 WARP smoke tests	2026-11-14T02:29:38.9945428Z [36;1m}[0m
+windows	DX11 WARP smoke tests	2026-11-14T02:29:38.9970457Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	DX11 WARP smoke tests	2026-11-14T02:29:38.9970670Z ##[endgroup]
+windows	DX11 WARP smoke tests	2026-11-14T02:29:39.6786113Z PASS: 6 DX11/ImGui frames; GPU=Microsoft Basic Render Driver; vertices=3376; drawCalls=5; present=flip; gpuTiming=5.7203; fileEntities=2
+windows	DX11 WARP smoke tests	2026-11-14T02:29:40.8296050Z PASS: 60 DX11/ImGui frames; GPU=Microsoft Basic Render Driver; vertices=3376; drawCalls=5; present=flip; gpuTiming=5.7032; fileEntities=2
+windows	External recording through real DX11 preview	﻿2026-11-14T02:29:40.8730142Z ##[group]Run $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--capture-test','./apex-visualizer/tests/fixtures/capture-test.mp4' -PassThru
+windows	External recording through real DX11 preview	2026-11-14T02:29:40.8730864Z [36;1m$p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--capture-test','./apex-visualizer/tests/fixtures/capture-test.mp4' -PassThru[0m
+windows	External recording through real DX11 preview	2026-11-14T02:29:40.8731328Z [36;1mif (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Capture preview integration timed out' }[0m
+windows	External recording through real DX11 preview	2026-11-14T02:29:40.8731783Z [36;1mif ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 50; throw "Capture preview failed: $($p.ExitCode)" }[0m
+windows	External recording through real DX11 preview	2026-11-14T02:29:40.8732142Z [36;1mGet-Content capture-smoke-result.txt[0m
+windows	External recording through real DX11 preview	2026-11-14T02:29:40.8755803Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	External recording through real DX11 preview	2026-11-14T02:29:40.8756003Z ##[endgroup]
+windows	External recording through real DX11 preview	2026-11-14T02:29:43.2299916Z PASS: real recording frames=30; size=320x180; last uploaded sequence=30; actual DX11 preview draw command=1; WARP=1
+windows	Actual official OBS virtual-camera filter and DX11 preview	﻿2026-11-14T02:29:43.2754631Z ##[group]Run $archive = Join-Path $env:RUNNER_TEMP 'obs-official-33.0.1.zip'
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2755040Z [36;1m$archive = Join-Path $env:RUNNER_TEMP 'obs-official-33.0.1.zip'[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2755293Z [36;1m$folder = Join-Path $env:RUNNER_TEMP 'obs-official-camera'[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2755716Z [36;1mInvoke-WebRequest 'https://github.com/obsproject/obs-studio/releases/download/33.0.1/OBS-Studio-33.0.1-Windows-x64.zip' -OutFile $archive[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2756132Z [36;1m$hash = (Get-FileHash $archive -Algorithm SHA256).Hash.ToLower()[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2756538Z [36;1mif ($hash -ne '0d9436451c2d772b33428e3fdae9776f071895c335de17283176306fb72651d3') { throw 'Official OBS archive SHA256 mismatch' }[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2756919Z [36;1mExpand-Archive $archive $folder[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2757210Z [36;1m$camera = Get-ChildItem $folder -Recurse -Filter 'obs-virtualcam-module64.dll' | Select-Object -First 1[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2757586Z [36;1mif (!$camera) { throw 'Official OBS virtual-camera component missing' }[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2758010Z [36;1m$registration = Start-Process "$env:SystemRoot/System32/regsvr32.exe" -ArgumentList '/i','/s',('"'+$camera.FullName+'"') -Wait -PassThru[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2758475Z [36;1mif ($registration.ExitCode -ne 0) { throw "Official camera registration failed: $($registration.ExitCode)" }[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2758748Z [36;1mtry {[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2759338Z [36;1m  [ordered]@{ official_release='33.0.1'; archive_sha256=$hash; camera_dll_sha256=(Get-FileHash $camera.FullName -Algorithm SHA256).Hash; obs_application_started=$false; expected_video='Actual official camera placeholder frames; not gameplay' } | ConvertTo-Json | Set-Content obs-camera-provenance.json[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2760107Z [36;1m  $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--capture-camera-test' -PassThru[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2760479Z [36;1m  if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Official OBS camera test timed out' }[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2760909Z [36;1m  if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 70; throw "Actual OBS camera test failed: $($p.ExitCode)" }[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2761278Z [36;1m  Get-Content obs-camera-smoke-result.txt[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2761444Z [36;1m} finally {[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2761699Z [36;1m  Start-Process "$env:SystemRoot/System32/regsvr32.exe" -ArgumentList '/u','/s',('"'+$camera.FullName+'"') -Wait[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2761972Z [36;1m}[0m
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2785630Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:43.2785829Z ##[endgroup]
+windows	Actual official OBS virtual-camera filter and DX11 preview	2026-11-14T02:29:50.3069447Z PASS: actual OBS virtual-camera frames (no OBS producer; placeholder output) =10; size=1280x720; last uploaded sequence=10; actual DX11 preview draw command=1; WARP=1
+windows	Five-minute startup recovery and missing custom-model diagnostics	﻿2026-11-14T02:29:50.3848484Z ##[group]Run $model = './build-apex/Release/models/compute_validation.onnx'
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3848885Z [36;1m$model = './build-apex/Release/models/compute_validation.onnx'[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3849133Z [36;1m$hash = (Get-FileHash $model -Algorithm SHA256).Hash.ToLower()[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3849334Z [36;1mMove-Item $model ($model+'.saved')[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3849479Z [36;1mtry {[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3849878Z [36;1m  $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--gpu-soak','--cpu-seconds','1','--compute-iterations','5','--warp','--output','./compute-model-recovery' -PassThru[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3850391Z [36;1m  if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Recovered-model startup timed out' }[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3850739Z [36;1m  if ($p.ExitCode -ne 6) { throw 'Expected required-GPU unavailability on WARP, not a fake GPU pass' }[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3851103Z [36;1m  $r = Get-Content ./compute-model-recovery/compute-report.json -Raw | ConvertFrom-Json[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3851990Z [36;1m  if (!$r.cpu_inference.verified -or $r.gpu_target_seconds -ne 300 -or $r.cuda_ep_inference.verified -or $r.selected_model.sha256 -ne $hash -or (Get-FileHash $model -Algorithm SHA256).Hash.ToLower() -ne $hash) { throw 'Bundled model was not recovered and numerically verified for actual soak startup' }[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3852695Z [36;1m} finally { if (Test-Path $model) { Remove-Item $model }; Move-Item ($model+'.saved') $model }[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3853234Z [36;1m$p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--gpu-soak','--model','./intentionally-missing-custom.onnx','--warp','--output','./compute-model-missing' -PassThru[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3853784Z [36;1mif (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Missing model diagnostic test timed out' }[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3854083Z [36;1mif ($p.ExitCode -ne 6) { throw 'Missing custom model should not pass' }[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3854382Z [36;1m$r = Get-Content ./compute-model-missing/compute-report.json -Raw | ConvertFrom-Json[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3855035Z [36;1mif ($r.cuda_workload.reason_code -ne 'MODEL_FILE_MISSING' -or $r.cuda_workload.state -ne 'blocked' -or !$r.error -or $r.acceleration_status -notmatch 'MODEL_FILE_MISSING' -or $r.cuda_ep_inference.verified) { throw 'Missing-model startup error hidden or falsely verified' }[0m
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3879084Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Five-minute startup recovery and missing custom-model diagnostics	2026-11-14T02:29:50.3879283Z ##[endgroup]
+windows	Timed WARP stability benchmark (120 seconds)	﻿2026-11-14T02:29:56.6366609Z ##[group]Run ./apex-visualizer/tools/benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./hardware-validation -Seconds 120 -Warmup 5 -Warp
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:29:56.6367323Z [36;1m./apex-visualizer/tools/benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./hardware-validation -Seconds 120 -Warmup 5 -Warp[0m
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:29:56.6391612Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:29:56.6391812Z ##[endgroup]
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3412488Z {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3413002Z   "average_fps": 135.16117757504605,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3413453Z   "backend": "DirectX / feature level 11.0 / CUDA driver unavailable; DX11 remains active",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3413835Z   "configuration": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3414065Z     "cuda": "CUDA driver unavailable; DX11 remains active",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3414351Z     "cuda_compute_capability": "0.0",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3414594Z     "cuda_driver_api_version": "0",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3414810Z     "entity_count": "64",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3415149Z     "frame_cap": "144",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3415322Z     "initial_client_height": "749",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3415471Z     "initial_client_width": "1028",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3415720Z     "model_backend": "optional ONNX compute validation; inactive during render-only benchmark",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3415999Z     "nvml": "NVIDIA counters unavailable (NVML missing)",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3416189Z     "present": "flip-discard latency1",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3416347Z     "source": "local simulation",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3416510Z     "vsync": "off",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3416667Z     "window_initial_size": "1440x900 outer; DPI dependent client"
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3416853Z   },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3417479Z   "counter_sampling": "Latest observations held between updates: CPU/memory/NVML/DXGI at 2Hz; GPU draw queries asynchronous; file input 5Hz. Repeated per-frame values are not independent hardware samples. Source processing is poll/read/parse time; delivery is worker start to UI handoff, not producer-to-photon latency.",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3418281Z   "counters": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3418395Z     "cpu_work_ms": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3418512Z       "max": 2.2033,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3418636Z       "mean": 0.25706155743264153,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3418796Z       "min": 0.2028,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3418915Z       "observations": 16219
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3419044Z     },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3419164Z     "device_vram_mib": null,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3419308Z     "gpu_device_util_percent": null,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3419715Z     "gpu_draw_ms": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3419829Z       "max": 11.2761,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3419951Z       "mean": 6.779400801529062,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3420083Z       "min": 6.196,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3420205Z       "observations": 16219
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3420437Z     },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3420645Z     "private_mib": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3420767Z       "max": 18.078125,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3420900Z       "mean": 17.882679072384242,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3421042Z       "min": 16.97265625,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3421172Z       "observations": 16219
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3421300Z     },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3421412Z     "process_cpu_percent": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3421549Z       "max": 77.95571137717333,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3421686Z       "mean": 29.034513998971445,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3421823Z       "min": 0.0,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3421942Z       "observations": 16219
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422062Z     },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422165Z     "process_vram_mib": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422292Z       "max": 0.0,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422419Z       "mean": 0.0,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422530Z       "min": 0.0,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422645Z       "observations": 16219
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422774Z     },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422878Z     "source_delivery_ms": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3422996Z       "max": 0.4217,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3423113Z       "mean": 0.004730877366052157,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3423252Z       "min": 0.0029,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3423363Z       "observations": 16219
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3425630Z     },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3425739Z     "source_processing_ms": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3425873Z       "max": 0.4217,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3425995Z       "mean": 0.004730877366052157,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3426131Z       "min": 0.0029,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3426248Z       "observations": 16219
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3426365Z     },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3426469Z     "working_set_mib": {
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3426589Z       "max": 37.25390625,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3426719Z       "mean": 36.661149731796044,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3426862Z       "min": 33.1328125,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3426991Z       "observations": 16219
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3427120Z     }
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3427221Z   },
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3427346Z   "frame_intervals_at_or_above_1000ms": 0,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3427515Z   "gpu": "Microsoft Basic Render Driver",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3427674Z   "histogram_overflow_ms": 1000,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3427813Z   "max_frame_ms": 11.7228,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3427952Z   "mean_frame_ms": 7.398574190763958,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3428102Z   "min_frame_ms": 6.9736,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3428614Z   "notes": "GPU utilization/VRAM are optional sampled device counters. Empty CSV fields mean unavailable. Frame time includes pacing; GPU timing is latest asynchronous draw duration, not utilization. Memory delta alone does not prove a leak.",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3429165Z   "outcome": "completed",
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3429324Z   "p95_frame_ms_approx": 7.5,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3429469Z   "p99_frame_ms_approx": 8.4,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3429611Z   "quantile_resolution_ms": 0.1,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3429762Z   "requested_measurement_seconds": 120.0,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3429916Z   "samples": 16219,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3430040Z   "warmup_seconds": 5.0,
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3430178Z   "working_set_delta_mib": -3.66796875
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3430320Z }
+windows	Timed WARP stability benchmark (120 seconds)	2026-11-14T02:32:03.3437896Z Measured report and per-frame CSV: D:\a\roblox-game-testing\roblox-game-testing\hardware-validation\20261114-022956-855
+windows	Actual CPU ONNX inference and CUDA unavailable handling	﻿2026-11-14T02:32:03.3744701Z ##[group]Run ./apex-visualizer/tools/compute-benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./compute-validation -Seconds 60 -Warp
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:32:03.3745425Z [36;1m./apex-visualizer/tools/compute-benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Output ./compute-validation -Seconds 60 -Warp[0m
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:32:03.3746014Z [36;1m$report = Get-Content (Get-ChildItem compute-validation -Recurse -Filter compute-report.json | Select-Object -First 1).FullName -Raw | ConvertFrom-Json[0m
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:32:03.3746836Z [36;1mif (-not $report.cpu_inference.verified -or $report.cuda_workload.verified -or $report.cuda_ep_inference.verified) { throw 'Unexpected compute verification state on WARP runner' }[0m
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:32:03.3773285Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:32:03.3773497Z ##[endgroup]
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3530787Z {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3533214Z   "acceleration_status": "CPU fallback verified; CUDA EP skipped [BLOCKED_BY_CUDA_DEVICE]: No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3533908Z   "adapter": "Microsoft Basic Render Driver",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3534850Z   "available_providers": [
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3535560Z     "AzureExecutionProvider",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3536295Z     "CPUExecutionProvider"
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3536988Z   ],
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3537975Z   "benchmark_policy": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3539010Z     "cpu_inter_op_threads": 1,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3539737Z     "cpu_intra_op_threads": 1,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3540450Z     "cuda_arena_limit_bytes": 536870912,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3541210Z     "input_values": "deterministic signed FP32",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3541842Z     "tf32_enabled": false,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3543065Z     "warmup_calls": 10
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3543333Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3544296Z   "cpu_inference": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3545305Z     "blocked_by": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3546034Z     "cuda_kernel_events": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3546684Z     "fp32_input_shapes": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3547516Z     "message": "CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3547889Z     "profile_file": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3548796Z     "reason_code": "VERIFIED_EXECUTION",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3549556Z     "run_end_to_end": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3550249Z       "max_ms": 8.7287,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3550925Z       "mean_ms": 0.11523572175806027,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3551610Z       "min_ms": 0.0698,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3552282Z       "observations": 286772,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3553011Z       "serial_latency_equivalent_per_second": 8677.864682442136
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3553663Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3554439Z     "state": "passed",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3555232Z     "validated_iterations_per_second": 4779.52457087162,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3555935Z     "validated_loop_duration_s": 60.00011,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3556558Z     "verified": true
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3557223Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3557914Z   "cpu_to_cuda_ep_latency_ratio": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3558540Z   "cuda_driver_api_version": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3559215Z   "cuda_ep_inference": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3559867Z     "blocked_by": "cuda_workload",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3560548Z     "cuda_kernel_events": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3561231Z     "fp32_input_shapes": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3562034Z     "message": "No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3562471Z     "profile_file": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3563335Z     "reason_code": "BLOCKED_BY_CUDA_DEVICE",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3564066Z     "run_end_to_end": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3564719Z     "state": "skipped",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3565364Z     "verified": false
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3566077Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3566731Z   "cuda_workload": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3567382Z     "blocked_by": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3570050Z     "cuda_kernel_events": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3570234Z     "fp32_input_shapes": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3570718Z     "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3571127Z     "profile_file": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3571346Z     "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3571714Z     "run_end_to_end": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3572696Z     "state": "unavailable",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3573878Z     "verified": false
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3574147Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3575170Z   "dependencies": [
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3575832Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3576573Z       "message": "Not found in supported CUDA runtime locations",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3577152Z       "name": "cudart64_12.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3577938Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3578652Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3579302Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3688543Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3691603Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3691918Z       "message": "Not found in supported CUDA runtime locations",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3692295Z       "name": "cublasLt64_12.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3692535Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3692760Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3692994Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3693194Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3693374Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3693640Z       "message": "Not found in supported CUDA runtime locations",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3693961Z       "name": "cublas64_12.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3694152Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3694372Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3694584Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3694952Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3695130Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3695391Z       "message": "Not found in supported CUDA runtime locations",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3695725Z       "name": "cufft64_11.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3695959Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3696163Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3696390Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3696579Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3696759Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3697343Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3698000Z       "name": "cudnn_engines_runtime_compiled64_9.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3698290Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3698506Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3698792Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3698995Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3699163Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3699552Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3700045Z       "name": "cudnn_engines_precompiled64_9.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3700317Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3700456Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3700608Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3700816Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3700983Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3701302Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3701672Z       "name": "cudnn_heuristic64_9.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3701916Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3702054Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3702201Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3702345Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3702538Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3702867Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3703179Z       "name": "cudnn_ops64_9.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3703459Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3703637Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3703787Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3703921Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3704076Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3704445Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3706154Z       "name": "cudnn_adv64_9.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3706315Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3706451Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3706664Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3706866Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3707002Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3707257Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3707866Z       "name": "cudnn_cnn64_9.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3708027Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3708184Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3708405Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3708585Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3708709Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3708969Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3709436Z       "name": "cudnn_graph64_9.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3709625Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3709763Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3709979Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3710179Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3710274Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3710492Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3710875Z       "name": "cudnn64_9.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3711089Z       "path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3711233Z       "state": "missing",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3711381Z       "win32_error": 0
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3711554Z     }
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3711736Z   ],
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3711896Z   "error": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3712002Z   "finished": true,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3712156Z   "gpu_execution_result": "INCOMPLETE",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3712367Z   "gpu_target_seconds": 60.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3715065Z   "measurement_notes": "Authorized selected-model benchmark or bundled synthetic validation. Benchmark mode uses deterministic FP32 tensor inputs; it does not represent actual gameplay preprocessing/inference. CPU baseline is cross-provider agreement, not independent model correctness.  ONNX Run wall latency includes transfers, execution and output materialization; output validation and setup excluded from mean Run latency. Validated-loop inference FPS includes periodic numerical checking.  Serial inference/s is reciprocal mean Run latency, not display FPS. CUDA event duration measures the vector-add kernel, not inference. CUDA EP marked verified only with numeric agreement, disabled CPU fallback and a CUDAExecutionProvider node in actual ORT profiling. Render FPS is reciprocal of observed main-window frame intervals during each phase; short phases can have too few frames to compare. Process GPU busy is PDH busiest matching PID+adapter engine; local VRAM is per-process DXGI WDDM usage. Counters sampled at 2Hz can miss short peaks. Memory endpoints/ranges do not establish leak freedom.",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3717855Z   "memory_trends": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3718093Z     "process_private": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3718322Z       "growth_mib": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3718492Z       "message": "Not enough sustained samples",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3718679Z       "samples": 0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3718889Z       "slope_mib_per_minute": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3719127Z       "span_s": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3719280Z       "state": "inconclusive"
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3719442Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3719605Z     "process_vram": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3719815Z       "growth_mib": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3720021Z       "message": "Not enough sustained samples",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3720209Z       "samples": 0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3720351Z       "slope_mib_per_minute": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3720611Z       "span_s": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3720805Z       "state": "inconclusive"
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3720963Z     }
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3721091Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3721272Z   "minimum_seconds_per_available_phase": 60.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3721710Z   "model": "Bundled deterministic MatMul(128x256,256x256)+Relu, float32",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3721921Z   "observed_render_frame_intervals": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3722141Z     "completed": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3722340Z       "max_ms": 9.5932,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3722497Z       "mean_ms": 9.40775,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3722647Z       "min_ms": 9.2223,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3722828Z       "observations": 2,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3723220Z       "serial_latency_equivalent_per_second": 106.29534160665409
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3723414Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3723540Z     "cpu_inference": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3723785Z       "max_ms": 15.7112,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3723989Z       "mean_ms": 9.219840221232158,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3724153Z       "min_ms": 7.019,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3724302Z       "observations": 6509,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3724532Z       "serial_latency_equivalent_per_second": 108.46174944519353
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3724861Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3724985Z     "cuda_vector_add": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3725134Z       "max_ms": 9.1598,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3725280Z       "mean_ms": 8.851725,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3725507Z       "min_ms": 8.5218,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3725712Z       "observations": 4,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3725889Z       "serial_latency_equivalent_per_second": 112.97233025201302
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3726093Z     }
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3726266Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3726452Z   "onnx_runtime_version": "1.22.0",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3726666Z   "overall_benchmark_result": "INCOMPLETE",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3726816Z   "phase": "completed",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3726944Z   "process_after_cleanup": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3727176Z     "device_gpu_percent": 4294967295.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3727382Z     "device_vram_mib": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3727513Z     "private_mib": 19.8359375,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3727666Z     "process_busiest_engine_percent": 91.40195955692676,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3727913Z     "process_local_vram_mib": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3728125Z     "working_set_mib": 39.59375
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3728274Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3728374Z   "process_before": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3728498Z     "device_gpu_percent": 4294967295.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3728702Z     "device_vram_mib": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3728895Z     "private_mib": 17.85546875,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3729097Z     "process_busiest_engine_percent": 92.69532939902098,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3729266Z     "process_local_vram_mib": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3729442Z     "working_set_mib": 37.08984375
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3729625Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3730460Z   "process_observations": 6663,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3731081Z   "process_peak_observed": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3731847Z     "device_gpu_percent": 4294967295.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3732554Z     "device_vram_mib": null,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3733331Z     "private_mib": 29.78515625,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3734060Z     "process_busiest_engine_percent": 96.20272613053575,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3734719Z     "process_local_vram_mib": 0.0,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3735629Z     "working_set_mib": 53.625
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3736302Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3737263Z   "requested_iterations_per_phase": 200,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3738364Z   "runtime_path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\build-apex\\Release\\runtime\\cpu\\onnxruntime.dll",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3738795Z   "selected_model": {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3739714Z     "benchmark_mode": false,
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3740463Z     "input_profile_path": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3741314Z     "input_profile_sha256": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3742173Z     "path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\build-apex\\Release\\models/compute_validation.onnx",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3742751Z     "sha256": "2d08ea139dfea3fc7273eb47a58e1168dde19073ca3526c6fee62db096900c5b"
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3743495Z   },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3744294Z   "test_inventory": [
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3744931Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3745814Z       "blocked_by": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3746506Z       "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3747272Z       "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3748008Z       "state": "unavailable",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3748690Z       "test": "cuda_workload",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3749477Z       "verified": false
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3749818Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3750839Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3751334Z       "blocked_by": "",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3752528Z       "message": "CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3752925Z       "reason_code": "VERIFIED_EXECUTION",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3753755Z       "state": "passed",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3754415Z       "test": "cpu_inference",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3755135Z       "verified": true
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3755790Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3756445Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3757108Z       "blocked_by": "cuda_workload",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3758081Z       "message": "No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3758464Z       "reason_code": "BLOCKED_BY_CUDA_DEVICE",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3759422Z       "state": "skipped",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3760084Z       "test": "cuda_ep_inference",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3760861Z       "verified": false
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3761508Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3762352Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3763134Z       "message": "Requires passed CPU and CUDA EP inference",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3763436Z       "state": "skipped",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3764397Z       "test": "cpu_gpu_comparison",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3764830Z       "verified": false
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3765851Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3766349Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3767194Z       "message": "Requires at least 300 actual measured GPU seconds and successful final numerical verification",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3767813Z       "state": "incomplete",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3768332Z       "test": "sustained_cuda_inference",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3769460Z       "verified": false
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3770108Z     },
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3770542Z     {
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3771611Z       "message": "Heuristic, not proof of leak freedom: after 30s warmup, >=240s valid counters; >max(64MiB,2%) growth, >8MiB/min and rising quarter averages flag investigation",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3772246Z       "state": "inconclusive",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3772582Z       "test": "memory_growth_check",
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3773321Z       "verified": false
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3774222Z     }
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3775413Z   ]
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3776221Z }
+windows	Actual CPU ONNX inference and CUDA unavailable handling	2026-11-14T02:33:07.3827546Z Actual results: D:\a\roblox-game-testing\roblox-game-testing\compute-validation\20261114-023203-595. CPU success without -RequireCuda does not mean CUDA passed.
+windows	Selected-model benchmark and input-shape recovery	﻿2026-11-14T02:33:07.4247666Z ##[group]Run ./apex-visualizer/tools/model-benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Model ./apex-visualizer/tests/fixtures/dynamic-relu.onnx -InputProfile ./apex-visualizer/tests/fixtures/dynamic-shapes.json -CpuSeconds 3 -GpuSeconds 2 -Output ./model-benchmark-validation -Warp
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4248982Z [36;1m./apex-visualizer/tools/model-benchmark.ps1 -Exe ./build-apex/Release/apex_visualizer.exe -Model ./apex-visualizer/tests/fixtures/dynamic-relu.onnx -InputProfile ./apex-visualizer/tests/fixtures/dynamic-shapes.json -CpuSeconds 3 -GpuSeconds 2 -Output ./model-benchmark-validation -Warp[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4249889Z [36;1m$report = Get-Content (Get-ChildItem model-benchmark-validation -Recurse -Filter compute-report.json | Select-Object -First 1).FullName -Raw | ConvertFrom-Json[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4250448Z [36;1m$hash = (Get-FileHash ./apex-visualizer/tests/fixtures/dynamic-relu.onnx -Algorithm SHA256).Hash.ToLower()[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4251228Z [36;1mif (!$report.selected_model.benchmark_mode -or $report.selected_model.sha256 -ne $hash -or !$report.cpu_inference.verified -or $report.cpu_inference.validated_loop_duration_s -lt 3 -or $report.cuda_ep_inference.verified) { throw 'Selected-model benchmark reported incorrect identity/execution' }[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4252286Z [36;1m$p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--model-benchmark','--model','./apex-visualizer/tests/fixtures/dynamic-relu.onnx','--cpu-seconds','1','--gpu-seconds','1','--warp','--output','./model-shape-negative' -PassThru[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4253057Z [36;1mif (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Missing input-shape test timed out' }[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4253416Z [36;1mif ($p.ExitCode -ne 6) { throw 'Missing dynamic dimensions were not rejected' }[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4253765Z [36;1m$r = Get-Content ./model-shape-negative/compute-report.json -Raw | ConvertFrom-Json[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4254227Z [36;1mif ($r.cpu_inference.reason_code -ne 'INPUT_SHAPE_REQUIRED' -or $r.cpu_inference.verified) { throw 'Dynamic shape omission falsely verified' }[0m
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4279622Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:07.4279865Z ##[endgroup]
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2536938Z {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2539337Z   "acceleration_status": "CPU fallback verified; CUDA EP skipped [BLOCKED_BY_CUDA_DEVICE]: CUDA device/context unavailable",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2540348Z   "adapter": "Microsoft Basic Render Driver",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2540830Z   "available_providers": [
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2541825Z     "AzureExecutionProvider",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2542340Z     "CPUExecutionProvider"
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2543137Z   ],
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2543875Z   "benchmark_policy": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2544355Z     "cpu_inter_op_threads": 1,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2545092Z     "cpu_intra_op_threads": 1,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2545553Z     "cuda_arena_limit_bytes": 536870912,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2547487Z     "input_values": "deterministic signed FP32",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2547845Z     "tf32_enabled": false,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2548530Z     "warmup_calls": 10
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2549310Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2549513Z   "cpu_inference": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2550512Z     "blocked_by": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2551144Z     "cuda_kernel_events": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2551822Z     "fp32_input_shapes": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2552283Z       "features": [
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2553055Z         16,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2553269Z         8
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2554090Z       ]
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2554313Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2555497Z     "message": "Selected model CPU baseline passed with deterministic FP32 inputs; initialization/warmup excluded",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2555878Z     "profile_file": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2556297Z     "reason_code": "VERIFIED_MODEL_BENCHMARK",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2557089Z     "run_end_to_end": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2557308Z       "max_ms": 6.4803,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2558305Z       "mean_ms": 0.0034098965136981304,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2560927Z       "min_ms": 0.0019,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2561149Z       "observations": 755559,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2561446Z       "serial_latency_equivalent_per_second": 293264.0319091301
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2561750Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2562092Z     "state": "passed",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2562404Z     "validated_iterations_per_second": 251852.5214802092,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2562733Z     "validated_loop_duration_s": 3.0000057,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2563153Z     "verified": true
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2564155Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2564755Z   "cpu_to_cuda_ep_latency_ratio": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2565094Z   "cuda_driver_api_version": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2566352Z   "cuda_ep_inference": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2567094Z     "blocked_by": "cuda_workload",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2567728Z     "cuda_kernel_events": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2568262Z     "fp32_input_shapes": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2569076Z     "message": "CUDA device/context unavailable",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2569441Z     "profile_file": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2570168Z     "reason_code": "BLOCKED_BY_CUDA_DEVICE",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2570461Z     "run_end_to_end": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2571343Z     "state": "skipped",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2571533Z     "verified": false
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2571936Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2572760Z   "cuda_workload": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2572971Z     "blocked_by": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2574310Z     "cuda_kernel_events": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2574558Z     "fp32_input_shapes": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2575329Z     "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2575826Z     "profile_file": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2576661Z     "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2576926Z     "run_end_to_end": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2577637Z     "state": "unavailable",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2578338Z     "verified": false
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2578958Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2579671Z   "dependencies": [
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2579863Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2580796Z       "message": "Not found in supported CUDA runtime locations",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2581160Z       "name": "cudart64_12.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2581871Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2582232Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2583078Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2583264Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2584081Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2584303Z       "message": "Not found in supported CUDA runtime locations",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2585077Z       "name": "cublasLt64_12.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2585290Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2585976Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2586171Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2586989Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2587299Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2588168Z       "message": "Not found in supported CUDA runtime locations",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2588427Z       "name": "cublas64_12.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2589078Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2589460Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2590287Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2590507Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2591360Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2591784Z       "message": "Not found in supported CUDA runtime locations",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2592583Z       "name": "cufft64_11.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2593235Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2593413Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2594282Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2594453Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2595135Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2595591Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2596163Z       "name": "cudnn_engines_runtime_compiled64_9.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2596877Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2597050Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2597938Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2599220Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2599356Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2600344Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2600681Z       "name": "cudnn_engines_precompiled64_9.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2600991Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2601800Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2601976Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2602903Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2603242Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2604316Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2604617Z       "name": "cudnn_heuristic64_9.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2604892Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2605820Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2606064Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2606807Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2607443Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2608125Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2608549Z       "name": "cudnn_ops64_9.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2609330Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2609489Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2611014Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2611240Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2611385Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2611819Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2612501Z       "name": "cudnn_adv64_9.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2613243Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2613660Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2614004Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2614807Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2615516Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2616625Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2617063Z       "name": "cudnn_cnn64_9.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2617272Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2618100Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2618868Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2619330Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2619804Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2620592Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2621400Z       "name": "cudnn_graph64_9.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2622376Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2623222Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2624077Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2625201Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2625746Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2629732Z       "message": "Required cuDNN companion missing beside cudnn64_9.dll; reinstall the complete pinned cuDNN family",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2631066Z       "name": "cudnn64_9.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2631361Z       "path": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2632204Z       "state": "missing",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2632966Z       "win32_error": 0
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2633357Z     }
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2634220Z   ],
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2634351Z   "error": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2635232Z   "finished": true,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2635468Z   "gpu_execution_result": "INCOMPLETE",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2636118Z   "gpu_target_seconds": 2.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2639266Z   "measurement_notes": "Authorized selected-model benchmark or bundled synthetic validation. Benchmark mode uses deterministic FP32 tensor inputs; it does not represent actual gameplay preprocessing/inference. CPU baseline is cross-provider agreement, not independent model correctness.  ONNX Run wall latency includes transfers, execution and output materialization; output validation and setup excluded from mean Run latency. Validated-loop inference FPS includes periodic numerical checking.  Serial inference/s is reciprocal mean Run latency, not display FPS. CUDA event duration measures the vector-add kernel, not inference. CUDA EP marked verified only with numeric agreement, disabled CPU fallback and a CUDAExecutionProvider node in actual ORT profiling. Render FPS is reciprocal of observed main-window frame intervals during each phase; short phases can have too few frames to compare. Process GPU busy is PDH busiest matching PID+adapter engine; local VRAM is per-process DXGI WDDM usage. Counters sampled at 2Hz can miss short peaks. Memory endpoints/ranges do not establish leak freedom.",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2642383Z   "memory_trends": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2642577Z     "process_private": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2642793Z       "growth_mib": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2642964Z       "message": "Not enough sustained samples",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2643158Z       "samples": 0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2643367Z       "slope_mib_per_minute": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2643599Z       "span_s": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2643754Z       "state": "inconclusive"
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2643955Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2644137Z     "process_vram": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2644318Z       "growth_mib": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2644743Z       "message": "Not enough sustained samples",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2645484Z       "samples": 0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2645703Z       "slope_mib_per_minute": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2646672Z       "span_s": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2646848Z       "state": "inconclusive"
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2647571Z     }
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2647754Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2648654Z   "minimum_seconds_per_available_phase": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2648987Z   "model": "Actual selected ONNX file, deterministic FP32 inputs, CPU-reference comparison",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2649553Z   "observed_render_frame_intervals": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2650303Z     "completed": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2650755Z       "max_ms": 9.5072,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2651503Z       "mean_ms": 9.133299999999998,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2651872Z       "min_ms": 8.7594,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2652461Z       "observations": 2,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2652746Z       "serial_latency_equivalent_per_second": 109.4894506914259
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2653553Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2654063Z     "cpu_inference": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2654382Z       "max_ms": 12.0404,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2655224Z       "mean_ms": 8.877899704142008,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2655743Z       "min_ms": 7.028,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2656431Z       "observations": 338,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2657140Z       "serial_latency_equivalent_per_second": 112.63925402687838
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2657538Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2658482Z     "cuda_vector_add": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2659422Z       "max_ms": 9.7525,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2659754Z       "mean_ms": 9.3027,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2660622Z       "min_ms": 8.5152,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2660962Z       "observations": 4,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2661864Z       "serial_latency_equivalent_per_second": 107.49567329914971
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2662156Z     }
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2662873Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2663050Z   "onnx_runtime_version": "1.22.0",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2663960Z   "overall_benchmark_result": "INCOMPLETE",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2664217Z   "phase": "completed",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2664952Z   "process_after_cleanup": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2665347Z     "device_gpu_percent": 4294967295.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2666194Z     "device_vram_mib": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2666363Z     "private_mib": 19.1484375,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2667147Z     "process_busiest_engine_percent": 92.97509366807783,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2667394Z     "process_local_vram_mib": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2668169Z     "working_set_mib": 39.12109375
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2668322Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2669032Z   "process_before": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2669307Z     "device_gpu_percent": 4294967295.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2669987Z     "device_vram_mib": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2670191Z     "private_mib": 17.7265625,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2671112Z     "process_busiest_engine_percent": 91.40842093557977,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2671424Z     "process_local_vram_mib": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2672231Z     "working_set_mib": 36.84765625
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2672665Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2673274Z   "process_observations": 493,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2673931Z   "process_peak_observed": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2674303Z     "device_gpu_percent": 4294967295.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2675052Z     "device_vram_mib": null,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2675266Z     "private_mib": 27.921875,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2676146Z     "process_busiest_engine_percent": 94.80452133761415,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2676430Z     "process_local_vram_mib": 0.0,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2677193Z     "working_set_mib": 52.21875
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2677406Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2678293Z   "requested_iterations_per_phase": 20,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2678781Z   "runtime_path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\build-apex\\Release\\runtime\\cpu\\onnxruntime.dll",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2679217Z   "selected_model": {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2680122Z     "benchmark_mode": true,
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2680527Z     "input_profile_path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\apex-visualizer\\tests\\fixtures\\dynamic-shapes.json",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2681168Z     "input_profile_sha256": "afbe159c65ea410f5851715c9a68418dce8bcfcd6b3fa7b5113cd49f4c63cbac",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2681851Z     "path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\apex-visualizer\\tests\\fixtures\\dynamic-relu.onnx",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2682401Z     "sha256": "068bf1217cd3c4a91f5edb3f086eb25c2099e67e5da950ec53fa7f08f6935787"
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2683107Z   },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2683721Z   "test_inventory": [
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2685092Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2685191Z       "blocked_by": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2685721Z       "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2686241Z       "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2686949Z       "state": "unavailable",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2687416Z       "test": "cuda_workload",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2688392Z       "verified": false
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2688604Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2689399Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2689591Z       "blocked_by": "",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2690693Z       "message": "Selected model CPU baseline passed with deterministic FP32 inputs; initialization/warmup excluded",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2691002Z       "reason_code": "VERIFIED_MODEL_BENCHMARK",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2691334Z       "state": "passed",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2692085Z       "test": "cpu_inference",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2692319Z       "verified": true
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2693167Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2693462Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2694204Z       "blocked_by": "cuda_workload",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2694586Z       "message": "CUDA device/context unavailable",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2695390Z       "reason_code": "BLOCKED_BY_CUDA_DEVICE",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2695702Z       "state": "skipped",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2696431Z       "test": "cuda_ep_inference",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2696712Z       "verified": false
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2697434Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2697610Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2698568Z       "message": "Requires passed CPU and CUDA EP inference",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2698845Z       "state": "skipped",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2699597Z       "test": "cpu_gpu_comparison",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2699843Z       "verified": false
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2700581Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2700723Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2701812Z       "message": "Requires at least 300 actual measured GPU seconds and successful final numerical verification",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2702099Z       "state": "incomplete",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2702477Z       "test": "sustained_cuda_inference",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2703256Z       "verified": false
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2703409Z     },
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2704167Z     {
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2705118Z       "message": "Heuristic, not proof of leak freedom: after 30s warmup, >=240s valid counters; >max(64MiB,2%) growth, >8MiB/min and rising quarter averages flag investigation",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2706382Z       "state": "inconclusive",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2706526Z       "test": "memory_growth_check",
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2706787Z       "verified": false
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2707457Z     }
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2708107Z   ]
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2708812Z }
+windows	Selected-model benchmark and input-shape recovery	2026-11-14T02:33:13.2759206Z Actual results: D:\a\roblox-game-testing\roblox-game-testing\model-benchmark-validation\20261114-023307-682. Inspect all inventory items: CPU-only success is not GPU success; memory-growth checks can remain inconclusive.
+windows	Verify optional GPU runtime installer (not a GPU execution test)	﻿2026-11-14T02:33:15.8063430Z ##[group]Run $dest = Join-Path $env:RUNNER_TEMP 'apex-ort-gpu-install'
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8063880Z [36;1m$dest = Join-Path $env:RUNNER_TEMP 'apex-ort-gpu-install'[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8064197Z [36;1m./apex-visualizer/tools/setup-gpu-runtime.ps1 -Destination $dest -InstallDependencies[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8064604Z [36;1m& './build-apex/Release/apex_dependency_tests.exe' $dest 2>&1 | Tee-Object dependency-loader-test.txt[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8065325Z [36;1mif ($LASTEXITCODE -eq 77) { Write-Host 'Provider initialization explicitly BLOCKED by unavailable NVIDIA driver; not GPU success'; $global:LASTEXITCODE = 0 } elseif ($LASTEXITCODE -ne 0) { throw 'Actual CUDA dependency DLL loading failed (not a GPU execution test)' }[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8066033Z [36;1mMove-Item (Join-Path $dest 'cudnn_graph64_9.dll') (Join-Path $dest 'cudnn_graph64_9.dll.disabled')[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8066295Z [36;1mtry {[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8066649Z [36;1m  $p = Start-Process './build-apex/Release/apex_dependency_tests.exe' -ArgumentList $dest -PassThru -RedirectStandardError missing-cudnn-component.txt[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8067314Z [36;1m  if (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Missing-companion test timeout' }[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8067858Z [36;1m  if ($p.ExitCode -ne 1 -or (Get-Content missing-cudnn-component.txt -Raw) -notmatch 'cudnn_graph64_9.dll: missing') { throw 'Missing cuDNN component was not rejected cleanly before dispatcher use' }[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8068436Z [36;1m} finally { Move-Item (Join-Path $dest 'cudnn_graph64_9.dll.disabled') (Join-Path $dest 'cudnn_graph64_9.dll') }[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8068908Z [36;1mGet-ChildItem $dest -Filter '*.dll' | Get-FileHash -Algorithm SHA256 | ConvertTo-Json | Set-Content gpu-runtime-install-manifest.json[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8069259Z [36;1mRemove-Item $dest -Recurse -Force[0m
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8094810Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:15.8095020Z ##[endgroup]
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:18.6176520Z Pinned NVIDIA runtime downloads: 1.41 GiB. No Python/toolkit installation or system PATH changes.
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:51.9497998Z Runtime files prepared at D:\a\_temp\apex-ort-gpu-install. Backup: 
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:51.9500901Z x64 files found; loader/driver/inference still require an actual test. Restart the app, then run compute-benchmark.ps1 -RequireCuda.
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:51.9503858Z Microsoft VC++ x64 runtime is required: https://aka.ms/vs/17/release/vc_redist.x64.exe
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:58.8917108Z PASS: twelve pinned x64 NVIDIA DLLs including all cuDNN companions actually loaded
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:58.8917893Z PASS: actual cudnnGetVersion first-use dispatcher call returned 90800; not GPU inference
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:58.8925373Z BLOCKED: ONNX CUDA provider initialization error 1114 and System32 NVIDIA driver is not loadable; provider/inference NOT verified. D:\a\_work\1\s\onnxruntime\core\session\provider_bridge_ort.cc:1778 onnxruntime::ProviderLibrary::Get [ONNXRuntimeError] : 1 : FAIL : Error loading "D:\a\_temp\apex-ort-gpu-install\onnxruntime_providers_cuda.dll" But no dependency issue could be determined. (Error 1114: "A dynamic link library (DLL) initialization routine failed.")
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:58.8926419Z 
+windows	Verify optional GPU runtime installer (not a GPU execution test)	2026-11-14T02:33:58.8935513Z Provider initialization explicitly BLOCKED by unavailable NVIDIA driver; not GPU success
+windows	Required CUDA must fail without CUDA hardware	﻿2026-11-14T02:34:01.9948377Z ##[group]Run $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-iterations','5','--require-cuda','--warp','--output','./compute-required-negative' -PassThru
+windows	Required CUDA must fail without CUDA hardware	2026-11-14T02:34:01.9949204Z [36;1m$p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-iterations','5','--require-cuda','--warp','--output','./compute-required-negative' -PassThru[0m
+windows	Required CUDA must fail without CUDA hardware	2026-11-14T02:34:01.9949710Z [36;1mif (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Negative CUDA test timeout' }[0m
+windows	Required CUDA must fail without CUDA hardware	2026-11-14T02:34:01.9950030Z [36;1mif ($p.ExitCode -ne 6) { throw "Expected unverified CUDA exit 6, got $($p.ExitCode)" }[0m
+windows	Required CUDA must fail without CUDA hardware	2026-11-14T02:34:01.9974178Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Required CUDA must fail without CUDA hardware	2026-11-14T02:34:01.9974376Z ##[endgroup]
+windows	Cancelled compute must fail	﻿2026-11-14T02:34:04.7523509Z ##[group]Run $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-seconds','30','--compute-cancel-after','1','--warp','--output','./compute-cancelled' -PassThru
+windows	Cancelled compute must fail	2026-11-14T02:34:04.7524365Z [36;1m$p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-seconds','30','--compute-cancel-after','1','--warp','--output','./compute-cancelled' -PassThru[0m
+windows	Cancelled compute must fail	2026-11-14T02:34:04.7524871Z [36;1mif (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Cancelled run timeout' }[0m
+windows	Cancelled compute must fail	2026-11-14T02:34:04.7525171Z [36;1mif ($p.ExitCode -ne 6) { throw "Expected cancelled exit 6, got $($p.ExitCode)" }[0m
+windows	Cancelled compute must fail	2026-11-14T02:34:04.7525499Z [36;1m$report = Get-Content ./compute-cancelled/compute-report.json -Raw | ConvertFrom-Json[0m
+windows	Cancelled compute must fail	2026-11-14T02:34:04.7526051Z [36;1mif ($report.phase -ne 'cancelled' -or $report.cuda_ep_inference.verified) { throw 'Cancelled run falsely completed' }[0m
+windows	Cancelled compute must fail	2026-11-14T02:34:04.7551792Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Cancelled compute must fail	2026-11-14T02:34:04.7552054Z ##[endgroup]
+windows	Missing runtime recovery	﻿2026-11-14T02:34:08.4507897Z ##[group]Run Move-Item ./build-apex/Release/runtime ./build-apex/Release/runtime-disabled
+windows	Missing runtime recovery	2026-11-14T02:34:08.4508357Z [36;1mMove-Item ./build-apex/Release/runtime ./build-apex/Release/runtime-disabled[0m
+windows	Missing runtime recovery	2026-11-14T02:34:08.4508592Z [36;1mtry {[0m
+windows	Missing runtime recovery	2026-11-14T02:34:08.4508980Z [36;1m$p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--compute-test','--compute-iterations','5','--warp','--output','./compute-missing-runtime' -PassThru[0m
+windows	Missing runtime recovery	2026-11-14T02:34:08.4509484Z [36;1mif (-not $p.WaitForExit(60000)) { $p.Kill(); throw 'Missing runtime test timeout' }[0m
+windows	Missing runtime recovery	2026-11-14T02:34:08.4509822Z [36;1mif ($p.ExitCode -ne 6) { throw "Expected unavailable inference exit 6, got $($p.ExitCode)" }[0m
+windows	Missing runtime recovery	2026-11-14T02:34:08.4510192Z [36;1m$report = Get-Content ./compute-missing-runtime/compute-report.json -Raw | ConvertFrom-Json[0m
+windows	Missing runtime recovery	2026-11-14T02:34:08.4510628Z [36;1mif ($report.cpu_inference.state -ne 'unavailable' -or $report.cuda_ep_inference.verified) { throw 'Missing runtime falsely verified' }[0m
+windows	Missing runtime recovery	2026-11-14T02:34:08.4511085Z [36;1m} finally { Move-Item ./build-apex/Release/runtime-disabled ./build-apex/Release/runtime }[0m
+windows	Missing runtime recovery	2026-11-14T02:34:08.4535293Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Missing runtime recovery	2026-11-14T02:34:08.4535503Z ##[endgroup]
+windows	Run actions/upload-artifact@v5	﻿2026-11-14T02:34:11.1992025Z ##[group]Run actions/upload-artifact@v5
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.1992272Z with:
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.1992396Z   name: apex-visualizer-windows
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.1993519Z   path: build-apex/Release/*.exe
+windows	Run actions/upload-artifact@v5	build-apex/Release/runtime/
+windows	Run actions/upload-artifact@v5	build-apex/Release/models/
+windows	Run actions/upload-artifact@v5	smoke-result.txt
+windows	Run actions/upload-artifact@v5	capture-smoke-result.txt
+windows	Run actions/upload-artifact@v5	obs-camera-smoke-result.txt
+windows	Run actions/upload-artifact@v5	obs-camera-provenance.json
+windows	Run actions/upload-artifact@v5	hardware-validation/
+windows	Run actions/upload-artifact@v5	compute-validation/
+windows	Run actions/upload-artifact@v5	model-benchmark-validation/
+windows	Run actions/upload-artifact@v5	model-shape-negative/
+windows	Run actions/upload-artifact@v5	compute-model-recovery/
+windows	Run actions/upload-artifact@v5	compute-model-missing/
+windows	Run actions/upload-artifact@v5	gpu-runtime-install-manifest.json
+windows	Run actions/upload-artifact@v5	dependency-loader-test.txt
+windows	Run actions/upload-artifact@v5	missing-cudnn-component.txt
+windows	Run actions/upload-artifact@v5	compute-required-negative/
+windows	Run actions/upload-artifact@v5	compute-missing-runtime/
+windows	Run actions/upload-artifact@v5	compute-cancelled/
+windows	Run actions/upload-artifact@v5	
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.1994632Z   if-no-files-found: error
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.1994773Z   compression-level: 6
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.1994904Z   overwrite: false
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.1995031Z   include-hidden-files: false
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.1995172Z ##[endgroup]
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.3397775Z (node:7016) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.3398563Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.3665706Z Multiple search paths detected. Calculating the least common ancestor of all paths
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.3670108Z The least common ancestor is D:\a\roblox-game-testing\roblox-game-testing. This will be the root directory of the artifact
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.3670581Z With the provided path, there will be 55 files uploaded
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.3674850Z Artifact name is valid!
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.3680349Z Root directory input is valid!
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:11.6227824Z Beginning upload of artifact content to blob storage
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:12.1610728Z (node:7016) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:12.7393978Z Uploaded bytes 8358557
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:12.7744260Z Finished uploading artifact content to blob storage!
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:12.7745198Z SHA256 digest of uploaded artifact zip is 98688a434f36b94bee4ce4465c3d32dfe01aad95691aa887b2445fc353080dad
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:12.7747202Z Finalizing artifact upload
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:13.1417664Z Artifact apex-visualizer-windows.zip successfully finalized. Artifact ID 14094377967
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:13.1429441Z Artifact apex-visualizer-windows has been successfully uploaded! Final size is 8358557 bytes. Artifact ID is 14094377967
+windows	Run actions/upload-artifact@v5	2026-11-14T02:34:13.1431949Z Artifact download URL: https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43546472698/artifacts/14094377967
+windows	Post Run actions/checkout@v5	﻿2026-11-14T02:34:13.1729907Z Post job cleanup.
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.3048374Z [command]"C:\Program Files\Git\bin\git.exe" version
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.3275258Z git version 2.56.1.windows.1
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.3325247Z Temporarily overriding HOME='D:\a\_temp\71f2e181-65b9-451d-926f-e4af156fb9f5' before making global git config changes
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.3326051Z Adding repository directory to the temporary git global config as a safe directory
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.3334499Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\roblox-game-testing\roblox-game-testing
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.3626510Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.3915863Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.7922504Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.8137661Z http.https://github.com/.extraheader
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.8202915Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:13.8458162Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:14.2759696Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+windows	Post Run actions/checkout@v5	2026-11-14T02:34:14.3002622Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+windows	Complete job	﻿2026-11-14T02:34:14.7307075Z Cleaning up orphan processes
+windows	Complete job	2026-11-14T02:34:14.7690200Z Terminate orphan process: pid (7808) (vctip)
+windows	Complete job	2026-11-14T02:34:14.7719739Z Terminate orphan process: pid (2896) (MSBuild)
+windows	Complete job	2026-11-14T02:34:14.8125526Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
