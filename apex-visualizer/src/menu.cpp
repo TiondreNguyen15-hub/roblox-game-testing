@@ -19,7 +19,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
  if(ImGui::Begin("Apex Visualization",nullptr,flags)){
   ImGui::TextColored({s.accent[0],s.accent[1],s.accent[2],1},"A /  APEX VISUALIZATION");ImGui::SameLine();ImGui::TextDisabled("  STANDALONE LAB");ImGui::Separator();
   ImGui::BeginChild("Sidebar",{135*scale,-28},true);
-  const char* tabs[]={"Visuals","Rendering","System","Configuration","Capture","HUD Reader"};for(int i=0;i<6;++i)if(ImGui::Selectable(tabs[i],tab_==i,0,{0,36*scale}))tab_=i;
+  const char* tabs[]={"Visuals","Rendering","System","Configuration","Capture","Game ESP"};for(int i=0;i<6;++i)if(ImGui::Selectable(tabs[i],tab_==i,0,{0,36*scale}))tab_=i;
   ImGui::Spacing();ImGui::TextDisabled("INSERT");ImGui::TextWrapped("Toggle menu\nF10: exit");ImGui::EndChild();ImGui::SameLine();
   ImGui::BeginChild("Page",{0,-28},false);
   ImGui::Text("%s",tabs[tab_]);ImGui::Separator();
@@ -103,6 +103,22 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    if(device.captureTexture&&device.capture.width){float w=std::max(1.f,std::min(ImGui::GetContentRegionAvail().x,180.f*device.capture.width/device.capture.height));ImGui::Image(static_cast<ImTextureID>(device.captureTexture),{w,w*device.capture.height/device.capture.width});}
    ImGui::TextWrapped("Preview and frame activity use real captured pixels. No semantic player detection is configured. A compatible authorized vision model and preprocessing contract are required for that next stage.");
   }else if(tab_==5){
+   ImGui::TextWrapped("Game ESP / enemy-model analysis");
+   if(ImGui::Button("Open recording for enemy analysis..."))captureRequest_=4;
+   if(device.capture.running&&device.capture.isRecording&&ImGui::Button(device.capture.paused?"Resume analysis clip":"Pause analysis clip"))captureRequest_=5;
+   if(ImGui::Button("Browse enemy ONNX model..."))enemyRequest_=3;
+   ImGui::TextWrapped("Model: %s",enemyOptions.modelPath.empty()?"Select SingularityMetaV3_recovered.onnx on your PC":enemyOptions.modelPath.u8string().c_str());
+   if(device.enemy.analyzedFrame&&device.enemyTexture){auto frame=device.enemy.analyzedFrame;float w=std::min(ImGui::GetContentRegionAvail().x,260.f*frame->width/frame->height);ImVec2 size{w,w*frame->height/frame->width};auto origin=ImGui::GetCursorScreenPos();ImGui::Image(static_cast<ImTextureID>(device.enemyTexture),size);for(const auto& box:device.enemy.latest.boxes){auto* draw=ImGui::GetWindowDrawList();ImVec2 a{origin.x+box.x1*size.x,origin.y+box.y1*size.y},b{origin.x+box.x2*size.x,origin.y+box.y2*size.y};draw->AddRect(a,b,IM_COL32(255,90,110,255),0,0,2);char text[64];snprintf(text,sizeof(text),"Enemy? %.2f",box.score);draw->AddText(a,IM_COL32(255,220,220,255),text);}ImGui::Text("Analyzed source frame %llu | %zu candidates | %.1f ms",static_cast<unsigned long long>(device.enemy.latest.sequence),device.enemy.latest.boxes.size(),device.enemy.latest.latencyMs);}
+   ImGui::Checkbox("Prefer CUDA for enemy model",&enemyOptions.preferCuda);ImGui::SliderFloat("Detection score",&enemyOptions.confidence,.05f,.95f,"%.2f");ImGui::SliderFloat("Overlap suppression",&enemyOptions.iou,.1f,.9f,"%.2f");ImGui::SliderInt("Detection interval ms",&enemyOptions.intervalMs,50,2000);
+   ImGui::BeginDisabled(enemyOptions.modelPath.empty()||!device.capture.frame);ImGui::Checkbox("Analyze incoming capture frames",&enemyEnabled);if(ImGui::Button("Detect enemies in current frame"))enemyRequest_=1;ImGui::EndDisabled();
+   if(ImGui::Button("Save enemy setup")){std::string error;notice_=saveEnemyOptions(Config::defaultPath().parent_path()/"enemy-settings.json",enemyOptions,error)?"Enemy setup saved.":error;}
+   ImGui::TextWrapped("%s: %s",device.enemy.status.c_str(),device.enemy.message.c_str());ImGui::TextWrapped("Backend: %s",device.enemy.latest.backend.c_str());
+
+   ImGui::TextWrapped("Original model class labels: %s",device.enemy.latest.modelLabels.c_str());ImGui::TextWrapped("SHA256: %s",device.enemy.latest.modelSha.c_str());
+   if(ImGui::Button("Copy Game ESP diagnostics")){auto text="Status: "+device.enemy.status+"\nMessage: "+device.enemy.message+"\nBackend: "+device.enemy.latest.backend+"\nModel: "+enemyOptions.modelPath.u8string()+"\nModel SHA256: "+device.enemy.latest.modelSha+"\nOriginal labels: "+device.enemy.latest.modelLabels+"\nCandidates: "+std::to_string(device.enemy.latest.boxes.size());ImGui::SetClipboardText(text.c_str());}
+   ImGui::TextWrapped("Boxes refer to the analyzed image shown above. Class 0 is an enemy candidate by your model description; friend/foe accuracy is not independently validated. No weapon detection is added.");
+   ImGui::SetNextItemOpen(showTextTools,ImGuiCond_Once);
+   if(!ImGui::CollapsingHeader("Existing recording text tools (preserved)")){ImGui::EndChild();ImGui::Separator();ImGui::TextDisabled("Standalone capture analysis | DX11 | Insert: menu | F10: exit");ImGui::End();ImGui::PopStyleVar();s.clamp();return;}
    ImGui::TextWrapped("Read visible HUD text from local recordings");
    if(ImGui::Button("Open recording..."))captureRequest_=4;ImGui::SameLine();
    if(device.capture.running&&device.capture.isRecording){if(ImGui::Button(device.capture.paused?"Resume clip":"Pause clip"))captureRequest_=5;}

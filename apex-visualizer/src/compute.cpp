@@ -1,4 +1,5 @@
 #include "apex/compute.hpp"
+#include "apex/enemy.hpp"
 #include "apex/log.hpp"
 #include "apex/runtime_dependencies.hpp"
 #include <cstring>
@@ -116,7 +117,9 @@ ComputeTest inference(OrtLibrary& lib,const ComputeOptions& o,bool gpu,int devic
  result.measuredWallSeconds=elapsed(start);result.reason="VERIFIED_EXECUTION";result.verified=true;result.state="passed";result.message=gpu?"CUDA EP execution proved by actual node profile and numerical reference; CPU EP fallback disabled; TF32 off":"CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread";return result;
 }
 #include "model_benchmark.inc"
+#include "enemy_inference.inc"
 }
+std::unique_ptr<EnemyDetector> makeEnemyDetector(const EnemyOptions& o){return std::make_unique<LoadedEnemyDetector>(o);}
 ComputeRunner::~ComputeRunner(){stop();}
 void ComputeRunner::stop(){cancel_=true;if(worker_.joinable())worker_.join();}
 ComputeSnapshot ComputeRunner::snapshot()const{std::lock_guard<std::mutex> lock(mutex_);return state_;}

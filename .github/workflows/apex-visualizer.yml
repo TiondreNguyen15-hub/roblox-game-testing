@@ -35,6 +35,15 @@ jobs:
           if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 60; throw "Actual HUD OCR integration failed: $($p.ExitCode)" }
           Get-Content hud-smoke-result.txt
           Get-Content hud-readings-test.csv
+      - name: Enemy adapter pixel-to-ONNX-to-preview integration (synthetic contract fixture)
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--enemy-test','./apex-visualizer/tests/fixtures/hud-counter.mp4','--enemy-model','./apex-visualizer/tests/fixtures/enemy-contract-test.onnx' -PassThru
+          if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Enemy contract integration timed out' }
+          if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 60; throw "Enemy adapter integration failed: $($p.ExitCode)" }
+          $result = Get-Content enemy-smoke-result.txt -Raw
+          if ($result -notmatch 'count=1;' -or $result -notmatch 'CUDA_verified=0') { throw 'Contract fixture output/backend was not verified honestly' }
+          Write-Host $result
       - name: Actual official OBS virtual-camera filter and DX11 preview
         shell: pwsh
         run: |
@@ -147,6 +156,7 @@ jobs:
             smoke-result.txt
             capture-smoke-result.txt
             obs-camera-smoke-result.txt
+            enemy-smoke-result.txt
             hud-smoke-result.txt
             hud-readings-test.csv
             obs-camera-provenance.json
