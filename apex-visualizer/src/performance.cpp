@@ -15,6 +15,11 @@ MemoryTrend assessMemoryTrend(const std::vector<MemorySample>& values,bool vram)
  double threshold=std::max(64.,first/nf*.02);bool flagged=r.growthMiB>threshold&&r.slopeMiBPerMinute>8&&rising;
  r.state=flagged?"suspected_growth":"stable_observed";r.message=flagged?"Sustained growth flagged; investigate allocations. This is not a definitive leak diagnosis.":"No sustained-growth heuristic triggered in observed window; leak freedom is not proven.";return r;
 }
+void yuy2ToRgba(const std::vector<unsigned char>& input,unsigned width,unsigned height,std::vector<unsigned char>& output){
+ if(!width||!height||width%2||width>4096||height>2160||input.size()!=size_t(width)*height*2||&input==&output)throw std::runtime_error("Invalid bounded native YUY2 frame");
+ output.resize(size_t(width)*height*4);
+ for(size_t i=0,j=0;i<input.size();i+=4,j+=8){int u=int(input[i+1])-128,v=int(input[i+3])-128;for(unsigned p=0;p<2;++p){int y=std::max(0,int(input[i+p*2])-16);auto index=j+p*4;output[index]=static_cast<unsigned char>(std::clamp((298*y+409*v+128)>>8,0,255));output[index+1]=static_cast<unsigned char>(std::clamp((298*y-100*u-208*v+128)>>8,0,255));output[index+2]=static_cast<unsigned char>(std::clamp((298*y+516*u+128)>>8,0,255));output[index+3]=255;}}
+}
 FrameStatistics frameStatistics(const std::vector<unsigned char>& p,unsigned w,unsigned h,const std::vector<unsigned char>* previous){
  if(!w||!h||w>4096||h>2160||p.size()!=size_t(w)*h*4)throw std::runtime_error("Invalid captured RGBA dimensions");
  FrameStatistics r;const bool compare=previous&&previous->size()==p.size();size_t n=0;

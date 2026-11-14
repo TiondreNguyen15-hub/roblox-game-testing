@@ -6,6 +6,9 @@
 using namespace apex;
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 int main(){try{
+ std::vector<unsigned char> yuy2={16,128,235,128},rgba;yuy2ToRgba(yuy2,2,1,rgba);require(rgba==std::vector<unsigned char>({0,0,0,255,255,255,255,255}),"YUY2 luma/chroma mapping wrong");
+ yuy2={81,90,81,240};yuy2ToRgba(yuy2,2,1,rgba);require(rgba[0]>=250&&rgba[1]<3&&rgba[2]<3&&rgba[3]==255,"YUY2 color conversion wrong");
+ bool malformed=false;try{yuy2ToRgba(yuy2,3,1,rgba);}catch(...){malformed=true;}require(malformed,"Odd YUY2 width accepted");
  std::vector<MemorySample> samples;
  for(unsigned i=0;i<=540;++i)samples.push_back({i*.5,512.+std::sin(i*.1),200.});
  require(assessMemoryTrend(samples,true).state=="stable_observed","Stable VRAM falsely flagged");
