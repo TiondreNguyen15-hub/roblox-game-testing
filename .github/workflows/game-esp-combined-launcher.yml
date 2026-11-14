@@ -1,0 +1,58 @@
+name: Combined GPU repair and overlay launcher validation
+on: [workflow_dispatch]
+jobs:
+  validate:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v5
+      - name: Validate actual native payload and launcher orchestration without installing GPU files
+        shell: pwsh
+        run: |
+          Expand-Archive './Apex-Game-ESP-Overlay-Update.zip' (Join-Path $env:RUNNER_TEMP 'overlay package')
+          $root=Join-Path $env:RUNNER_TEMP 'overlay package/Game-ESP-Update'
+          $script=Join-Path $root 'Update-And-Enable-GPU.ps1'
+          $tokens=$null;$errors=$null
+          [void][System.Management.Automation.Language.Parser]::ParseFile($script,[ref]$tokens,[ref]$errors)
+          if ($errors.Count) { throw 'Combined launcher syntax failed' }
+          & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File $script -ValidateOnly
+          if ($LASTEXITCODE -ne 0) { throw 'Real native payload / manifest validation failed' }
+          # Isolated orchestration check: real native app, stub child stages; NO GPU install or DLL execution.
+          $test=Join-Path $env:RUNNER_TEMP 'orchestration with spaces'
+          New-Item -ItemType Directory -Path (Join-Path $test 'GPU-Reinstall') -Force | Out-Null
+          Copy-Item $script (Join-Path $test 'Update-And-Enable-GPU.ps1')
+          $target=Join-Path $test 'apex_visualizer.exe'
+          Copy-Item (Join-Path $root 'payload/apex_visualizer.exe') $target
+          Set-Content (Join-Path $test 'expected.txt') $target
+          @'
+          $ErrorActionPreference='Stop'
+          $root=Split-Path -Parent $PSScriptRoot
+          Set-Content (Join-Path $root 'gpu-stage.txt') 'stub GPU stage only; no install'
+          $app=Get-Process -Name apex_visualizer | Select-Object -First 1
+          if (!$app.CloseMainWindow() -or !$app.WaitForExit(15000)) { exit 9 }
+          exit 0
+          '@ | Set-Content (Join-Path $test 'GPU-Reinstall/Install-GPU.ps1')
+          @'
+          param([string]$TargetExe)
+          $ErrorActionPreference='Stop'
+          if ($TargetExe -ne (Get-Content (Join-Path $PSScriptRoot 'expected.txt'))) { exit 8 }
+          if (!(Test-Path (Join-Path $PSScriptRoot 'gpu-stage.txt'))) { exit 9 }
+          Set-Content (Join-Path $PSScriptRoot 'update-stage.txt') 'exact target handoff and stage order passed'
+          exit 0
+          '@ | Set-Content (Join-Path $test 'Update-Game-ESP.ps1')
+          $p=Start-Process $target -ArgumentList '--warp' -PassThru
+          try {
+            for ($n=0;$n -lt 50;$n++) { $p.Refresh();if ($p.MainWindowHandle) { break };Start-Sleep -Milliseconds 200 }
+            if (!$p.MainWindowHandle) { throw 'Actual native fixture app failed to open' }
+            & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1')
+            if ($LASTEXITCODE -ne 0 -or !(Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Quoted spaced target handoff / stage order failed' }
+          } finally { if (!$p.HasExited) { $p.Kill() } }
+          Remove-Item (Join-Path $test 'update-stage.txt')
+          'exit 7' | Set-Content (Join-Path $test 'GPU-Reinstall/Install-GPU.ps1')
+          $p=Start-Process $target -ArgumentList '--warp' -PassThru
+          try {
+            for ($n=0;$n -lt 50;$n++) { $p.Refresh();if ($p.MainWindowHandle) { break };Start-Sleep -Milliseconds 200 }
+            & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1')
+            if ($LASTEXITCODE -eq 0 -or (Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Failure did not prevent later update stage' }
+          } finally { if (!$p.HasExited) { $p.Kill() } }
+          Write-Host 'PASS real native payload hash and manifest validation; orchestration with stub child stages checks exact spaced target, stage ordering and stop-on-failure. No GPU install or RTX execution claimed.'
+          exit 0

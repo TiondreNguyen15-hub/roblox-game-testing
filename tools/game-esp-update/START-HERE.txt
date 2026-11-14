@@ -1,3 +1,7 @@
+CONFIRMED CPU-ONLY RUNTIME?
+Leave exactly ONE demo open, Extract All, then run Update-And-Enable-GPU.cmd.
+This repairs GPU dependencies in that running copy, then installs the overlay and preview fix. Up to 1.4 GB may download; cached files are reused.
+
 GAME ESP ENEMY-MODEL UPDATE
 
 1. Leave your current working demo OPEN.
@@ -8,4 +12,9 @@ GAME ESP ENEMY-MODEL UPDATE
 
 Your GPU files and saved settings stay in place. Do not reinstall GPU files.
 Private trained weights are not included; choose the model you already downloaded.
-Enemy? boxes are candidates on the analyzed image, not an in-game overlay. No weapons detector is added.
+For boxes on your main monitor: use borderless/windowed gameplay, start live OBS capture, then enable Game ESP > Desktop overlay (live capture). F8 hides/shows it.
+Enemy? boxes are model candidates on a separate desktop window. No weapons detector is added.
+
+IF THE MODEL STILL SAYS ONNX CPU:
+First enable Prefer CUDA and detect a frame. Copy Game ESP diagnostics for the exact reason.
+If GPU runtime files are missing from this running installation, leave the demo open and run GPU-Reinstall/Reinstall-GPU.cmd from this extracted folder. It detects that copy, closes it normally, installs pinned local dependencies, and reopens it. Up to 1.4 GB may download; cached files are reused. Installation alone does not verify this model's CUDA execution.
