@@ -1,0 +1,155 @@
+{
+  "acceleration_status": "Inference unavailable; DX11 renderer remains active",
+  "adapter": "Microsoft Basic Render Driver",
+  "available_providers": [],
+  "benchmark_policy": {
+    "cpu_inter_op_threads": 1,
+    "cpu_intra_op_threads": 1,
+    "cuda_arena_limit_bytes": 536870912,
+    "input_values": "deterministic signed FP32",
+    "tf32_enabled": false,
+    "warmup_calls": 10
+  },
+  "cpu_inference": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "fp32_input_shapes": null,
+    "message": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+    "profile_file": "",
+    "reason_code": "ORT_RUNTIME_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "cpu_to_cuda_ep_latency_ratio": null,
+  "cuda_driver_api_version": null,
+  "cuda_ep_inference": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "fp32_input_shapes": null,
+    "message": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+    "profile_file": "",
+    "reason_code": "ORT_RUNTIME_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "cuda_workload": {
+    "blocked_by": "",
+    "cuda_kernel_events": null,
+    "fp32_input_shapes": null,
+    "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+    "profile_file": "",
+    "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+    "run_end_to_end": null,
+    "state": "unavailable",
+    "verified": false
+  },
+  "dependencies": [],
+  "error": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+  "finished": true,
+  "gpu_execution_result": "INCOMPLETE",
+  "gpu_target_seconds": 0.0,
+  "measurement_notes": "Authorized selected-model benchmark or bundled synthetic validation. Benchmark mode uses deterministic FP32 tensor inputs; it does not represent actual gameplay preprocessing/inference. CPU baseline is cross-provider agreement, not independent model correctness.  ONNX Run wall latency includes transfers, execution and output materialization; output validation and setup excluded from mean Run latency. Validated-loop inference FPS includes periodic numerical checking.  Serial inference/s is reciprocal mean Run latency, not display FPS. CUDA event duration measures the vector-add kernel, not inference. CUDA EP marked verified only with numeric agreement, disabled CPU fallback and a CUDAExecutionProvider node in actual ORT profiling. Render FPS is reciprocal of observed main-window frame intervals during each phase; short phases can have too few frames to compare. Process GPU busy is PDH busiest matching PID+adapter engine; local VRAM is per-process DXGI WDDM usage. Counters sampled at 2Hz can miss short peaks. Memory endpoints/ranges do not establish leak freedom.",
+  "memory_trends": {
+    "process_private": {
+      "growth_mib": 0.0,
+      "message": "Not enough sustained samples",
+      "samples": 0,
+      "slope_mib_per_minute": 0.0,
+      "span_s": 0.0,
+      "state": "inconclusive"
+    },
+    "process_vram": {
+      "growth_mib": 0.0,
+      "message": "Not enough sustained samples",
+      "samples": 0,
+      "slope_mib_per_minute": 0.0,
+      "span_s": 0.0,
+      "state": "inconclusive"
+    }
+  },
+  "minimum_seconds_per_available_phase": 0.0,
+  "model": "Bundled deterministic MatMul(128x256,256x256)+Relu, float32",
+  "onnx_runtime_version": "",
+  "overall_benchmark_result": "FAIL",
+  "phase": "unavailable_or_failed",
+  "process_after_cleanup": {
+    "device_gpu_percent": 4294967295.0,
+    "device_vram_mib": null,
+    "private_mib": 17.546875,
+    "process_busiest_engine_percent": 95.40526309276062,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 37.015625
+  },
+  "process_before": {
+    "device_gpu_percent": 4294967295.0,
+    "device_vram_mib": null,
+    "private_mib": 17.6953125,
+    "process_busiest_engine_percent": 95.74223380557392,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 36.75
+  },
+  "process_observations": 96,
+  "process_peak_observed": {
+    "device_gpu_percent": 4294967295.0,
+    "device_vram_mib": null,
+    "private_mib": 17.6953125,
+    "process_busiest_engine_percent": 95.74223380557392,
+    "process_local_vram_mib": 0.0,
+    "working_set_mib": 37.015625
+  },
+  "requested_iterations_per_phase": 5,
+  "runtime_path": "",
+  "selected_model": {
+    "benchmark_mode": false,
+    "input_profile_path": "",
+    "input_profile_sha256": "",
+    "path": "D:\\a\\roblox-game-testing\\roblox-game-testing\\build-apex\\Release\\models/compute_validation.onnx",
+    "sha256": "2d08ea139dfea3fc7273eb47a58e1168dde19073ca3526c6fee62db096900c5b"
+  },
+  "test_inventory": [
+    {
+      "blocked_by": "",
+      "message": "CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  ",
+      "reason_code": "CUDA_DRIVER_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cuda_workload",
+      "verified": false
+    },
+    {
+      "blocked_by": "",
+      "message": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+      "reason_code": "ORT_RUNTIME_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cpu_inference",
+      "verified": false
+    },
+    {
+      "blocked_by": "",
+      "message": "ONNX Runtime not loadable. Install bundled CPU runtime VC++ x64 dependencies or GPU runtime/CUDA dependencies.",
+      "reason_code": "ORT_RUNTIME_NOT_LOADABLE",
+      "state": "unavailable",
+      "test": "cuda_ep_inference",
+      "verified": false
+    },
+    {
+      "message": "Requires passed CPU and CUDA EP inference",
+      "state": "skipped",
+      "test": "cpu_gpu_comparison",
+      "verified": false
+    },
+    {
+      "message": "Requires at least 300 actual measured GPU seconds and successful final numerical verification",
+      "state": "incomplete",
+      "test": "sustained_cuda_inference",
+      "verified": false
+    },
+    {
+      "message": "Heuristic, not proof of leak freedom: after 30s warmup, >=240s valid counters; >max(64MiB,2%) growth, >8MiB/min and rising quarter averages flag investigation",
+      "state": "inconclusive",
+      "test": "memory_growth_check",
+      "verified": false
+    }
+  ]
+}

@@ -1,8 +1,9 @@
 {
-  "phase": "OBS DirectShow compatibility fix",
-  "source_commit": "110547ab77eba226ca66879a5b905317af1283ba",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43540051211",
-  "exe_sha256": "fa0cdae9c5bb7ac95c5d04b08f9cadcde91bdc946fcf71750226366dc81321cb",
+  "phase": "OBS explicit live-source startup and actual official camera validation",
+  "actual_official_obs_33_camera_and_dx11_preview": "passed (native YUY2, idle/placeholder frames; no producer/gameplay)",
+  "source_commit": "31870e7f30d434d1014426f5dfa64e1088c70357",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43543692901",
+  "exe_sha256": "dd8c3ae6741893c32a045e44e72ea7e0b5fa1cd58673bcee96f0e6a5a8930eaf",
   "native_windows_ctest_suites": 9,
   "directshow_actual_avi_graph_and_sample_callback": "passed",
   "directshow_camera_enumeration_and_no_camera_diagnostics": "passed",

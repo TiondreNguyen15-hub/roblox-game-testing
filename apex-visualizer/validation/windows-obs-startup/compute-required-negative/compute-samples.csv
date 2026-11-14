@@ -1,0 +1,4 @@
+elapsed_s,phase,render_frame_interval_ms,process_busiest_engine_percent,process_local_vram_mib,working_set_mib,private_mib,device_gpu_percent,device_vram_mib
+0.0141716,cuda_vector_add,14.4297,95.7306,0,36.5469,17.1406,4.29497e+09,
+0.524197,completed,12.1573,95.7563,0,39.1875,19.2852,4.29497e+09,
+1.03213,completed,11.2366,95.7714,0,39.1484,19.1641,4.29497e+09,

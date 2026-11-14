@@ -1,0 +1,1 @@
+PASS: real recording frames=30; size=320x180; last uploaded sequence=30; actual DX11 preview draw command=1; WARP=1

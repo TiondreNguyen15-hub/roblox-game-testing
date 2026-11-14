@@ -1,0 +1,4 @@
+elapsed_s,phase,render_frame_interval_ms,process_busiest_engine_percent,process_local_vram_mib,working_set_mib,private_mib,device_gpu_percent,device_vram_mib
+0.0123439,unavailable_or_failed,12.6098,95.7422,0,36.75,17.6953,4.29497e+09,
+0.523199,unavailable_or_failed,11.7694,95.5919,0,36.7578,16.6953,4.29497e+09,
+1.02468,unavailable_or_failed,11.8316,95.4053,0,37.0156,17.5469,4.29497e+09,

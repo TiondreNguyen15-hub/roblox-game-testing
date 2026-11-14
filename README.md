@@ -1,3 +1,13 @@
+# OBS camera no-frame startup fix
+
+[Download the updated OBS patch](Apex-Visualization-OBS-Fix.zip) · [Startup fix details](apex-visualizer/OBS-STARTUP-FIX.md) · [Actual camera validation](apex-visualizer/OBS-CAPTURE-VALIDATION.md)
+
+The receiver now connects native camera pins explicitly, configures YUY2 (including fresh cameras with no saved format), converts frames to RGBA internally, prepares the live source and removes playback-clock scheduling from live capture. A real OBS camera test reproduced a one-frame stall with state Running; the updated app passed with ten actual official OBS 33.0.1 camera samples and a DX11 preview draw command. These were idle/placeholder frames in isolated Windows CI, not captured gameplay or a test on your PC.
+
+Close the app, extract the patch into your **existing folder containing apex_visualizer.exe**, replace the EXE and keep `runtime/gpu` and settings. Start OBS Virtual Camera, reopen the updated app and retry Capture. If it fails, use Copy capture diagnostics and paste the text in chat.
+
+---
+
 # OBS Virtual Camera detection update
 
 [Download the small OBS compatibility patch](Apex-Visualization-OBS-Fix.zip) · [Actual native Windows validation](apex-visualizer/OBS-CAPTURE-VALIDATION.md)

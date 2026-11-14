@@ -1,6 +1,10 @@
-# OBS compatibility update: actual validation
+# OBS startup update: actual camera validation
 
-Native source commit `110547ab77eba226ca66879a5b905317af1283ba`. [Successful Windows validation run](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43540051211). Native EXE SHA256: `fa0cdae9c5bb7ac95c5d04b08f9cadcde91bdc946fcf71750226366dc81321cb`.
+**Actual official OBS camera test passed:** OBS Studio 33.0.1 x64's genuine virtual-camera component was downloaded from the official release, SHA256-checked, registered only in the isolated Windows CI machine, and used by this application to receive at least ten real camera samples and issue a DX11 image draw command. No OBS producer or gameplay was running; these were the filter's idle/placeholder frames. This is genuine camera integration coverage, not a claim that gameplay or the user's installed camera was tested. The component was unregistered after the test and is not included in the patch.
+
+The app connects actual OBS output pins directly, configures native YUY2 (including a concrete 720p30 fallback for a fresh empty-format filter), converts validated YUY2 pixels to RGBA internally, explicitly calls Pause before Run, disables playback-clock scheduling for live camera samples, checks graph errors and logs startup/state HRESULTs. A real-camera attempt reproduced one delivered sample followed by an eight-second stall with state Running; removing live playback synchronization addresses that receiver stall. Recording playback retains its clock. The first real-filter attempts exposed automatic RGB connection and capture-builder discovery failures; those builds were not published as fixes. OBS's camera thread is signaled in Pause in the pinned source version. This addresses a possible startup mismatch; the user's actual cause remains unproven. See [OBS-STARTUP-FIX.md](OBS-STARTUP-FIX.md).
+
+Native source commit `31870e7f30d434d1014426f5dfa64e1088c70357`. [Successful Windows validation run](https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43543692901). Native EXE SHA256: `dd8c3ae6741893c32a045e44e72ea7e0b5fa1cd58673bcee96f0e6a5a8930eaf`.
 
 - Visual Studio 2022 x64 Release build and **all nine CTest suites passed**. Portable Linux module suites and Windows cross-compilation also passed.
 - The extended Windows capture suite executed the actual **DirectShow graph**, original AVI test recording, Windows RGB32 conversion, the real Sample Grabber callback COM vtable and conversion to RGBA. It required a received frame with the expected 160x90 dimensions and nonblack real pixel statistics, then stopped and released the graph. This is a real file-decoding integration test, not a simulated OBS camera or evidence that a physical OBS source is installed on CI.
@@ -13,4 +17,4 @@ The reported failure is consistent with an API mismatch: the original button enu
 
 [Update instructions](OBS-CAPTURE-FIX.md). After installing the patch, run Capture > Start OBS Virtual Camera. If it still fails, use Copy capture diagnostics and send that actual text. No model/runtime reinstall or CUDA configuration changes are needed for this capture-only patch. The source/settings/renderer remain; only capture support and diagnostics were extended.
 
-Raw native evidence: [validation/windows-obs-fix](validation/windows-obs-fix). The test AVI is an original FFmpeg `testsrc2` recording (160x90,10fps,1 second, uncompressed BGR24); no external gameplay or fabricated player data is used.
+Raw native evidence: [validation/windows-obs-startup](validation/windows-obs-startup). The test AVI is an original FFmpeg `testsrc2` recording (160x90,10fps,1 second, uncompressed BGR24); no external gameplay or fabricated player data is used.

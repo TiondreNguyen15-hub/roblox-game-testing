@@ -1,0 +1,21 @@
+Test project /workspace/work/apex-asan
+    Start 1: apex_core_modules
+1/8 Test #1: apex_core_modules ................   Passed    0.02 sec
+    Start 2: apex_imgui_visuals
+2/8 Test #2: apex_imgui_visuals ...............   Passed    0.05 sec
+    Start 3: apex_menu_system
+3/8 Test #3: apex_menu_system .................   Passed    0.55 sec
+    Start 4: apex_json_telemetry
+4/8 Test #4: apex_json_telemetry ..............   Passed    0.04 sec
+    Start 5: apex_logging
+5/8 Test #5: apex_logging .....................   Passed    0.02 sec
+    Start 6: apex_benchmark_reports
+6/8 Test #6: apex_benchmark_reports ...........   Passed    0.02 sec
+    Start 7: apex_compute_reference
+7/8 Test #7: apex_compute_reference ...........   Passed    0.23 sec
+    Start 8: apex_performance_checks
+8/8 Test #8: apex_performance_checks ..........   Passed    0.02 sec
+
+100% tests passed out of 8
+
+Total Test time (real) =   0.95 sec

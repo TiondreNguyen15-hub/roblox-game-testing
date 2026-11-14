@@ -2,7 +2,11 @@
 
 The user reported that DirectShow found and opened OBS Virtual Camera, but received zero callbacks before the eight-second timeout. That proves discovery/graph connection progressed; it does not identify the cause of missing samples or prove OBS output was working.
 
+Real-filter testing also exposed failures in the capture graph builder's automatic connection/interface-discovery path. The receiver now enumerates OBS's actual output pin, obtains IAMStreamConfig directly, selects a supported native YUY2 format, and uses ConnectDirect through the sample receiver to the null renderer. Camera video no longer depends on a guessed RGB conversion filter. If a fresh OBS filter advertises zero formats because no producer has cached a resolution, the app requests a concrete 1280x720, 30fps YUY2 format through IAMStreamConfig instead of rejecting the empty list. A bounded in-app YUY2-to-RGBA conversion has tested black/white/red reference cases and rejects malformed dimensions. Its color matrix is BT.601 limited-range; a vision preprocessing contract must account for source color characteristics.
+
 The app now explicitly prepares the graph with `IMediaControl::Pause()` before `Run()`. [OBS 33.0.1 VCamFilter source](https://github.com/obsproject/obs-studio/blob/33.0.1/plugins/win-dshow/virtualcam-module/virtualcam-filter.cpp) signals its capture thread's start event in `Pause()`, while its `Run()` only marks it active and delegates to the base filter. Making the live-source state transition explicit avoids relying on implicit preparation. This is a compatibility change, not a remotely proven root cause on the user's PC.
+
+A real-camera test then reproduced a one-frame stall while the graph reported Running. The live path now removes playback-clock synchronization from the graph: OBS paces its own frames, and the null renderer consumes them without waiting on incompatible playback timestamps. File-recording playback keeps its existing clock.
 
 Graph failure/device-loss events are now consumed and reported. Startup HRESULTs and graph state are logged. A no-sample timeout includes callback count and Pause/Run/state results rather than assuming OBS was not started.
 
