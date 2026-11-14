@@ -1,0 +1,20 @@
+name: Windows OCR capability probe
+on: [workflow_dispatch]
+jobs:
+  probe:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v5
+      - name: Inspect Windows OCR recognition availability
+        shell: powershell
+        run: |
+          Add-Type -AssemblyName System.Runtime.WindowsRuntime
+          [Windows.Media.Ocr.OcrEngine,Windows.Foundation,ContentType=WindowsRuntime] | Out-Null
+          $languages = [Windows.Media.Ocr.OcrEngine]::AvailableRecognizerLanguages
+          Write-Host "Installed OCR languages: $($languages.LanguageTag -join ', ')"
+          if ($languages.Count -eq 0) {
+            Write-Host 'Attempting official en-US OCR capability in this isolated CI image'
+            Add-WindowsCapability -Online -Name 'Language.OCR~~~en-US~0.0.1.0' | Format-List
+            $languages = [Windows.Media.Ocr.OcrEngine]::AvailableRecognizerLanguages
+          }
+          if ($languages.Count -eq 0) { throw 'Windows OCR capability unavailable: actual OCR tests blocked' }
