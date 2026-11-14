@@ -1,0 +1,11 @@
+GAME ESP ENEMY-MODEL UPDATE
+
+1. Leave your current working demo OPEN.
+2. Right-click this ZIP and choose Extract All.
+3. In the extracted folder, double-click Update-Game-ESP.cmd.
+4. Open Game ESP > Browse enemy ONNX model. Select your local SingularityMetaV3_recovered.onnx.
+5. Open a recording or use your existing OBS capture.
+
+Your GPU files and saved settings stay in place. Do not reinstall GPU files.
+Private trained weights are not included; choose the model you already downloaded.
+Enemy? boxes are candidates on the analyzed image, not an in-game overlay. No weapons detector is added.

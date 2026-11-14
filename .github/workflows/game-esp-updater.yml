@@ -1,0 +1,37 @@
+name: Game ESP updater validation
+on: [workflow_dispatch]
+jobs:
+  validate:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check updater syntax and preservation in isolated app folder
+        shell: pwsh
+        run: |
+          $root = (Resolve-Path './tools/game-esp-update').Path
+          $script = Join-Path $root 'Update-Game-ESP.ps1'
+          $tokens=$null;$errors=$null
+          [void][System.Management.Automation.Language.Parser]::ParseFile($script,[ref]$tokens,[ref]$errors)
+          if ($errors.Count) { $errors | Format-List; throw 'Updater syntax failed' }
+          # File-update behavior only; no dummy file is executed or called OCR.
+          $payload=Join-Path $root 'payload'
+          New-Item -ItemType Directory -Path (Join-Path $payload 'models') -Force | Out-Null
+          Set-Content (Join-Path $payload 'apex_visualizer.exe') 'update test bytes'
+          @{exe_sha256=(Get-FileHash (Join-Path $payload 'apex_visualizer.exe')).Hash.ToLower()} | ConvertTo-Json | Set-Content (Join-Path $payload 'BUILD-INFO.json')
+          foreach ($name in @('GAME-ESP-README.md','GAME-ESP-VALIDATION.md','HUD-Sample.mp4')) { Set-Content (Join-Path $payload $name) 'file preservation test' }
+          Set-Content (Join-Path $payload 'models/compute_validation.onnx') 'new model fixture'
+          $app=Join-Path $env:RUNNER_TEMP 'hud updater app with spaces'
+          New-Item -ItemType Directory -Path (Join-Path $app 'runtime/gpu') -Force | Out-Null
+          New-Item -ItemType Directory -Path (Join-Path $app 'models') -Force | Out-Null
+          Set-Content (Join-Path $app 'apex_visualizer.exe') 'old test bytes'
+          Set-Content (Join-Path $app 'runtime/gpu/keep.dll') 'keep GPU libraries'
+          Set-Content (Join-Path $app 'models/compute_validation.onnx') 'keep existing model'
+          Set-Content (Join-Path $app 'settings.json') 'keep settings'
+          & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File $script -ValidateOnly
+          if ($LASTEXITCODE -ne 0) { throw 'Updater payload validation failed' }
+          & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File $script -TargetExe (Join-Path $app 'apex_visualizer.exe') -NoLaunch
+          if ($LASTEXITCODE -ne 0) { throw 'Updater file replacement failed' }
+          if ((Get-Content (Join-Path $app 'runtime/gpu/keep.dll')) -ne 'keep GPU libraries' -or (Get-Content (Join-Path $app 'settings.json')) -ne 'keep settings' -or (Get-Content (Join-Path $app 'models/compute_validation.onnx')) -ne 'keep existing model') { throw 'Updater changed preserved files' }
+          $backup=Get-ChildItem (Join-Path $app 'update-backups') -Recurse -Filter 'apex_visualizer.exe' | Select-Object -First 1
+          if (!$backup -or (Get-Content $backup.FullName) -ne 'old test bytes') { throw 'Original executable backup was not preserved' }
+          Write-Host 'PASS updater file integrity, replace/backup, paths with spaces, GPU/model/settings preservation. GUI picker and real app closing are not exercised by this test.'
