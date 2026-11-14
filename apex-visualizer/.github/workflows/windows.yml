@@ -44,6 +44,15 @@ jobs:
           $result = Get-Content enemy-smoke-result.txt -Raw
           if ($result -notmatch 'count=1;' -or $result -notmatch 'CUDA_verified=0') { throw 'Contract fixture output/backend was not verified honestly' }
           Write-Host $result
+      - name: Roblox profile capture-to-YOLO-to-preview integration (synthetic contract)
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--enemy-test','./apex-visualizer/tests/fixtures/hud-counter.mp4','--enemy-profile','roblox','--enemy-model','./apex-visualizer/tests/fixtures/roblox-contract-test.onnx' -PassThru
+          if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Roblox adapter integration timed out' }
+          if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 40; throw 'Roblox adapter failed' }
+          $result=Get-Content roblox-enemy-smoke-result.txt -Raw
+          if ($result -notmatch 'count=1;' -or $result -notmatch 'CUDA_verified=0') { throw 'Unexpected synthetic Roblox fixture result' }
+          Write-Host $result
       - name: Actual official OBS virtual-camera filter and DX11 preview
         shell: pwsh
         run: |
@@ -172,6 +181,7 @@ jobs:
             capture-smoke-result.txt
             obs-camera-smoke-result.txt
             enemy-smoke-result.txt
+            roblox-enemy-smoke-result.txt
             overlay-background-result.txt
             hud-smoke-result.txt
             hud-readings-test.csv

@@ -1,0 +1,14 @@
+#include "apex/enemy.hpp"
+#include <fstream>
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+#include <cmath>
+using namespace apex;
+void require(bool value,const char* error){if(!value)throw std::runtime_error(error);}
+int main(){try{
+ CapturedFrame frame;frame.width=1280;frame.height=640;frame.rgba.assign(size_t(frame.width)*frame.height*4,255);auto image=prepareEnemyImage(frame,640);require(image.left==0&&image.top==160&&image.nchw.size()==3*640*640&&image.scale==.5f,"640 letterbox wrong");require(image.nchw[160*640]==1&&std::abs(image.nchw[0]-114.f/255)<1e-6,"RGB normalization wrong");
+ std::vector<float> output(42000);output[0]=320;output[8400]=320;output[16800]=320;output[25200]=320;output[33600]=.9f;auto boxes=decodeRobloxOutput(output.data(),output.size(),image,.5f,.45f);require(boxes.size()==1&&boxes[0].x1==.25f&&boxes[0].x2==.75f&&boxes[0].y1==0&&boxes[0].y2==1,"Channel-major xywh mapping wrong");for(int channel=0;channel<5;++channel)output[channel*8400+1]=output[channel*8400];require(decodeRobloxOutput(output.data(),output.size(),image,.5f,.45f).size()==1,"Roblox duplicate NMS wrong");require(decodeRobloxOutput(output.data(),output.size(),image,.95f,.45f).empty(),"Roblox score filter wrong");output[33600]=std::numeric_limits<float>::quiet_NaN();bool rejected=false;try{decodeRobloxOutput(output.data(),output.size(),image,.5f,.45f);}catch(...){rejected=true;}require(rejected,"Nonfinite output accepted");
+ auto root=std::filesystem::temp_directory_path()/"apex-roblox-profile-tests";std::filesystem::create_directories(root);auto a=enemySettingsFile(root,EnemyProfile::Apex416),b=enemySettingsFile(root,EnemyProfile::Roblox640);require(a!=b,"Profiles share settings file");EnemyOptions apex,roblox;apex.modelPath="apex-local.onnx";apex.confidence=.75f;roblox.profile=EnemyProfile::Roblox640;roblox.modelPath="roblox-local.onnx";std::string error;require(saveEnemyOptions(a,apex,error)&&saveEnemyOptions(b,roblox,error),"Profile save failed");EnemyOptions loadedA,loadedB;loadedB.profile=EnemyProfile::Roblox640;require(loadEnemyOptions(a,loadedA,error)&&loadEnemyOptions(b,loadedB,error)&&loadedA.modelPath==apex.modelPath&&loadedA.confidence==.75f&&loadedB.modelPath==roblox.modelPath,"Profile values not preserved separately");require(!loadEnemyOptions(b,loadedA,error)&&loadedA.modelPath==apex.modelPath,"Wrong profile mutated Apex settings");{std::ofstream old(a);old<<R"({"version":1,"model":"legacy-apex.onnx","prefer_cuda":true,"confidence":0.5,"iou":0.45,"interval_ms":150})";}require(loadEnemyOptions(a,loadedA,error)&&loadedA.modelPath=="legacy-apex.onnx","Legacy Apex settings migration failed");std::filesystem::remove_all(root);
+ std::cout<<"PASS Roblox RGB letterbox, channel-major xywh decoding, confidence/NMS, invalid values, separate model paths and backward-compatible Apex settings\n";return 0;
+ }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

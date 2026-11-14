@@ -106,11 +106,14 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::SetNextItemOpen(!showTextTools,ImGuiCond_Once);
    if(ImGui::CollapsingHeader("Enemy model analysis")){
    ImGui::TextWrapped("Game ESP / enemy-model analysis");
+   int selectedProfile=static_cast<int>(enemyOptions.profile);const char* profileNames[]={"Apex (primary, 416px)","Roblox (test, YOLO 640px)"};
+   if(ImGui::Combo("Model profile",&selectedProfile,profileNames,2)){std::string error;auto root=Config::defaultPath().parent_path();if(!saveEnemyOptions(enemySettingsFile(root,enemyOptions.profile),enemyOptions,error))notice_=error;else{EnemyOptions next=enemyOptions;next.profile=static_cast<EnemyProfile>(selectedProfile);next.modelPath.clear();next.confidence=.5f;next.iou=.45f;next.intervalMs=150;auto path=enemySettingsFile(root,next.profile);if(std::filesystem::exists(path)&&!loadEnemyOptions(path,next,error))notice_=error;else{enemyOptions=next;enemyEnabled=false;enemyRequest_=4;notice_="Profile changed; previous model path/settings saved separately. Start capture and enable analysis.";}}}
+
    ImGui::Checkbox("Desktop overlay (live capture)",&overlayOptions.enabled);
    if(ImGui::Button("Open recording for enemy analysis..."))captureRequest_=4;
    if(device.capture.running&&device.capture.isRecording&&ImGui::Button(device.capture.paused?"Resume analysis clip":"Pause analysis clip"))captureRequest_=5;
    if(ImGui::Button("Browse enemy ONNX model..."))enemyRequest_=3;
-   ImGui::TextWrapped("Model: %s",enemyOptions.modelPath.empty()?"Select SingularityMetaV3_recovered.onnx on your PC":enemyOptions.modelPath.u8string().c_str());
+   ImGui::TextWrapped("Model: %s",enemyOptions.modelPath.empty()?(enemyOptions.profile==EnemyProfile::Apex416?"Select SingularityMetaV3_recovered.onnx on your PC":"Select your local RobloxAIO-harlan.onnx"):enemyOptions.modelPath.u8string().c_str());
    ImGui::Checkbox("Show exact analyzed frame (updates at model speed)",&enemyPreviewAnalyzed);
    const bool exact=enemyPreviewAnalyzed||!device.capture.frame;
    auto previewFrame=exact?device.enemy.analyzedFrame:device.capture.frame;auto previewTexture=exact?device.enemyTexture:device.captureTexture;
@@ -124,11 +127,12 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    }
    ImGui::Checkbox("Prefer CUDA for enemy model",&enemyOptions.preferCuda);ImGui::SliderFloat("Detection score",&enemyOptions.confidence,.05f,.95f,"%.2f");ImGui::SliderFloat("Overlap suppression",&enemyOptions.iou,.1f,.9f,"%.2f");ImGui::SliderInt("Detection interval ms",&enemyOptions.intervalMs,50,2000);
    ImGui::BeginDisabled(enemyOptions.modelPath.empty()||!device.capture.frame);ImGui::Checkbox("Analyze incoming capture frames",&enemyEnabled);if(ImGui::Button("Detect enemies in current frame"))enemyRequest_=1;ImGui::EndDisabled();
-   if(ImGui::Button("Save enemy setup")){std::string error;notice_=saveEnemyOptions(Config::defaultPath().parent_path()/"enemy-settings.json",enemyOptions,error)?"Enemy setup saved.":error;}
+   if(ImGui::Button("Save enemy setup")){std::string error;notice_=saveEnemyOptions(enemySettingsFile(Config::defaultPath().parent_path(),enemyOptions.profile),enemyOptions,error)?"Enemy setup saved.":error;}
+   ImGui::TextWrapped("%s",notice_.c_str());
    ImGui::TextWrapped("%s: %s",device.enemy.status.c_str(),device.enemy.message.c_str());ImGui::TextWrapped("Backend: %s",device.enemy.latest.backend.c_str());
 
    ImGui::TextWrapped("Original model class labels: %s",device.enemy.latest.modelLabels.c_str());ImGui::TextWrapped("SHA256: %s",device.enemy.latest.modelSha.c_str());
-   if(ImGui::Button("Copy Game ESP diagnostics")){auto text="Status: "+device.enemy.status+"\nMessage: "+device.enemy.message+"\nBackend: "+device.enemy.latest.backend+"\nModel: "+enemyOptions.modelPath.u8string()+"\nModel SHA256: "+device.enemy.latest.modelSha+"\nOriginal labels: "+device.enemy.latest.modelLabels+"\nCandidates: "+std::to_string(device.enemy.latest.boxes.size())+"\nCapture FPS: "+std::to_string(device.capture.fps)+"\nModel processing ms: "+std::to_string(device.enemy.latest.latencyMs)+"\nResult age ms: "+std::to_string(resultAge*1000)+"\nUI frame ms: "+std::to_string(stats.wallFrameMs);ImGui::SetClipboardText(text.c_str());}
+   if(ImGui::Button("Copy Game ESP diagnostics")){auto text="Profile: "+std::string(enemyOptions.profile==EnemyProfile::Apex416?"Apex416":"Roblox640")+"\nStatus: "+device.enemy.status+"\nMessage: "+device.enemy.message+"\nBackend: "+device.enemy.latest.backend+"\nModel: "+enemyOptions.modelPath.u8string()+"\nModel SHA256: "+device.enemy.latest.modelSha+"\nOriginal labels: "+device.enemy.latest.modelLabels+"\nCandidates: "+std::to_string(device.enemy.latest.boxes.size())+"\nCapture FPS: "+std::to_string(device.capture.fps)+"\nModel processing ms: "+std::to_string(device.enemy.latest.latencyMs)+"\nResult age ms: "+std::to_string(resultAge*1000)+"\nUI frame ms: "+std::to_string(stats.wallFrameMs);ImGui::SetClipboardText(text.c_str());}
    ImGui::TextWrapped("Live preview uses the latest captured image; boxes are delayed model results. Exact analyzed-frame mode aligns boxes to their source pixels. Class 0 is an enemy candidate by your model description; friend/foe accuracy is not independently validated. No weapon detection is added.");
    }
    ImGui::SetNextItemOpen(showTextTools,ImGuiCond_Once);

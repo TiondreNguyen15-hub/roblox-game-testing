@@ -1,7 +1,7 @@
 #include "apex/enemy.hpp"
 #include "apex/log.hpp"
 namespace apex {namespace {
-bool sameModel(const EnemyOptions& a,const EnemyOptions& b){return a.modelPath==b.modelPath&&a.preferCuda==b.preferCuda;}
+bool sameModel(const EnemyOptions& a,const EnemyOptions& b){return a.profile==b.profile&&a.modelPath==b.modelPath&&a.preferCuda==b.preferCuda;}
 }
 EnemyService::~EnemyService(){stop();}
 void EnemyService::stop(){{std::lock_guard<std::mutex> lock(mutex_);stop_=true;pending_.reset();}wake_.notify_all();if(worker_.joinable())worker_.join();}
