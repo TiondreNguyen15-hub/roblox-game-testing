@@ -1,6 +1,9 @@
-param([switch]$ValidateOnly)
+param([switch]$ValidateOnly,[switch]$NoLaunch,[string]$TargetExe='')
 $ErrorActionPreference = 'Stop'
 try {
+ $launch=Join-Path $PSScriptRoot 'tools/launch-app.ps1'
+ if (!(Test-Path -LiteralPath $launch)) { throw 'Extract ALL files: launch-app.ps1 is missing.' }
+ . $launch
  $helper = Join-Path $PSScriptRoot 'tools/setup-gpu-runtime.ps1'
  $manifest = Join-Path $PSScriptRoot 'tools/cuda-dependencies.json'
  if (!(Test-Path -LiteralPath $helper) -or !(Test-Path -LiteralPath $manifest)) { throw 'Extract ALL files from the ZIP first, then run Reinstall-GPU.cmd.' }
@@ -9,8 +12,8 @@ try {
  if ($ValidateOnly) { Write-Host 'Launcher files and dependency manifest are valid. No files installed and no GPU execution tested.'; exit 0 }
  Write-Host 'Finding the demo you currently use...' -ForegroundColor Cyan
  $running = @(Get-Process -Name apex_visualizer -ErrorAction SilentlyContinue | Where-Object { $_.Path })
- $exe = ''
- if ($running.Count -eq 1) { $exe = $running[0].Path }
+ $exe = $TargetExe
+ if (!$exe -and $running.Count -eq 1) { $exe = $running[0].Path }
  if (!$exe -and $running.Count -eq 0) {
   $known = Join-Path $env:USERPROFILE 'Downloads/Apex-Visualization-Compute-Fix/apex_visualizer.exe'
   if (Test-Path -LiteralPath $known -PathType Leaf) { $exe = $known }
@@ -37,8 +40,8 @@ try {
  }
  Write-Host 'Preparing pinned ONNX/CUDA/cuDNN files. About 1.4 GB may download; existing cached packages will be reused.' -ForegroundColor Yellow
  & $helper -Destination (Join-Path $appFolder 'runtime/gpu') -InstallDependencies
- Write-Host 'GPU runtime files installed. Reopening your demo...' -ForegroundColor Green
- Start-Process -FilePath $exe -WorkingDirectory $appFolder
+ Write-Host 'GPU runtime files installed.' -ForegroundColor Green
+ if (!$NoLaunch) { $null=Start-VerifiedApexApp -Exe $exe } else { Write-Host 'Launch deferred to the update stage.' }
  Write-Host 'In the app: System > Run CUDA + ONNX validation. Installation alone does not verify GPU execution.' -ForegroundColor Cyan
  exit 0
 } catch {

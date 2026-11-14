@@ -1,6 +1,9 @@
 param([switch]$ValidateOnly,[string]$TargetExe='', [switch]$NoLaunch)
 $ErrorActionPreference = 'Stop'
 try {
+ $launch=Join-Path $PSScriptRoot 'tools/launch-app.ps1'
+ if (!(Test-Path -LiteralPath $launch)) { throw 'Extract ALL files: launch-app.ps1 is missing.' }
+ . $launch
  $payload = Join-Path $PSScriptRoot 'payload'
  $newExe = Join-Path $payload 'apex_visualizer.exe'
  $build = Get-Content -LiteralPath (Join-Path $payload 'BUILD-INFO.json') -Raw | ConvertFrom-Json
@@ -35,7 +38,7 @@ try {
  if (!(Test-Path -LiteralPath $model)) { New-Item -ItemType Directory -Path (Split-Path $model) -Force | Out-Null;Copy-Item -LiteralPath (Join-Path $payload 'models/compute_validation.onnx') -Destination $model }
  Write-Host 'Game-ESP update installed. GPU libraries, saved settings and existing models were kept.' -ForegroundColor Green
  Write-Host "Old executable backup: $backup"
- if (!$NoLaunch) { Start-Process -FilePath $TargetExe -WorkingDirectory $app }
+ if (!$NoLaunch) { $null=Start-VerifiedApexApp -Exe $TargetExe }
  Write-Host 'Open Game ESP > Browse enemy ONNX model. Select your local trained model, then open a recording or use your existing OBS capture.' -ForegroundColor Cyan
  exit 0
 } catch { Write-Host "UPDATE STOPPED: $($_.Exception.Message)" -ForegroundColor Red;Write-Host 'Send a screenshot of this window.';exit 1 }

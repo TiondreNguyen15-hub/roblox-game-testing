@@ -16,6 +16,13 @@ jobs:
           if ($errors.Count) { throw 'Combined launcher syntax failed' }
           & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File $script -ValidateOnly
           if ($LASTEXITCODE -ne 0) { throw 'Real native payload / manifest validation failed' }
+          . (Join-Path $root 'tools/launch-app.ps1')
+          $real=Join-Path $root 'payload/apex_visualizer.exe'
+          $native=Start-VerifiedApexApp -Exe $real
+          if (!$native.CloseMainWindow() -or !$native.WaitForExit(15000)) { throw 'Verified native startup/close failed' }
+          $detected=$false
+          try { $null=Start-VerifiedApexApp -Exe $env:ComSpec -Arguments @('/c','exit','23') -ReportDirectory $root } catch { $detected=$_.Exception.Message -match '0x00000017' }
+          if (!$detected -or !(Test-Path (Join-Path $root 'launch-failure.txt'))) { throw 'Immediate exit was silently treated as successful startup' }
           # Isolated orchestration check: real native app, stub child stages; NO GPU install or DLL execution.
           $test=Join-Path $env:RUNNER_TEMP 'orchestration with spaces'
           New-Item -ItemType Directory -Path (Join-Path $test 'GPU-Reinstall') -Force | Out-Null
@@ -24,8 +31,10 @@ jobs:
           Copy-Item (Join-Path $root 'payload/apex_visualizer.exe') $target
           Set-Content (Join-Path $test 'expected.txt') $target
           @'
+          param([string]$TargetExe,[switch]$NoLaunch)
           $ErrorActionPreference='Stop'
           $root=Split-Path -Parent $PSScriptRoot
+          if (!$NoLaunch -or $TargetExe -ne (Get-Content (Join-Path $root 'expected.txt'))) { exit 10 }
           Set-Content (Join-Path $root 'gpu-stage.txt') 'stub GPU stage only; no install'
           $app=Get-Process -Name apex_visualizer | Select-Object -First 1
           if (!$app.CloseMainWindow() -or !$app.WaitForExit(15000)) { exit 9 }
@@ -54,5 +63,5 @@ jobs:
             & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1')
             if ($LASTEXITCODE -eq 0 -or (Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Failure did not prevent later update stage' }
           } finally { if (!$p.HasExited) { $p.Kill() } }
-          Write-Host 'PASS real native payload hash and manifest validation; orchestration with stub child stages checks exact spaced target, stage ordering and stop-on-failure. No GPU install or RTX execution claimed.'
+          Write-Host 'PASS real native payload hash and manifest validation; orchestration with stub child stages checks exact spaced target, stage ordering and stop-on-failure. Native GUI startup and immediate-exit diagnostics also passed; no GPU install or RTX execution claimed.'
           exit 0

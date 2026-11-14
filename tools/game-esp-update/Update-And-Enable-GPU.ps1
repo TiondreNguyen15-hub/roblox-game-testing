@@ -19,7 +19,7 @@ try {
  if ($running.Count -ne 1) { throw 'Leave exactly ONE copy of your working demo open, then run this launcher again.' }
  $target=[IO.Path]::GetFullPath($running[0].Path)
  Write-Host "Repairing GPU dependencies and updating this exact copy: $target" -ForegroundColor Cyan
- Run-Stage $gpu
+ Run-Stage $gpu @('-TargetExe',('"'+$target+'"'),'-NoLaunch')
  Run-Stage $update @('-TargetExe',('"'+$target+'"'))
  Write-Host 'Finished. In Game ESP select your model, enable Prefer CUDA and analyze a captured frame.' -ForegroundColor Green
  Write-Host 'Only CUDA EP execution profiled confirms this model actually executed GPU work. Installation is not verification.'
