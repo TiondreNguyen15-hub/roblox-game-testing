@@ -68,9 +68,10 @@ struct Gui {
 };
 }
 int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int){
- bool captureTest=false;std::filesystem::path captureFile;bool capturePreviewDrawn=false;bool modelBenchmark=false,gpuSoak=false;double cpuSeconds=10,gpuSeconds=10;std::filesystem::path modelPath,inputProfile;bool computeCli=false,requireCuda=false;double computeSeconds=0,computeCancelAfter=-1;int computeIterations=200;bool smoke=false,warp=false,asyncSmoke=false;int maxFrames=0;double benchmarkSeconds=0,warmup=5;int cap=144,entities=64;bool benchmarkRequested=false,noVsync=false,simulate=false;std::filesystem::path jsonPath,benchmarkPath=L"benchmark-results";
+ bool captureCameraTest=false;bool captureTest=false;std::filesystem::path captureFile;bool capturePreviewDrawn=false;bool modelBenchmark=false,gpuSoak=false;double cpuSeconds=10,gpuSeconds=10;std::filesystem::path modelPath,inputProfile;bool computeCli=false,requireCuda=false;double computeSeconds=0,computeCancelAfter=-1;int computeIterations=200;bool smoke=false,warp=false,asyncSmoke=false;int maxFrames=0;double benchmarkSeconds=0,warmup=5;int cap=144,entities=64;bool benchmarkRequested=false,noVsync=false,simulate=false;std::filesystem::path jsonPath,benchmarkPath=L"benchmark-results";
  int argc=0;LPWSTR* argv=CommandLineToArgvW(GetCommandLineW(),&argc);
  if(argv){for(int i=1;i<argc;++i){std::wstring a=argv[i];if(a==L"--smoke-test"||a==L"--async-smoke-test"){smoke=true;warp=true;asyncSmoke=a==L"--async-smoke-test";maxFrames=asyncSmoke?60:6;}else if(a==L"--json"&&i+1<argc)jsonPath=argv[++i];else if(a==L"--warp")warp=true;
+ else if(a==L"--capture-camera-test"){captureCameraTest=true;captureTest=true;smoke=true;warp=true;maxFrames=2000;}
  else if(a==L"--capture-file"&&i+1<argc)captureFile=argv[++i];else if(a==L"--capture-test"&&i+1<argc){captureTest=true;smoke=true;warp=true;maxFrames=2000;captureFile=argv[++i];}
  else if(a==L"--model-benchmark"){computeCli=true;modelBenchmark=true;}else if(a==L"--gpu-soak"){computeCli=true;modelBenchmark=true;gpuSoak=true;requireCuda=true;}
  else if(a==L"--model"&&i+1<argc)modelPath=argv[++i];else if(a==L"--input-profile"&&i+1<argc)inputProfile=argv[++i];
@@ -99,7 +100,7 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
   apex::ComputeRunner compute;bool computeStarted=false,computeReported=false;double computeFinishedAt=-1,computeStartedAt=0;std::filesystem::path computeDirectory;
   apex::ProviderSystem providers(!smoke||asyncSmoke);apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics metrics;apex::RenderStats stats;
   if(captureTest){settings.menuWidth=1000;settings.menuHeight=780;}
-  if(!captureFile.empty()){capture.start(captureFile);menu.selectPage(apex::MenuPage::Capture);}
+  if(captureCameraTest||!captureFile.empty()){capture.start(captureFile);menu.selectPage(apex::MenuPage::Capture);}
   apex::FramePacer pacer;using Clock=std::chrono::steady_clock;auto previous=Clock::now();auto benchmarkStart=previous;double simulationTime=0;int frames=0;bool occluded=false;
   while(!state.quit){
    MSG msg{};while(PeekMessageW(&msg,nullptr,0,0,PM_REMOVE)){if(msg.message==WM_QUIT)state.quit=true;TranslateMessage(&msg);DispatchMessageW(&msg);}if(state.quit)break;
@@ -133,11 +134,12 @@ else if(a==L"--frames"&&i+1<argc){try{maxFrames=std::max(1,std::stoi(argv[++i]))
    ++frames;
    if(benchmarkRequested&&frames>1){apex::BenchmarkSample sample;sample.frameMs=stats.wallFrameMs;sample.cpuWorkMs=stats.frameMs;sample.processCpu=metrics.cpuValid?metrics.cpu():-1;sample.gpuMs=renderer.gpuTimingValid()?renderer.gpuTimeMs():-1;sample.gpuUtil=hardware.utilizationValid?double(hardware.utilization):-1;sample.deviceVramMiB=hardware.memoryValid?hardware.usedBytes/1048576.:-1;sample.processVramMiB=renderer.memoryValid?renderer.processVram/1048576.:-1;sample.workingSetMiB=metrics.memoryValid?metrics.workingSet/1048576.:-1;sample.privateMiB=metrics.memoryValid?metrics.privateBytes/1048576.:-1;sample.processingMs=stats.processingMs;sample.deliveryMs=stats.deliveryMs;
     if(benchmark.sample(std::chrono::duration<double>(Clock::now()-benchmarkStart).count(),sample))break;}
+   if(captureCameraTest&&deviceInfo.capture.frames>=10&&capturePreviewDrawn)break;
    if(captureTest&&!deviceInfo.capture.running){if(deviceInfo.capture.state!="end_of_recording"||!deviceInfo.capture.frames||!captureTexture.sequence||!capturePreviewDrawn)throw std::runtime_error("External recording/preview integration failed: "+deviceInfo.capture.message);break;}
    if(maxFrames&&frames>=maxFrames)break;
    auto target=start+std::chrono::microseconds(1000000/settings.frameLimit);pacer.wait(target);
   }
-  if(captureTest){if(deviceInfo.capture.state!="end_of_recording"||!capturePreviewDrawn)throw std::runtime_error("External capture integration incomplete");std::ofstream report("capture-smoke-result.txt");report<<"PASS: real recording frames="<<deviceInfo.capture.frames<<"; size="<<deviceInfo.capture.width<<"x"<<deviceInfo.capture.height<<"; last uploaded sequence="<<captureTexture.sequence<<"; actual DX11 preview draw command="<<capturePreviewDrawn<<"; WARP="<<warp<<'\n';report.flush();if(!report)throw std::runtime_error("Capture integration report write failed");}
+  if(captureTest){if((captureCameraTest?deviceInfo.capture.frames<10:deviceInfo.capture.state!="end_of_recording")||!capturePreviewDrawn)throw std::runtime_error("External capture integration incomplete");std::ofstream report(captureCameraTest?"obs-camera-smoke-result.txt":"capture-smoke-result.txt");report<<(captureCameraTest?"PASS: actual OBS virtual-camera frames (no OBS producer; placeholder output) =":"PASS: real recording frames=")<<deviceInfo.capture.frames<<"; size="<<deviceInfo.capture.width<<"x"<<deviceInfo.capture.height<<"; last uploaded sequence="<<captureTexture.sequence<<"; actual DX11 preview draw command="<<capturePreviewDrawn<<"; WARP="<<warp<<'\n';report.flush();if(!report)throw std::runtime_error("Capture integration report write failed");}
   if(computeStarted&&!computeReported){compute.stop();compute.finishCapture();apex::saveComputeReport(computeDirectory,compute.snapshot());}
   if(computeCli){auto result=compute.snapshot();if(!computeReported||!apex::computeRunSucceeded(result,requireCuda))return 6;}
   if(benchmarkRequested)benchmark.finish("stopped before requested duration");

@@ -27,6 +27,28 @@ jobs:
           if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Capture preview integration timed out' }
           if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 50; throw "Capture preview failed: $($p.ExitCode)" }
           Get-Content capture-smoke-result.txt
+      - name: Actual official OBS virtual-camera filter and DX11 preview
+        shell: pwsh
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'obs-official-33.0.1.zip'
+          $folder = Join-Path $env:RUNNER_TEMP 'obs-official-camera'
+          Invoke-WebRequest 'https://github.com/obsproject/obs-studio/releases/download/33.0.1/OBS-Studio-33.0.1-Windows-x64.zip' -OutFile $archive
+          $hash = (Get-FileHash $archive -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne '0d9436451c2d772b33428e3fdae9776f071895c335de17283176306fb72651d3') { throw 'Official OBS archive SHA256 mismatch' }
+          Expand-Archive $archive $folder
+          $camera = Get-ChildItem $folder -Recurse -Filter 'obs-virtualcam-module64.dll' | Select-Object -First 1
+          if (!$camera) { throw 'Official OBS virtual-camera component missing' }
+          $registration = Start-Process "$env:SystemRoot/System32/regsvr32.exe" -ArgumentList '/i','/s',('"'+$camera.FullName+'"') -Wait -PassThru
+          if ($registration.ExitCode -ne 0) { throw "Official camera registration failed: $($registration.ExitCode)" }
+          try {
+            [ordered]@{ official_release='33.0.1'; archive_sha256=$hash; camera_dll_sha256=(Get-FileHash $camera.FullName -Algorithm SHA256).Hash; obs_application_started=$false; expected_video='Actual official camera placeholder frames; not gameplay' } | ConvertTo-Json | Set-Content obs-camera-provenance.json
+            $p = Start-Process './build-apex/Release/apex_visualizer.exe' -ArgumentList '--capture-camera-test' -PassThru
+            if (!$p.WaitForExit(60000)) { $p.Kill(); throw 'Official OBS camera test timed out' }
+            if ($p.ExitCode -ne 0) { Get-Content "$env:LOCALAPPDATA/ApexVisualization/apex.log" -Tail 70; throw "Actual OBS camera test failed: $($p.ExitCode)" }
+            Get-Content obs-camera-smoke-result.txt
+          } finally {
+            Start-Process "$env:SystemRoot/System32/regsvr32.exe" -ArgumentList '/u','/s',('"'+$camera.FullName+'"') -Wait
+          }
       - name: Timed WARP stability benchmark (120 seconds)
         shell: pwsh
         run: |
@@ -98,6 +120,8 @@ jobs:
             build-apex/Release/models/
             smoke-result.txt
             capture-smoke-result.txt
+            obs-camera-smoke-result.txt
+            obs-camera-provenance.json
             hardware-validation/
             compute-validation/
             model-benchmark-validation/
