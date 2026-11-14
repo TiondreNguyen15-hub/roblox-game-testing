@@ -1,0 +1,16 @@
+HUD READER UPDATE
+
+1. Leave your CURRENT working demo open so the updater finds it.
+2. Extract ALL files from the ZIP. Do not run inside the ZIP.
+3. Double-click Update-HUD.cmd. It closes and reopens your current app.
+4. Open HUD Reader > Open recording. Choose HUD-Sample.mp4 from the app
+   folder for a first test, or choose your own MP4 gameplay recording.
+5. Pause the clip, drag a box around only the ammo digits, choose Ammo
+   counter, and press Read current frame. Or enable continuous HUD reading.
+6. Save HUD setup to keep your region. Export OCR CSV saves actual readings.
+
+Your runtime/gpu and existing settings are NOT replaced. No GPU reinstall.
+Windows OCR reads the text on CPU; the CUDA model benchmark stays separate.
+Parsed counters/banners are candidates, not guaranteed gameplay facts.
+No trained Apex detector or automatic aiming is added.
+See HUD-README.md and HUD-VALIDATION.md in your app folder after updating.
