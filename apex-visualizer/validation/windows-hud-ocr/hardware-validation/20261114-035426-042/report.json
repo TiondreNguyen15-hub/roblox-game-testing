@@ -1,0 +1,87 @@
+{
+  "average_fps": 135.47418241330868,
+  "backend": "DirectX / feature level 11.0 / CUDA driver unavailable; DX11 remains active",
+  "configuration": {
+    "cuda": "CUDA driver unavailable; DX11 remains active",
+    "cuda_compute_capability": "0.0",
+    "cuda_driver_api_version": "0",
+    "entity_count": "64",
+    "frame_cap": "144",
+    "initial_client_height": "749",
+    "initial_client_width": "1028",
+    "model_backend": "optional ONNX compute validation; inactive during render-only benchmark",
+    "nvml": "NVIDIA counters unavailable (NVML missing)",
+    "present": "flip-discard latency1",
+    "source": "local simulation",
+    "vsync": "off",
+    "window_initial_size": "1440x900 outer; DPI dependent client"
+  },
+  "counter_sampling": "Latest observations held between updates: CPU/memory/NVML/DXGI at 2Hz; GPU draw queries asynchronous; file input 5Hz. Repeated per-frame values are not independent hardware samples. Source processing is poll/read/parse time; delivery is worker start to UI handoff, not producer-to-photon latency.",
+  "counters": {
+    "cpu_work_ms": {
+      "max": 2.0199,
+      "mean": 0.26597310081811065,
+      "min": 0.1913,
+      "observations": 16257
+    },
+    "device_vram_mib": null,
+    "gpu_device_util_percent": null,
+    "gpu_draw_ms": {
+      "max": 12.4607,
+      "mean": 6.476620760287887,
+      "min": 5.9852,
+      "observations": 16257
+    },
+    "private_mib": {
+      "max": 19.44140625,
+      "mean": 18.265548830888232,
+      "min": 17.078125,
+      "observations": 16257
+    },
+    "process_cpu_percent": {
+      "max": 70.88855736879034,
+      "mean": 23.621280714228874,
+      "min": 0.0,
+      "observations": 16257
+    },
+    "process_vram_mib": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "observations": 16257
+    },
+    "source_delivery_ms": {
+      "max": 0.2442,
+      "mean": 0.004424936950236934,
+      "min": 0.0026,
+      "observations": 16257
+    },
+    "source_processing_ms": {
+      "max": 0.2442,
+      "mean": 0.004424936950236934,
+      "min": 0.0026,
+      "observations": 16257
+    },
+    "working_set_mib": {
+      "max": 37.7734375,
+      "mean": 36.781484994925265,
+      "min": 30.9609375,
+      "observations": 16257
+    }
+  },
+  "frame_intervals_at_or_above_1000ms": 0,
+  "gpu": "Microsoft Basic Render Driver",
+  "histogram_overflow_ms": 1000,
+  "max_frame_ms": 13.4756,
+  "mean_frame_ms": 7.381480236205967,
+  "min_frame_ms": 6.9643,
+  "notes": "GPU utilization/VRAM are optional sampled device counters. Empty CSV fields mean unavailable. Frame time includes pacing; GPU timing is latest asynchronous draw duration, not utilization. Memory delta alone does not prove a leak.",
+  "outcome": "completed",
+  "p95_frame_ms_approx": 7.5,
+  "p99_frame_ms_approx": 8.0,
+  "quantile_resolution_ms": 0.1,
+  "requested_measurement_seconds": 120.0,
+  "samples": 16257,
+  "warmup_seconds": 5.0,
+  "working_set_delta_mib": -6.47265625
+}

@@ -1,3 +1,17 @@
+# Recorded HUD text reader
+
+[Download the one-click HUD update](Apex-HUD-Update.zip) · [Usage](apex-visualizer/HUD-README.md) · [Actual OCR/native validation](apex-visualizer/HUD-VALIDATION.md)
+
+Leave your working demo open, extract **all** files from the HUD update ZIP, and double-click **Update-HUD.cmd**. It verifies and installs the native executable in the current app folder, backs up the old EXE, and keeps GPU libraries, existing models and settings. No GPU reinstall is required.
+
+Open **HUD Reader > Open recording...**, choose your MP4, pause it, drag a box around the magazine digits, and select **Read current frame** or continuous reading. `HUD-Sample.mp4` is included in the app folder for a first test (use Text upscale 1). Save HUD setup stores the region/mode separately; CSV export keeps the latest 600 observations for the selected source.
+
+This is actual **Windows OCR on CPU**, separate from CUDA model validation. Raw text, optional numeric/banner candidates, frame IDs/timestamps and measured OCR latency are shown/exported. No confidence score, Apex-trained object detector, live-player data, automatic aiming or gameplay accuracy is fabricated. Actual Apex footage still needs region calibration and accuracy checks. Existing OBS capture remains; this OCR phase analyzes local recordings.
+
+Native Windows tests passed 12/12, including actual numeric pixel OCR and a full H264 recording -> OCR -> parsed 28/160 -> DX11 preview/CSV test using an original generated fixture. Portable/sanitizer suites passed 10/10. The updater's Windows preservation test also passed; its GUI picker/real app closing were not exercised by that isolated test.
+
+---
+
 # GPU runtime reinstall without folder searches
 
 [Download the double-click GPU reinstall launcher](Apex-GPU-Reinstall.zip)

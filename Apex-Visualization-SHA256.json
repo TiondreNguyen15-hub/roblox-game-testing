@@ -1,8 +1,10 @@
 {
-  "Apex-Visualization-Compute-Fix.zip": "72955627db539d10bcadff4f76c00f4a4f87a47339888389959b0075efa61d3d",
-  "Apex-Visualization-OBS-Fix.zip": "72955627db539d10bcadff4f76c00f4a4f87a47339888389959b0075efa61d3d",
-  "Apex-Visualization-Phase3-Update.zip": "72955627db539d10bcadff4f76c00f4a4f87a47339888389959b0075efa61d3d",
-  "Apex-Visualization-CuDNN-Fix.zip": "4f3831f22f7fba06df351e99bee5da687116511cfce6845438e219d65d2a4a4f",
-  "Apex-Visualization-Source.zip": "15dd4facc3c8bcf88e270cc16d178c34eec6e43044457ee230747cc2d3e787f9",
-  "Apex-Visualization-Windows-x64.zip": "3169909f01a7d0bf84dc68f69801c4bd79848fc6fcd666e8f093d071b74b3d89"
+  "Apex-HUD-Update.zip": "791567322029da16cbc22a4c9b9f7406ae9bb949ffa768b6862d893e1c1c3d3b",
+  "Apex-GPU-Reinstall.zip": "b4c54c1071f389ff96d3b13e982e5b695256427f528ec156b76ef13aa479e4b6",
+  "Apex-Visualization-Compute-Fix.zip": "90b43fd7c051cc6c2904dde2a9f9a266e418e4be59d285a124c72de766f8b3f3",
+  "Apex-Visualization-OBS-Fix.zip": "90b43fd7c051cc6c2904dde2a9f9a266e418e4be59d285a124c72de766f8b3f3",
+  "Apex-Visualization-Phase3-Update.zip": "90b43fd7c051cc6c2904dde2a9f9a266e418e4be59d285a124c72de766f8b3f3",
+  "Apex-Visualization-Source.zip": "48779765eb4f249864ce36c1ddd0fe92ca5d934182020b61672a3219edbb53c5",
+  "Apex-Visualization-Windows-x64.zip": "c1e132642e3591865ddaaa3461faa4304819d2ee99188683f4f88cb3a1cecff0",
+  "Apex-Visualization-CuDNN-Fix.zip": "4f3831f22f7fba06df351e99bee5da687116511cfce6845438e219d65d2a4a4f"
 }

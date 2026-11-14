@@ -1,3 +1,5 @@
+> **HUD Reader update:** [Recorded text recognition](HUD-README.md) · [Actual OCR validation](HUD-VALIDATION.md). This text backend uses Windows OCR on CPU; CUDA tests remain separate.
+
 > **Five-minute test repair:** [Startup recovery](COMPUTE-STARTUP-FIX.md) · [Actual validation](COMPUTE-STARTUP-VALIDATION.md). Keep your installed GPU runtime.
 
 > **Latest OBS update:** [DirectShow compatibility fix](OBS-CAPTURE-FIX.md) · [Actual native validation](OBS-CAPTURE-VALIDATION.md). Actual OBS acquisition on your PC still requires confirmation.
