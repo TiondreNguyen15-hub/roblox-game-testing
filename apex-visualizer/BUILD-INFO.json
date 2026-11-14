@@ -1,14 +1,15 @@
 {
-  "phase": "Recorded HUD OCR and one-click update",
-  "source_commit": "79fed8a5b8b9d1985e6cc6198ce9185c422d5133",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43553817653",
-  "updater_validation": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43554516657",
-  "exe_sha256": "c9be18e94c6f6f7ff3acbcd1e7fbc396f5479ff841ad14fbc7429bc57a68b5c3",
-  "native_windows_ctest_suites": 12,
-  "portable_and_sanitizer_suites": 10,
-  "actual_windows_ocr": "passed (known numeric pixels)",
-  "actual_mp4_to_ocr_and_dx11_preview": "passed (original generated fixture)",
-  "hud_backend": "Windows OCR CPU; independent of CUDA benchmark",
-  "gameplay_hud_accuracy": "requires user footage and ROI calibration",
-  "gpu_ocr_or_apex_detection_claimed": false
+  "phase": "Game ESP local enemy model adapter",
+  "source_commit": "d2a3fef5b589867dc5e6e1c1e9df2884469f2b02",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43558523408",
+  "updater_validation": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43558633916",
+  "exe_sha256": "c3d0af61de9be24cd9c22169ae721aee4d326c2a0a70a6ccc91c7867b1226174",
+  "native_windows_ctest_suites": 13,
+  "portable_and_sanitizer_suites": 11,
+  "native_adapter_test": "actual video decode -> preprocessing -> ONNX CPU Run -> candidate boxes -> DX11 preview; explicitly synthetic contract model",
+  "private_trained_model_cpu": "ONNX checker and actual Linux CPU execution passed on black input",
+  "private_trained_model_cuda": "requires PC validation; not claimed",
+  "private_trained_model_included": false,
+  "gameplay_accuracy": "not established; metadata class0=item, user describes enemy",
+  "preserved": "DX11, JSON/simulated data, OBS, settings, compute validation, recording OCR"
 }

@@ -1,3 +1,5 @@
+> **Game ESP update:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.
+
 > **HUD Reader update:** [Recorded text recognition](HUD-README.md) · [Actual OCR validation](HUD-VALIDATION.md). This text backend uses Windows OCR on CPU; CUDA tests remain separate.
 
 > **Five-minute test repair:** [Startup recovery](COMPUTE-STARTUP-FIX.md) · [Actual validation](COMPUTE-STARTUP-VALIDATION.md). Keep your installed GPU runtime.

@@ -1,72 +1,64 @@
-# Recorded HUD text reader
+# Game ESP enemy-model update
 
-[Download the one-click HUD update](Apex-HUD-Update.zip) · [Usage](apex-visualizer/HUD-README.md) · [Actual OCR/native validation](apex-visualizer/HUD-VALIDATION.md)
+[Download the one-click Game ESP update](Apex-Game-ESP-Update.zip) · [Instructions](apex-visualizer/GAME-ESP-README.md) · [Validation and limits](apex-visualizer/GAME-ESP-VALIDATION.md)
 
-Leave your working demo open, extract **all** files from the HUD update ZIP, and double-click **Update-HUD.cmd**. It verifies and installs the native executable in the current app folder, backs up the old EXE, and keeps GPU libraries, existing models and settings. No GPU reinstall is required.
+Leave your current working demo open. Right-click the ZIP, choose **Extract All**, then run **Update-Game-ESP.cmd** from the extracted folder. It finds your running demo, backs up/replaces its executable and keeps your installed GPU libraries, models and saved settings. No GPU reinstall is needed.
 
-Open **HUD Reader > Open recording...**, choose your MP4, pause it, drag a box around the magazine digits, and select **Read current frame** or continuous reading. `HUD-Sample.mp4` is included in the app folder for a first test (use Text upscale 1). Save HUD setup stores the region/mode separately; CSV export keeps the latest 600 observations for the selected source.
+Open **Game ESP > Browse enemy ONNX model**, select your local `SingularityMetaV3_recovered.onnx`, and open a recording or use the existing OBS receiver. The app displays candidate boxes on the exact analyzed frame, source sequence, processing latency and actual backend status. Save enemy setup preserves model/threshold preferences separately. Private trained weights are not in this public repository or download.
 
-This is actual **Windows OCR on CPU**, separate from CUDA model validation. Raw text, optional numeric/banner candidates, frame IDs/timestamps and measured OCR latency are shown/exported. No confidence score, Apex-trained object detector, live-player data, automatic aiming or gameplay accuracy is fabricated. Actual Apex footage still needs region calibration and accuracy checks. Existing OBS capture remains; this OCR phase analyzes local recordings.
+The model metadata calls class 0 `item`; the enemy-only meaning comes from the user. Results are labeled **Enemy?** until validated against footage. No weapons/ammo detector was added; the old recording OCR tools remain collapsed beneath the enemy controls. This is a standalone capture preview, not an in-game overlay or memory reader.
 
-Native Windows tests passed 12/12, including actual numeric pixel OCR and a full H264 recording -> OCR -> parsed 28/160 -> DX11 preview/CSV test using an original generated fixture. Portable/sanitizer suites passed 10/10. The updater's Windows preservation test also passed; its GUI picker/real app closing were not exercised by that isolated test.
-
----
-
-# GPU runtime reinstall without folder searches
-
-[Download the double-click GPU reinstall launcher](Apex-GPU-Reinstall.zip)
-
-Leave your current Apex Visualization demo open, extract **all** files from this ZIP, and double-click `GPU-Reinstall/Reinstall-GPU.cmd`. It detects the running demo, closes it normally, installs the version-pinned GPU libraries into that app folder, and reopens the demo. If no unique running demo is found, it uses the last known Compute-Fix folder or provides an EXE picker.
-
-About 1.4 GB may download; cached packages are reused and hashes verified. No CUDA toolkit or system PATH changes are made. Existing GPU files are backed up. After installation, use System > Run CUDA + ONNX validation. DLL installation is not proof of GPU execution. [Launcher validation scope](tools/gpu-reinstall/VALIDATION.txt).
+Native Windows adapter integration uses an explicitly synthetic, image-dependent test model. The private supplied model passed ONNX checking and actual Linux CPU execution. Its RTX 3070 execution and gameplay accuracy still need validation on the user's PC; previous math-model GPU tests do not establish these results.
 
 ---
 
-# Five-minute GPU test startup repair
+# BLOCKLINE — integrated shooter prototype
 
-[Download the compute startup fix](Apex-Visualization-Compute-Fix.zip) · [Instructions](apex-visualizer/COMPUTE-STARTUP-FIX.md) · [Actual validation](apex-visualizer/COMPUTE-STARTUP-VALIDATION.md)
+**[Download the full game ZIP](https://github.com/TiondreNguyen15-hub/roblox-game-testing/raw/refs/heads/main/Blockline-Full.zip)**
 
-This update includes the missing mathematical test model and CPU runtime, recovers a missing default model, accepts quoted Windows paths, adds **Use bundled test model**, and exposes the actual startup exception in the UI and copied diagnostics. Existing custom files, GPU libraries, OBS capture, settings and DX11 rendering remain.
+Open the included **Blockline.rbxlx** using **Roblox Studio → File → Open from File**, then press Play. A browser will display XML if you open the place file directly as a web page; extract the ZIP and open the file inside Roblox Studio.
 
-Close the app and extract into your **original full app folder containing runtime/gpu**, replacing the executable and supplied files. Keep all installed GPU DLLs. Launch > System > Use bundled test model > 5-minute GPU model test. The patch does not include or reinstall the 1.41 GiB GPU dependencies.
+This build includes the dark/red introduction and menu, third-person shoulder camera, sprint/jump/crouch, three guns, combat feedback, TDM/FFA/1v1 duel, results, responsive HUD, persistent progression and five private training drills.
 
-Native Windows tests verified recovered-model bytes/SHA256, actual CPU inference through the soak startup path, honest missing-file errors, and existing camera/rendering/inference regressions. The exact original PC exception was not supplied; actual RTX 3070 five-minute execution still needs a retry on that PC. Copy compute diagnostics now includes any remaining error.
+See **[FEATURES-AND-ISSUES.md](FEATURES-AND-ISSUES.md)** for the full feature matrix, automated test results and remaining issues. Roblox Studio and physical devices were unavailable during implementation. **60+ FPS and live multiplayer/device correctness have not been established.**
 
----
+## Use the menu
 
-# OBS camera no-frame startup fix
+- PLAY cycles between Team Deathmatch, Free For All, 1v1 Duel and Aim Training. Select the mode, then press the large PLAY button.
+- PRACTICE cycles between Stationary, Moving, Tracking, Flick and Reaction drills. START enters a private range.
+- LOADOUT equips owned guns or unlocks others with earned credits.
+- SETTINGS saves FOV, sensitivity, reduced motion, crosshair visibility and the low-shadow graphics option.
+- STATISTICS shows saved career stats; TEAM shows the actual current-server roster.
+- Daily rewards grant 100 credits once per 24 hours, verified and saved by the server.
 
-[Download the updated OBS patch](Apex-Visualization-OBS-Fix.zip) · [Startup fix details](apex-visualizer/OBS-STARTUP-FIX.md) · [Actual camera validation](apex-visualizer/OBS-CAPTURE-VALIDATION.md)
+## Data saving
 
-The receiver now connects native camera pins explicitly, configures YUY2 (including fresh cameras with no saved format), converts frames to RGBA internally, prepares the live source and removes playback-clock scheduling from live capture. A real OBS camera test reproduced a one-frame stall with state Running; the updated app passed with ten actual official OBS 33.0.1 camera samples and a DX11 preview draw command. These were idle/placeholder frames in isolated Windows CI, not captured gameplay or a test on your PC.
+Publish a test copy. For Studio persistence tests, enable **Game Settings → Security → Enable Studio Access to API Services** for that test experience. Published servers use Roblox DataStoreService. If access fails, the UI clearly reports session-only mode and blocks cloud purchases/daily claims.
 
-Close the app, extract the patch into your **existing folder containing apex_visualizer.exe**, replace the EXE and keep `runtime/gpu` and settings. Start OBS Virtual Camera, reopen the updated app and retry Capture. If it fails, use Copy capture diagnostics and paste the text in chat.
+## Controls
 
----
+| Action | PC | Xbox / PlayStation | Mobile |
+|---|---|---|---|
+| Move / jump | WASD / Space | Standard Roblox controls | Native movement/jump |
+| Aim camera | Mouse | Right stick | Drag on right side |
+| Fire / aim | Left / right click | RT/LT or R2/L2 | FIRE / AIM |
+| Reload | R | X / Square | RELOAD |
+| Sprint | Shift | L3 | RUN |
+| Toggle crouch | C or Ctrl | R3 | CROUCH |
+| Select weapon | 1 / 2 / 3 | R1 cycles owned weapons | WEAPONS opens loadout |
+| Menu / resume | M or MENU | Y / Triangle | MENU |
+| Menu select / back | Click | A/B or Cross/Circle | Tap |
 
-# OBS Virtual Camera detection update
+## Source organization
 
-[Download the small OBS compatibility patch](Apex-Visualization-OBS-Fix.zip) · [Actual native Windows validation](apex-visualizer/OBS-CAPTURE-VALIDATION.md)
+- ServerScriptService / BlocklineServer: profiles, saving, movement speed/stance validation, weapons, combat, modes, training and rewards.
+- StarterPlayerScripts / BlocklineMenu: native ScreenGui, menu/HUD, previews and feedback.
+- StarterPlayerScripts / BlocklineMovement: shoulder camera, aiming, control integration, crouch input, stance and procedural weapon presentation.
+- ReplicatedStorage / Blockline: server-created request/combat/event remotes and diagnostics.
+- Workspace / BlocklineArena: saved map. Additional mode maps are cloned only when first selected; each player's training range is created on entry and removed on exit.
 
-The original camera button searched only Media Foundation. The updated app also tries DirectShow, which OBS Virtual Camera commonly uses. Close the app, extract this patch into your **existing folder containing apex_visualizer.exe**, and replace the EXE. Keep your installed `runtime/gpu` and settings.
+The three root .luau files match the scripts embedded in the place. `tools/build_game.py` regenerates the integrated place and a separate map-only edition. The original city model is a legacy artifact, not the active arena.
 
-Start Virtual Camera in OBS, then Capture > Start OBS Virtual Camera in the updated app. If it still fails, choose **Copy capture diagnostics** and paste that text in chat. DirectShow video decoding and existing renderer/CPU regression tests passed; actual OBS acquisition on your PC still needs confirmation. [Instructions and limits](apex-visualizer/OBS-CAPTURE-FIX.md).
+## Delivery status
 
----
-
-# Apex Visualization — Phase 3 performance and external capture
-
-- [Small Phase 3 update — keep your installed GPU runtime](Apex-Visualization-Phase3-Update.zip)
-- [Full Windows x64 application](Apex-Visualization-Windows-x64.zip)
-- [Complete C++ source and offline build dependencies](Apex-Visualization-Source.zip)
-- [Benchmark and five-minute GPU test instructions](apex-visualizer/PHASE3-PERFORMANCE.md)
-- [OBS / local recording capture guide](apex-visualizer/CAPTURE.md)
-- [Actual build/test evidence and remaining PC checks](apex-visualizer/PHASE3-VALIDATION.md)
-
-Close the application. Extract the small update into the **existing folder containing `apex_visualizer.exe`**, replace the EXE, and keep your working `runtime/gpu` folder. No GPU dependency reinstall is needed for an already-working installation. Fresh full downloads contain the CPU runtime; the optional pinned GPU setup helper remains available.
-
-In **System**, leave Model path blank for the bundled mathematical validation model, or select your own supported FP32 ONNX file. Choose **Benchmark loaded model CPU / GPU** or **5-minute GPU model test**. The app reports actual Run latency, validated-loop inference FPS, GPU utilization, VRAM and memory trends. A completed short CUDA test does not establish five-minute stability or a speedup. Current RTX 3070 timings must be measured on your PC; none are fabricated.
-
-The **Capture** page receives real frames from OBS Virtual Camera or a local recording using Windows Media Foundation. Use OBS Display Capture / Window Capture with Windows Graphics Capture. This app does not inject, access another process's memory, bypass anti-cheat or invent player entities. Preview and frame activity work on pixels; semantic gameplay detection still requires a compatible authorized vision model and its preprocessing/output contract. The bundled MatMul model is not a vision detector.
-
-The existing interface, settings, DX11 renderer, local JSON input and earlier project assets are preserved. Historical evidence remains available; the Phase 3 validation report describes this native build specifically.
+[Download Blockline-Full.zip](https://github.com/TiondreNguyen15-hub/roblox-game-testing/raw/refs/heads/main/Blockline-Full.zip), extract it, then open Blockline.rbxlx in Roblox Studio. This archive includes the integrated game, source, builders and test report.

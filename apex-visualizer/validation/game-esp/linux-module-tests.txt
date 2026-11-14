@@ -1,0 +1,27 @@
+Test project /workspace/work/apex-native
+      Start  1: apex_core_modules
+ 1/11 Test  #1: apex_core_modules ................   Passed    0.01 sec
+      Start  2: apex_imgui_visuals
+ 2/11 Test  #2: apex_imgui_visuals ...............   Passed    0.01 sec
+      Start  3: apex_menu_system
+ 3/11 Test  #3: apex_menu_system .................   Passed    0.52 sec
+      Start  4: apex_json_telemetry
+ 4/11 Test  #4: apex_json_telemetry ..............   Passed    0.01 sec
+      Start  5: apex_logging
+ 5/11 Test  #5: apex_logging .....................   Passed    0.01 sec
+      Start  6: apex_benchmark_reports
+ 6/11 Test  #6: apex_benchmark_reports ...........   Passed    0.01 sec
+      Start  7: apex_compute_reference
+ 7/11 Test  #7: apex_compute_reference ...........   Passed    0.09 sec
+      Start  8: apex_performance_checks
+ 8/11 Test  #8: apex_performance_checks ..........   Passed    0.01 sec
+      Start  9: apex_compute_startup_recovery
+ 9/11 Test  #9: apex_compute_startup_recovery ....   Passed    0.06 sec
+      Start 10: apex_hud_parser_and_regions
+10/11 Test #10: apex_hud_parser_and_regions ......   Passed    0.01 sec
+      Start 11: apex_enemy_geometry_and_filter
+11/11 Test #11: apex_enemy_geometry_and_filter ...   Passed    0.03 sec
+
+100% tests passed out of 11
+
+Total Test time (real) =   0.77 sec
