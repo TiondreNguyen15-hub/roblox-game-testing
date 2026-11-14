@@ -101,8 +101,10 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::Text("%ux%u | %.1f capture FPS | read wait %.2f ms",device.capture.width,device.capture.height,device.capture.fps,device.capture.readWaitMs);
    ImGui::Text("Luma %.3f | frame activity %.3f",device.capture.statistics.meanLuma,device.capture.statistics.meanAbsoluteChange);
    if(device.captureTexture&&device.capture.width){float w=std::max(1.f,std::min(ImGui::GetContentRegionAvail().x,180.f*device.capture.width/device.capture.height));ImGui::Image(static_cast<ImTextureID>(device.captureTexture),{w,w*device.capture.height/device.capture.width});}
-   ImGui::TextWrapped("Preview and frame activity use real captured pixels. No semantic player detection is configured. A compatible authorized vision model and preprocessing contract are required for that next stage.");
+   ImGui::TextWrapped("Preview and frame activity use real captured pixels. Select your local enemy model on Game ESP to analyze these captured frames.");
   }else if(tab_==5){
+   ImGui::SetNextItemOpen(!showTextTools,ImGuiCond_Once);
+   if(ImGui::CollapsingHeader("Enemy model analysis")){
    ImGui::TextWrapped("Game ESP / enemy-model analysis");
    if(ImGui::Button("Open recording for enemy analysis..."))captureRequest_=4;
    if(device.capture.running&&device.capture.isRecording&&ImGui::Button(device.capture.paused?"Resume analysis clip":"Pause analysis clip"))captureRequest_=5;
@@ -117,6 +119,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::TextWrapped("Original model class labels: %s",device.enemy.latest.modelLabels.c_str());ImGui::TextWrapped("SHA256: %s",device.enemy.latest.modelSha.c_str());
    if(ImGui::Button("Copy Game ESP diagnostics")){auto text="Status: "+device.enemy.status+"\nMessage: "+device.enemy.message+"\nBackend: "+device.enemy.latest.backend+"\nModel: "+enemyOptions.modelPath.u8string()+"\nModel SHA256: "+device.enemy.latest.modelSha+"\nOriginal labels: "+device.enemy.latest.modelLabels+"\nCandidates: "+std::to_string(device.enemy.latest.boxes.size());ImGui::SetClipboardText(text.c_str());}
    ImGui::TextWrapped("Boxes refer to the analyzed image shown above. Class 0 is an enemy candidate by your model description; friend/foe accuracy is not independently validated. No weapon detection is added.");
+   }
    ImGui::SetNextItemOpen(showTextTools,ImGuiCond_Once);
    if(!ImGui::CollapsingHeader("Existing recording text tools (preserved)")){ImGui::EndChild();ImGui::Separator();ImGui::TextDisabled("Standalone capture analysis | DX11 | Insert: menu | F10: exit");ImGui::End();ImGui::PopStyleVar();s.clamp();return;}
    ImGui::TextWrapped("Read visible HUD text from local recordings");
