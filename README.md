@@ -1,3 +1,15 @@
+# Stable detection boxes and fast lock response
+
+[Download the update](Apex-Stable-Fast-Tracking-Update.zip) · [Setup](apex-visualizer/TRACKING.md) · [Actual tests and limits](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+Extract All, leave the working demo open and run Update-Game-ESP.cmd. Then click **Tracking > Fast lock + stable boxes**. Save tracking setup and Detection > Detection tuning and saving > Save enemy setup. Click START LOCK and switch to the selected game within 10 seconds. F9 stops/disarms; focus loss cancels a toggle.
+
+The controller now retains identity across short gaps and associates small compatible measured shifts instead of immediately restarting the selected track. Missing/stale data still produces zero movement. Confirmed detection scores have hysteresis; weak new targets cannot acquire below the configured score. A short dim dotted LAST box is display-only and never drives input. Source/geometry/error and expiry guards clear history.
+
+The explicit fast preset uses zero smoothing, stronger bounded response and actual measured first-update frame time. The 12-count event cap remains. Existing saved settings are preserved until applying a preset; paths, activation binding/mode, FOV radius and anchor remain. No actual RTX/model speed, Apex camera response or gameplay accuracy improvement is claimed without PC measurements.
+
+---
+
 # Explicit tracking activation and target lock controls
 
 [Download the activation update](Apex-Tracking-Activation-Update.zip) · [Activation guide](apex-visualizer/TRACKING.md) · [OBS capture help](apex-visualizer/GAME-ESP-README.md) · [Validation](apex-visualizer/GAME-ESP-VALIDATION.md)

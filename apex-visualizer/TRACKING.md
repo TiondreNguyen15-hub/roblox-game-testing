@@ -26,14 +26,24 @@ Choose **Right mouse**, **Mouse 4**, **Mouse 5**, **Left Alt**, **Left Shift** o
 
 Changing the binding or mode disarms tracking. Saved settings include the binding/mode, but never an armed, pending, active or selected-window state. Legacy files without the new fields load as Hold + Right mouse, disarmed.
 
-## Lock response, limits and diagnostics
+## Stable boxes and faster acquisition
 
-**Responsive follow preset** explicitly enables both axes and sets response 4, smoothing 15 ms, maximum speed 500 counts/second and deadzone 2 pixels. It does not overwrite the user's configuration until clicked/saved. Existing X/Y sliders, radius, anchor, maximum received-frame age and independent axis controls remain. No universal game-sensitivity calibration is claimed.
+Click **Fast lock + stable boxes** before START LOCK. This explicit preset enables X/Y, uses response 8, zero smoothing, speed limit 800 counts/second, deadzone 1 pixel, and 250 ms identity retention. It also enables confirmed-detection stabilization, 120 ms visual grace, 16 ms detection scheduling, CUDA preference and the 200 ms live-display age limit. It preserves the selected activation binding/mode, FOV radius and anchor, and disarms until START or an explicit enable. Save tracking setup and Detection > Detection tuning and saving > Save enemy setup to persist both groups.
 
-The geometric box anchor (default center) must be inside the FOV. It is not a detected joint. The controller retains overlapping boxes by IoU and reacquires when no eligible association remains. It does not extrapolate hidden or lost targets. Disabled/zero-response axes are reported; a centered target needs no movement.
+The controller can use the measured current frame interval on the first active update; it no longer adds a mandatory zero-movement acquisition tick. The 12-count per-axis/event cap remains. This is a controller response change, not proof of faster model/GPU inference or instant Apex lock. Game sensitivity still determines the camera response.
 
-Motion remains speed-limited, smoothed and capped at 12 counts per axis per controller step. Focus, selected HWND/PID, activation, F9, live nonrecording Apex profile and receiver freshness gates remain. The selected binding is sampled again immediately before a Hold-mode event; Toggle mode requires explicit runtime activation. Actual Apex camera response and sensitivity must be checked on the PC; no input-filter/anti-cheat bypass is added.
+Confidence stabilization uses the full configured score to acquire a new detection. A previously confirmed overlapping box can retain an actual fresh score down to 70% of that acquisition score for up to a 250 ms observation gap. It uses actual measured coordinates/scores; it does not fabricate a missing model output. Disable Stabilize confirmed detections in Detection tuning if it retains unwanted boxes.
 
-The activation and target statuses are visible on Tracking. When its FOV graphic is displayed, the desktop overlay also shows the activation/blocking/lock status. **Copy tracking diagnostics** includes binding, mode, activation state, model backend, frame age and accepted Windows events. F8 only changes overlay graphics; F9 disarms input.
+Across a brief empty/stale measurement gap, tracking retains only the local association identity for the configured Brief-gap identity retention time (default 250 ms). It produces zero movement during missing/stale results. A compatible new fresh measured box can reuse that identity, including a small bounded center shift with compatible size. A longer gap, incompatible geometry or a newly acquired unrelated candidate gets a new identity. Model association is heuristic, not a real game entity ID. The maximum received-frame age remains independent and is not extended by identity retention.
 
-Receiver frame age includes local processing but not unknown sender/OBS delay. Slow/failed inference produces stale/no-target status instead of moving on an old box. Existing previews, model profiles, old OCR, DX11 renderer, GPU setup and low-latency detection controls are preserved.
+A dim dotted **LAST** box can remain on the display for the Visual gap grace time (default 120 ms), bounded by maximum live display age plus that grace. It is explicitly historical display data. It never feeds the tracking controller, refreshes a source timestamp, changes acquisition confidence or keeps activation/movement engaged. Tracking uses actual service detections and its own independent freshness limit. Failed/stopped/changed sources clear the display history. Exact analyzed-frame mode still shows boxes on their actual source image.
+
+## Limits and diagnostics
+
+Responsive follow preset remains as the milder option. Existing X/Y/FOV, anchor, deadzone and timing controls remain. Fast preset is not applied silently to existing saved axis settings. Disabled/zero-response axes are reported; a centered target needs no movement.
+
+Focus, HWND/PID, activation, F9, live nonrecording Apex profile and receiver freshness gates remain. Hold mode rechecks the selected physical binding before ordinary SendInput; Toggle requires runtime activation. No input-filter/anti-cheat bypass, automatic firing or game-memory access is added. Accepted Windows events do not prove actual Apex camera response.
+
+Tracking shows activation, target/gap and blocking status. The FOV overlay includes the same status when displayed. Copy tracking diagnostics includes the activation binding/mode, model backend and received-frame age; Copy detection diagnostics also includes acquisition score, stabilization, fresh lower-score retention count and visual grace. F8 only changes graphics; F9 disarms.
+
+Slow/failed inference still produces stale/no-target status. A display grace cannot make a slow CPU model fast, and an actual missing prediction cannot be recovered as a fresh target without a new model output. Unknown game/OBS sender buffering remains outside receiver age. Actual capture, model accuracy, RTX performance, sensitivity and Apex input acceptance require user-PC testing.

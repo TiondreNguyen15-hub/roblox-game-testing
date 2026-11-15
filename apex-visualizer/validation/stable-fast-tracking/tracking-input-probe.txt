@@ -1,0 +1,1 @@
+PASS actual Windows SendInput through default Hold, explicit Toggle and held Left Shift binding guards in OWN test window; inactive/disarmed toggle and unheld Shift rejected; observed toggle cursor delta=1,1; button/Shift released and cursor restored; no live game, Apex acceptance, trained-model GPU or aim accuracy tested

@@ -1,0 +1,5 @@
+{
+  "Name": "Microsoft Hyper-V Video",
+  "DriverVersion": "10.0.20348.1",
+  "PNPDeviceID": "VMBUS\\{DA0A7802-E377-4AAC-8E77-0558EB1073F8}\\{5620E0C7-8062-4DCE-AEB7-520C7EF76171}"
+}

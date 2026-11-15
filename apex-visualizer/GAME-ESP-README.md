@@ -15,14 +15,18 @@ The app opens on **Home**, with actual capture/model status and three setup step
 
 Capture selection, model loading and tracking arming remain explicit actions. Home buttons only open the relevant page; they do not arm tracking. Backend badges describe actual detector results, not driver detection or presumed GPU success.
 
-## Boxes lagging behind moving targets
+## Stable boxes and fast tracking
 
-1. In **Detection**, click **Low-latency live preset**. This requests CUDA, changes the scheduling interval to 16 ms, switches to live preview and expires live boxes at 200 ms source-frame age. It does not change confidence, overlap, model weights or tracking controls.
-2. Check **Backend** and **Copy detection diagnostics**. A CUDA request is not proof of GPU execution. ONNX CPU/fallback can remain much slower; only actual model profiling can verify CUDA.
-3. Use OBS to capture the same complete game view, with scene filters/scaling minimized. The app's frame age includes its own queuing and inference, but OBS/game-to-camera sender delay is unknown.
-4. In **Detection tuning and saving**, adjust **Maximum live box age ms** if needed, then **Save enemy setup**. Old boxes clear instead of drifting behind moving targets. A strict age limit can mean fewer/no visible boxes when the model is too slow; it cannot accelerate that model.
+Use **Tracking > Fast lock + stable boxes**, then **START LOCK** and switch to the selected game within 10 seconds. This explicit preset removes controller smoothing and increases bounded response; it also enables detection confidence stabilization and short display grace. Save tracking setup and Detection > Detection tuning and saving > Save enemy setup to persist both groups. Existing paths, binding/mode, radius and anchor remain.
 
-The worker keeps only the newest pending frame and now replaces the frame that triggered expensive model initialization before inference starts. The preview remains independent of inference. **Exact analyzed frame** is still available for inspecting boxes on their correct source pixels, without applying the live-display age limit. This update adds no guessed target motion and makes no measured GPU speed or accuracy claim.
+- New targets still require the configured acquisition score (default 0.50). Already-confirmed overlapping boxes can retain actual fresh scores down to 70% of it; weak unrelated new boxes are rejected. Stabilization history expires after a 250 ms observation gap or source/model/geometry change.
+- Brief gaps retain local target identity for 250 ms by default. Movement pauses during missing/stale data. Fresh compatible measurements can reuse the ID instead of restarting association/smoothing. Tracking does not extrapolate hidden/missing targets.
+- Dim dotted **LAST** boxes are historical display-only data for a default 120 ms visual grace. They never feed tracking, refresh frame timestamps or extend tracking freshness. Long gaps and failed/stopped/changed sources clear them.
+- Fast response uses the actual current frame interval on acquisition, zero smoothing, response 8 and speed limit 800 counts/second. The 12-count event cap remains. This is not measured GPU/inference acceleration, an instant camera snap guarantee or a game-sensitivity calibration.
+
+Detection tuning exposes **Stabilize confirmed detections** and **Visual gap grace ms**. Tracking limits exposes **Brief-gap identity retention** separately from maximum received-frame age. The older low-latency preset and milder Responsive follow preset remain. Exact analyzed-frame mode still shows source-aligned real boxes. If the model makes no usable prediction or CPU inference is too slow, these changes cannot fabricate a current target or GPU speed.
+
+Check Backend/Copy detection diagnostics for actual model execution, processing time, score, retained-score count, received-frame age and configured limits. OBS must supply the actual game; unknown sender/OBS buffering is not included in receiver age. Actual stability, model accuracy, GPU/model latency and camera acceptance need footage/PC validation.
 
 ## Selecting the tracking window
 

@@ -1,0 +1,39 @@
+{
+  "model_sha256": "e7f89487dc8970e8f6da4e70ed56756d3287b4f3dfef97ce973ef7138be280bc",
+  "size_bytes": 40793716,
+  "onnx_checker": "passed",
+  "input": {
+    "name": "in_00000",
+    "type": "tensor(float)",
+    "shape": [
+      1,
+      3,
+      416,
+      416
+    ]
+  },
+  "output": {
+    "name": "out_00000",
+    "type": "tensor(float)",
+    "shape": [
+      1,
+      300,
+      6
+    ]
+  },
+  "metadata": {
+    "names": "{0: 'item'}"
+  },
+  "test_input": "all-zero FP32 image; no gameplay or accuracy claim",
+  "execution_provider": "CPUExecutionProvider",
+  "platform": "Linux cloud host, not user RTX 3070",
+  "finite": true,
+  "class_ids": [
+    0.0
+  ],
+  "maximum_score": 1.9669532775878906e-05,
+  "accepted_at_0_5": 0,
+  "one_call_ms_not_benchmark": 832.5134059996344,
+  "trained_model_cuda_execution": "not tested here; requires user PC",
+  "accuracy": "not tested; requires labeled footage"
+}
