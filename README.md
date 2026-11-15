@@ -1,3 +1,15 @@
+# START LOCK respects Hold / Toggle selection
+
+[Download the Hold-mode fix](Apex-Hold-Activation-Fix.zip) · [Instructions](apex-visualizer/TRACKING.md) · [Actual validation](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+Extract All, leave the demo open and run **Update-Game-ESP.cmd**. In Tracking, select **Hold selected key**, choose your key/button and click **START LOCK**. It keeps Hold selected. Switch to the game and hold the chosen key to activate; release it to stop. F9 or STOP / DISARM stops either mode.
+
+Toggle is preserved when explicitly selected and retains its existing 10-second focus handoff. START no longer forces the selected mode to Toggle. If an earlier release saved that unwanted Toggle selection, choose Hold again and Save tracking setup. Active/armed/pending/window state is never saved.
+
+Fast response, stable boxes, capture/model settings, GPU files and the renderer are retained. Tests cover the shared START action preserving mode/key and Hold-only physical activation/release/focus/emergency behavior. No model accuracy or actual Apex input acceptance claim is added.
+
+---
+
 # Stable detection boxes and fast lock response
 
 [Download the update](Apex-Stable-Fast-Tracking-Update.zip) · [Setup](apex-visualizer/TRACKING.md) · [Actual tests and limits](apex-visualizer/GAME-ESP-VALIDATION.md)

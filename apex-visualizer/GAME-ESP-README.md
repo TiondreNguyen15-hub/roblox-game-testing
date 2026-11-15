@@ -17,7 +17,7 @@ Capture selection, model loading and tracking arming remain explicit actions. Ho
 
 ## Stable boxes and fast tracking
 
-Use **Tracking > Fast lock + stable boxes**, then **START LOCK** and switch to the selected game within 10 seconds. This explicit preset removes controller smoothing and increases bounded response; it also enables detection confidence stabilization and short display grace. Save tracking setup and Detection > Detection tuning and saving > Save enemy setup to persist both groups. Existing paths, binding/mode, radius and anchor remain.
+Use **Tracking > Fast lock + stable boxes**, then **START LOCK**. Hold mode requires the chosen key held in the selected game; Toggle mode uses the existing 10-second focus handoff. This explicit preset removes controller smoothing and increases bounded response; it also enables detection confidence stabilization and short display grace. Save tracking setup and Detection > Detection tuning and saving > Save enemy setup to persist both groups. Existing paths, binding/mode, radius and anchor remain.
 
 - New targets still require the configured acquisition score (default 0.50). Already-confirmed overlapping boxes can retain actual fresh scores down to 70% of it; weak unrelated new boxes are rejected. Stabilization history expires after a 250 ms observation gap or source/model/geometry change.
 - Brief gaps retain local target identity for 250 ms by default. Movement pauses during missing/stale data. Fresh compatible measurements can reuse the ID instead of restarting association/smoothing. Tracking does not extrapolate hidden/missing targets.
@@ -34,7 +34,7 @@ The Apex list refreshes automatically once per second while Tracking is open. **
 
 ## Tracking activation and lock
 
-Tracking now has an **Activation key / button** selector, **Hold/Toggle** modes, **START LOCK** and **STOP / DISARM** controls. Click START LOCK and switch to the selected game within 10 seconds. It explicitly enables Toggle mode, waits for focus and selects the nearest fresh detected candidate inside the FOV. Focus loss cancels the toggle; F9 disarms. Alternatively enable tracking and use the selected key in Hold or Toggle mode. Saved settings always load disarmed.
+Tracking now has an **Activation key / button** selector, **Hold/Toggle** modes, **START LOCK** and **STOP / DISARM** controls. Select Hold or Toggle, then click START LOCK. In Hold mode, switch to the selected game and hold the chosen key; releasing stops movement. In Toggle mode, switch to the selected game within 10 seconds. It preserves your selected mode: Hold requires the configured key held in the focused game; Toggle waits up to 10 seconds for focus before activating. Eligible fresh detections are required in either mode. Focus loss cancels the toggle; F9 disarms. Alternatively enable tracking and use the selected key in Hold or Toggle mode. Saved settings always load disarmed.
 
 A circle alone is not a detection. OBS must send the actual game, and the model must produce an accepted box in the circle. Tracking shows activation, target and blocking status; Copy tracking diagnostics includes the binding/mode. Responsive follow preset is an explicit optional action. Existing X/Y/FOV controls remain. See [TRACKING.md](TRACKING.md) for all activation and stop behavior. Game camera response to normal Windows input still requires PC verification.
 

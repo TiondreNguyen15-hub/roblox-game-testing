@@ -9,13 +9,14 @@ Tracking follows only fresh model detections inside the configured circle. The s
 3. Open Tracking and select the game window. The list refreshes every second and retains minimized games; restore the selected game before activation.
 4. Open Screen overlay, Show on screen, and choose the game monitor. Enable the FOV circle. Without a valid selected game it defaults to monitor center; with a valid game it follows its client center. Detection boxes require the full capture to match that monitor; OBS crops/borders/scene scaling can misalign the mapping.
 
-## Start with the screen button
+## START LOCK respects your selected activation mode
 
-Click **START LOCK**, then switch to the selected Apex game within **10 seconds**. This explicit button enables tracking and selects Toggle mode. It waits for game focus before activating. The nearest fresh detected candidate whose configured box anchor is inside the circle is acquired; overlapping detections retain that candidate while it remains eligible. On a new activation, acquisition starts again from the nearest candidate.
+Choose the activation key/button and **Hold selected key** or **Toggle** first. **START LOCK never changes that selection.**
 
-Click **STOP / DISARM** or press **F9** to stop and disarm. The configured activation key also toggles an active Toggle session off while the selected game is focused. Losing focus cancels the toggle; returning to the game does not automatically restart it. A missed 10-second handoff expires the request. Invalid window/source/profile/model state also clears activation.
+- **Hold:** START LOCK enables tracking, then switch to the selected game and hold the chosen physical key/button. Focusing the game alone does not activate movement. Releasing the key stops movement immediately; there is no Toggle latch or 10-second pending activation in Hold mode.
+- **Toggle:** START LOCK keeps Toggle mode and requests a 10-second handoff to the selected game. Switch to that game within 10 seconds to activate; the configured key toggles the session off. Lost focus cancels the active toggle, and returning does not resume it automatically.
 
-The button does not force Apex to accept mouse input and does not make an undetected object trackable. If the capture contains desktop pixels or the model has no accepted character box in the circle, there is no target to follow. Target loss or stale results stop movement; a fresh eligible detection can be acquired again while activation remains valid.
+STOP / DISARM or F9 stops and disarms either mode. Choosing a new key/mode disarms as before. The regular Enable tracking checkbox and in-game activation-key path remain. START does not make an undetected object trackable or force Apex to accept input: actual fresh eligible model boxes are required. No selected window or active/pending/armed state is restored from saved preferences.
 
 ## Activation key / button
 

@@ -1,18 +1,16 @@
-STABLE BOXES + FAST LOCK UPDATE
+HOLD ACTIVATION FIX
 
-1. Leave your current demo open, Extract ALL files and run Update-Game-ESP.cmd.
-   Existing GPU files, models and saved settings are preserved.
-2. Verify OBS and the app show the actual game and your model detects real characters.
-3. Tracking > Fast lock + stable boxes. This sets the fast response and disarms.
-4. Save tracking setup. In Detection > Detection tuning and saving, Save enemy setup.
-5. Tracking > START LOCK, then switch to the selected game within 10 seconds.
-   STOP / DISARM or F9 stops input. Losing focus cancels the active toggle.
+1. Leave your current demo open, Extract ALL files, then run Update-Game-ESP.cmd.
+   Models, GPU files and saved settings are preserved.
+2. Tracking: choose Activation mode > Hold selected key and choose your key/button.
+3. Click START LOCK. The selected mode and key now stay unchanged.
+4. Switch to the selected game and hold the key to activate. Release it to stop.
+   Hold does not auto-activate just because the game gets focus.
+5. Save tracking setup to persist your selected mode/key. Active/armed state is never saved.
 
-Brief gaps retain only target identity. Missing/stale detections produce zero movement.
-Dim dotted LAST boxes are historical display-only data, not current targets.
-Fresh confirmed detections can survive moderate score dips; weak new targets still require full score.
-The fast preset removes smoothing and increases bounded response; the 12-count event cap remains.
-Existing Hold/Toggle bindings and milder Responsive preset remain. Preferences load disarmed.
-Actual model/GPU speed, capture alignment and Apex camera response still need PC testing.
-No GPU FPS gain or accuracy improvement is asserted from synthetic/controller tests.
+Toggle still works when explicitly selected. Its START handoff waits up to 10 seconds for game focus.
+STOP / DISARM or F9 stops either mode. Lost focus cancels an active toggle.
+Previous versions forced Toggle when START LOCK was clicked; choose Hold again after updating if that old selection was saved.
+Stable boxes, Fast lock preset, model/capture/GPU settings and the DX11 renderer remain.
+Actual Apex acceptance/model accuracy/hardware performance still require PC testing.
 If startup fails, send launch-failure.txt beside the installed executable.

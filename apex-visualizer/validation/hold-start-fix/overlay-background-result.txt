@@ -1,0 +1,1 @@
+PASS: actual OBS placeholder -> synthetic ONNX contract -> desktop overlay; app minimized; capture_frames_before=3; after=13; analyses_before=1; after=3; status=Desktop overlay active on Primary monitor (1024x768); CPU / GPU not verified; trained model / gameplay not tested
