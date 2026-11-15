@@ -167,6 +167,9 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    if(ImGui::BeginCombo("Apex window",trackingWindow.handle?trackingWindow.title.c_str():"Select the game window")){for(size_t n=0;n<device.trackingWindows.size();++n){const auto& w=device.trackingWindows[n];ImGui::PushID(int(n));if(ImGui::Selectable(w.title.c_str(),trackingWindow.handle==w.handle)){trackingWindow=w;trackingOptions.armed=false;trackingRequest_=2;}ImGui::PopID();}ImGui::EndCombo();}
    if(ImGui::Button("Configure capture"))tab_=4;ImGui::SameLine();if(ImGui::Button("Configure detection model"))tab_=5;
    bool ready=device.trackingEmergency&&device.trackingWindowState.valid&&device.capture.running&&!device.capture.isRecording&&enemyEnabled&&enemyOptions.profile==EnemyProfile::Apex416&&!enemyOptions.modelPath.empty();
+   if(!device.capture.running||device.capture.isRecording)ImGui::TextWrapped("To arm: start live OBS capture (recordings cannot drive mouse input).");
+   else if(enemyOptions.profile!=EnemyProfile::Apex416||enemyOptions.modelPath.empty()||!enemyEnabled)ImGui::TextWrapped("To arm: choose the Apex profile, load its model and enable incoming-frame analysis.");
+   else if(!device.trackingWindowState.valid)ImGui::TextWrapped("To arm: open Apex in borderless/windowed mode, Refresh Apex windows and select it.");
    ImGui::BeginDisabled(!ready);ImGui::Checkbox("Arm mouse following (hold right mouse to activate)",&trackingOptions.armed);ImGui::EndDisabled();
    ImGui::TextWrapped("F9: emergency disarm. Release right mouse to stop. Arming and selected window are never restored from disk.");
    if(!device.trackingEmergency)ImGui::TextWrapped("F9 registration unavailable; mouse following is disabled. Close any app reserving F9 and restart.");

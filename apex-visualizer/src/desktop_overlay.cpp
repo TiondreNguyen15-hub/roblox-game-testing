@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cstdio>
+#include <cmath>
 #include <stdexcept>
 namespace apex {
 struct DesktopOverlay::Impl {
@@ -20,7 +21,7 @@ DesktopOverlay::DesktopOverlay():impl_(std::make_unique<Impl>()){impl_->enumerat
 DesktopOverlay::~DesktopOverlay()=default;
 const std::vector<std::string>& DesktopOverlay::monitors()const{return impl_->labels;}
 const std::string& DesktopOverlay::status()const{return impl_->message;}
-void DesktopOverlay::update(const DesktopOverlayOptions& o,const EnemySnapshot& result,bool live,unsigned w,unsigned h,const TrackingOverlay& tracking){auto& s=*impl_;auto now=Impl::Clock::now();if((!o.enabled&&!tracking.visible)||!live){if(s.window)ShowWindow(s.window,SW_HIDE);s.boxes.clear();s.frame.reset();s.completed=0;s.message=o.enabled?"Waiting for live OBS capture (recordings are preview-only)":"Desktop overlay off";return;}try{
+void DesktopOverlay::update(const DesktopOverlayOptions& o,const EnemySnapshot& result,bool live,unsigned w,unsigned h,const TrackingOverlay& requestedTracking){TrackingOverlay hidden;bool valid=std::isfinite(requestedTracking.centerX)&&std::isfinite(requestedTracking.centerY)&&std::isfinite(requestedTracking.targetX)&&std::isfinite(requestedTracking.targetY)&&std::isfinite(requestedTracking.radius)&&requestedTracking.radius>=20&&requestedTracking.radius<=800;const auto& tracking=valid?requestedTracking:hidden;auto& s=*impl_;auto now=Impl::Clock::now();if((!o.enabled&&!tracking.visible)||!live){if(s.window)ShowWindow(s.window,SW_HIDE);s.boxes.clear();s.frame.reset();s.completed=0;s.message=o.enabled?"Waiting for live OBS capture (recordings are preview-only)":"Desktop overlay off";return;}try{
  if(now-s.enumerated>std::chrono::seconds(2)){s.enumerate();s.monitor=-1;}if(s.displays.empty())throw std::runtime_error("No desktop monitor available");s.create();int monitor=std::clamp(o.monitor,0,int(s.displays.size())-1);auto r=s.displays[monitor].bounds;bool dirty=tracking.visible!=s.tracking.visible||tracking.marker!=s.tracking.marker||tracking.centerX!=s.tracking.centerX||tracking.centerY!=s.tracking.centerY||tracking.radius!=s.tracking.radius||tracking.targetX!=s.tracking.targetX||tracking.targetY!=s.tracking.targetY||tracking.label!=s.tracking.label;s.tracking=tracking;s.desktopLeft=float(r.left);s.desktopTop=float(r.top);
  if(monitor!=s.monitor||o.fitAspect!=s.fit||w!=s.sourceWidth||h!=s.sourceHeight){s.monitor=monitor;s.fit=o.fitAspect;s.sourceWidth=w;s.sourceHeight=h;s.viewport=overlayViewport(float(r.right-r.left),float(r.bottom-r.top),w,h,o.fitAspect);if(!SetWindowPos(s.window,HWND_TOPMOST,r.left,r.top,r.right-r.left,r.bottom-r.top,SWP_NOACTIVATE))throw std::runtime_error("Desktop overlay positioning failed");dirty=true;}
  if(result.completed!=s.completed||result.analyzedFrame!=s.frame){s.completed=result.completed;s.frame=result.analyzedFrame;s.received=now;dirty=true;}
