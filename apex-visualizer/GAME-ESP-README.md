@@ -9,7 +9,7 @@ The app opens on **Home**, with actual capture/model status and three setup step
 
 **Detection** is the former Game ESP page. Live and exact-frame previews, Apex/Roblox profiles, model selection, overlay and recorded text reader remain. Open **Detection tuning and saving** for CUDA preference, score/overlap/cadence and Save enemy setup; open **Model details and diagnostics** for hashes and copied results. **Recorded text reader** preserves the OCR controls.
 
-**Tracking** has visible setup/activation steps and separate **X / horizontal**, **Y / vertical** and **FOV overlay** tabs. Detailed counters and copied tracking status are under **Tracking status and diagnostics**. Activation rules, F9 and saved settings are unchanged.
+**Tracking** has visible setup/activation steps and separate **X / horizontal**, **Y / vertical** and **FOV overlay** tabs. Detailed counters and copied tracking status are under **Tracking status and diagnostics**. Activation now supports configurable Hold/Toggle and explicit START LOCK. F9 and saved settings remain; see the activation section below.
 
 **System** opens on Performance. Choose **Compute checks** for validation, custom-model benchmarks, cancellation and detailed results. Those tests remain distinct from your detection model. **Settings** saves the existing configuration; **Appearance** controls the accent and window size. Existing saved dimensions are preserved; **Expand layout** switches to the roomier workspace without silently overwriting your preferences.
 
@@ -28,13 +28,23 @@ The worker keeps only the newest pending frame and now replaces the frame that t
 
 The Apex list refreshes automatically once per second while Tracking is open. **Refresh windows** is on its own row, with a count. Minimized Apex windows remain in the list; select one and restore the game before arming. Windows are recognized by their Apex title or native Respawn001 window class. An empty list explains that no matching game window was found. Selection remains explicit and does not arm tracking.
 
-## Tracking category
+## Tracking activation and lock
 
-**Tracking** now has separate **X / horizontal**, **Y / vertical** and **FOV overlay** sections. Configure the existing Apex detector/capture first; then select the actual game window from the automatically refreshed list. The FOV circle can show without desktop boxes. Arming is off at startup; mouse following requires the selected game focused and the right mouse button held. Release the button to stop; **F9** disarms globally. **F8** hides/shows overlay graphics without disarming. Settings load disarmed and do not restore a window selection.
+Tracking now has an **Activation key / button** selector, **Hold/Toggle** modes, **START LOCK** and **STOP / DISARM** controls. Click START LOCK and switch to the selected game within 10 seconds. It explicitly enables Toggle mode, waits for focus and selects the nearest fresh detected candidate inside the FOV. Focus loss cancels the toggle; F9 disarms. Alternatively enable tracking and use the selected key in Hold or Toggle mode. Saved settings always load disarmed.
 
-X/Y enable, proportional response, smoothing and speed limits are independent. FOV is a client-pixel radius. By default results older than 250 ms from receiver creation are rejected; unknown OBS sender latency is not included. Only the Apex model profile can drive mouse output. Windows input acceptance is reported separately from whether Apex actually responds. Use **Copy tracking diagnostics** for failures; no input bypass or automatic firing is added. Start in Firing Range and verify the model is detecting the intended visible targets. The model's class label alone does not establish friend/foe accuracy.
+A circle alone is not a detection. OBS must send the actual game, and the model must produce an accepted box in the circle. Tracking shows activation, target and blocking status; Copy tracking diagnostics includes the binding/mode. Responsive follow preset is an explicit optional action. Existing X/Y/FOV controls remain. See [TRACKING.md](TRACKING.md) for all activation and stop behavior. Game camera response to normal Windows input still requires PC verification.
 
-Save/Load tracking setup is separate from model and renderer settings. Full instructions are in TRACKING.md (included in the source/full archive and update payload).
+## OBS shows the desktop instead of Apex
+
+The app analyzes exactly the pixels supplied by OBS. It cannot fix a source that sends the desktop.
+
+1. Use Apex borderless/windowed mode. Record 10 seconds in OBS while Apex stays focused, then review the recording. A desktop preview seen only after Alt-Tab can be caused by the game minimizing; the recording distinguishes that from a wrong source.
+2. If the focused-game recording still contains desktop pixels, verify the Display Capture monitor. For an alternative, add **Window Capture**, select the Apex window, and use the **Windows 10 / Windows Graphics Capture** capture method. This supported window-capture path does not need a game hook.
+3. Hide the old Display Capture source using its eye icon so it cannot cover the game source; fit the game source to the OBS canvas. If using Studio Mode, make the game scene the actual Program output, not only the editing preview.
+4. Hide the app's desktop overlay with F8 while testing capture. If capture fails only with the overlay shown, use the window-capture path to avoid display-compositor/capture-exclusion feedback.
+5. Once OBS actually shows Apex, restart Virtual Camera and reconnect Capture in the app. Verify both OBS and the app show the same game view before enabling detection/tracking.
+
+These are user-PC source checks; the bundled receiver tests use official OBS placeholder/recorded fixtures and do not verify that the user's current Apex scene is configured correctly.
 
 ## Install and start
 

@@ -1,0 +1,5 @@
+source,frame_sequence,source_timestamp_100ns,ocr_latency_ms,mode,status,magazine_candidate,reserve_candidate,banner_candidate,region_x,region_y,region_width,region_height,raw_text
+"./apex-visualizer/tests/fixtures/hud-counter.mp4",1,4000000,26.9803,0,"ammo_candidate",28,160,"",0,0,1,1,"28 / 160"
+"./apex-visualizer/tests/fixtures/hud-counter.mp4",9,12000000,27.5609,0,"ammo_candidate",28,160,"",0,0,1,1,"28 / 160"
+"./apex-visualizer/tests/fixtures/hud-counter.mp4",16,19000000,13.9523,0,"ammo_candidate",28,160,"",0,0,1,1,"28 / 160"
+"./apex-visualizer/tests/fixtures/hud-counter.mp4",24,27000000,27.2965,0,"ammo_candidate",28,160,"",0,0,1,1,"28 / 160"

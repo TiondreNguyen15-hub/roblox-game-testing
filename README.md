@@ -1,3 +1,19 @@
+# Explicit tracking activation and target lock controls
+
+[Download the activation update](Apex-Tracking-Activation-Update.zip) · [Activation guide](apex-visualizer/TRACKING.md) · [OBS capture help](apex-visualizer/GAME-ESP-README.md) · [Validation](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+Extract All, leave the working demo open and run **Update-Game-ESP.cmd**. Models, settings and GPU files are preserved.
+
+In **Tracking**, select the game and click **START LOCK**, then switch to that game within 10 seconds. The nearest fresh detected candidate inside the circle is acquired; overlapping detections retain it while eligible. No detection means no target. **STOP / DISARM** or **F9** stops input. Losing focus cancels an active toggle.
+
+Alternatively choose **Activation key / button** and **Hold/Toggle** mode, enable tracking and use that key in-game. Changing the binding/mode disarms. Preferences save the binding, never active/armed/pending/window state. Responsive follow preset is an explicit optional response change. Activation and target/blocking statuses are visible in the UI and FOV overlay.
+
+OBS must actually capture Apex before detection/tracking can work. Check a focused-game recording; use borderless mode and the correct display, or supported Windows Graphics Capture with the old desktop source hidden. Restart Virtual Camera after OBS shows the game. This update cannot fix the user's local OBS scene remotely.
+
+Tests cover activation handoff/timeout/focus/stop, sticky target selection, stale/lost target behavior, settings and existing capture/renderer regressions. Normal Windows input acceptance does not prove Apex camera response; actual capture/model accuracy/RTX performance and game acceptance remain PC tests. No bypass or fabricated targets are added.
+
+---
+
 # Tracking picker + low-latency live detection
 
 [Download the update](Apex-Tracking-Detection-Update.zip) · [Setup guide](apex-visualizer/GAME-ESP-README.md) · [Verified tests and limits](apex-visualizer/GAME-ESP-VALIDATION.md)

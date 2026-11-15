@@ -1,17 +1,18 @@
-TRACKING PICKER + LOW-LATENCY DETECTION UPDATE
+TRACKING ACTIVATION UPDATE
 
-1. Leave your working demo open. Extract ALL files from this ZIP.
-2. Run Update-Game-ESP.cmd. Models, settings and GPU files are preserved.
-3. Tracking: the Apex window list refreshes automatically every second.
-   Select your game. Minimized games remain listed; restore it before tracking.
-   Refresh windows is now below the picker with a result count.
-4. Detection: click Low-latency live preset, then Save enemy setup.
-   It requests CUDA and 16 ms scheduling, uses live preview and expires boxes at 200 ms frame age.
-   Actual speed depends on capture/model/backend. ONNX CPU can still be slow.
-5. Screen overlay > Show on screen. Pick your monitor and use borderless/windowed mode.
+1. Leave the current demo open. Extract ALL files, then run Update-Game-ESP.cmd.
+   Existing GPU files, models and saved settings are preserved.
+2. OBS must show the actual game first. Desktop pixels cannot supply game targets.
+   See GAME-ESP-README.md: OBS desktop troubleshooting.
+3. Connect live Capture, load the Apex model in Detection and verify real boxes.
+4. Tracking: select the Apex game, then click START LOCK.
+5. Switch to that game within 10 seconds. A fresh detected character inside the circle is required.
+   START LOCK uses Toggle mode. Losing focus cancels its active toggle.
+6. STOP / DISARM or F9 stops input. The configured activation key toggles it off in-game.
 
-The badge/FOV appears immediately; boxes require fresh live OBS/model detections.
-F8 hides/shows graphics. F9 disarms tracking. Selection/overlay never auto-arm it.
-Exact analyzed frame remains available for inspection. Private model weights remain separate.
-This update is not a measured FPS gain or gameplay accuracy claim.
+Alternative: choose Activation key / button and Hold or Toggle mode, enable tracking, then use that key in-game.
+Responsive follow preset is optional; game sensitivity still needs calibration.
+Save tracking setup saves preferences, never active/armed/window state.
+Screen overlay > Show on screen displays the circle/status on the selected monitor. F8 hides/shows graphics only.
+Actual Apex response, capture configuration and private-model GPU performance require PC testing.
 If startup fails, send launch-failure.txt beside the installed executable.

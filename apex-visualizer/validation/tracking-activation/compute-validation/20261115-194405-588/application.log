@@ -1,0 +1,138 @@
+2026-11-15T19:41:16Z [INFO] Configuration operation completed
+2026-11-15T19:41:16Z [INFO] Configuration operation completed
+2026-11-15T19:41:16Z [WARN] Configuration: Invalid boolean
+2026-11-15T19:41:16Z [WARN] Configuration: Invalid numeric setting
+2026-11-15T19:41:16Z [WARN] Configuration: Unsupported configuration version
+2026-11-15T19:41:16Z [WARN] Configuration: Invalid integer
+2026-11-15T19:41:16Z [WARN] Configuration: Configuration exceeds 32 KiB
+2026-11-15T19:41:16Z [INFO] Configuration operation completed
+2026-11-15T19:41:16Z [INFO] Configuration operation completed
+2026-11-15T19:41:16Z [INFO] Configuration operation completed
+2026-11-15T19:41:16Z [INFO] Configuration operation completed
+2026-11-15T19:41:16Z [INFO] Configuration operation completed
+2026-11-15T19:41:17Z [INFO] JSON provider recovered
+2026-11-15T19:41:17Z [WARN] JSON provider: [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - invalid literal; last read: 'p'
+2026-11-15T19:41:17Z [INFO] JSON provider recovered
+2026-11-15T19:41:17Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "C:\Users\RUNNER~1\AppData\Local\Temp\apex-file-telemetry-test.json"
+2026-11-15T19:41:17Z [INFO] JSON provider recovered
+2026-11-15T19:41:17Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "C:\Users\RUNNER~1\AppData\Local\Temp\apex-file-telemetry-test.json"
+2026-11-15T19:41:17Z [INFO] JSON provider recovered
+2026-11-15T19:41:20Z [WARN] Capture: Recording file not found
+2026-11-15T19:41:20Z [INFO] Media Foundation video inputs: 0; OBS found=no
+2026-11-15T19:41:21Z [INFO] DirectShow video inputs (0): 
+2026-11-15T19:41:21Z [WARN] Capture: Media Foundation did not find OBS. DirectShow also found no OBS Virtual Camera (0 inputs: none). Repair the 64-bit OBS Virtual Camera installation, then restart this app.
+2026-11-15T19:41:21Z [INFO] DirectShow Pause=0x1 Run=0x1 GetState=0x0 state=2
+2026-11-15T19:41:21Z [INFO] DirectShow recording probe started; waiting for actual file samples
+2026-11-15T19:41:24Z [INFO] Application startup
+2026-11-15T19:41:24Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:24Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:24Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:24Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:24Z [INFO] JSON provider recovered
+2026-11-15T19:41:24Z [INFO] Application shutdown
+2026-11-15T19:41:24Z [INFO] Application startup
+2026-11-15T19:41:24Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:24Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:24Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:24Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:24Z [INFO] JSON provider recovered
+2026-11-15T19:41:25Z [INFO] Application shutdown
+2026-11-15T19:41:26Z [INFO] Application startup
+2026-11-15T19:41:26Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:26Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:26Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:26Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:26Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "apex_entities.json"
+2026-11-15T19:41:28Z [INFO] Application shutdown
+2026-11-15T19:41:28Z [INFO] Application startup
+2026-11-15T19:41:28Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:29Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:29Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:29Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:29Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "apex_entities.json"
+2026-11-15T19:41:32Z [INFO] Application shutdown
+2026-11-15T19:41:32Z [INFO] Application startup
+2026-11-15T19:41:32Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:32Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:32Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:32Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:32Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "apex_entities.json"
+2026-11-15T19:41:35Z [INFO] Application shutdown
+2026-11-15T19:41:36Z [INFO] Application startup
+2026-11-15T19:41:36Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:36Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:36Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:36Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:36Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "apex_entities.json"
+2026-11-15T19:41:39Z [INFO] Application shutdown
+2026-11-15T19:41:39Z [INFO] Application startup
+2026-11-15T19:41:39Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:40Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:40Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:40Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:40Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "apex_entities.json"
+2026-11-15T19:41:40Z [WARN] Enemy detector: Model tensor type or shape does not match selected Apex/Roblox profile
+2026-11-15T19:41:40Z [ERROR] Enemy model test failed: Model tensor type or shape does not match selected Apex/Roblox profile
+2026-11-15T19:41:49Z [INFO] Application startup
+2026-11-15T19:41:49Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:49Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:49Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:49Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:49Z [INFO] Media Foundation video inputs: 0; OBS found=no
+2026-11-15T19:41:49Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "apex_entities.json"
+2026-11-15T19:41:49Z [INFO] DirectShow video inputs (1): OBS Virtual Camera
+2026-11-15T19:41:49Z [INFO] OBS Virtual Camera found through DirectShow; opening video stream
+2026-11-15T19:41:49Z [INFO] DirectShow native camera capabilities: count=0 bytes=128
+2026-11-15T19:41:49Z [INFO] DirectShow configured explicit OBS 1280x720 YUY2 fallback (no usable advertised format)
+2026-11-15T19:41:49Z [INFO] DirectShow live camera playback clock disabled; OBS paces its own capture samples
+2026-11-15T19:41:49Z [INFO] DirectShow Pause=0x1 Run=0x1 GetState=0x40237 state=2
+2026-11-15T19:41:49Z [INFO] DirectShow camera prepared and started; waiting for actual OBS samples
+2026-11-15T19:41:49Z [INFO] Application shutdown
+2026-11-15T19:41:50Z [INFO] Application startup
+2026-11-15T19:41:50Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:50Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:50Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:50Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:50Z [INFO] Media Foundation video inputs: 0; OBS found=no
+2026-11-15T19:41:50Z [WARN] JSON provider: file_size: The system cannot find the file specified.: "apex_entities.json"
+2026-11-15T19:41:50Z [INFO] DirectShow video inputs (1): OBS Virtual Camera
+2026-11-15T19:41:50Z [INFO] OBS Virtual Camera found through DirectShow; opening video stream
+2026-11-15T19:41:50Z [INFO] DirectShow native camera capabilities: count=0 bytes=128
+2026-11-15T19:41:50Z [INFO] DirectShow configured explicit OBS 1280x720 YUY2 fallback (no usable advertised format)
+2026-11-15T19:41:50Z [INFO] DirectShow live camera playback clock disabled; OBS paces its own capture samples
+2026-11-15T19:41:50Z [INFO] DirectShow Pause=0x1 Run=0x1 GetState=0x40237 state=2
+2026-11-15T19:41:50Z [INFO] DirectShow camera prepared and started; waiting for actual OBS samples
+2026-11-15T19:41:51Z [INFO] Application shutdown
+2026-11-15T19:41:51Z [INFO] Application startup
+2026-11-15T19:41:51Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:52Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:52Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:52Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:53Z [INFO] Restored missing bundled validation model: D:\a\roblox-game-testing\roblox-game-testing\build-apex\Release\models/compute_validation.onnx
+2026-11-15T19:41:53Z [WARN] Compute 0 unavailable: CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  
+2026-11-15T19:41:54Z [INFO] Compute 1 passed: Selected model CPU baseline passed with deterministic FP32 inputs; initialization/warmup excluded
+2026-11-15T19:41:54Z [WARN] Compute 2 skipped: CUDA device/context unavailable
+2026-11-15T19:41:55Z [INFO] Compute report status: ./compute-model-recovery\compute-report.json
+2026-11-15T19:41:55Z [INFO] Application startup
+2026-11-15T19:41:55Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:41:55Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:41:55Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:41:55Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:41:56Z [ERROR] Compute startup [MODEL_FILE_MISSING]: ONNX model file not found: D:\a\roblox-game-testing\roblox-game-testing\intentionally-missing-custom.onnx. Use bundled test model, or select an existing .onnx file.
+2026-11-15T19:41:57Z [INFO] Compute report status: ./compute-model-missing\compute-report.json
+2026-11-15T19:41:59Z [INFO] Application startup
+2026-11-15T19:41:59Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:42:00Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:42:00Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:42:00Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:44:05Z [INFO] Application shutdown
+2026-11-15T19:44:06Z [INFO] Application startup
+2026-11-15T19:44:07Z [INFO] Renderer: Microsoft Basic Render Driver / flip-discard
+2026-11-15T19:44:07Z [INFO] CUDA driver unavailable; DX11 remains active
+2026-11-15T19:44:07Z [INFO] NVIDIA counters unavailable (NVML missing)
+2026-11-15T19:44:07Z [INFO] Frame pacing: high-resolution per-process waitable timer
+2026-11-15T19:44:08Z [WARN] Compute 0 unavailable: CUDA driver DLL unavailable: Win32 126: The specified module could not be found.  
+2026-11-15T19:45:08Z [INFO] Compute 1 passed: CPUExecutionProvider Run results agree with independent numerical reference; one intra/inter-op thread
+2026-11-15T19:45:08Z [WARN] Compute 2 skipped: No verified CUDA device/context; ONNX GPU inference was not attempted. See CUDA workload result.
+2026-11-15T19:45:09Z [INFO] Compute report status: D:\a\roblox-game-testing\roblox-game-testing\compute-validation\20261115-194405-588\compute-report.json
+2026-11-15T19:45:09Z [INFO] Application shutdown

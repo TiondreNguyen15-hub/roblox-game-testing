@@ -1,30 +1,39 @@
-# Tracking: independent X/Y and FOV
+# Tracking activation and target lock
 
-The new **Tracking** category uses visible candidates from the existing Apex ONNX detector. It can emit bounded relative mouse movement through normal Windows `SendInput`. It does not automatically fire. The existing model pages, Roblox test profile, live preview, DX11 renderer, desktop boxes, old OCR and GPU setup remain.
+Tracking follows only fresh model detections inside the configured circle. The selected target is a local box association, not a game entity ID. It does not detect hidden players, invent missing targets or fire automatically. Mouse movement uses ordinary Windows SendInput. Windows accepting events does not prove Apex uses them or establish aim accuracy.
 
-## First test
+## Before starting
 
-1. Install the current tracking update into your existing app. Keep the GPU runtime; use the combined GPU/update launcher only if that copy still lacks CUDA dependencies.
-2. Use Apex **Firing Range** in borderless/windowed mode. In OBS capture the same full game view, start Virtual Camera, then start the app's OBS receiver on Capture.
-3. On Detection choose **Apex (primary, 416px)**, browse to your local Apex model and enable **Enable detection**. Verify actual model candidates and backend. The Roblox profile remains available for detection tests; this mouse controller requires the Apex profile.
-4. Open **Tracking**, then select the actual Apex game window. The list refreshes every second; **Refresh windows** is also available below the picker. Minimized games remain selectable, but restore the selected game before arming. Recognition uses the window title or Respawn001 class; enumeration uses normal window metadata and does not read game memory. The selected window is not saved across restarts.
-5. Use the **X / horizontal**, **Y / vertical** and **FOV overlay** tabs under Tune controls. Configure X and Y independently. Each has an enable toggle, response strength, smoothing and speed limit. Start with the conservative defaults; game sensitivity changes the effect of mouse counts, so no universal calibration is claimed.
-6. Open **Screen overlay**, click **Show on screen**, enable **Draw FOV circle**, and choose the correct monitor and radius. The circle appears immediately, centered on the monitor until a valid game window is selected; then it follows that game client. The radius is in client pixels, not camera FOV degrees. It can show without desktop bounding boxes enabled.
-7. Put a correctly detected candidate slightly off-center inside the circle. Explicitly check **Arm mouse following**, switch focus to the selected Apex window, then hold the **right mouse button**. Release it to stop. **F9** globally disarms. If Windows cannot register F9, arming is disabled. **F8** hides/shows all overlay graphics; hiding graphics does not disarm mouse output.
-8. Read Tracking status and **Windows input events accepted**. That counter means Windows accepted the events; it does not prove Apex used them. If tracking does not move the camera, use **Copy tracking diagnostics**. No blocked-input bypass is provided.
+1. OBS must show the actual Apex game, not the desktop. Use borderless/windowed mode and verify the source while the game stays focused. See GAME-ESP-README.md for the desktop-capture troubleshooting steps.
+2. Start OBS Virtual Camera, connect Capture, load the Apex-profile model in Detection and enable detection. Verify a real candidate box on a visible character. Low-latency live preset remains available.
+3. Open Tracking and select the game window. The list refreshes every second and retains minimized games; restore the selected game before activation.
+4. Open Screen overlay, Show on screen, and choose the game monitor. Enable the FOV circle. Without a valid selected game it defaults to monitor center; with a valid game it follows its client center. Detection boxes require the full capture to match that monitor; OBS crops/borders/scene scaling can misalign the mapping.
 
-## X/Y response and timing
+## Start with the screen button
 
-Response is proportional to image error, in mouse counts per client pixel per second. Speed is capped independently per axis, with an additional hard cap of 12 counts per axis per controller step. Smoothing is an exponential time constant on velocity. Disabling an axis clears its residual movement immediately. Center deadzone avoids small corrective steps. The anchor is a geometric point inside a box (default center), not a detected head/joint.
+Click **START LOCK**, then switch to the selected Apex game within **10 seconds**. This explicit button enables tracking and selects Toggle mode. It waits for game focus before activating. The nearest fresh detected candidate whose configured box anchor is inside the circle is acquired; overlapping detections retain that candidate while it remains eligible. On a new activation, acquisition starts again from the nearest candidate.
 
-Candidates must have valid normalized boxes and lie inside the FOV at their chosen anchor. The nearest candidate is acquired, with overlap-based continuity on subsequent measurements. Track IDs are local associations, not game entity IDs. No target motion, wall-hidden player or friendly/enemy identity is inferred beyond the model's supplied pixels/boxes.
+Click **STOP / DISARM** or press **F9** to stop and disarm. The configured activation key also toggles an active Toggle session off while the selected game is focused. Losing focus cancels the toggle; returning to the game does not automatically restart it. A missed 10-second handoff expires the request. Invalid window/source/profile/model state also clears activation.
 
-Mouse output also requires live camera capture, enabled Apex detection, selected-window focus, right-button hold, an available emergency hotkey and a fresh received frame. By default frames older than **250 ms** are rejected. The timestamp starts when the receiver creates its frame, before local preprocessing/inference; unknown OBS sender/display delay is not measured by this limit. CPU inference may be too slow and pause output. Lowering the existing model's detection interval can increase measurement cadence if hardware keeps up; no FPS gain is asserted.
+The button does not force Apex to accept mouse input and does not make an undetected object trackable. If the capture contains desktop pixels or the model has no accepted character box in the circle, there is no target to follow. Target loss or stale results stop movement; a fresh eligible detection can be acquired again while activation remains valid.
 
-Background capture/controller work continues while tracking is armed or its FOV is active; the main window's rendering can pause when minimized. Target focus and hold are checked again immediately before each input event. Native game input filtering, camera response, alignment, latency and effective sensitivity require testing on the actual PC. Event acceptance is not an Apex compatibility test.
+## Activation key / button
 
-## Persistence and stops
+Choose **Right mouse**, **Mouse 4**, **Mouse 5**, **Left Alt**, **Left Shift** or **Left Ctrl**, then select a mode:
 
-**Save tracking setup** writes `tracking-settings.json` beside the app's existing local settings. Arming and target window are never serialized. Successful loading starts disarmed. Source/model/profile changes disarm and reset the controller. No valid/fresh candidate, lost focus, released hold, unavailable F9 or an ordinary Windows input failure stops output. An input API failure disarms and appears in diagnostics. This is not a guarantee against arbitrary OS/driver failures.
+- **Hold selected key:** enable tracking, focus the selected game and hold the chosen key. Releasing it stops movement.
+- **Toggle: press to start / stop:** enable tracking, focus the selected game and press the chosen key. Release before the next press; holding a key does not repeatedly toggle. Focus loss cancels a toggle. A key already held when arming/refocusing does not trigger a new toggle.
 
-Actual Windows tests, source/build hashes and remaining PC checks are documented in GAME-ESP-VALIDATION.md. No Apex-match automation, trained-model RTX performance, aim accuracy or performance improvement is claimed tested on the user's PC.
+Changing the binding or mode disarms tracking. Saved settings include the binding/mode, but never an armed, pending, active or selected-window state. Legacy files without the new fields load as Hold + Right mouse, disarmed.
+
+## Lock response, limits and diagnostics
+
+**Responsive follow preset** explicitly enables both axes and sets response 4, smoothing 15 ms, maximum speed 500 counts/second and deadzone 2 pixels. It does not overwrite the user's configuration until clicked/saved. Existing X/Y sliders, radius, anchor, maximum received-frame age and independent axis controls remain. No universal game-sensitivity calibration is claimed.
+
+The geometric box anchor (default center) must be inside the FOV. It is not a detected joint. The controller retains overlapping boxes by IoU and reacquires when no eligible association remains. It does not extrapolate hidden or lost targets. Disabled/zero-response axes are reported; a centered target needs no movement.
+
+Motion remains speed-limited, smoothed and capped at 12 counts per axis per controller step. Focus, selected HWND/PID, activation, F9, live nonrecording Apex profile and receiver freshness gates remain. The selected binding is sampled again immediately before a Hold-mode event; Toggle mode requires explicit runtime activation. Actual Apex camera response and sensitivity must be checked on the PC; no input-filter/anti-cheat bypass is added.
+
+The activation and target statuses are visible on Tracking. When its FOV graphic is displayed, the desktop overlay also shows the activation/blocking/lock status. **Copy tracking diagnostics** includes binding, mode, activation state, model backend, frame age and accepted Windows events. F8 only changes overlay graphics; F9 disarms input.
+
+Receiver frame age includes local processing but not unknown sender/OBS delay. Slow/failed inference produces stale/no-target status instead of moving on an old box. Existing previews, model profiles, old OCR, DX11 renderer, GPU setup and low-latency detection controls are preserved.
