@@ -1,4 +1,4 @@
-> **Screen overlay: Show on screen / monitor / F8:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.
+> **Tracking window picker + low-latency live detection:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.
 
 > **Tracking: separate X/Y and FOV overlay:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.
 

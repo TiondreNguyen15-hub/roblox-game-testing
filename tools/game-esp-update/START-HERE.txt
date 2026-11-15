@@ -1,17 +1,17 @@
-SCREEN OVERLAY UPDATE
+TRACKING PICKER + LOW-LATENCY DETECTION UPDATE
 
 1. Leave your working demo open. Extract ALL files from this ZIP.
-2. Run Update-Game-ESP.cmd. It preserves your GPU files, models and settings.
-3. Open Screen overlay in the left sidebar.
-4. Click Show on screen and select the monitor where you play.
-5. The SCREEN OVERLAY ON badge and configured FOV circle appear on the actual desktop immediately.
+2. Run Update-Game-ESP.cmd. Models, settings and GPU files are preserved.
+3. Tracking: the Apex window list refreshes automatically every second.
+   Select your game. Minimized games remain listed; restore it before tracking.
+   Refresh windows is now below the picker with a result count.
+4. Detection: click Low-latency live preset, then Save enemy setup.
+   It requests CUDA and 16 ms scheduling, uses live preview and expires boxes at 200 ms frame age.
+   Actual speed depends on capture/model/backend. ONNX CPU can still be slow.
+5. Screen overlay > Show on screen. Pick your monitor and use borderless/windowed mode.
 
-Use borderless/windowed game mode. Exclusive fullscreen may cover desktop overlays.
-F8 hides/shows graphics. Show on screen also clears the F8-hidden state.
-Actual boxes require connected live OBS capture, a loaded model and fresh accepted detections.
-Draw detected boxes and Draw FOV circle are independent. Recordings remain inside the preview.
-F9 disarms tracking. Enabling the overlay does not arm mouse following.
-
-For GPU dependencies only, optional Update-And-Enable-GPU.cmd repairs them and updates that exact app.
-Installation does not verify GPU execution. Trained model weights remain separate.
+The badge/FOV appears immediately; boxes require fresh live OBS/model detections.
+F8 hides/shows graphics. F9 disarms tracking. Selection/overlay never auto-arm it.
+Exact analyzed frame remains available for inspection. Private model weights remain separate.
+This update is not a measured FPS gain or gameplay accuracy claim.
 If startup fails, send launch-failure.txt beside the installed executable.

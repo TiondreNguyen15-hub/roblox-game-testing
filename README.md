@@ -1,3 +1,17 @@
+# Tracking picker + low-latency live detection
+
+[Download the update](Apex-Tracking-Detection-Update.zip) · [Setup guide](apex-visualizer/GAME-ESP-README.md) · [Verified tests and limits](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+Leave your working demo open, **Extract All**, then run **Update-Game-ESP.cmd**. Existing models, saved settings and GPU files are preserved.
+
+- **Tracking:** the window list refreshes every second, keeps minimized Apex windows selectable, recognizes the native Respawn001 class as well as Apex titles, and shows an empty-list explanation. **Refresh windows** has its own row. Restore the selected game before tracking; selection does not arm output.
+- **Detection:** click **Low-latency live preset**, then **Save enemy setup**. It requests CUDA, uses a 16 ms scheduling interval, keeps live preview independent and clears boxes above 200 ms source-frame age. Model initialization switches to the newest pending frame before inference. Existing confidence/model/tracking controls remain.
+- **Screen overlay:** **Show on screen**, choose the game monitor and use borderless/windowed mode. F8 hides/shows graphics; F9 disarms tracking.
+
+Source-frame age includes local queuing and inference, not unknown OBS sender delay. Slow CPU inference can still lag or leave no fresh boxes; a CUDA request does not prove GPU execution. No measured GPU FPS or model-accuracy improvement is claimed. Actual Apex display/input behavior and model performance require the PC.
+
+---
+
 # Overlay on your actual screen
 
 [Download the screen-overlay update](Apex-Screen-Overlay-Update.zip) · [Setup guide](apex-visualizer/GAME-ESP-README.md) · [Validation](apex-visualizer/GAME-ESP-VALIDATION.md)
