@@ -34,11 +34,16 @@ try {
  Copy-Item -LiteralPath $newExe -Destination $staged -Force
  [IO.File]::Replace($staged,$TargetExe,(Join-Path $backup 'apex_visualizer.exe'))
  foreach ($name in @('BUILD-INFO.json','GAME-ESP-README.md','GAME-ESP-VALIDATION.md','TRACKING.md','HUD-Sample.mp4')) { Copy-Item -LiteralPath (Join-Path $payload $name) -Destination (Join-Path $app $name) -Force }
+ $previewPayload=Join-Path $payload 'previews'
+ if (Test-Path -LiteralPath $previewPayload -PathType Container) {
+  $previewTarget=Join-Path $app 'previews';New-Item -ItemType Directory -Path $previewTarget -Force | Out-Null
+  foreach ($preview in @(Get-ChildItem -LiteralPath $previewPayload -File -Filter '*.png')) { Copy-Item -LiteralPath $preview.FullName -Destination (Join-Path $previewTarget $preview.Name) -Force }
+ }
  $model=Join-Path $app 'models/compute_validation.onnx'
  if (!(Test-Path -LiteralPath $model)) { New-Item -ItemType Directory -Path (Split-Path $model) -Force | Out-Null;Copy-Item -LiteralPath (Join-Path $payload 'models/compute_validation.onnx') -Destination $model }
  Write-Host 'Game-ESP update installed. GPU libraries, saved settings and existing models were kept.' -ForegroundColor Green
  Write-Host "Old executable backup: $backup"
  if (!$NoLaunch) { $null=Start-VerifiedApexApp -Exe $TargetExe }
- Write-Host 'Open Game ESP > Browse enemy ONNX model. Select your local trained model, then open a recording or use your existing OBS capture.' -ForegroundColor Cyan
+ Write-Host 'Start on Home, then follow Capture > Detection > Tracking. Choose your existing local model on Detection.' -ForegroundColor Cyan
  exit 0
 } catch { Write-Host "UPDATE STOPPED: $($_.Exception.Message)" -ForegroundColor Red;Write-Host 'Send a screenshot of this window.';exit 1 }

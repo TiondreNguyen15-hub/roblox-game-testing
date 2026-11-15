@@ -32,7 +32,7 @@ try {
  Write-Host "Repairing GPU dependencies and updating this exact copy: $target" -ForegroundColor Cyan
  Run-Stage $gpu @('-TargetExe',('"'+$target+'"'),'-NoLaunch')
  Run-Stage $update @('-TargetExe',('"'+$target+'"'))
- Write-Host 'Finished. In Game ESP select your model, enable Prefer CUDA and analyze a captured frame.' -ForegroundColor Green
+ Write-Host 'Finished. Follow Home > Capture > Detection. CUDA preference is under Detection tuning and saving.' -ForegroundColor Green
  Write-Host 'Only CUDA EP execution profiled confirms this model actually executed GPU work. Installation is not verification.'
  exit 0
 } catch { Write-Host "STOPPED: $($_.Exception.Message)" -ForegroundColor Red;exit 1 }

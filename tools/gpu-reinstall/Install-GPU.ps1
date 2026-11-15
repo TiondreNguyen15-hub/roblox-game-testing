@@ -42,7 +42,7 @@ try {
  & $helper -Destination (Join-Path $appFolder 'runtime/gpu') -InstallDependencies
  Write-Host 'GPU runtime files installed.' -ForegroundColor Green
  if (!$NoLaunch) { $null=Start-VerifiedApexApp -Exe $exe } else { Write-Host 'Launch deferred to the update stage.' }
- Write-Host 'In the app: System > Run CUDA + ONNX validation. Installation alone does not verify GPU execution.' -ForegroundColor Cyan
+ Write-Host 'In the app: System > Compute checks > Run CUDA + ONNX validation. Installation alone does not verify GPU execution.' -ForegroundColor Cyan
  exit 0
 } catch {
  Write-Host "INSTALLATION STOPPED: $($_.Exception.Message)" -ForegroundColor Red
