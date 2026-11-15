@@ -118,6 +118,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
     }
    }
   }else if(tab_==4){
+   if(ImGui::CollapsingHeader("OBS shows desktop instead of the game"))hint("Record 10 seconds while Apex remains focused to check actual capture. Use borderless mode and the correct display. Or add OBS Window Capture for Apex using Windows Graphics Capture, hide the old desktop source, and fit the source to canvas. Restart Virtual Camera after OBS shows the game; its output must use the active game scene. This app cannot fix an OBS source that is sending desktop pixels.");
    if(!device.capture.running){if(ImGui::Button("Connect OBS camera",{180,0}))captureRequest_=1;if(ImGui::GetContentRegionAvail().x>190)ImGui::SameLine();if(ImGui::Button("Choose recording",{180,0}))captureRequest_=4;}
    else {if(ImGui::Button("Disconnect",{140,0}))captureRequest_=3;if(device.capture.isRecording){ImGui::SameLine();if(ImGui::Button(device.capture.paused?"Resume":"Pause",{110,0}))captureRequest_=5;}}
    ImGui::TextColored(device.capture.running?good:muted,"%s",device.capture.running?(device.capture.isRecording?"RECORDING SOURCE":"LIVE CAMERA"):"NOT CONNECTED");
@@ -207,8 +208,15 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    if(!device.capture.running||device.capture.isRecording)ImGui::TextWrapped("To arm: start live OBS capture (recordings cannot drive mouse input).");
    else if(enemyOptions.profile!=EnemyProfile::Apex416||enemyOptions.modelPath.empty()||!enemyEnabled)ImGui::TextWrapped("To arm: choose the Apex profile, load its model and enable incoming-frame analysis.");
    else if(!device.trackingWindowState.valid)ImGui::TextWrapped("To arm: select an Apex window above and restore it if minimized. The list refreshes automatically.");
-   ImGui::BeginDisabled(!ready);ImGui::Checkbox("Arm mouse following (hold right mouse to activate)",&trackingOptions.armed);ImGui::EndDisabled();
-   hint("Hold right mouse to follow. F9 disarms. F8 only changes overlay visibility.");
+   int activationKey=static_cast<int>(trackingOptions.activationKey);const char* keys[]={"Right mouse","Mouse 4 (side)","Mouse 5 (side)","Left Alt","Left Shift","Left Ctrl"};if(ImGui::Combo("Activation key / button",&activationKey,keys,6)){trackingOptions.activationKey=static_cast<TrackingActivationKey>(activationKey);trackingOptions.armed=false;trackingRequest_=2;}
+   int activationMode=static_cast<int>(trackingOptions.activationMode);const char* modes[]={"Hold selected key","Toggle: press to start / stop"};if(ImGui::Combo("Activation mode",&activationMode,modes,2)){trackingOptions.activationMode=static_cast<TrackingActivationMode>(activationMode);trackingOptions.armed=false;trackingRequest_=2;}
+   ImGui::BeginDisabled(!ready);if(ImGui::Checkbox("Enable tracking (then use activation key)",&trackingOptions.armed))trackingRequest_=2;
+   if(ImGui::Button("START LOCK",{155,0})){trackingOptions.activationMode=TrackingActivationMode::Toggle;trackingOptions.armed=true;trackingRequest_=3;}ImGui::EndDisabled();ImGui::SameLine();if(ImGui::Button("STOP / DISARM",{155,0})){trackingOptions.armed=false;trackingRequest_=2;}
+   hint("START LOCK selects Toggle mode: switch to the selected game within 10 seconds. It follows a detected character inside the circle. Lost focus cancels the toggle; F9 disarms. Hold mode uses the selected key while held.");
+   ImGui::TextColored(device.activation.active?good:device.activation.pending?warning:muted,"%s",device.activation.status.c_str());
+   ImGui::TextColored(device.tracking.target?good:muted,"%s",device.tracking.target?"TARGET: detected character inside circle":"TARGET: no fresh detected character inside circle");
+   if(ImGui::Button("Responsive follow preset")){trackingOptions.x.enabled=trackingOptions.y.enabled=true;trackingOptions.x.gain=trackingOptions.y.gain=4;trackingOptions.x.smoothingMs=trackingOptions.y.smoothingMs=15;trackingOptions.x.maxSpeed=trackingOptions.y.maxSpeed=500;trackingOptions.deadzone=2;notice_="Responsive bounded follow configured. Game sensitivity still needs calibration; this does not verify Apex accepts mouse input.";}
+
    if(!device.trackingEmergency)ImGui::TextWrapped("F9 registration unavailable; mouse following is disabled. Close any app reserving F9 and restart.");
    ImGui::TextWrapped("%s",device.tracking.status.c_str());ImGui::TextWrapped("%s",device.trackingError.c_str());
    section("3. Tune controls");
@@ -226,9 +234,9 @@ bool fovOn=trackingOptions.showFov&&overlayOptions.enabled&&!device.overlayHidde
    if(ImGui::CollapsingHeader("Tracking status and diagnostics")){
    ImGui::TextDisabled("Capture %.1f FPS | frame age %.0f ms | %llu accepted Windows events",device.capture.fps,device.tracking.ageMs,static_cast<unsigned long long>(device.trackingSent));
    if(device.tracking.target)ImGui::Text("Candidate track %llu | X error %.1f px | Y error %.1f px",static_cast<unsigned long long>(device.tracking.targetId),device.tracking.errorX,device.tracking.errorY);
-   if(ImGui::Button("Copy tracking diagnostics")){auto text="Tracking: "+device.tracking.status+"\nError: "+device.trackingError+"\nWindow: "+trackingWindow.title+"\nFrame age ms: "+std::to_string(device.tracking.ageMs)+"\nCapture FPS: "+std::to_string(device.capture.fps)+"\nBackend: "+device.enemy.latest.backend+"\nModel message: "+device.enemy.message+"\nWindows input events accepted: "+std::to_string(device.trackingSent);ImGui::SetClipboardText(text.c_str());}
+   if(ImGui::Button("Copy tracking diagnostics")){auto text="Activation: "+device.activation.status+"\nMode: "+std::string(trackingOptions.activationMode==TrackingActivationMode::Hold?"Hold":"Toggle")+"\nActivation key: "+trackingActivationName(trackingOptions.activationKey)+"\nTracking: "+device.tracking.status+"\nError: "+device.trackingError+"\nWindow: "+trackingWindow.title+"\nFrame age ms: "+std::to_string(device.tracking.ageMs)+"\nCapture FPS: "+std::to_string(device.capture.fps)+"\nBackend: "+device.enemy.latest.backend+"\nModel message: "+device.enemy.message+"\nWindows input events accepted: "+std::to_string(device.trackingSent);ImGui::SetClipboardText(text.c_str());}
    }
-   ImGui::TextWrapped("%s",notice_.c_str());if(ImGui::CollapsingHeader("How tracking works"))hint("Only visible model candidates are used. Windows accepting input does not prove Apex uses it. Release right mouse or use F9 to disarm; F8 only changes overlay visibility.");
+   ImGui::TextWrapped("%s",notice_.c_str());if(ImGui::CollapsingHeader("How tracking works"))hint("Only visible model candidates are used. Windows accepting input does not prove Apex uses it. Release a held activation key to stop Hold mode. Toggle mode stops on its next key press, STOP, lost focus or F9. F9 disarms; F8 only changes graphics.");
   }else if(tab_==8){
    section("Actual screen overlay", "This creates a separate, transparent desktop window. It is not the preview image.");
    if(ImGui::Checkbox("Show overlay on my screen",&overlayOptions.enabled))overlayRequest_=1;
