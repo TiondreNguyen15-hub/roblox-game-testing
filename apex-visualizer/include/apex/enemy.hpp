@@ -8,8 +8,8 @@ struct EnemyImage{std::vector<float> nchw;float scale=1;unsigned left=0,top=0,wi
 enum class EnemyProfile{Apex416=0,Roblox640=1};
 unsigned enemyImageSide(EnemyProfile);
 std::filesystem::path enemySettingsFile(const std::filesystem::path&,EnemyProfile);
-struct EnemyOptions{EnemyProfile profile=EnemyProfile::Apex416;std::filesystem::path modelPath,baseDirectory,profileDirectory;std::string adapter;std::uint64_t adapterLuid=0;bool preferCuda=true;float confidence=.5f,iou=.45f;int intervalMs=150,maxResultAgeMs=250;};
-struct EnemyObservation{std::uint64_t sequence=0;long long timestamp100ns=0;double latencyMs=0;std::vector<EnemyBox> boxes;std::string backend,modelSha,modelLabels,source,message;bool cudaVerified=false;};
+struct EnemyOptions{EnemyProfile profile=EnemyProfile::Apex416;std::filesystem::path modelPath,baseDirectory,profileDirectory;std::string adapter;std::uint64_t adapterLuid=0;bool preferCuda=true,stabilize=true;float confidence=.5f,iou=.45f;int intervalMs=150,maxResultAgeMs=250,visualGraceMs=120;};
+struct EnemyObservation{std::uint64_t sequence=0;long long timestamp100ns=0;double latencyMs=0;std::vector<EnemyBox> boxes;unsigned retained=0;std::string backend,modelSha,modelLabels,source,message;bool cudaVerified=false;};
 struct EnemySnapshot{std::chrono::steady_clock::time_point observedAt{};bool busy=false;std::string status="no_model",message="Select your trained enemy ONNX model";std::uint64_t completed=0;EnemyObservation latest;std::shared_ptr<const CapturedFrame> analyzedFrame;};
 double enemyFrameAgeMs(const EnemySnapshot&,std::chrono::steady_clock::time_point now=std::chrono::steady_clock::now());
 bool enemyResultFresh(const EnemySnapshot&,int maxAgeMs,std::chrono::steady_clock::time_point now=std::chrono::steady_clock::now());
@@ -18,6 +18,9 @@ std::vector<EnemyBox> decodeEnemyOutput(const float*,size_t,const EnemyImage&,fl
 std::vector<EnemyBox> decodeRobloxOutput(const float*,size_t,const EnemyImage&,float confidence,float iou);
 bool saveEnemyOptions(const std::filesystem::path&,const EnemyOptions&,std::string&);
 bool loadEnemyOptions(const std::filesystem::path&,EnemyOptions&,std::string&);
+class EnemyContinuity{public:void reset();std::vector<EnemyBox> update(const std::vector<EnemyBox>&,const EnemyOptions&,const CapturedFrame&);private:std::vector<EnemyBox> confirmed_;double seen_=-1;unsigned width_=0,height_=0;};
+struct EnemyDisplayState{std::vector<EnemyBox> boxes;bool held=false;};
+class EnemyDisplayCache{public:void reset();EnemyDisplayState update(const EnemySnapshot&,int maxAgeMs,int graceMs,bool enabled,std::chrono::steady_clock::time_point now=std::chrono::steady_clock::now());private:std::vector<EnemyBox> boxes_;std::chrono::steady_clock::time_point stamp_{},missing_{};std::string source_;unsigned width_=0,height_=0;std::uint64_t completed_=0;};
 class EnemyDetector{public:virtual ~EnemyDetector()=default;virtual EnemyObservation run(const CapturedFrame&,const EnemyOptions&)=0;};
 std::unique_ptr<EnemyDetector> makeEnemyDetector(const EnemyOptions&);
 class EnemyService{
