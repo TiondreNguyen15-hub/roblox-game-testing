@@ -1,3 +1,17 @@
+# Apex Vision workspace — organized loader update
+
+[Download the organized workspace](Apex-Workspace-Update.zip) · [Navigation/setup guide](apex-visualizer/GAME-ESP-README.md) · [Validation](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+The loader now opens on **Home**, with capture/model status and a three-step setup checklist. Workspace navigation follows **Capture > Detection > Tracking**. Appearance, System and Settings are separate; JSON/simulated tools remain in Advanced > Data lab.
+
+Tracking has X / Y / FOV tabs. Detection keeps live/exact previews and the recorded text reader, with tuning, overlay and diagnostics grouped separately. System separates live Performance from Compute checks. The dark theme, spacing, cards and persistent disarmed/armed footer replace the previous flat settings stack. Runtime activation and data/model systems are unchanged.
+
+Leave your working demo open, **Extract All**, then run **Update-Game-ESP.cmd**. GPU files, saved models and settings stay in place. Use the combined GPU repair launcher only if that copy still lacks CUDA dependencies. Existing saved window sizes are respected; click **Expand layout** for the roomier view.
+
+Screenshots in the guide are CPU renders of the actual ImGui interface with no source/model connected; they are not Windows/game/hardware validation. Actual PC GPU/model behavior and Apex input acceptance still require direct testing; this UI update makes no performance or accuracy claim.
+
+---
+
 # Tracking category: X, Y and FOV overlay
 
 [Download the Tracking update](Apex-Tracking-Update.zip) · [Instructions](apex-visualizer/TRACKING.md) · [Actual validation](apex-visualizer/GAME-ESP-VALIDATION.md)

@@ -1,8 +1,21 @@
-# Game ESP: local enemy-model capture analysis
+# Workspace: capture, detection and tracking
 
-The sidebar's **HUD Reader** entry is now **Game ESP**. This page loads your local trained model and shows a live captured preview with the latest candidate boxes. Exact analyzed-frame viewing remains optional. Existing recording text tools remain in a collapsed section; JSON/simulated visuals, settings, OBS capture, DX11 rendering and compute benchmarks remain.
 
-## New Tracking category
+The sidebar's **HUD Reader** entry is now **Detection**. This page loads your local trained model and shows a live captured preview with the latest candidate boxes. Exact analyzed-frame viewing remains optional. Existing recording text tools remain in a collapsed section; JSON/simulated visuals, settings, OBS capture, DX11 rendering and compute benchmarks remain.
+
+## Navigation
+
+The app opens on **Home**, with actual capture/model status and three setup steps. Use **Capture > Detection > Tracking** in order. **Appearance**, **System** and **Settings** are grouped under Manage; local JSON and simulated visuals remain under **Data lab** in Advanced.
+
+**Detection** is the former Game ESP page. Live and exact-frame previews, Apex/Roblox profiles, model selection, overlay and recorded text reader remain. Open **Detection tuning and saving** for CUDA preference, score/overlap/cadence and Save enemy setup; open **Model details and diagnostics** for hashes and copied results. **Recorded text reader** preserves the OCR controls.
+
+**Tracking** has visible setup/activation steps and separate **X / horizontal**, **Y / vertical** and **FOV overlay** tabs. Detailed counters and copied tracking status are under **Tracking status and diagnostics**. Activation rules, F9 and saved settings are unchanged.
+
+**System** opens on Performance. Choose **Compute checks** for validation, custom-model benchmarks, cancellation and detailed results. Those tests remain distinct from your detection model. **Settings** saves the existing configuration; **Appearance** controls the accent and window size. Existing saved dimensions are preserved; **Expand layout** switches to the roomier workspace without silently overwriting your preferences.
+
+Capture selection, model loading and tracking arming remain explicit actions. Home buttons only open the relevant page; they do not arm tracking. Backend badges describe actual detector results, not driver detection or presumed GPU success.
+
+## Tracking category
 
 **Tracking** now has separate **X / horizontal**, **Y / vertical** and **FOV overlay** sections. Configure the existing Apex detector/capture first; then Refresh Apex windows and select the actual game window. The FOV circle can show without desktop boxes. Arming is off at startup; mouse following requires the selected game focused and the right mouse button held. Release the button to stop; **F9** disarms globally. **F8** hides/shows overlay graphics without disarming. Settings load disarmed and do not restore a window selection.
 
@@ -15,14 +28,14 @@ Save/Load tracking setup is separate from model and renderer settings. Full inst
 1. **For your confirmed CPU-only runtime:** leave the one demo open if possible (otherwise select its installed EXE when prompted), extract the complete update ZIP, and run **Update-And-Enable-GPU.cmd**. It captures that executable path, runs the existing pinned GPU repair helper, then updates that same copy. Up to 1.4 GB may download; cached packages are reused. The optional normal update below preserves installed files without repairing a missing GPU runtime. Installation is not proof of model GPU execution.
 
    For a copy that already has working GPU dependencies, leave your current working demo open. Download **Apex-Game-ESP-Update.zip**, right-click it and choose **Extract All**. Open the extracted folder and double-click **Update-Game-ESP.cmd**. The updater locates your running demo, closes it normally, backs up its executable, updates it and reopens it. Keep your existing GPU libraries; no GPU reinstall is required.
-2. Open **Game ESP**, then **Browse enemy ONNX model**. Select your local `SingularityMetaV3_recovered.onnx` file. If it is inside a ZIP, extract the ZIP first. The private trained weights are deliberately not included in the public download.
-3. Choose **Open recording for enemy analysis**, or start your existing OBS receiver on **Capture** and return to **Game ESP**. Browse automatically enables incoming-frame analysis. **Detect enemies in current frame** also works with a paused recording.
+2. Open **Detection**, then **Choose ONNX model**. Select your local `SingularityMetaV3_recovered.onnx` file. If it is inside a ZIP, extract the ZIP first. The private trained weights are deliberately not included in the public download.
+3. Choose **Open recording for enemy analysis**, or start your existing OBS receiver on **Capture** and return to **Detection**. Browse automatically enables incoming-frame analysis. **Analyze current frame** also works with a paused recording.
 4. Adjust **Detection score** and **Overlap suppression** if needed. Default score is 0.50. **Save enemy setup** preserves the local model path, CUDA preference, thresholds and analysis interval in `%LOCALAPPDATA%/ApexVisualization/enemy-settings.json`.
-5. Read **Backend**. Only `CUDA EP execution profiled (CPU ops permitted)` means this detector actually executed a non-copy CUDA node. It is separate from the math-model validation. CPU fallback includes its reason. Use **Copy Game ESP diagnostics** if initialization fails.
+5. Read **Backend**. Only `CUDA EP execution profiled (CPU ops permitted)` means this detector actually executed a non-copy CUDA node. It is separate from the math-model validation. CPU fallback includes its reason. Use **Copy Detection diagnostics** if initialization fails.
 
-The preview now updates from live capture independently of model completion. The previous default preview waited for each model result, so a 150 ms detection interval alone limited its visible refresh to about 6.7 updates/second even with fast inference. Keep **Show exact analyzed frame (updates at model speed)** unchecked for the smooth live view. Enable it to inspect boxes on their exact source pixels. Live boxes are delayed model results; result age and processing latency are displayed separately from actual capture FPS. This removes that preview coupling, but does not establish an RTX speedup or guarantee against GPU contention. The queue holds at most one pending frame and drops older pending work, rather than building an increasing backlog. Detection interval limits submissions; it is not an inference FPS claim. To unload the model fully, close the app. Browse again to reload a model replaced at the same path.
+The preview now updates from live capture independently of model completion. The previous default preview waited for each model result, so a 150 ms detection interval alone limited its visible refresh to about 6.7 updates/second even with fast inference. Keep **Exact analyzed frame (updates at model speed)** unchecked for the smooth live view. Enable it to inspect boxes on their exact source pixels. Live boxes are delayed model results; result age and processing latency are displayed separately from actual capture FPS. This removes that preview coupling, but does not establish an RTX speedup or guarantee against GPU contention. The queue holds at most one pending frame and drops older pending work, rather than building an increasing backlog. Detection interval limits submissions; it is not an inference FPS claim. To unload the model fully, close the app. Browse again to reload a model replaced at the same path.
 
-If boxes still update slowly, check **Backend**. `ONNX CPU` means this model is not running on the RTX 3070, even if a previous math-model test passed in another app folder. **Copy Game ESP diagnostics** now includes actual capture FPS, UI frame time, model processing time and result age so these can be distinguished. The updater preserves GPU files in the selected app folder. If diagnostics show that its GPU runtime files are missing, the update includes an optional **GPU-Reinstall/Reinstall-GPU.cmd** helper: leave the demo open and run that helper from the extracted update. It targets the currently running copy, installs pinned local dependencies (up to 1.4 GB; cached downloads reused), then reopens it. It does not run automatically, and installation alone does not verify CUDA execution. A GPU initialization/model error requires diagnosing that actual error, not assuming reinstall is the solution.
+If boxes still update slowly, check **Backend**. `ONNX CPU` means this model is not running on the RTX 3070, even if a previous math-model test passed in another app folder. **Copy Detection diagnostics** now includes actual capture FPS, UI frame time, model processing time and result age so these can be distinguished. The updater preserves GPU files in the selected app folder. If diagnostics show that its GPU runtime files are missing, the update includes an optional **GPU-Reinstall/Reinstall-GPU.cmd** helper: leave the demo open and run that helper from the extracted update. It targets the currently running copy, installs pinned local dependencies (up to 1.4 GB; cached downloads reused), then reopens it. It does not run automatically, and installation alone does not verify CUDA execution. A GPU initialization/model error requires diagnosing that actual error, not assuming reinstall is the solution.
 
 ## If the combined launcher did not reopen the app
 
@@ -35,9 +48,9 @@ If startup fails, the launcher reports the exit/failure and saves **launch-failu
 ## Roblox test profile (Apex stays primary)
 
 1. Capture Roblox in OBS, fit the full game view to its canvas and start Virtual Camera. In the app use **Capture > Start OBS Virtual Camera**.
-2. Open **Game ESP > Model profile > Roblox (test, YOLO 640px)**.
-3. **Browse enemy ONNX model** and choose your local **RobloxAIO-harlan.onnx**. Trained weights are separate and are not included in the public download.
-4. Enable **Analyze incoming capture frames**. Leave **Show exact analyzed frame** unchecked for live preview; optionally enable the desktop overlay for the selected monitor.
+2. Open **Detection > Model profile > Roblox (test, YOLO 640px)**.
+3. **Choose ONNX model** and choose your local **RobloxAIO-harlan.onnx**. Trained weights are separate and are not included in the public download.
+4. Enable **Enable detection**. Leave **Exact analyzed frame** unchecked for live preview; optionally enable the desktop overlay for the selected monitor.
 5. Check actual Backend and candidates against visible targets. Only a profiled CUDA execution status proves GPU work; CPU fallback remains explicit. Accuracy and Roblox-specific target coverage require footage, not a black-image sanity test.
 6. **Save enemy setup** stores the Roblox model path and thresholds separately. Switching profiles also saves the previous setup; it clears old detections and disables analysis until you select a model or enable it again. Select **Apex (primary, 416px)** to return. The app starts on the Apex profile each launch.
 
@@ -49,10 +62,10 @@ The inspected Roblox export uses FP32 `images` [1,3,640,640] -> `output0` [1,5,8
 
 1. Put Apex in **Borderless Window** or windowed mode on your main monitor. Exclusive fullscreen is not supported by this desktop window.
 2. In OBS, capture the full game view. Prefer **Window Capture** of the game, fit it to the OBS canvas, and start **Virtual Camera**. Cropped scenes, a webcam inset or extra borders can misalign detection boxes.
-3. In the demo, **Capture > Start OBS Virtual Camera**, then **Game ESP > Browse enemy ONNX model** and choose your local model. Keep **Analyze incoming capture frames** enabled.
-4. Check **Desktop overlay (live capture)**. Leave **Overlay monitor** set to **Primary monitor** for your main screen, or choose another display. The overlay starts off each time you launch the app.
-5. Switch back to the game. The purple **Game ESP** badge and any actual **Enemy?** boxes appear on the selected monitor. You can minimize the demo; its capture and inference continue while the overlay is enabled.
-6. Press **F8** to hide/show the overlay while the game has focus. If another app owns that hotkey, Game ESP reports it; use the checkbox instead. Close the demo to remove the overlay entirely.
+3. In the demo, **Capture > Start OBS Virtual Camera**, then **Detection > Choose ONNX model** and choose your local model. Keep **Enable detection** enabled.
+4. Check **Desktop boxes (live capture)**. Leave **Overlay monitor** set to **Primary monitor** for your main screen, or choose another display. The overlay starts off each time you launch the app.
+5. Switch back to the game. The purple **Detection** badge and any actual **Enemy?** boxes appear on the selected monitor. You can minimize the demo; its capture and inference continue while the overlay is enabled.
+6. Press **F8** to hide/show the overlay while the game has focus. If another app owns that hotkey, Detection reports it; use the checkbox instead. Close the demo to remove the overlay entirely.
 
 The overlay is a separate click-through, non-activating Windows desktop window, so it does not intercept game clicks or keyboard focus. It displays captured-image detections with capture/inference delay; boxes do not predict target motion. It clears boxes one second after the last completed analysis and hides when live capture stops or when a recording is selected. A visible badge without boxes means no fresh accepted detections, not proof of correct enemy recognition.
 

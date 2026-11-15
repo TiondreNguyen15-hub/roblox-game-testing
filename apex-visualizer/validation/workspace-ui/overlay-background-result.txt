@@ -1,0 +1,1 @@
+PASS: actual OBS placeholder -> synthetic ONNX contract -> desktop overlay; app minimized; capture_frames_before=3; after=13; analyses_before=1; after=3; status=Desktop overlay active; boxes expire after 1 second without a new result; trained model / gameplay not tested

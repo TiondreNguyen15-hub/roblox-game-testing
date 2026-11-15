@@ -1,15 +1,18 @@
 {
-  "phase": "Tracking category: X/Y, FOV and focused hold-to-activate mouse input",
-  "source_commit": "aeffec7400f5897235fa56414f81124473053f2a",
-  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43737291921",
-  "combined_launcher_validation": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43738217539",
-  "updater_validation": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43736087155",
-  "exe_sha256": "00fcef88c49141c48969b316afff4c6be2fc30d7fd5c96298119e34287089e30",
+  "phase": "Organized Apex Vision workspace UI",
+  "source_commit": "0d40f6f7e594248ff84bfa10a3572462f0580229",
+  "windows_ci": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43744551295",
+  "combined_launcher_validation": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43745297183",
+  "updater_validation": "https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43745300804",
+  "exe_sha256": "7e2c6b1d31bfbe9583efdaaca67b39c3ef66a19a93b1d919c7ca0d0941ae744c",
   "native_windows_ctest_suites": 18,
   "portable_and_sanitizer_suites": 14,
+  "interface_pages": 8,
+  "navigation": "Home, Capture, Detection, Tracking; Appearance/System/Settings; Advanced Data lab",
+  "settings_preserved": "Existing valid saved sizes, model paths, profile settings, tracking preferences and GPU files retained; fresh defaults use 1000x740",
+  "activation_logic": "unchanged; disarmed startup, focus/hold/freshness/FOV/hotkey gates retained",
   "desktop_input_probe": "PASS actual Windows SendInput through focus/hold guard in OWN test window; observed cursor delta=1,0; button released and cursor restored; no live game, Apex acceptance, trained-model GPU or aim accuracy tested",
-  "game_input_acceptance": "Not tested; Windows event acceptance is not Apex camera acceptance",
-  "tracking": "Independent axes, receiver-frame age limit, circular pixel FOV, explicit per-launch arming, right-button hold, focus/handle/PID checks, global F9 disarm",
   "private_models_included": false,
-  "preserved": "Apex/Roblox detector profiles, model settings, DX11, OBS, live/exact previews, old OCR, existing GPU dependencies"
+  "screenshots": "Actual ImGui UI rendered by CPU with disconnected/default state, not Windows/GPU/game validation",
+  "remaining_pc_tests": "User workflow, actual DPI/multi-monitor behavior, private-model GPU execution and Apex input acceptance require PC; no performance improvement claimed"
 }

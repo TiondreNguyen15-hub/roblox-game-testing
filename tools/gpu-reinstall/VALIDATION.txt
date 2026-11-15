@@ -1,8 +1,8 @@
-Current native startup/launcher checks:
-https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43738217539
+Current workspace native startup/launcher checks:
+https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43745297183
 
-Actual native GUI startup/close, immediate-exit diagnostics, exact spaced target, stage ordering, no intermediate launch and closed-app recovery passed. Child GPU/update stages were isolated stubs; no user-PC GPU install or game input acceptance is claimed.
-Pinned GPU dependency installation/loading was exercised by the full native workflow:
-https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43737291921
+Actual native GUI startup/close, early-exit diagnostics, target handoff, stage ordering and closed-app recovery passed. Child GPU/update stages were isolated stubs, not a user-PC install.
+Complete native regression/dependency workflow:
+https://github.com/TiondreNguyen15-hub/roblox-game-testing/actions/runs/43744551295
 
-Actual trained-model CUDA execution, camera response, game acceptance and game performance require the user's PC. Installation alone is not GPU execution proof.
+Real PC model/GPU performance, game input acceptance, DPI/multi-monitor behavior and interactive setup still require PC checks. Installation alone does not verify GPU execution.

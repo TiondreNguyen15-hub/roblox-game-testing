@@ -1,12 +1,14 @@
-TRACKING UPDATE
+ORGANIZED WORKSPACE UPDATE
 
-For a copy with working GPU files: leave the demo open, Extract All, then run Update-Game-ESP.cmd.
-If that copy still has a CPU-only ONNX runtime: use Update-And-Enable-GPU.cmd instead. If the app is closed, select its installed EXE when prompted. Pinned GPU packages may download; cached files are reused.
+1. Leave your working demo open. Extract ALL files from this ZIP.
+2. Run Update-Game-ESP.cmd. GPU libraries, existing models and saved settings are preserved.
+3. The app opens on Home. Follow Capture > Detection > Tracking.
 
-Capture Apex Firing Range in OBS, start Virtual Camera and the app receiver. Enable the existing Apex model on Game ESP.
-Open Tracking > Refresh Apex windows > select the game. Configure X / Y and enable the FOV circle.
-Arm explicitly, focus the selected game and HOLD RIGHT MOUSE. Release to stop. F9 globally disarms. F8 only hides/shows graphics.
-Arming and target window are not restored from settings. Windows accepting input does not prove Apex uses it.
+Detection is the former Game ESP page. Tuning/saving, overlay, diagnostics and recorded OCR are grouped in sections.
+Tracking uses X / horizontal, Y / vertical and FOV overlay tabs. F9 disarms. F8 only controls overlay visibility.
+System > Compute checks holds the existing validation and benchmark controls. Data lab holds local JSON/simulated visuals.
+Click Expand layout if your previous saved window size is compact. Model paths and arming behavior are unchanged.
 
-Keep your private ONNX files; they are not included. See payload/TRACKING.md and GAME-ESP-README.md for setup and limits.
-If startup fails: send launch-failure.txt from beside the installed executable.
+For a CPU-only runtime, the optional Update-And-Enable-GPU.cmd repairs GPU dependencies and updates that exact app. Installation alone is not proof of GPU execution.
+Trained ONNX weights remain separate. See payload/GAME-ESP-README.md and payload/TRACKING.md.
+If startup fails, send launch-failure.txt from beside the installed executable.
