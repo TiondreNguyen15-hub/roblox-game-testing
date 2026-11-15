@@ -27,17 +27,18 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
   if(ImGui::GetWindowWidth()>650*scale){ImGui::SameLine(ImGui::GetWindowContentRegionMax().x-135*scale);if(ImGui::SmallButton("Expand layout")){s.menuWidth=1000;s.menuHeight=740;}}
   ImGui::Spacing();ImGui::Separator();ImGui::Spacing();
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding,{12,12});ImGui::BeginChild("Sidebar",{155*scale,-32},true);
-  ImGui::TextDisabled("WORKSPACE");ImGui::Spacing();nav("Home",7,tab_,accent);nav("Capture",4,tab_,accent);nav("Detection",5,tab_,accent);nav("Tracking",6,tab_,accent);
+  ImGui::TextDisabled("WORKSPACE");ImGui::Spacing();nav("Home",7,tab_,accent);nav("Capture",4,tab_,accent);nav("Detection",5,tab_,accent);nav("Tracking",6,tab_,accent);nav("Screen overlay",8,tab_,accent);
   ImGui::Spacing();ImGui::Separator();ImGui::Spacing();ImGui::TextDisabled("MANAGE");ImGui::Spacing();nav("Appearance",1,tab_,accent);nav("System",2,tab_,accent);nav("Settings",3,tab_,accent);
   ImGui::Spacing();ImGui::Separator();ImGui::Spacing();ImGui::TextDisabled("ADVANCED");ImGui::Spacing();nav("Data lab",0,tab_,accent);ImGui::EndChild();ImGui::PopStyleVar();ImGui::SameLine();
   ImGui::BeginChild("Page",{0,-32},false);ImGui::PushItemWidth(std::max(110.f,ImGui::GetContentRegionAvail().x*.58f));
-  const char* titles[]={"Data lab","Appearance","System","Settings","Capture","Detection","Tracking","Home"};tab_=std::clamp(tab_,0,7);
-  const char* subtitles[]={"Local JSON and simulated visualization tools.","Theme, window layout and rendering preferences.","Live performance and optional compute checks.","Saved preferences and application files.","Connect a video source before starting detection.","Choose a model and inspect its captured results.","Configure the window, axes and tracking circle.","A clear path from capture to your workspace."};
+  const char* titles[]={"Data lab","Appearance","System","Settings","Capture","Detection","Tracking","Home","Screen overlay"};tab_=std::clamp(tab_,0,8);
+  const char* subtitles[]={"Local JSON and simulated visualization tools.","Theme, window layout and rendering preferences.","Live performance and optional compute checks.","Saved preferences and application files.","Connect a video source before starting detection.","Choose a model and inspect its captured results.","Configure the window, axes and tracking circle.","A clear path from capture to your workspace.","Draw on your actual monitor, independently of the preview."};
   ImGui::TextUnformatted(titles[tab_]);hint(subtitles[tab_]);ImGui::Spacing();ImGui::Separator();ImGui::Spacing();
   if(tab_==7){
    bool captured=device.capture.running&&device.capture.frame;bool configured=!enemyOptions.modelPath.empty();bool modelReady=device.enemy.completed>0&&device.enemy.status!="unavailable";bool cuda=device.enemy.latest.cudaVerified;
    int columns=ImGui::GetContentRegionAvail().x<420?1:3;
    if(ImGui::BeginTable("HomeStatus",columns,ImGuiTableFlags_SizingStretchSame)){ImGui::TableNextColumn();statCard("CaptureCard","CAPTURE",captured?(device.capture.isRecording?"Recording":"Live"):"Not connected",captured?"Frames received":"Connect OBS or a recording",captured?good:muted);ImGui::TableNextColumn();statCard("ModelCard","DETECTION",device.enemy.status=="unavailable"?"Needs attention":modelReady?"Results received":configured?"Configured":"No model",enemyOptions.profile==EnemyProfile::Apex416?"Apex profile":"Roblox profile",device.enemy.status=="unavailable"?warning:modelReady?good:muted);ImGui::TableNextColumn();statCard("EngineCard","LAST MODEL RUN",cuda?"CUDA profiled":device.enemy.latest.backend=="ONNX CPU"?"CPU":"Not verified",cuda?"CPU operators may also run":"Last detector result",cuda?good:muted);ImGui::EndTable();}
+   if(ImGui::Button("Show overlay on my screen")){overlayOptions.enabled=true;overlayRequest_=1;tab_=8;}ImGui::SameLine();if(ImGui::Button("Overlay settings"))tab_=8;
    section("Get started", "Complete these steps in order. Existing model and tracking preferences stay separate.");
    if(stepCard("StepCapture","01","Connect capture",captured?"Your video source has delivered frames. Open Capture to inspect it.":"Start OBS Virtual Camera, then connect it here.","Capture",captured))tab_=4;
    if(stepCard("StepModel","02","Choose a detector",configured?"Your model path is configured. Enable analysis and check the preview.":"Select the Apex or Roblox profile and choose your local ONNX file.","Detection",modelReady))tab_=5;
@@ -131,6 +132,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::SetNextItemOpen(!showTextTools,ImGuiCond_Once);
    if(ImGui::CollapsingHeader("Model and live preview")){
 
+   if(ImGui::Checkbox("Show overlay on my screen",&overlayOptions.enabled))overlayRequest_=1;ImGui::SameLine();if(ImGui::Button("Screen settings"))tab_=8;
    int selectedProfile=static_cast<int>(enemyOptions.profile);const char* profileNames[]={"Apex (primary, 416px)","Roblox (test, YOLO 640px)"};
    if(ImGui::Combo("Model profile",&selectedProfile,profileNames,2)){std::string error;auto root=Config::defaultPath().parent_path();if(!saveEnemyOptions(enemySettingsFile(root,enemyOptions.profile),enemyOptions,error))notice_=error;else{EnemyOptions next=enemyOptions;next.profile=static_cast<EnemyProfile>(selectedProfile);next.modelPath.clear();next.confidence=.5f;next.iou=.45f;next.intervalMs=150;auto path=enemySettingsFile(root,next.profile);if(std::filesystem::exists(path)&&!loadEnemyOptions(path,next,error))notice_=error;else{enemyOptions=next;enemyEnabled=false;enemyRequest_=4;notice_="Profile changed; previous model path/settings saved separately. Start capture and enable analysis.";}}}
 
@@ -145,7 +147,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    const double resultAge=device.enemy.completed?std::chrono::duration<double>(std::chrono::steady_clock::now()-device.enemy.observedAt).count():0;
    if(previewFrame&&previewTexture){auto frame=previewFrame;float w=std::min(ImGui::GetContentRegionAvail().x,190.f*frame->width/frame->height);ImVec2 size{w,w*frame->height/frame->width};auto origin=ImGui::GetCursorScreenPos();ImGui::Image(static_cast<ImTextureID>(previewTexture),size);if(exact||(device.enemy.completed&&resultAge<1.0))for(const auto& box:device.enemy.latest.boxes){auto* draw=ImGui::GetWindowDrawList();ImVec2 a{origin.x+box.x1*size.x,origin.y+box.y1*size.y},b{origin.x+box.x2*size.x,origin.y+box.y2*size.y};draw->AddRect(a,b,IM_COL32(255,90,110,255),0,0,2);char text[64];snprintf(text,sizeof(text),"Enemy? %.2f",box.score);draw->AddText(a,IM_COL32(255,220,220,255),text);}if(exact)ImGui::Text("Exact analyzed frame %llu | %zu candidates | %.1f ms",static_cast<unsigned long long>(device.enemy.latest.sequence),device.enemy.latest.boxes.size(),device.enemy.latest.latencyMs);else{ImGui::Text("Live capture %.1f FPS | frame %llu",device.capture.fps,static_cast<unsigned long long>(frame->sequence));if(device.enemy.completed)ImGui::Text("Detection frame %llu | age %.0f ms | processing %.1f ms",static_cast<unsigned long long>(device.enemy.latest.sequence),resultAge*1000,device.enemy.latest.latencyMs);else ImGui::TextDisabled("Live preview continues while the model initializes / analyzes");}}
    if(ImGui::CollapsingHeader("Desktop overlay and monitor")){
-   ImGui::Checkbox("Desktop boxes (live capture)",&overlayOptions.enabled);
+   ImGui::Checkbox("Draw detected boxes on screen",&overlayOptions.showBoxes);
    if(ImGui::BeginCombo("Overlay monitor",device.overlayMonitors.empty()?"No monitor":device.overlayMonitors[std::clamp(overlayOptions.monitor,0,int(device.overlayMonitors.size())-1)].c_str())){for(int n=0;n<int(device.overlayMonitors.size());++n)if(ImGui::Selectable(device.overlayMonitors[n].c_str(),overlayOptions.monitor==n))overlayOptions.monitor=n;ImGui::EndCombo();}
    ImGui::Checkbox("Fit capture aspect ratio to monitor",&overlayOptions.fitAspect);
    ImGui::TextWrapped("%s",device.overlayStatus.c_str());ImGui::TextWrapped("%s",device.overlayHotkey?"F8: show/hide overlay, even while the game has focus":"F8 unavailable (already reserved); use the overlay checkbox");
@@ -215,7 +217,7 @@ ImGui::Checkbox("Enable X",&trackingOptions.x.enabled);ImGui::SliderFloat("X res
     if(ImGui::BeginTabItem("Y / vertical")){hint("Vertical response, independent of X.");
 ImGui::Checkbox("Enable Y",&trackingOptions.y.enabled);ImGui::SliderFloat("Y response",&trackingOptions.y.gain,0,5,"%.2f counts / pixel / second");ImGui::SliderFloat("Y smoothing",&trackingOptions.y.smoothingMs,0,200,"%.0f ms");ImGui::SliderFloat("Y speed limit",&trackingOptions.y.maxSpeed,10,500,"%.0f counts / second");ImGui::EndTabItem();}
     if(ImGui::BeginTabItem("FOV overlay")){
-ImGui::Checkbox("Show tracking FOV circle",&trackingOptions.showFov);ImGui::SliderFloat("FOV radius",&trackingOptions.radius,20,800,"%.0f client pixels");ImGui::TextWrapped("Circle centered on selected game client; this is a pixel radius, not the game's camera FOV angle. Use the same full-view OBS capture and selected overlay monitor.");ImGui::EndTabItem();}
+bool fovOn=trackingOptions.showFov&&overlayOptions.enabled&&!device.overlayHidden;if(ImGui::Checkbox("Show FOV circle on my screen",&fovOn)){trackingOptions.showFov=fovOn;if(fovOn)overlayOptions.enabled=true;overlayRequest_=1;}ImGui::SliderFloat("FOV radius",&trackingOptions.radius,20,800,"%.0f client pixels");ImGui::TextWrapped("Circle centered on selected game client; this is a pixel radius, not the game's camera FOV angle. Use the same full-view OBS capture and selected overlay monitor.");ImGui::EndTabItem();}
     ImGui::EndTabBar();
    }
    if(ImGui::CollapsingHeader("Tracking limits")){ImGui::SliderFloat("Center deadzone",&trackingOptions.deadzone,0,30,"%.1f px");ImGui::SliderFloat("Box anchor Y",&trackingOptions.anchor,.1f,.9f,"%.2f");ImGui::SliderFloat("Maximum received-frame age",&trackingOptions.maxAgeMs,50,500,"%.0f ms");ImGui::TextWrapped("Anchor is a point inside the model box, not an actual joint. Receiver age excludes unknown OBS sender delay. Slow/failed inference stops mouse output. Adjust game sensitivity and X/Y response manually.");}
@@ -226,6 +228,20 @@ ImGui::Checkbox("Show tracking FOV circle",&trackingOptions.showFov);ImGui::Slid
    if(ImGui::Button("Copy tracking diagnostics")){auto text="Tracking: "+device.tracking.status+"\nError: "+device.trackingError+"\nWindow: "+trackingWindow.title+"\nFrame age ms: "+std::to_string(device.tracking.ageMs)+"\nCapture FPS: "+std::to_string(device.capture.fps)+"\nBackend: "+device.enemy.latest.backend+"\nModel message: "+device.enemy.message+"\nWindows input events accepted: "+std::to_string(device.trackingSent);ImGui::SetClipboardText(text.c_str());}
    }
    ImGui::TextWrapped("%s",notice_.c_str());if(ImGui::CollapsingHeader("How tracking works"))hint("Only visible model candidates are used. Windows accepting input does not prove Apex uses it. Release right mouse or use F9 to disarm; F8 only changes overlay visibility.");
+  }else if(tab_==8){
+   section("Actual screen overlay", "This creates a separate, transparent desktop window. It is not the preview image.");
+   if(ImGui::Checkbox("Show overlay on my screen",&overlayOptions.enabled))overlayRequest_=1;
+   ImGui::TextColored(device.overlayVisible?good:muted,"%s",device.overlayVisible?"VISIBLE ON DESKTOP":device.overlayHidden?"HIDDEN BY F8":"OFF / STARTING");
+   if(ImGui::Button("Show on screen",{150,0})){overlayOptions.enabled=true;overlayRequest_=1;}ImGui::SameLine();if(ImGui::Button("Hide overlay",{150,0})){overlayOptions.enabled=false;overlayRequest_=1;}
+   hint("When enabled, the APEX VISION badge and configured circle appear on this monitor, even before a model is loaded. F8 toggles visibility; it does not arm tracking.");
+   section("Monitor and graphics");
+   if(ImGui::BeginCombo("Screen",device.overlayMonitors.empty()?"Primary monitor":device.overlayMonitors[std::clamp(overlayOptions.monitor,0,int(device.overlayMonitors.size())-1)].c_str())){for(int n=0;n<int(device.overlayMonitors.size());++n)if(ImGui::Selectable(device.overlayMonitors[n].c_str(),overlayOptions.monitor==n))overlayOptions.monitor=n;ImGui::EndCombo();}
+   ImGui::Checkbox("Draw FOV circle",&trackingOptions.showFov);ImGui::SliderFloat("Circle radius",&trackingOptions.radius,20,800,"%.0f pixels");
+   ImGui::Checkbox("Draw detected boxes",&overlayOptions.showBoxes);ImGui::Checkbox("Fit capture aspect ratio",&overlayOptions.fitAspect);
+   hint("Without a selected game window, the circle is centered on this monitor. With a valid selected Apex window, it follows that client center. Choose the monitor containing the game.");
+   ImGui::TextWrapped("%s",device.overlayStatus.c_str());
+   if(ImGui::CollapsingHeader("If you cannot see it"))hint("Use borderless/windowed game mode. Exclusive fullscreen may cover desktop overlays. Check the selected monitor and F8 state. The overlay is click-through and never takes game focus. Detection boxes still require fresh live model results; recordings stay inside the preview.");
+   if(ImGui::Button("Open Capture"))tab_=4;ImGui::SameLine();if(ImGui::Button("Open Detection"))tab_=5;
   }else{
    section("Preferences", "Save the renderer, theme and data-lab settings. Model and tracking setup have their own save controls.");
    if(ImGui::Button("Save configuration")){std::string error;notice_=Config::save(Config::defaultPath(),s,error)?"Configuration saved.":error;}

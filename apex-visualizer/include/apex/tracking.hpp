@@ -5,7 +5,7 @@ struct TrackingAxis {bool enabled=true;float gain=1.2f,smoothingMs=60,maxSpeed=1
 struct TrackingOptions {bool armed=false,showFov=true;TrackingAxis x,y;float radius=150,deadzone=3,anchor=.5f,maxAgeMs=250;};
 struct TrackingContext {double now=0,frameTime=0;std::uint64_t sequence=0;float width=0,height=0;bool live=false,focused=false,hold=false,emergencyAvailable=false;};
 struct TrackingResult {bool target=false,engaged=false;float x=0,y=0,errorX=0,errorY=0,ageMs=0;int moveX=0,moveY=0;std::uint64_t targetId=0;std::string status="Disarmed";};
-struct TrackingOverlay {bool visible=false,marker=false;float centerX=0,centerY=0,radius=150,targetX=0,targetY=0;std::string label;};
+struct TrackingOverlay {bool visible=false,marker=false,useMonitorCenter=false;float centerX=0,centerY=0,radius=150,targetX=0,targetY=0;std::string label;};
 struct TrackingWindow {std::uintptr_t handle=0;unsigned long process=0;std::string title;};
 struct TrackingWindowState {bool valid=false,focused=false,hold=false;float left=0,top=0,width=0,height=0;std::string status;};
 class TargetTracker {
