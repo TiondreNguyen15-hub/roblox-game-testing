@@ -7,12 +7,14 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <cstdlib>
 int main(int argc,char** argv){
  const int width=1280,height=800;ImGui::CreateContext();auto& io=ImGui::GetIO();io.IniFilename=nullptr;io.DisplaySize={float(width),float(height)};io.DeltaTime=1.f/60;
  if(std::filesystem::exists("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))io.Fonts->AddFontFromFileTTF("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",16.f);
  unsigned char* atlas;int tw,th;io.Fonts->GetTexDataAsRGBA32(&atlas,&tw,&th);io.Fonts->SetTexID((ImTextureID)1);
- apex::Simulation scene;scene.update(1,24);apex::Settings settings;settings.liveFile=false;settings.menuWidth=740;settings.menuHeight=550;apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics system;apex::DeviceInfo device{"CPU documentation preview",0};apex::RenderStats stats;
- ImGui::NewFrame();auto v=visuals.draw(scene,settings,width,height);menu.draw(settings,device,system,stats,v,true,1);ImGui::Render();
+ apex::Simulation scene;scene.update(1,24);apex::Settings settings;settings.liveFile=false;settings.menuWidth=1000;settings.menuHeight=740;apex::Visuals visuals;apex::Menu menu;apex::SystemMetrics system;apex::DeviceInfo device{"CPU documentation preview",0};apex::RenderStats stats;
+ if(argc>2)menu.selectPage(static_cast<apex::MenuPage>(std::clamp(std::atoi(argv[2]),0,7)));
+ for(int frame=0;frame<3;++frame){ImGui::NewFrame();apex::VisualStats v{};menu.draw(settings,device,system,stats,v,true,1);ImGui::Render();}
  std::vector<unsigned char> image(size_t(width*height*3),0);auto* data=ImGui::GetDrawData();
  auto edge=[](ImVec2 a,ImVec2 b,ImVec2 p){return (p.x-a.x)*(b.y-a.y)-(p.y-a.y)*(b.x-a.x);};
  for(int n=0;n<data->CmdListsCount;++n){const auto* list=data->CmdLists[n];for(const auto& cmd:list->CmdBuffer){if(cmd.UserCallback)continue;
