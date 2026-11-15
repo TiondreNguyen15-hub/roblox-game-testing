@@ -1,0 +1,33 @@
+Test project /workspace/work/apex-native
+      Start  1: apex_core_modules
+ 1/14 Test  #1: apex_core_modules ...........................   Passed    0.01 sec
+      Start  2: apex_imgui_visuals
+ 2/14 Test  #2: apex_imgui_visuals ..........................   Passed    0.01 sec
+      Start  3: apex_menu_system
+ 3/14 Test  #3: apex_menu_system ............................   Passed    0.52 sec
+      Start  4: apex_json_telemetry
+ 4/14 Test  #4: apex_json_telemetry .........................   Passed    0.01 sec
+      Start  5: apex_logging
+ 5/14 Test  #5: apex_logging ................................   Passed    0.01 sec
+      Start  6: apex_benchmark_reports
+ 6/14 Test  #6: apex_benchmark_reports ......................   Passed    0.01 sec
+      Start  7: apex_compute_reference
+ 7/14 Test  #7: apex_compute_reference ......................   Passed    0.09 sec
+      Start  8: apex_performance_checks
+ 8/14 Test  #8: apex_performance_checks .....................   Passed    0.00 sec
+      Start  9: apex_compute_startup_recovery
+ 9/14 Test  #9: apex_compute_startup_recovery ...............   Passed    0.05 sec
+      Start 10: apex_hud_parser_and_regions
+10/14 Test #10: apex_hud_parser_and_regions .................   Passed    0.01 sec
+      Start 11: apex_enemy_geometry_and_filter
+11/14 Test #11: apex_enemy_geometry_and_filter ..............   Passed    0.01 sec
+      Start 12: apex_overlay_coordinate_mapping
+12/14 Test #12: apex_overlay_coordinate_mapping .............   Passed    0.00 sec
+      Start 13: apex_roblox_decoder_and_profile_isolation
+13/14 Test #13: apex_roblox_decoder_and_profile_isolation ...   Passed    0.03 sec
+      Start 14: apex_tracking_selection_axes_and_gates
+14/14 Test #14: apex_tracking_selection_axes_and_gates ......   Passed    0.00 sec
+
+100% tests passed out of 14
+
+Total Test time (real) =   0.76 sec

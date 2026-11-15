@@ -60,18 +60,19 @@ The inspected Roblox export uses FP32 `images` [1,3,640,640] -> `output0` [1,5,8
 
 ## Desktop overlay on your main monitor
 
-1. Put Apex in **Borderless Window** or windowed mode on your main monitor. Exclusive fullscreen is not supported by this desktop window.
-2. In OBS, capture the full game view. Prefer **Window Capture** of the game, fit it to the OBS canvas, and start **Virtual Camera**. Cropped scenes, a webcam inset or extra borders can misalign detection boxes.
-3. In the demo, **Capture > Start OBS Virtual Camera**, then **Detection > Choose ONNX model** and choose your local model. Keep **Enable detection** enabled.
-4. Check **Desktop boxes (live capture)**. Leave **Overlay monitor** set to **Primary monitor** for your main screen, or choose another display. The overlay starts off each time you launch the app.
-5. Switch back to the game. The purple **Detection** badge and any actual **Enemy?** boxes appear on the selected monitor. You can minimize the demo; its capture and inference continue while the overlay is enabled.
-6. Press **F8** to hide/show the overlay while the game has focus. If another app owns that hotkey, Detection reports it; use the checkbox instead. Close the demo to remove the overlay entirely.
+1. Open **Screen overlay** in the left sidebar.
+2. Click **Show on screen**, or check **Show overlay on my screen**. This also clears a previous F8 hide state.
+3. Choose **Screen > Primary monitor**, or the monitor where you play. Enable **Draw FOV circle** if you want a circle.
+4. The **APEX VISION | SCREEN OVERLAY ON** badge and configured circle appear immediately on the actual desktop, even without a model or capture. Without a selected game window, the circle is centered on the chosen monitor. With a valid selected Apex window, it follows that client center.
+5. For actual detection boxes, start OBS Virtual Camera, connect it in **Capture**, load your local model in **Detection**, enable detection, and keep **Draw detected boxes** checked. Boxes require fresh accepted live detections; a recording never supplies desktop boxes.
+6. Use borderless/windowed gameplay on the selected monitor. Exclusive fullscreen can cover desktop windows. You can minimize the demo while the screen overlay runs.
+7. Press **F8** to hide/show graphics, or use **Show on screen / Hide overlay**. Close the app to remove it. F8 does not disarm tracking; **F9** does.
 
-The overlay is a separate click-through, non-activating Windows desktop window, so it does not intercept game clicks or keyboard focus. It displays captured-image detections with capture/inference delay; boxes do not predict target motion. It clears boxes one second after the last completed analysis and hides when live capture stops or when a recording is selected. A visible badge without boxes means no fresh accepted detections, not proof of correct enemy recognition.
+The overlay is a separate click-through, non-activating Windows window, independent of the in-app preview. It does not intercept game clicks or keyboard focus. A visible badge or FOV circle is a display check, not evidence of enemy detection. When capture stops, the badge and configured circle remain visible but detection boxes clear. Boxes also clear when the last analysis becomes older than one second.
 
-**Fit capture aspect ratio to monitor** centers the captured view with letterboxing/pillarboxing. Turn it off only if your displayed game actually stretches the capture to fill the monitor. The legacy desktop box overlay assumes the full capture corresponds to that monitor; it does not automatically track a smaller game window, undo OBS crops or calibrate scene transformations. The Tracking FOV instead follows its explicitly selected client geometry. Use borderless fullscreen on the same selected display for the first test.
+**Fit capture aspect ratio** centers the captured view with letterboxing/pillarboxing. Disable it only if your displayed game stretches the capture to fill the monitor. Detection boxes assume the full capture corresponds to the selected monitor; they do not automatically track a smaller game window, undo OBS crops or calibrate scene transformations. The Tracking FOV instead follows its explicitly selected client geometry.
 
-The app requests Windows capture exclusion for its overlay (Windows 10 2004+/11). If Windows rejects it, the status warns you to use OBS Window Capture. Actual OBS scene/compositor compatibility still needs checking on your PC; use Window Capture if Display Capture includes the overlay. The DX11 preview remains available for comparison.
+The app requests Windows capture exclusion for its overlay (Windows 10 2004+/11). If Windows rejects it, the status warns you to use OBS Window Capture. Actual OBS scene/compositor compatibility still needs checking on your PC; use Window Capture if Display Capture includes the overlay.
 
 ## Model contract and limits
 

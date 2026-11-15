@@ -1,0 +1,1 @@
+PASS actual Windows SendInput through focus/hold guard in OWN test window; observed cursor delta=1,0; button released and cursor restored; no live game, Apex acceptance, trained-model GPU or aim accuracy tested

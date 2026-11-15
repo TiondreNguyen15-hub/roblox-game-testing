@@ -1,3 +1,15 @@
+# Overlay on your actual screen
+
+[Download the screen-overlay update](Apex-Screen-Overlay-Update.zip) · [Setup guide](apex-visualizer/GAME-ESP-README.md) · [Validation](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+Leave the working demo open, **Extract All**, and run **Update-Game-ESP.cmd**. Then open **Screen overlay > Show on screen**, choose the monitor where you play, and use borderless/windowed game mode. The separate desktop window immediately shows its ON badge and configured FOV circle, even without capture/model data. **F8** hides/shows it. Exclusive fullscreen can cover desktop windows.
+
+Detection boxes require fresh live OBS/model results and have a separate switch. The circle defaults to the chosen monitor center until a valid game window is selected. Existing settings, models, GPU files and input activation gates are preserved. Enabling the overlay does not arm mouse following. **F9** disarms it.
+
+Current Windows checks verify the actual transparent, click-through, non-activating overlay window and drawing without capture/model/focus. Real multi-monitor/DPI/game-compositor behavior still requires the PC. No trained-model accuracy or GPU performance improvement is claimed.
+
+---
+
 # Apex Vision workspace — organized loader update
 
 [Download the organized workspace](Apex-Workspace-Update.zip) · [Navigation/setup guide](apex-visualizer/GAME-ESP-README.md) · [Validation](apex-visualizer/GAME-ESP-VALIDATION.md)
