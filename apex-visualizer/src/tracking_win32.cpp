@@ -1,0 +1,14 @@
+#include "apex/tracking.hpp"
+#include <windows.h>
+#include <algorithm>
+#include <cwctype>
+#include <cstdlib>
+namespace apex {namespace {
+std::string title(HWND h){wchar_t text[512]{};GetWindowTextW(h,text,512);int n=WideCharToMultiByte(CP_UTF8,0,text,-1,nullptr,0,nullptr,nullptr);if(n<2)return {};std::string out(size_t(n),'\0');WideCharToMultiByte(CP_UTF8,0,text,-1,out.data(),n,nullptr,nullptr);out.pop_back();return out;}
+bool apexTitle(HWND h){wchar_t text[512]{};GetWindowTextW(h,text,512);std::wstring value(text);std::transform(value.begin(),value.end(),value.begin(),[](wchar_t c){return std::towlower(c);});return value.find(L"apex")!=std::wstring::npos;}
+BOOL CALLBACK collect(HWND h,LPARAM data){DWORD pid=0;GetWindowThreadProcessId(h,&pid);RECT r{};if(pid==GetCurrentProcessId()||!IsWindowVisible(h)||IsIconic(h)||!apexTitle(h)||!GetClientRect(h,&r)||r.right<320||r.bottom<200)return TRUE;static_cast<std::vector<TrackingWindow>*>(reinterpret_cast<void*>(data))->push_back({reinterpret_cast<std::uintptr_t>(h),pid,title(h)});return TRUE;}
+}
+std::vector<TrackingWindow> trackingWindows(){std::vector<TrackingWindow> result;EnumWindows(collect,reinterpret_cast<LPARAM>(&result));return result;}
+TrackingWindowState inspectTrackingWindow(const TrackingWindow& window){TrackingWindowState state;auto h=reinterpret_cast<HWND>(window.handle);DWORD pid=0;if(h)GetWindowThreadProcessId(h,&pid);RECT r{};POINT origin{};if(!h||!IsWindow(h)||pid!=window.process||!apexTitle(h)||!IsWindowVisible(h)||IsIconic(h)||!GetClientRect(h,&r)||!ClientToScreen(h,&origin)||r.right<320||r.bottom<200){state.status="Select a visible Apex game window";return state;}state.valid=true;state.focused=GetForegroundWindow()==h;state.hold=(GetAsyncKeyState(VK_RBUTTON)&0x8000)!=0;state.left=float(origin.x);state.top=float(origin.y);state.width=float(r.right);state.height=float(r.bottom);state.status=state.focused?"Apex window focused":"Apex window not focused";return state;}
+bool sendTrackingMovement(const TrackingWindow& window,int x,int y,std::string& error){if(x==0&&y==0){error.clear();return true;}auto state=inspectTrackingWindow(window);if(!state.valid||!state.focused||!state.hold||(GetAsyncKeyState(VK_F9)&0x8000)){error="Mouse output stopped: focus or hold condition changed";return false;}if(std::abs(x)>12||std::abs(y)>12){error="Mouse step exceeds bounded output";return false;}INPUT input{};input.type=INPUT_MOUSE;input.mi.dx=x;input.mi.dy=y;input.mi.dwFlags=MOUSEEVENTF_MOVE|MOUSEEVENTF_MOVE_NOCOALESCE;SetLastError(0);if(SendInput(1,&input,sizeof(input))!=1){error="Windows rejected mouse input (code "+std::to_string(GetLastError())+"); no input bypass is provided";return false;}error.clear();return true;}
+}

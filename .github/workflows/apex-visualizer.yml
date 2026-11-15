@@ -11,6 +11,13 @@ jobs:
         run: cmake --build build-apex --config Release --parallel 2
       - name: Module tests
         run: ctest --test-dir build-apex -C Release --output-on-failure
+      - name: Actual guarded Windows mouse-input probe (own test window only)
+        shell: pwsh
+        run: |
+          $p = Start-Process './build-apex/Release/apex_tracking_input_probe.exe' -Wait -PassThru
+          Get-Content tracking-input-probe.txt
+          if ($p.ExitCode -ne 0 -and $p.ExitCode -ne 77) { throw 'Tracking desktop-input probe failed' }
+          if ($p.ExitCode -eq 77) { Write-Host 'Desktop input probe explicitly SKIPPED on this host; PC validation required.' }
       - name: DX11 WARP smoke tests
         shell: pwsh
         run: |
@@ -191,6 +198,7 @@ jobs:
             enemy-smoke-result.txt
             roblox-enemy-smoke-result.txt
             overlay-background-result.txt
+            tracking-input-probe.txt
             hud-smoke-result.txt
             hud-readings-test.csv
             obs-camera-provenance.json

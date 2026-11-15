@@ -19,7 +19,7 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
  if(ImGui::Begin("Apex Visualization",nullptr,flags)){
   ImGui::TextColored({s.accent[0],s.accent[1],s.accent[2],1},"A /  APEX VISUALIZATION");ImGui::SameLine();ImGui::TextDisabled("  STANDALONE LAB");ImGui::Separator();
   ImGui::BeginChild("Sidebar",{135*scale,-28},true);
-  const char* tabs[]={"Visuals","Rendering","System","Configuration","Capture","Game ESP"};for(int i=0;i<6;++i)if(ImGui::Selectable(tabs[i],tab_==i,0,{0,36*scale}))tab_=i;
+  const char* tabs[]={"Visuals","Rendering","System","Configuration","Capture","Game ESP","Tracking"};for(int i=0;i<7;++i)if(ImGui::Selectable(tabs[i],tab_==i,0,{0,36*scale}))tab_=i;
   ImGui::Spacing();ImGui::TextDisabled("INSERT");ImGui::TextWrapped("Toggle menu\nF10: exit");ImGui::EndChild();ImGui::SameLine();
   ImGui::BeginChild("Page",{0,-28},false);
   ImGui::Text("%s",tabs[tab_]);ImGui::Separator();
@@ -161,6 +161,25 @@ void Menu::draw(Settings& s,const DeviceInfo& device,const SystemMetrics& system
    ImGui::TextDisabled("CSV export keeps the latest 600 observations for this source.");
    ImGui::BeginDisabled(!device.hud.completed);if(ImGui::Button("Export OCR CSV..."))hudRequest_=2;ImGui::SameLine();if(ImGui::Button("Copy OCR result")){auto text="Backend: "+device.hud.backend+"\nStatus: "+device.hud.status+"\nRaw OCR: "+result.raw+"\nSource: "+result.source+"\nFrame: "+std::to_string(result.sequence)+"\nOCR ms: "+std::to_string(result.latencyMs);ImGui::SetClipboardText(text.c_str());}ImGui::EndDisabled();
    ImGui::TextWrapped("OCR reads pixels; parsed values are candidates, not ground truth. No confidence score is exposed by this backend. Windows OCR uses CPU and is separate from CUDA validation.");
+  }else if(tab_==6){
+   ImGui::TextWrapped("Visible-target tracking / normal Windows mouse input");
+   if(ImGui::Button("Refresh Apex windows"))trackingRequest_=1;
+   if(ImGui::BeginCombo("Apex window",trackingWindow.handle?trackingWindow.title.c_str():"Select the game window")){for(size_t n=0;n<device.trackingWindows.size();++n){const auto& w=device.trackingWindows[n];ImGui::PushID(int(n));if(ImGui::Selectable(w.title.c_str(),trackingWindow.handle==w.handle)){trackingWindow=w;trackingOptions.armed=false;trackingRequest_=2;}ImGui::PopID();}ImGui::EndCombo();}
+   if(ImGui::Button("Configure capture"))tab_=4;ImGui::SameLine();if(ImGui::Button("Configure detection model"))tab_=5;
+   bool ready=device.trackingEmergency&&device.trackingWindowState.valid&&device.capture.running&&!device.capture.isRecording&&enemyEnabled&&enemyOptions.profile==EnemyProfile::Apex416&&!enemyOptions.modelPath.empty();
+   ImGui::BeginDisabled(!ready);ImGui::Checkbox("Arm mouse following (hold right mouse to activate)",&trackingOptions.armed);ImGui::EndDisabled();
+   ImGui::TextWrapped("F9: emergency disarm. Release right mouse to stop. Arming and selected window are never restored from disk.");
+   if(!device.trackingEmergency)ImGui::TextWrapped("F9 registration unavailable; mouse following is disabled. Close any app reserving F9 and restart.");
+   ImGui::TextWrapped("%s",device.tracking.status.c_str());ImGui::TextWrapped("%s",device.trackingError.c_str());
+   ImGui::Text("Capture %.1f FPS | observed frame age %.0f ms",device.capture.fps,device.tracking.ageMs);ImGui::Text("Windows input events accepted: %llu (game acceptance unverified)",static_cast<unsigned long long>(device.trackingSent));
+   if(device.tracking.target)ImGui::Text("Candidate track %llu | X error %.1f px | Y error %.1f px",static_cast<unsigned long long>(device.tracking.targetId),device.tracking.errorX,device.tracking.errorY);
+   ImGui::SetNextItemOpen(true,ImGuiCond_Once);if(ImGui::CollapsingHeader("X / horizontal")){ImGui::Checkbox("Enable X",&trackingOptions.x.enabled);ImGui::SliderFloat("X response",&trackingOptions.x.gain,0,5,"%.2f counts / pixel / second");ImGui::SliderFloat("X smoothing",&trackingOptions.x.smoothingMs,0,200,"%.0f ms");ImGui::SliderFloat("X speed limit",&trackingOptions.x.maxSpeed,10,500,"%.0f counts / second");}
+   ImGui::SetNextItemOpen(true,ImGuiCond_Once);if(ImGui::CollapsingHeader("Y / vertical")){ImGui::Checkbox("Enable Y",&trackingOptions.y.enabled);ImGui::SliderFloat("Y response",&trackingOptions.y.gain,0,5,"%.2f counts / pixel / second");ImGui::SliderFloat("Y smoothing",&trackingOptions.y.smoothingMs,0,200,"%.0f ms");ImGui::SliderFloat("Y speed limit",&trackingOptions.y.maxSpeed,10,500,"%.0f counts / second");}
+   ImGui::SetNextItemOpen(true,ImGuiCond_Once);if(ImGui::CollapsingHeader("FOV overlay")){ImGui::Checkbox("Show tracking FOV circle",&trackingOptions.showFov);ImGui::SliderFloat("FOV radius",&trackingOptions.radius,20,800,"%.0f client pixels");ImGui::TextWrapped("Circle centered on selected game client; this is a pixel radius, not the game's camera FOV angle. Use the same full-view OBS capture and selected overlay monitor.");}
+   if(ImGui::CollapsingHeader("Tracking limits")){ImGui::SliderFloat("Center deadzone",&trackingOptions.deadzone,0,30,"%.1f px");ImGui::SliderFloat("Box anchor Y",&trackingOptions.anchor,.1f,.9f,"%.2f");ImGui::SliderFloat("Maximum received-frame age",&trackingOptions.maxAgeMs,50,500,"%.0f ms");ImGui::TextWrapped("Anchor is a point inside the model box, not an actual joint. Receiver age excludes unknown OBS sender delay. Slow/failed inference stops mouse output. Adjust game sensitivity and X/Y response manually.");}
+   if(ImGui::Button("Save tracking setup")){std::string error;notice_=saveTrackingOptions(Config::defaultPath().parent_path()/"tracking-settings.json",trackingOptions,error)?"Tracking settings saved; arming not saved.":error;}ImGui::SameLine();if(ImGui::Button("Load tracking setup")){std::string error;notice_=loadTrackingOptions(Config::defaultPath().parent_path()/"tracking-settings.json",trackingOptions,error)?"Tracking settings loaded, disarmed.":error;trackingRequest_=2;}
+   if(ImGui::Button("Copy tracking diagnostics")){auto text="Tracking: "+device.tracking.status+"\nError: "+device.trackingError+"\nWindow: "+trackingWindow.title+"\nFrame age ms: "+std::to_string(device.tracking.ageMs)+"\nCapture FPS: "+std::to_string(device.capture.fps)+"\nBackend: "+device.enemy.latest.backend+"\nModel message: "+device.enemy.message+"\nWindows input events accepted: "+std::to_string(device.trackingSent);ImGui::SetClipboardText(text.c_str());}
+   ImGui::TextWrapped("%s",notice_.c_str());ImGui::TextWrapped("Only visible model candidates are used. No automatic firing, game-memory access, injected code or input bypass. Windows accepting input does not prove Apex uses it.");
   }else{
    ImGui::TextWrapped("Configuration: %s",Config::defaultPath().u8string().c_str());ImGui::TextWrapped("Log: %s",Log::path().u8string().c_str());
    if(ImGui::Button("Save configuration")){std::string error;notice_=Config::save(Config::defaultPath(),s,error)?"Configuration saved.":error;}
