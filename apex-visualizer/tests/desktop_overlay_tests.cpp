@@ -8,7 +8,7 @@ COLORREF pixel(HWND window,int x,int y){RECT r{};GetClientRect(window,&r);HDC sc
 int main(){try{
  auto before=GetGuiResources(GetCurrentProcess(),GR_GDIOBJECTS);
  {
-  apex::DesktopOverlay overlay;apex::DesktopOverlayOptions options;options.enabled=true;
+  apex::DesktopOverlay overlay;apex::DesktopOverlayOptions options;options.enabled=true;options.maxResultAgeMs=1000;
   apex::TrackingOverlay circle;circle.visible=true;circle.useMonitorCenter=true;circle.radius=40;
   auto foreground=GetForegroundWindow();overlay.update(options,{},false,0,0,circle);
   HWND window=FindWindowW(L"ApexVisualizationDesktopOverlay",nullptr);
@@ -27,7 +27,7 @@ int main(){try{
   options.showBoxes=false;overlay.update(options,snapshot,true,1920,1080,circle);require(pixel(window,x,y)==RGB(0,0,0),"Box switch did not clear graphics");
   options.showBoxes=true;overlay.update(options,snapshot,true,1920,1080,circle);require(pixel(window,x,y)==RGB(210,110,255),"Box switch did not redraw same fresh result");
   for(int n=0;n<200;++n){++snapshot.completed;snapshot.observedAt=std::chrono::steady_clock::now();overlay.update(options,snapshot,true,1920,1080,circle);}
-  snapshot.observedAt=std::chrono::steady_clock::now()-std::chrono::seconds(2);overlay.update(options,snapshot,true,1920,1080,circle);require(pixel(window,x,y)==RGB(0,0,0),"Stale boxes retained");
+  auto oldFrame=std::make_shared<apex::CapturedFrame>();oldFrame->capturedAt=std::chrono::steady_clock::now()-std::chrono::seconds(2);snapshot.analyzedFrame=oldFrame;snapshot.observedAt=std::chrono::steady_clock::now();overlay.update(options,snapshot,true,1920,1080,circle);require(pixel(window,x,y)==RGB(0,0,0),"Stale boxes retained");
   overlay.update(options,snapshot,false,0,0,circle);require(overlay.visible(),"On-screen window hid when capture stopped");require(pixel(window,cx+39,cy)==RGB(210,110,255),"Circle disappeared when live source stopped");
   auto invalid=circle;invalid.radius=std::numeric_limits<float>::quiet_NaN();overlay.update(options,{},false,0,0,invalid);require(overlay.visible()&&pixel(window,cx+39,cy)==RGB(0,0,0),"Invalid circle entered painter / hid on-status window");
   options.enabled=false;overlay.update(options,snapshot,true,1920,1080,circle);require(!overlay.visible(),"Off switch did not hide desktop window");

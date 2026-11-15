@@ -2,7 +2,7 @@
 #include "enemy.hpp"
 #include "tracking.hpp"
 namespace apex {
-struct DesktopOverlayOptions {bool enabled=false,fitAspect=true,showBoxes=true;int monitor=0;};
+struct DesktopOverlayOptions {bool enabled=false,fitAspect=true,showBoxes=true;int monitor=0,maxResultAgeMs=250;};
 struct OverlayViewport {float x=0,y=0,width=0,height=0;};
 OverlayViewport overlayViewport(float width,float height,unsigned sourceWidth,unsigned sourceHeight,bool fit);
 #ifdef _WIN32

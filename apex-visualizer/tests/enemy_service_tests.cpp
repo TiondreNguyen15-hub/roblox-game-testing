@@ -1,0 +1,14 @@
+#include "apex/enemy.hpp"
+#include <iostream>
+#include <stdexcept>
+#include <functional>
+using namespace apex;
+namespace {
+struct Control{std::mutex mutex;std::condition_variable wake;bool entered=false,release=false;std::vector<std::uint64_t> sequences;} control;
+void require(bool value,const char* error){if(!value)throw std::runtime_error(error);}
+class Fixture final:public EnemyDetector{public:EnemyObservation run(const CapturedFrame& f,const EnemyOptions&)override{std::lock_guard<std::mutex> lock(control.mutex);control.sequences.push_back(f.sequence);EnemyObservation result;result.sequence=f.sequence;result.message="explicit test fixture; no ONNX execution";return result;}};
+auto frame(std::uint64_t sequence){auto f=std::make_shared<CapturedFrame>();f->sequence=sequence;return f;}
+void waitFor(const std::function<bool()>& predicate){auto until=std::chrono::steady_clock::now()+std::chrono::seconds(5);while(!predicate()){if(std::chrono::steady_clock::now()>until)throw std::runtime_error("Scheduler fixture timed out");std::this_thread::yield();}}
+}
+namespace apex {std::unique_ptr<EnemyDetector> makeEnemyDetector(const EnemyOptions&){std::unique_lock<std::mutex> lock(control.mutex);control.entered=true;control.wake.notify_all();if(!control.wake.wait_for(lock,std::chrono::seconds(5),[]{return control.release;}))throw std::runtime_error("Fixture initialization release timeout");return std::make_unique<Fixture>();}}
+int main(){try{EnemyService service;EnemyOptions options;options.modelPath="synthetic-scheduler-fixture.onnx";options.intervalMs=16;service.submit(frame(1),options,"fixture",true);{std::unique_lock<std::mutex> lock(control.mutex);require(control.wake.wait_for(lock,std::chrono::seconds(5),[]{return control.entered;}),"Initialization fixture not entered");}service.submit(frame(2),options,"fixture",true);service.submit(frame(3),options,"fixture",true);{std::lock_guard<std::mutex> lock(control.mutex);control.release=true;}control.wake.notify_all();waitFor([&]{return service.snapshot().completed==1;});auto result=service.snapshot();require(result.latest.sequence==3,"Model initialization ran its stale starting frame instead of newest queued frame");{std::lock_guard<std::mutex> lock(control.mutex);require(control.sequences.size()==1&&control.sequences[0]==3,"Queued backlog was inferred rather than replaced");}service.beginSource();require(!service.snapshot().analyzedFrame&&service.snapshot().completed==0,"Source reset retained old detections");service.submit(frame(4),options,"new-source",true);waitFor([&]{return service.snapshot().completed==1;});require(service.snapshot().latest.sequence==4,"Source reset did not accept fresh work");service.stop();std::cout<<"PASS deterministic blocked-initialization fixture chooses latest frame, bounded pending replacement and source reset; no GPU/FPS/accuracy benchmark\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

@@ -32,7 +32,7 @@ void DesktopOverlay::update(const DesktopOverlayOptions& o,const EnemySnapshot& 
   bool dirty=o.showBoxes!=s.showBoxes||tracking.visible!=s.tracking.visible||tracking.marker!=s.tracking.marker||tracking.centerX!=s.tracking.centerX||tracking.centerY!=s.tracking.centerY||tracking.radius!=s.tracking.radius||tracking.targetX!=s.tracking.targetX||tracking.targetY!=s.tracking.targetY||tracking.label!=s.tracking.label;s.tracking=tracking;s.showBoxes=o.showBoxes;s.desktopLeft=float(r.left);s.desktopTop=float(r.top);
   if(monitor!=s.monitor||o.fitAspect!=s.fit||w!=s.sourceWidth||h!=s.sourceHeight){s.monitor=monitor;s.fit=o.fitAspect;s.sourceWidth=w;s.sourceHeight=h;s.viewport=overlayViewport(float(r.right-r.left),float(r.bottom-r.top),w,h,o.fitAspect);if(!SetWindowPos(s.window,HWND_TOPMOST,r.left,r.top,r.right-r.left,r.bottom-r.top,SWP_NOACTIVATE))throw std::runtime_error("Screen overlay positioning failed");dirty=true;}
   if(result.completed!=s.completed||result.analyzedFrame!=s.frame){s.completed=result.completed;s.frame=result.analyzedFrame;dirty=true;}
-  bool fresh=live&&s.frame&&result.status!="unavailable"&&now-result.observedAt<std::chrono::milliseconds(1000);
+  bool fresh=live&&enemyResultFresh(result,o.maxResultAgeMs,now);
   std::string state=!live?"connect live OBS capture":fresh?(result.latest.cudaVerified?"CUDA result":"CPU / GPU not verified"):"waiting for fresh detections";
   auto badge=std::string("APEX VISION | SCREEN OVERLAY ON | ")+state+" | F8 hide";
   if(tracking.visible)badge+=" | FOV circle";if(!s.excluded)badge+=" | capture exclusion unavailable";
