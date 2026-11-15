@@ -1,0 +1,144 @@
+validate	Set up job	﻿2026-11-15T16:33:00.3956929Z Current runner version: '2.338.2'
+validate	Set up job	2026-11-15T16:33:00.4002405Z ##[group]Runner Image Provisioner
+validate	Set up job	2026-11-15T16:33:00.4003194Z Hosted Compute Agent
+validate	Set up job	2026-11-15T16:33:00.4003716Z Version: 20261103.629
+validate	Set up job	2026-11-15T16:33:00.4004309Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+validate	Set up job	2026-11-15T16:33:00.4004988Z Build Date: 2026-11-03T17:26:59Z
+validate	Set up job	2026-11-15T16:33:00.4005877Z Worker ID: {b198641b-a123-4b7c-a8cd-55be04580202}
+validate	Set up job	2026-11-15T16:33:00.4006543Z Region: westus
+validate	Set up job	2026-11-15T16:33:00.4007016Z Cloud: Azure
+validate	Set up job	2026-11-15T16:33:00.4007490Z ##[endgroup]
+validate	Set up job	2026-11-15T16:33:00.4008798Z ##[group]Operating System
+validate	Set up job	2026-11-15T16:33:00.4009403Z Microsoft Windows Server 2022
+validate	Set up job	2026-11-15T16:33:00.4009955Z 10.0.20348
+validate	Set up job	2026-11-15T16:33:00.4010410Z Datacenter
+validate	Set up job	2026-11-15T16:33:00.4010869Z ##[endgroup]
+validate	Set up job	2026-11-15T16:33:00.4011346Z ##[group]Runner Image
+validate	Set up job	2026-11-15T16:33:00.4011856Z Image: windows-2022
+validate	Set up job	2026-11-15T16:33:00.4012371Z Version: 20261112.366.7
+validate	Set up job	2026-11-15T16:33:00.4013379Z Included Software: https://github.com/actions/runner-images/blob/win22/20261112.366/images/windows/Windows2022-Readme.md
+validate	Set up job	2026-11-15T16:33:00.4015094Z Image Release: https://github.com/actions/runner-images/releases/tag/win22%2F20261112.366
+validate	Set up job	2026-11-15T16:33:00.4015957Z ##[endgroup]
+validate	Set up job	2026-11-15T16:33:00.4017076Z ##[group]GITHUB_TOKEN Permissions
+validate	Set up job	2026-11-15T16:33:00.4018934Z Contents: read
+validate	Set up job	2026-11-15T16:33:00.4019536Z Metadata: read
+validate	Set up job	2026-11-15T16:33:00.4020066Z Packages: read
+validate	Set up job	2026-11-15T16:33:00.4020575Z ##[endgroup]
+validate	Set up job	2026-11-15T16:33:00.4022511Z Secret source: Actions
+validate	Set up job	2026-11-15T16:33:00.4023361Z Cache mode: write
+validate	Set up job	2026-11-15T16:33:00.4024024Z Prepare workflow directory
+validate	Set up job	2026-11-15T16:33:00.4485651Z Prepare all required actions
+validate	Set up job	2026-11-15T16:33:00.4555590Z Getting action download info
+validate	Set up job	2026-11-15T16:33:00.8507557Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+validate	Set up job	2026-11-15T16:33:01.0993093Z Complete job name: validate
+validate	Run actions/checkout@v5	﻿2026-11-15T16:33:01.2744105Z ##[group]Run actions/checkout@v5
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2745158Z with:
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2745651Z   repository: TiondreNguyen15-hub/roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2749462Z   token: ***
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2749868Z   ssh-strict: true
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2750269Z   ssh-user: git
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2750686Z   persist-credentials: true
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2751130Z   clean: true
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2751544Z   sparse-checkout-cone-mode: true
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2752025Z   fetch-depth: 1
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2752416Z   fetch-tags: false
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2752815Z   show-progress: true
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2753222Z   lfs: false
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2753590Z   submodules: false
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2753998Z   set-safe-directory: true
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2754455Z   allow-unsafe-pr-checkout: false
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.2755130Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.4173720Z Syncing repository: TiondreNguyen15-hub/roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.4176444Z ##[group]Getting Git version info
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.4177838Z Working directory is 'D:\a\roblox-game-testing\roblox-game-testing'
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.5279158Z [command]"C:\Program Files\Git\bin\git.exe" version
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.8745484Z git version 2.56.1.windows.1
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.8795399Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.8820622Z Temporarily overriding HOME='D:\a\_temp\ae931672-9ba7-45af-b5b8-1456fb2c303a' before making global git config changes
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.8822701Z Adding repository directory to the temporary git global config as a safe directory
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.8836095Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\roblox-game-testing\roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.9467074Z Deleting the contents of 'D:\a\roblox-game-testing\roblox-game-testing'
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.9471620Z ##[group]Initializing the repository
+validate	Run actions/checkout@v5	2026-11-15T16:33:01.9481045Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\roblox-game-testing\roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.0400104Z Initialized empty Git repository in D:/a/roblox-game-testing/roblox-game-testing/.git/
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.0438635Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/TiondreNguyen15-hub/roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.1161228Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.1162447Z ##[group]Disabling automatic garbage collection
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.1169491Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.1462939Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.1464061Z ##[group]Setting up auth
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.1475224Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+validate	Run actions/checkout@v5	2026-11-15T16:33:02.1772245Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+validate	Run actions/checkout@v5	2026-11-15T16:33:03.5908356Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+validate	Run actions/checkout@v5	2026-11-15T16:33:03.6207233Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+validate	Run actions/checkout@v5	2026-11-15T16:33:04.0715625Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+validate	Run actions/checkout@v5	2026-11-15T16:33:04.1024744Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+validate	Run actions/checkout@v5	2026-11-15T16:33:04.5594070Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+validate	Run actions/checkout@v5	2026-11-15T16:33:04.5898973Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:33:04.5899560Z ##[group]Fetching the repository
+validate	Run actions/checkout@v5	2026-11-15T16:33:04.5918265Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +caa6c150a2baea2aca8886b7578d75a17270c299:refs/remotes/origin/main
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1054978Z From https://github.com/TiondreNguyen15-hub/roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1055907Z  * [new ref]         caa6c150a2baea2aca8886b7578d75a17270c299 -> origin/main
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1089301Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1089801Z ##[group]Determining the checkout info
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1092674Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1106664Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1577960Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1870686Z ##[group]Checking out the ref
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.1880260Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.6591979Z Switched to a new branch 'main'
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.6613497Z branch 'main' set up to track 'origin/main'.
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.6688226Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.7133980Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+validate	Run actions/checkout@v5	2026-11-15T16:33:07.7424091Z caa6c150a2baea2aca8886b7578d75a17270c299
+validate	Check updater syntax and preservation in isolated app folder	﻿2026-11-15T16:33:07.7787222Z ##[group]Run $root = (Resolve-Path './tools/game-esp-update').Path
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7787933Z [36;1m$root = (Resolve-Path './tools/game-esp-update').Path[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7788344Z [36;1m$script = Join-Path $root 'Update-Game-ESP.ps1'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7788663Z [36;1m$tokens=$null;$errors=$null[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7789158Z [36;1m[void][System.Management.Automation.Language.Parser]::ParseFile($script,[ref]$tokens,[ref]$errors)[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7789809Z [36;1mif ($errors.Count) { $errors | Format-List; throw 'Updater syntax failed' }[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7790330Z [36;1m# File-update behavior only; no dummy file is executed or called OCR.[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7790732Z [36;1m$payload=Join-Path $root 'payload'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7791175Z [36;1mNew-Item -ItemType Directory -Path (Join-Path $payload 'models') -Force | Out-Null[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7792625Z [36;1mSet-Content (Join-Path $payload 'apex_visualizer.exe') 'update test bytes'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7793499Z [36;1m@{exe_sha256=(Get-FileHash (Join-Path $payload 'apex_visualizer.exe')).Hash.ToLower()} | ConvertTo-Json | Set-Content (Join-Path $payload 'BUILD-INFO.json')[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7795389Z [36;1mforeach ($name in @('GAME-ESP-README.md','GAME-ESP-VALIDATION.md','TRACKING.md','HUD-Sample.mp4')) { Set-Content (Join-Path $payload $name) 'file preservation test' }[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7796334Z [36;1mSet-Content (Join-Path $payload 'models/compute_validation.onnx') 'new model fixture'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7796928Z [36;1m$app=Join-Path $env:RUNNER_TEMP 'hud updater app with spaces'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7797464Z [36;1mNew-Item -ItemType Directory -Path (Join-Path $app 'runtime/gpu') -Force | Out-Null[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7798054Z [36;1mNew-Item -ItemType Directory -Path (Join-Path $app 'models') -Force | Out-Null[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7798607Z [36;1mSet-Content (Join-Path $app 'apex_visualizer.exe') 'old test bytes'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7799123Z [36;1mSet-Content (Join-Path $app 'runtime/gpu/keep.dll') 'keep GPU libraries'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7799687Z [36;1mSet-Content (Join-Path $app 'models/compute_validation.onnx') 'keep existing model'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7800202Z [36;1mSet-Content (Join-Path $app 'settings.json') 'keep settings'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7800767Z [36;1m& powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File $script -ValidateOnly[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7801338Z [36;1mif ($LASTEXITCODE -ne 0) { throw 'Updater payload validation failed' }[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7802054Z [36;1m& powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File $script -TargetExe (Join-Path $app 'apex_visualizer.exe') -NoLaunch[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7802767Z [36;1mif ($LASTEXITCODE -ne 0) { throw 'Updater file replacement failed' }[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7803996Z [36;1mif ((Get-Content (Join-Path $app 'runtime/gpu/keep.dll')) -ne 'keep GPU libraries' -or (Get-Content (Join-Path $app 'settings.json')) -ne 'keep settings' -or (Get-Content (Join-Path $app 'models/compute_validation.onnx')) -ne 'keep existing model') { throw 'Updater changed preserved files' }[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7805505Z [36;1m$backup=Get-ChildItem (Join-Path $app 'update-backups') -Recurse -Filter 'apex_visualizer.exe' | Select-Object -First 1[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7806357Z [36;1mif (!$backup -or (Get-Content $backup.FullName) -ne 'old test bytes') { throw 'Original executable backup was not preserved' }[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7807404Z [36;1mWrite-Host 'PASS updater file integrity, replace/backup, paths with spaces, GPU/model/settings preservation. GUI picker and real app closing are not exercised by this test.'[0m
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7923835Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:07.7924329Z ##[endgroup]
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:13.6588452Z Game-ESP update payload verified; no app files modified.
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:14.1319033Z Updating your existing app: D:\a\_temp\hud updater app with spaces
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:14.1812371Z Game-ESP update installed. GPU libraries, saved settings and existing models were kept.
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:14.1823474Z Old executable backup: D:\a\_temp\hud updater app with spaces\update-backups\game-esp-f7318fbb-dcb2-4aad-90af-afb1252849c4
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:14.1843059Z Open Game ESP > Browse enemy ONNX model. Select your local trained model, then open a recording or use your existing OBS capture.
+validate	Check updater syntax and preservation in isolated app folder	2026-11-15T16:33:14.2205774Z PASS updater file integrity, replace/backup, paths with spaces, GPU/model/settings preservation. GUI picker and real app closing are not exercised by this test.
+validate	Post Run actions/checkout@v5	﻿2026-11-15T16:33:14.2934820Z Post job cleanup.
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:14.4855206Z [command]"C:\Program Files\Git\bin\git.exe" version
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:14.5144808Z git version 2.56.1.windows.1
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:14.5214166Z Temporarily overriding HOME='D:\a\_temp\eded7a80-92ed-4cc0-a795-b5adc42f9e3b' before making global git config changes
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:14.5216046Z Adding repository directory to the temporary git global config as a safe directory
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:14.5227899Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\roblox-game-testing\roblox-game-testing
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:14.5583260Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:14.5950904Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:15.1153122Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:15.1428989Z http.https://github.com/.extraheader
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:15.1468401Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:15.1790126Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:15.6774974Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+validate	Post Run actions/checkout@v5	2026-11-15T16:33:15.7088187Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+validate	Complete job	﻿2026-11-15T16:33:16.2629224Z Cleaning up orphan processes

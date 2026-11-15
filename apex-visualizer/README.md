@@ -1,3 +1,5 @@
+> **Tracking: separate X/Y and FOV overlay:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.
+
 > **Separate Roblox test profile; Apex stays primary:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.
 
 > **Desktop overlay + smooth live preview:** [Enemy-model capture analysis](GAME-ESP-README.md) · [Actual validation and limits](GAME-ESP-VALIDATION.md). Private model selected locally; GPU execution/accuracy require PC verification.

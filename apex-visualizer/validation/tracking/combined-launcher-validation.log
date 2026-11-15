@@ -1,0 +1,242 @@
+validate	Set up job	﻿2026-11-15T16:55:57.6682998Z Current runner version: '2.338.2'
+validate	Set up job	2026-11-15T16:55:57.6726959Z ##[group]Runner Image Provisioner
+validate	Set up job	2026-11-15T16:55:57.6727786Z Hosted Compute Agent
+validate	Set up job	2026-11-15T16:55:57.6728332Z Version: 20261103.629
+validate	Set up job	2026-11-15T16:55:57.6728910Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+validate	Set up job	2026-11-15T16:55:57.6729581Z Build Date: 2026-11-03T17:26:59Z
+validate	Set up job	2026-11-15T16:55:57.6730200Z Worker ID: {33328cdc-b831-447c-8834-da3e20becb46}
+validate	Set up job	2026-11-15T16:55:57.6730865Z Region: southcentralus
+validate	Set up job	2026-11-15T16:55:57.6731414Z Cloud: Azure
+validate	Set up job	2026-11-15T16:55:57.6732107Z ##[endgroup]
+validate	Set up job	2026-11-15T16:55:57.6733415Z ##[group]Operating System
+validate	Set up job	2026-11-15T16:55:57.6734037Z Microsoft Windows Server 2022
+validate	Set up job	2026-11-15T16:55:57.6735753Z 10.0.20348
+validate	Set up job	2026-11-15T16:55:57.6736540Z Datacenter
+validate	Set up job	2026-11-15T16:55:57.6737269Z ##[endgroup]
+validate	Set up job	2026-11-15T16:55:57.6738091Z ##[group]Runner Image
+validate	Set up job	2026-11-15T16:55:57.6738967Z Image: windows-2022
+validate	Set up job	2026-11-15T16:55:57.6739908Z Version: 20261112.366.7
+validate	Set up job	2026-11-15T16:55:57.6741686Z Included Software: https://github.com/actions/runner-images/blob/win22/20261112.366/images/windows/Windows2022-Readme.md
+validate	Set up job	2026-11-15T16:55:57.6744888Z Image Release: https://github.com/actions/runner-images/releases/tag/win22%2F20261112.366
+validate	Set up job	2026-11-15T16:55:57.6746694Z ##[endgroup]
+validate	Set up job	2026-11-15T16:55:57.6748668Z ##[group]GITHUB_TOKEN Permissions
+validate	Set up job	2026-11-15T16:55:57.6751676Z Contents: read
+validate	Set up job	2026-11-15T16:55:57.6752581Z Metadata: read
+validate	Set up job	2026-11-15T16:55:57.6753362Z Packages: read
+validate	Set up job	2026-11-15T16:55:57.6754168Z ##[endgroup]
+validate	Set up job	2026-11-15T16:55:57.6757741Z Secret source: Actions
+validate	Set up job	2026-11-15T16:55:57.6759155Z Cache mode: write
+validate	Set up job	2026-11-15T16:55:57.6760802Z Prepare workflow directory
+validate	Set up job	2026-11-15T16:55:57.7229243Z Prepare all required actions
+validate	Set up job	2026-11-15T16:55:57.7299728Z Getting action download info
+validate	Set up job	2026-11-15T16:55:58.0463827Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+validate	Set up job	2026-11-15T16:55:58.3358993Z Complete job name: validate
+validate	Run actions/checkout@v5	﻿2026-11-15T16:55:58.5079965Z ##[group]Run actions/checkout@v5
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5081119Z with:
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5081714Z   repository: TiondreNguyen15-hub/roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5086075Z   token: ***
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5086563Z   ssh-strict: true
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5087047Z   ssh-user: git
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5087566Z   persist-credentials: true
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5088148Z   clean: true
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5088660Z   sparse-checkout-cone-mode: true
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5089241Z   fetch-depth: 1
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5089724Z   fetch-tags: false
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5090229Z   show-progress: true
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5090738Z   lfs: false
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5091218Z   submodules: false
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5091721Z   set-safe-directory: true
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5092284Z   allow-unsafe-pr-checkout: false
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.5093083Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.6473176Z Syncing repository: TiondreNguyen15-hub/roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.6477258Z ##[group]Getting Git version info
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.6479811Z Working directory is 'D:\a\roblox-game-testing\roblox-game-testing'
+validate	Run actions/checkout@v5	2026-11-15T16:55:58.7522734Z [command]"C:\Program Files\Git\bin\git.exe" version
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.0626815Z git version 2.56.1.windows.1
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.0665368Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.0682373Z Temporarily overriding HOME='D:\a\_temp\295101e7-2d53-4f51-93a3-603e836bf59a' before making global git config changes
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.0683933Z Adding repository directory to the temporary git global config as a safe directory
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.0693453Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\roblox-game-testing\roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.1315201Z Deleting the contents of 'D:\a\roblox-game-testing\roblox-game-testing'
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.1320030Z ##[group]Initializing the repository
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.1329464Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\roblox-game-testing\roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.2161397Z Initialized empty Git repository in D:/a/roblox-game-testing/roblox-game-testing/.git/
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.2192908Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/TiondreNguyen15-hub/roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.2857526Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.2858747Z ##[group]Disabling automatic garbage collection
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.2865969Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.3143157Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.3144205Z ##[group]Setting up auth
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.3154347Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+validate	Run actions/checkout@v5	2026-11-15T16:55:59.3429157Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+validate	Run actions/checkout@v5	2026-11-15T16:56:00.6989104Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+validate	Run actions/checkout@v5	2026-11-15T16:56:00.7266627Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+validate	Run actions/checkout@v5	2026-11-15T16:56:01.1779247Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+validate	Run actions/checkout@v5	2026-11-15T16:56:01.2062366Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+validate	Run actions/checkout@v5	2026-11-15T16:56:01.6701148Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+validate	Run actions/checkout@v5	2026-11-15T16:56:01.6988028Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:56:01.6988937Z ##[group]Fetching the repository
+validate	Run actions/checkout@v5	2026-11-15T16:56:01.7000821Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e7adeabe4bafb2cb7982e63840230dd9872bf679:refs/remotes/origin/main
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1100159Z From https://github.com/TiondreNguyen15-hub/roblox-game-testing
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1101188Z  * [new ref]         e7adeabe4bafb2cb7982e63840230dd9872bf679 -> origin/main
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1128229Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1128919Z ##[group]Determining the checkout info
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1130894Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1140520Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1551470Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1832445Z ##[group]Checking out the ref
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.1840520Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.6483779Z Switched to a new branch 'main'
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.6507472Z branch 'main' set up to track 'origin/main'.
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.6587438Z ##[endgroup]
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.6914049Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+validate	Run actions/checkout@v5	2026-11-15T16:56:04.7188521Z e7adeabe4bafb2cb7982e63840230dd9872bf679
+validate	Additional native controller smoothing comparison	﻿2026-11-15T16:56:04.7531728Z ##[group]Run cmake -S apex-visualizer -B build-controller -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:04.7532707Z [36;1mcmake -S apex-visualizer -B build-controller -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON[0m
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:04.7533345Z [36;1mif ($LASTEXITCODE -ne 0) { throw 'Controller configure failed' }[0m
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:04.7533942Z [36;1mcmake --build build-controller --config Release --target apex_tracking_tests --parallel 2[0m
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:04.7534527Z [36;1mif ($LASTEXITCODE -ne 0) { throw 'Controller compile failed' }[0m
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:04.7535157Z [36;1mctest --test-dir build-controller -C Release -R apex_tracking_selection_axes_and_gates --output-on-failure[0m
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:04.7535823Z [36;1mif ($LASTEXITCODE -ne 0) { throw 'Controller smoothing comparison failed' }[0m
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:04.7663836Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:04.7664267Z ##[endgroup]
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:05.9933623Z -- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.20348.
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:16.8616415Z -- The CXX compiler identification is MSVC 19.44.35230.0
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:17.0335574Z -- Detecting CXX compiler ABI info
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:18.0946567Z -- Detecting CXX compiler ABI info - done
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:18.1080777Z -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:18.1098275Z -- Detecting CXX compile features
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:18.1113226Z -- Detecting CXX compile features - done
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:20.6979981Z -- Configuring done (15.0s)
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:20.8537459Z -- Generating done (0.2s)
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:20.8545471Z -- Build files have been written to: D:/a/roblox-game-testing/roblox-game-testing/build-controller
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:20.9652474Z MSBuild version 17.14.60+43b635718 for .NET Framework
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:20.9946139Z 
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:21.3264123Z   1>Checking Build System
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:21.4663543Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:21.5884743Z   settings.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:23.0484495Z   config.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:25.9603204Z   simulation.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:26.3910246Z   telemetry.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:28.2962594Z   log.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:29.1741446Z   benchmark.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:31.0125537Z   compute_common.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:33.1082671Z   compute_inputs.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:34.6944984Z   performance.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:35.1435409Z   hud.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:37.0665408Z   enemy.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:38.9959210Z   overlay_geometry.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:39.8583763Z   tracking.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:41.7715380Z   Generating Code...
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:56.6806940Z   apex_core.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-controller\Release\apex_core.lib
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:56.7298196Z   Building Custom Rule D:/a/roblox-game-testing/roblox-game-testing/apex-visualizer/CMakeLists.txt
+validate	Additional native controller smoothing comparison	2026-11-15T16:56:56.8000522Z   tracking_tests.cpp
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:00.6368789Z   apex_tracking_tests.vcxproj -> D:\a\roblox-game-testing\roblox-game-testing\build-controller\Release\apex_tracking_tests.exe
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:01.1144219Z Internal ctest changing into directory: D:/a/roblox-game-testing/roblox-game-testing/build-controller
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:01.2200056Z Test project D:/a/roblox-game-testing/roblox-game-testing/build-controller
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:01.2671055Z     Start 17: apex_tracking_selection_axes_and_gates
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:01.2768697Z 1/1 Test #17: apex_tracking_selection_axes_and_gates ...   Passed    0.01 sec
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:01.2857523Z 
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:01.2857855Z 100% tests passed, 0 tests failed out of 1
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:01.2858193Z 
+validate	Additional native controller smoothing comparison	2026-11-15T16:57:01.2860136Z Total Test time (real) =   0.07 sec
+validate	Validate actual native payload and launcher orchestration without installing GPU files	﻿2026-11-15T16:57:01.4050855Z ##[group]Run Expand-Archive './Apex-Game-ESP-Overlay-Update.zip' (Join-Path $env:RUNNER_TEMP 'overlay package')
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4051849Z [36;1mExpand-Archive './Apex-Game-ESP-Overlay-Update.zip' (Join-Path $env:RUNNER_TEMP 'overlay package')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4052534Z [36;1m$root=Join-Path $env:RUNNER_TEMP 'overlay package/Game-ESP-Update'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4052998Z [36;1m$script=Join-Path $root 'Update-And-Enable-GPU.ps1'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4053343Z [36;1m$tokens=$null;$errors=$null[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4053848Z [36;1m[void][System.Management.Automation.Language.Parser]::ParseFile($script,[ref]$tokens,[ref]$errors)[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4054461Z [36;1mif ($errors.Count) { throw 'Combined launcher syntax failed' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4055029Z [36;1m& powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File $script -ValidateOnly[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4055640Z [36;1mif ($LASTEXITCODE -ne 0) { throw 'Real native payload / manifest validation failed' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4056338Z [36;1m. (Join-Path $root 'tools/launch-app.ps1')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4056706Z [36;1m$real=Join-Path $root 'payload/apex_visualizer.exe'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4057073Z [36;1m$native=Start-VerifiedApexApp -Exe $real[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4057631Z [36;1mif (!$native.CloseMainWindow() -or !$native.WaitForExit(15000)) { throw 'Verified native startup/close failed' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4058161Z [36;1m$detected=$false[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4058828Z [36;1mtry { $null=Start-VerifiedApexApp -Exe $env:ComSpec -Arguments @('/c','exit','23') -ReportDirectory $root } catch { $detected=$_.Exception.Message -match '0x00000017' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4059887Z [36;1mif (!$detected -or !(Test-Path (Join-Path $root 'launch-failure.txt'))) { throw 'Immediate exit was silently treated as successful startup' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4060739Z [36;1m# Isolated orchestration check: real native app, stub child stages; NO GPU install or DLL execution.[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4061333Z [36;1m$test=Join-Path $env:RUNNER_TEMP 'orchestration with spaces'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4061873Z [36;1mNew-Item -ItemType Directory -Path (Join-Path $test 'GPU-Reinstall') -Force | Out-Null[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4062437Z [36;1mCopy-Item $script (Join-Path $test 'Update-And-Enable-GPU.ps1')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4062861Z [36;1m$target=Join-Path $test 'apex_visualizer.exe'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4063277Z [36;1mCopy-Item (Join-Path $root 'payload/apex_visualizer.exe') $target[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4063731Z [36;1mSet-Content (Join-Path $test 'expected.txt') $target[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4064048Z [36;1m@'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4064282Z [36;1mparam([string]$TargetExe,[switch]$NoLaunch)[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4064593Z [36;1m$ErrorActionPreference='Stop'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4064892Z [36;1m$root=Split-Path -Parent $PSScriptRoot[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4065371Z [36;1mif (!$NoLaunch -or $TargetExe -ne (Get-Content (Join-Path $root 'expected.txt'))) { exit 10 }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4065982Z [36;1mSet-Content (Join-Path $root 'gpu-stage.txt') 'stub GPU stage only; no install'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4066643Z [36;1m$app=Get-Process -Name apex_visualizer -ErrorAction SilentlyContinue | Select-Object -First 1[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4067265Z [36;1mif ($app -and (!$app.CloseMainWindow() -or !$app.WaitForExit(15000))) { exit 9 }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4067668Z [36;1mexit 0[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4067968Z [36;1m'@ | Set-Content (Join-Path $test 'GPU-Reinstall/Install-GPU.ps1')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4068384Z [36;1m@'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4068596Z [36;1mparam([string]$TargetExe)[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4068864Z [36;1m$ErrorActionPreference='Stop'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4069299Z [36;1mif ($TargetExe -ne (Get-Content (Join-Path $PSScriptRoot 'expected.txt'))) { exit 8 }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4069844Z [36;1mif (!(Test-Path (Join-Path $PSScriptRoot 'gpu-stage.txt'))) { exit 9 }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4070462Z [36;1mSet-Content (Join-Path $PSScriptRoot 'update-stage.txt') 'exact target handoff and stage order passed'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4072386Z [36;1mexit 0[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4072680Z [36;1m'@ | Set-Content (Join-Path $test 'Update-Game-ESP.ps1')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4073133Z [36;1m$p=Start-Process $target -ArgumentList '--warp' -PassThru[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4073476Z [36;1mtry {[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4073890Z [36;1m  for ($n=0;$n -lt 50;$n++) { $p.Refresh();if ($p.MainWindowHandle) { break };Start-Sleep -Milliseconds 200 }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4074519Z [36;1m  if (!$p.MainWindowHandle) { throw 'Actual native fixture app failed to open' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4075213Z [36;1m  & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4076090Z [36;1m  if ($LASTEXITCODE -ne 0 -or !(Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Quoted spaced target handoff / stage order failed' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4076885Z [36;1m} finally { if (!$p.HasExited) { $p.Kill() } }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4077268Z [36;1mRemove-Item (Join-Path $test 'update-stage.txt')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4077929Z [36;1m& powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1') -TargetExe $target[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4078868Z [36;1mif ($LASTEXITCODE -ne 0 -or !(Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Closed-app explicit target recovery failed' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4079510Z [36;1mRemove-Item (Join-Path $test 'update-stage.txt')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4080096Z [36;1m& powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4080948Z [36;1mif ($LASTEXITCODE -ne 0 -or !(Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Closed-app remembered target recovery failed' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4081591Z [36;1mRemove-Item (Join-Path $test 'update-stage.txt')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4082048Z [36;1m'exit 7' | Set-Content (Join-Path $test 'GPU-Reinstall/Install-GPU.ps1')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4082536Z [36;1m$p=Start-Process $target -ArgumentList '--warp' -PassThru[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4082872Z [36;1mtry {[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4083277Z [36;1m  for ($n=0;$n -lt 50;$n++) { $p.Refresh();if ($p.MainWindowHandle) { break };Start-Sleep -Milliseconds 200 }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4084018Z [36;1m  & powershell.exe -STA -NoProfile -ExecutionPolicy Bypass -File (Join-Path $test 'Update-And-Enable-GPU.ps1')[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4084861Z [36;1m  if ($LASTEXITCODE -eq 0 -or (Test-Path (Join-Path $test 'update-stage.txt'))) { throw 'Failure did not prevent later update stage' }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4085482Z [36;1m} finally { if (!$p.HasExited) { $p.Kill() } }[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4086642Z [36;1mWrite-Host 'PASS real native payload hash and manifest validation; orchestration with stub child stages checks exact spaced target, stage ordering and stop-on-failure. Native GUI startup and immediate-exit diagnostics also passed; no GPU install or RTX execution claimed.'[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4087763Z [36;1mexit 0[0m
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4126258Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:01.4126634Z ##[endgroup]
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:06.6932580Z Launcher files and dependency manifest are valid. No files installed and no GPU execution tested.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:07.7344640Z Game-ESP update payload verified; no app files modified.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:08.3368015Z PASS combined launcher payload validation; nothing installed, no GPU execution claimed.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:10.1887231Z App window reopened and stayed running through the startup check.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:10.5974468Z Launch diagnostics saved: D:\a\_temp\overlay package\Game-ESP-Update\launch-failure.txt
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:10.5980324Z App exited during startup: code 0x00000017 (23)
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:11.1777450Z Repairing GPU dependencies and updating this exact copy: D:\a\_temp\orchestration with spaces\apex_visualizer.exe
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:13.2489545Z Finished. In Game ESP select your model, enable Prefer CUDA and analyze a captured frame.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:13.2498114Z Only CUDA EP execution profiled confirms this model actually executed GPU work. Installation is not verification.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:13.5961360Z Repairing GPU dependencies and updating this exact copy: D:\a\_temp\orchestration with spaces\apex_visualizer.exe
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:15.6355432Z Finished. In Game ESP select your model, enable Prefer CUDA and analyze a captured frame.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:15.6365409Z Only CUDA EP execution profiled confirms this model actually executed GPU work. Installation is not verification.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:15.9868038Z Repairing GPU dependencies and updating this exact copy: D:\a\_temp\orchestration with spaces\apex_visualizer.exe
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:18.0297145Z Finished. In Game ESP select your model, enable Prefer CUDA and analyze a captured frame.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:18.0305398Z Only CUDA EP execution profiled confirms this model actually executed GPU work. Installation is not verification.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:18.5864084Z Repairing GPU dependencies and updating this exact copy: D:\a\_temp\orchestration with spaces\apex_visualizer.exe
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:19.7570653Z STOPPED: Stage failed (7): Install-GPU.ps1. No later stage was started.
+validate	Validate actual native payload and launcher orchestration without installing GPU files	2026-11-15T16:57:19.7909759Z PASS real native payload hash and manifest validation; orchestration with stub child stages checks exact spaced target, stage ordering and stop-on-failure. Native GUI startup and immediate-exit diagnostics also passed; no GPU install or RTX execution claimed.
+validate	Post Run actions/checkout@v5	﻿2026-11-15T16:57:19.8407542Z Post job cleanup.
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.0184316Z [command]"C:\Program Files\Git\bin\git.exe" version
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.0446743Z git version 2.56.1.windows.1
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.0501081Z Temporarily overriding HOME='D:\a\_temp\b12582e1-8b51-44af-a220-ab64de3b7547' before making global git config changes
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.0502464Z Adding repository directory to the temporary git global config as a safe directory
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.0511808Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\roblox-game-testing\roblox-game-testing
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.0795540Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.1073379Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.5735724Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.5986602Z http.https://github.com/.extraheader
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.6019397Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:20.6295702Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:21.1046065Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+validate	Post Run actions/checkout@v5	2026-11-15T16:57:21.1322710Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+validate	Complete job	﻿2026-11-15T16:57:21.5890418Z Cleaning up orphan processes
+validate	Complete job	2026-11-15T16:57:21.6085797Z Terminate orphan process: pid (7580) (vctip)

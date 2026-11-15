@@ -1,28 +1,12 @@
-REOPEN / ROBLOX UPDATE
-Run Update-And-Enable-GPU.cmd for your CPU-only runtime. Leave the demo open if possible; if it is closed, select its installed apex_visualizer.exe when asked. Do not select payload or backup copies.
-The app now launches once after both stages, and startup is checked. Failure creates launch-failure.txt beside the installed EXE.
+TRACKING UPDATE
 
-CONFIRMED CPU-ONLY RUNTIME?
-Leave exactly ONE demo open, Extract All, then run Update-And-Enable-GPU.cmd.
-This repairs GPU dependencies in that running copy, then installs the overlay and preview fix. Up to 1.4 GB may download; cached files are reused.
+For a copy with working GPU files: leave the demo open, Extract All, then run Update-Game-ESP.cmd.
+If that copy still has a CPU-only ONNX runtime: use Update-And-Enable-GPU.cmd instead. If the app is closed, select its installed EXE when prompted. Pinned GPU packages may download; cached files are reused.
 
-GAME ESP ENEMY-MODEL UPDATE
+Capture Apex Firing Range in OBS, start Virtual Camera and the app receiver. Enable the existing Apex model on Game ESP.
+Open Tracking > Refresh Apex windows > select the game. Configure X / Y and enable the FOV circle.
+Arm explicitly, focus the selected game and HOLD RIGHT MOUSE. Release to stop. F9 globally disarms. F8 only hides/shows graphics.
+Arming and target window are not restored from settings. Windows accepting input does not prove Apex uses it.
 
-1. Leave your current working demo OPEN.
-2. Right-click this ZIP and choose Extract All.
-3. In the extracted folder, double-click Update-Game-ESP.cmd.
-4. Open Game ESP > Browse enemy ONNX model. Select your local SingularityMetaV3_recovered.onnx.
-5. Open a recording or use your existing OBS capture.
-
-Your GPU files and saved settings stay in place. Do not reinstall GPU files.
-Private trained weights are not included; choose the model you already downloaded.
-For boxes on your main monitor: use borderless/windowed gameplay, start live OBS capture, then enable Game ESP > Desktop overlay (live capture). F8 hides/shows it.
-Enemy? boxes are model candidates on a separate desktop window. No weapons detector is added.
-
-IF THE MODEL STILL SAYS ONNX CPU:
-First enable Prefer CUDA and detect a frame. Copy Game ESP diagnostics for the exact reason.
-If GPU runtime files are missing from this running installation, leave the demo open and run GPU-Reinstall/Reinstall-GPU.cmd from this extracted folder. It detects that copy, closes it normally, installs pinned local dependencies, and reopens it. Up to 1.4 GB may download; cached files are reused. Installation alone does not verify this model's CUDA execution.
-
-ROBLOX MODEL TEST:
-Start OBS capture of Roblox. In Game ESP choose Model profile > Roblox (test, YOLO 640px), Browse > your local RobloxAIO-harlan.onnx, then enable Analyze incoming capture frames.
-Apex remains the default profile; saved paths/settings are separate. Trained weights are not included.
+Keep your private ONNX files; they are not included. See payload/TRACKING.md and GAME-ESP-README.md for setup and limits.
+If startup fails: send launch-failure.txt from beside the installed executable.

@@ -1,13 +1,14 @@
 {
-  "Apex-Game-ESP-Roblox-Update.zip": "ade1b929b861262e96a958d115a10f9e93358b9a7fb90d261c85005e5c1d9e75",
-  "Apex-Game-ESP-Overlay-Update.zip": "ade1b929b861262e96a958d115a10f9e93358b9a7fb90d261c85005e5c1d9e75",
-  "Apex-Game-ESP-Update.zip": "ade1b929b861262e96a958d115a10f9e93358b9a7fb90d261c85005e5c1d9e75",
+  "Apex-Tracking-Update.zip": "263a05ac2441208d37bd76a473681e4017c6092d7bbd8508392670a30e224bbf",
+  "Apex-Game-ESP-Roblox-Update.zip": "263a05ac2441208d37bd76a473681e4017c6092d7bbd8508392670a30e224bbf",
+  "Apex-Game-ESP-Overlay-Update.zip": "263a05ac2441208d37bd76a473681e4017c6092d7bbd8508392670a30e224bbf",
+  "Apex-Game-ESP-Update.zip": "263a05ac2441208d37bd76a473681e4017c6092d7bbd8508392670a30e224bbf",
   "Apex-HUD-Update.zip": "791567322029da16cbc22a4c9b9f7406ae9bb949ffa768b6862d893e1c1c3d3b",
-  "Apex-GPU-Reinstall.zip": "6ea6e16b9290f437fe5dc547e832d416444cae28b73b07dee8eb2dc48f74ed3a",
-  "Apex-Visualization-Compute-Fix.zip": "57b3d06c7d97e0cab164f2932cec63e00fc4b9fe4aac4c3664a33e09cf2e9125",
-  "Apex-Visualization-OBS-Fix.zip": "57b3d06c7d97e0cab164f2932cec63e00fc4b9fe4aac4c3664a33e09cf2e9125",
-  "Apex-Visualization-Phase3-Update.zip": "57b3d06c7d97e0cab164f2932cec63e00fc4b9fe4aac4c3664a33e09cf2e9125",
-  "Apex-Visualization-Source.zip": "a0ee7094f7d8810fd667b5a98a60066fa35b4a47b655e6fc02b919f81ceaf862",
-  "Apex-Visualization-Windows-x64.zip": "15ed6770da5c883d0acab2ba73688d327fe9c7ee960d5565c0a6c16e35878c10",
+  "Apex-GPU-Reinstall.zip": "196334e78a4d5a8fbfb393e070235db400a01687c1cf68bde92566e4f35b0b5f",
+  "Apex-Visualization-Compute-Fix.zip": "ebdaecdee50fee45dc209bd76f9f36373655d501bfa57fdba37a323b8a75fa01",
+  "Apex-Visualization-OBS-Fix.zip": "ebdaecdee50fee45dc209bd76f9f36373655d501bfa57fdba37a323b8a75fa01",
+  "Apex-Visualization-Phase3-Update.zip": "ebdaecdee50fee45dc209bd76f9f36373655d501bfa57fdba37a323b8a75fa01",
+  "Apex-Visualization-Source.zip": "4d68b80177c85655d754ad0daf65f008ce759d799574efe86da67b701ddacbea",
+  "Apex-Visualization-Windows-x64.zip": "070df27808931c06dd2ad289a6987d0f948f65520ab5a8dd44d60a5c780c8f0c",
   "Apex-Visualization-CuDNN-Fix.zip": "4f3831f22f7fba06df351e99bee5da687116511cfce6845438e219d65d2a4a4f"
 }

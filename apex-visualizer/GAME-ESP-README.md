@@ -2,6 +2,14 @@
 
 The sidebar's **HUD Reader** entry is now **Game ESP**. This page loads your local trained model and shows a live captured preview with the latest candidate boxes. Exact analyzed-frame viewing remains optional. Existing recording text tools remain in a collapsed section; JSON/simulated visuals, settings, OBS capture, DX11 rendering and compute benchmarks remain.
 
+## New Tracking category
+
+**Tracking** now has separate **X / horizontal**, **Y / vertical** and **FOV overlay** sections. Configure the existing Apex detector/capture first; then Refresh Apex windows and select the actual game window. The FOV circle can show without desktop boxes. Arming is off at startup; mouse following requires the selected game focused and the right mouse button held. Release the button to stop; **F9** disarms globally. **F8** hides/shows overlay graphics without disarming. Settings load disarmed and do not restore a window selection.
+
+X/Y enable, proportional response, smoothing and speed limits are independent. FOV is a client-pixel radius. By default results older than 250 ms from receiver creation are rejected; unknown OBS sender latency is not included. Only the Apex model profile can drive mouse output. Windows input acceptance is reported separately from whether Apex actually responds. Use **Copy tracking diagnostics** for failures; no input bypass or automatic firing is added. Start in Firing Range and verify the model is detecting the intended visible targets. The model's class label alone does not establish friend/foe accuracy.
+
+Save/Load tracking setup is separate from model and renderer settings. Full instructions are in TRACKING.md (included in the source/full archive and update payload).
+
 ## Install and start
 
 1. **For your confirmed CPU-only runtime:** leave the one demo open if possible (otherwise select its installed EXE when prompted), extract the complete update ZIP, and run **Update-And-Enable-GPU.cmd**. It captures that executable path, runs the existing pinned GPU repair helper, then updates that same copy. Up to 1.4 GB may download; cached packages are reused. The optional normal update below preserves installed files without repairing a missing GPU runtime. Installation is not proof of model GPU execution.
@@ -48,7 +56,7 @@ The inspected Roblox export uses FP32 `images` [1,3,640,640] -> `output0` [1,5,8
 
 The overlay is a separate click-through, non-activating Windows desktop window, so it does not intercept game clicks or keyboard focus. It displays captured-image detections with capture/inference delay; boxes do not predict target motion. It clears boxes one second after the last completed analysis and hides when live capture stops or when a recording is selected. A visible badge without boxes means no fresh accepted detections, not proof of correct enemy recognition.
 
-**Fit capture aspect ratio to monitor** centers the captured view with letterboxing/pillarboxing. Turn it off only if your displayed game actually stretches the capture to fill the monitor. The overlay assumes the full capture corresponds to that monitor; it does not automatically track a smaller game window, undo OBS crops or calibrate scene transformations. Use borderless fullscreen on the same selected display for the first test.
+**Fit capture aspect ratio to monitor** centers the captured view with letterboxing/pillarboxing. Turn it off only if your displayed game actually stretches the capture to fill the monitor. The legacy desktop box overlay assumes the full capture corresponds to that monitor; it does not automatically track a smaller game window, undo OBS crops or calibrate scene transformations. The Tracking FOV instead follows its explicitly selected client geometry. Use borderless fullscreen on the same selected display for the first test.
 
 The app requests Windows capture exclusion for its overlay (Windows 10 2004+/11). If Windows rejects it, the status warns you to use OBS Window Capture. Actual OBS scene/compositor compatibility still needs checking on your PC; use Window Capture if Display Capture includes the overlay. The DX11 preview remains available for comparison.
 
@@ -58,7 +66,7 @@ The supplied file was inspected and checked: FP32 input `in_00000` `[1,3,416,416
 
 The model's actual metadata label is `{0: 'item'}`. You described it as an enemy detector; the UI therefore labels results **Enemy?**. Enemy/friendly classification and accuracy have not been independently established. Scores are model outputs, not calibrated accuracy estimates. No weapons/ammo detector was added. No health, distance, skeleton or hidden-player information is invented from the detector output.
 
-This is analysis of externally captured pixels, shown in the app preview or its separate desktop overlay. It does not inject into Apex, read its memory, bypass anti-cheat or automate gameplay. Only visible image content can be analyzed. Existing Windows OCR text tools remain CPU-based.
+This is analysis of externally captured pixels, shown in the app preview or its separate desktop overlay. It does not inject code into Apex, read its memory or bypass anti-cheat. The optional Tracking category described above can emit normal Windows mouse movement after explicit arming. Only visible image content can be analyzed. Existing Windows OCR text tools remain CPU-based.
 
 GPU inference uses the existing pinned local ONNX/CUDA/cuDNN loader, renderer adapter identity, TF32 disabled, one CPU thread and a 1 GiB CUDA allocator limit (not a limit on all process GPU memory). CPU shape/operator work is permitted and honestly reported. Provider initialization or ordinary inference exceptions fall back to CPU; native driver/DLL process crashes cannot be made recoverable with a C++ exception handler.
 

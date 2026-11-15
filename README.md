@@ -1,3 +1,15 @@
+# Tracking category: X, Y and FOV overlay
+
+[Download the Tracking update](Apex-Tracking-Update.zip) · [Instructions](apex-visualizer/TRACKING.md) · [Actual validation](apex-visualizer/GAME-ESP-VALIDATION.md)
+
+Extract All and use Update-Game-ESP.cmd to preserve your existing GPU files. For an installation still missing CUDA dependencies, use Update-And-Enable-GPU.cmd. The launcher can select a closed app and checks startup.
+
+Configure the existing Apex ONNX model and OBS capture, then open **Tracking**. Select the actual Apex window, adjust **X / horizontal**, **Y / vertical** and **FOV overlay**, explicitly arm, focus the selected game and hold right mouse. Release to stop; **F9** globally disarms. **F8** toggles overlay visibility, not input arming. Saved settings do not restore arming or a target window.
+
+Mouse output uses normal Windows SendInput with focus/hold/freshness/FOV checks and bounded per-axis response. Whether Apex accepts it, actual camera behavior, model accuracy, calibration and RTX performance still require the PC. Windows input acceptance is not proof of game acceptance. No input bypass, game-memory reads, automatic firing or hidden-player data is added. Existing UI, capture, renderer, detector profiles, old OCR and GPU setup remain.
+
+---
+
 # Separate Roblox test profile — Apex remains primary
 
 [Download the current combined update](Apex-Game-ESP-Roblox-Update.zip) · [Usage](apex-visualizer/GAME-ESP-README.md) · [Validation](apex-visualizer/GAME-ESP-VALIDATION.md)
