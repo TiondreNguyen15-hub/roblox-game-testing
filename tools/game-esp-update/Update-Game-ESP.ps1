@@ -33,7 +33,7 @@ try {
  $staged=$TargetExe+'.game-esp-update'
  Copy-Item -LiteralPath $newExe -Destination $staged -Force
  [IO.File]::Replace($staged,$TargetExe,(Join-Path $backup 'apex_visualizer.exe'))
- foreach ($name in @('BUILD-INFO.json','GAME-ESP-README.md','GAME-ESP-VALIDATION.md','HUD-Sample.mp4')) { Copy-Item -LiteralPath (Join-Path $payload $name) -Destination (Join-Path $app $name) -Force }
+ foreach ($name in @('BUILD-INFO.json','GAME-ESP-README.md','GAME-ESP-VALIDATION.md','TRACKING.md','HUD-Sample.mp4')) { Copy-Item -LiteralPath (Join-Path $payload $name) -Destination (Join-Path $app $name) -Force }
  $model=Join-Path $app 'models/compute_validation.onnx'
  if (!(Test-Path -LiteralPath $model)) { New-Item -ItemType Directory -Path (Split-Path $model) -Force | Out-Null;Copy-Item -LiteralPath (Join-Path $payload 'models/compute_validation.onnx') -Destination $model }
  Write-Host 'Game-ESP update installed. GPU libraries, saved settings and existing models were kept.' -ForegroundColor Green

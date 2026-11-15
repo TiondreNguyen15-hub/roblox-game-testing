@@ -18,7 +18,7 @@ jobs:
           New-Item -ItemType Directory -Path (Join-Path $payload 'models') -Force | Out-Null
           Set-Content (Join-Path $payload 'apex_visualizer.exe') 'update test bytes'
           @{exe_sha256=(Get-FileHash (Join-Path $payload 'apex_visualizer.exe')).Hash.ToLower()} | ConvertTo-Json | Set-Content (Join-Path $payload 'BUILD-INFO.json')
-          foreach ($name in @('GAME-ESP-README.md','GAME-ESP-VALIDATION.md','HUD-Sample.mp4')) { Set-Content (Join-Path $payload $name) 'file preservation test' }
+          foreach ($name in @('GAME-ESP-README.md','GAME-ESP-VALIDATION.md','TRACKING.md','HUD-Sample.mp4')) { Set-Content (Join-Path $payload $name) 'file preservation test' }
           Set-Content (Join-Path $payload 'models/compute_validation.onnx') 'new model fixture'
           $app=Join-Path $env:RUNNER_TEMP 'hud updater app with spaces'
           New-Item -ItemType Directory -Path (Join-Path $app 'runtime/gpu') -Force | Out-Null

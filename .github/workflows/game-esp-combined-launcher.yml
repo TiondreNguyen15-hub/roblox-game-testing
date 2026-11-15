@@ -5,6 +5,15 @@ jobs:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v5
+      - name: Additional native controller smoothing comparison
+        shell: pwsh
+        run: |
+          cmake -S apex-visualizer -B build-controller -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON
+          if ($LASTEXITCODE -ne 0) { throw 'Controller configure failed' }
+          cmake --build build-controller --config Release --target apex_tracking_tests --parallel 2
+          if ($LASTEXITCODE -ne 0) { throw 'Controller compile failed' }
+          ctest --test-dir build-controller -C Release -R apex_tracking_selection_axes_and_gates --output-on-failure
+          if ($LASTEXITCODE -ne 0) { throw 'Controller smoothing comparison failed' }
       - name: Validate actual native payload and launcher orchestration without installing GPU files
         shell: pwsh
         run: |
